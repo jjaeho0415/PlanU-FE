@@ -115,6 +115,7 @@
 > - 화살표 함수 사용
 > - 주석은 위에 사용
 > - 컴포넌트, 함수, 이미지파일 등등 import 하는 경우에는 절대경로로 import
+> - styled-component 이름은 PascalCase로 작성
 
 ### Communication Rules
 
