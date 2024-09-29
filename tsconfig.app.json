@@ -12,7 +12,10 @@
       "@utils/*": ["src/utils/*"],
       "@pages/*": ["src/pages/*"],
       "@hooks/*": ["src/hooks/*"],
-      "@store/*": ["src/store/*"]
+      "@store/*": ["src/store/*"],
+      "@layout/*": ["src/layout/*"],
+      "@api/*": ["src/api/*"],
+
     },
 
     /* Bundler mode */
@@ -29,5 +32,5 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"]
+  "include": [".eslintrc.cjs", "src"]
 }
