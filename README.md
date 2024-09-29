@@ -12,7 +12,8 @@
 <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
 <img src="https://img.shields.io/badge/Reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/>
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-<img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
+<!-- <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/> -->
+<img src="https://img.shields.io/badge/Styled_Component-38B2AC?style=for-the-badge&logo=Styled_Component&logoColor=white"/>
 <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
 <!-- <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"> -->
 <img src="https://img.shields.io/badge/zustand-553830?style=for-the-badge&logo=zustand&logoColor=white">
@@ -113,6 +114,8 @@
 > - export방식 (ex. export default ~)
 > - 화살표 함수 사용
 > - 주석은 위에 사용
+> - 컴포넌트, 함수, 이미지파일 등등 import 하는 경우에는 절대경로로 import
+> - styled-component 이름은 PascalCase로 작성
 
 ### Communication Rules
 
