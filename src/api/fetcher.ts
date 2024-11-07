@@ -48,7 +48,10 @@ const _fetch = async <T = unknown, R = unknown>({
   }
 
   try {
-    const res = await fetch(`{프록시url}${endpoint}`, requestOptions);
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}${endpoint}`,
+      requestOptions,
+    );
 
     if (!res.ok) {
       const errorData = await res.json();
