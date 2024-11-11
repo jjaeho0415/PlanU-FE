@@ -1,5 +1,6 @@
+import React from "react";
 import ErrorPage from "@pages/ErrorPage/page";
-import "./App.css";
+import "./App.module.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "@pages/LoginPage/page";
 import MyCalenderPage from "@pages/MyCalenderPage/page";
@@ -22,12 +23,14 @@ import NotificationPage from "@pages/NotificationPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import InvitingPage from "@pages/InvitingPage/page";
 import Layout from "@layout/Layout";
+import StartPage from "@pages/StartPage";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
+          <Route path="/start" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<MyCalenderPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
@@ -37,10 +40,7 @@ function App() {
           <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
           <Route path="/createGroup" element={<CreateGroupPage />} />
           <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
-          <Route
-            path="/group/:groupId/calender"
-            element={<GroupCalenderPage />}
-          />
+          <Route path="/group/:groupId/calender" element={<GroupCalenderPage />} />
           <Route
             path="/group/:groupId/calender/createSchedule"
             element={<CreateGroupSchedulePage />}
@@ -51,15 +51,9 @@ function App() {
             element={<GroupScheduleDetailPage />}
           />
           <Route path="/modifyLocation" element={<ModifyLocationPage />} />
-          <Route
-            path="/mySchedule/:scheduleId"
-            element={<MyScheduleDetailPage />}
-          />
+          <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />
           <Route path="/myPage" element={<MyPage />} />
-          <Route
-            path="/myPage/friendsManagement"
-            element={<FriendManagementPage />}
-          />
+          <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
           <Route path="/notification" element={<NotificationPage />} />
           <Route
             path="/group/:groupId/calender/schedule/:scheduleId/locationSharing"
