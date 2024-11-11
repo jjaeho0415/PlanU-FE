@@ -16,6 +16,7 @@ const LayoutContainer = styled.div`
   margin: 0 auto;
   position: relative;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 0;
 `;
 
 export default Layout;
