@@ -10,8 +10,8 @@
     "preview": "vite preview",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build",
-    "init-https": "sh init-https.sh"
-  },
+    "init-https": "cross-env-shell \"sh init-https.sh || init-https.sh\"" 
+   },
   "dependencies": {
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -36,6 +36,7 @@
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
+    "cross-env-shell": "^7.0.3",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-typescript": "^18.0.0",
