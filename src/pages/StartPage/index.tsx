@@ -1,7 +1,7 @@
 import styles from "./startPage.module.scss";
 import React from "react";
-import Logo from "../../../assets/logo/planU로고.svg?react";
-import Kakao from "../../../assets/logo/kakaoLogin.svg?react";
+import Logo from '@assets/logo/planU로고.svg?react';
+import Kakao from "@assets/logo/kakaoLogin.svg?react";
 
 const StartPage: React.FC = () => {
   return (
