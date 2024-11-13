@@ -4,7 +4,7 @@
     - 로컬서버 http -> https로 적용
  </p>
   <p>
-    - clone or pull 받고 npm install -> npm run init-https 실행한 이후 루트 경로에 init-https.sh파일이랑 .pem 파일 2개 정상적으로 설치 됐는지 확인하고 npm run secure 실행 -> https 적용
+    - clone or pull 받고 npm install -> npm run init-https 실행한 이후 루트 경로에 init-https.sh파일이랑 .pem 파일 2개 정상적으로 설치 됐는지 확인하고 npm run dev 실행 -> https 적용
   </p>
 </div>
 
