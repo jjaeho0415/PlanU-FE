@@ -1,11 +1,8 @@
 # PlanU-FE
 <div>
   <p> 
-    - http://localhost:3000은 npm run dev
+    - 로컬서버 http -> https로 적용
  </p>
-  <p>
-    - https://localhost:3000은 npm run secure
-  </p>
   <p>
     - clone or pull 받고 npm install -> npm run init-https 실행한 이후 루트 경로에 init-https.sh파일이랑 .pem 파일 2개 정상적으로 설치 됐는지 확인하고 npm run secure 실행 -> https 적용
   </p>
