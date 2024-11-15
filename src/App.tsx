@@ -1,6 +1,4 @@
-import React from "react";
 import ErrorPage from "@pages/ErrorPage/page";
-import "./App.module.scss";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "@pages/LoginPage/page";
 import MyCalenderPage from "@pages/MyCalenderPage/page";
