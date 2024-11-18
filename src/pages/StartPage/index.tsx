@@ -1,10 +1,12 @@
 import styles from "./startPage.module.scss";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from '@assets/logo/planU로고.svg?react';
 import LoginButton from "@components/buttons/LoginButton";
 import GoLogin from "@components/buttons/GoLogin";
 
 const StartPage: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.Container}>
       <Logo />
