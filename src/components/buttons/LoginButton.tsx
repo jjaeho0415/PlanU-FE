@@ -7,7 +7,7 @@ interface ILoginBtn {
   buttonType: "login_kakao" | "login_kakao_white" | "login_other" | "register" | "login";
 }
 
-export const LoginButton: React.FC<ILoginBtn> = ({ onClick, buttonType }) => {
+const LoginButton: React.FC<ILoginBtn> = ({ onClick, buttonType }) => {
   const [buttonText, setButtonText] = useState<string>("");
 
   useEffect(() => {
@@ -31,3 +31,5 @@ export const LoginButton: React.FC<ILoginBtn> = ({ onClick, buttonType }) => {
     </div>
   );
 };
+
+export default LoginButton;

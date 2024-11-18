@@ -2,7 +2,7 @@ import styles from "./startPage.module.scss";
 import React from "react";
 import Logo from "@assets/logo/planU로고.svg?react";
 import LoginButton from "@components/buttons/LoginButton";
-import GoLogin from "@components/buttons/GoLogin";
+import { GoLogin } from "@components/buttons/GoLogin";
 import { useNavigate } from "react-router-dom";
 
 const StartPage: React.FC = () => {

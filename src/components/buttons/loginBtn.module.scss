@@ -26,7 +26,7 @@
 
 .register {
   background: linear-gradient(
-    180deg,
+    90deg,
     #c61fa1 0%,
     #b12dcb 17%,
     #9a54bb 32%,
@@ -35,7 +35,19 @@
     #4709ae 87%,
     #0f057f 100%
   );
+  color: var(--white);
 }
 
 .login {
+  background: linear-gradient(
+    90deg,
+    #c61fa1 0%,
+    #b12dcb 17%,
+    #9a54bb 32%,
+    #a55eed 55%,
+    #702dcc 73%,
+    #4709ae 87%,
+    #0f057f 100%
+  );
+  color: var(--white);
 }
