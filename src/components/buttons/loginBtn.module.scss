@@ -1,3 +1,34 @@
 .Container {
-    
+    width: 326px;
+    height: 54px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+}
+
+.login_kakao{
+    background-color: #FFE812;
+    font-size: 14px;
+    text-align: center;
+}
+
+.login_kakao_white{
+    background-color: var(--button);
+    border: 1px soild var(--pink);
+}
+
+.login_other{
+    background-color: var(--button);
+    border-color: #4D3A52;
+    font-size: 14px;
+
+}
+
+.register {
+
+}
+
+.login {
+
 }
