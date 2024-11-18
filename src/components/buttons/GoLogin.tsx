@@ -1,4 +1,4 @@
-import { useNavigate, useNavigation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styles from "./goLogin.module.scss";
 import React, { useEffect, useState } from "react";
 
@@ -6,7 +6,7 @@ interface IGoLogin {
   textType: "로그인" | "회원가입";
 }
 
-export default function GoLogin({ textType }: IGoLogin) {
+export const GoLogin: React.FC<IGoLogin> = ({ textType }) => {
   const navigate = useNavigate();
   const [text, setText] = useState<string>("");
   const [buttonText, setButtonText] = useState<string>("");
@@ -37,4 +37,4 @@ export default function GoLogin({ textType }: IGoLogin) {
       </p>
     </div>
   );
-}
+};

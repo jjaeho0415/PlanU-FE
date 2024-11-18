@@ -1,11 +1,15 @@
-import styles from './defaultButton.module.scss';
-import React from 'react';
+import styles from "./defaultButton.module.scss";
+import React from "react";
 
-export default function DefaultButton () {
-  return(
-    <div className={styles.Container}>
-      <p></p>
-    </div>
-  )
+interface IDefaultButton {
+  buttonText: string;
+  onClick: () => void;
 }
 
+export const DefaultButton: React.FC<IDefaultButton> = ({ buttonText }) => {
+  return (
+    <div className={styles.Container}>
+      <p className={styles.buttonText}>{buttonText}</p>
+    </div>
+  );
+};

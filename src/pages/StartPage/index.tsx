@@ -3,8 +3,11 @@ import React from "react";
 import Logo from "@assets/logo/planU로고.svg?react";
 import LoginButton from "@components/buttons/LoginButton";
 import GoLogin from "@components/buttons/GoLogin";
+import { useNavigate } from "react-router-dom";
 
 const StartPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.Container}>
       <Logo />
@@ -18,7 +21,7 @@ const StartPage: React.FC = () => {
         <LoginButton
           buttonType="login_other"
           onClick={() => {
-            return;
+            navigate("/login");
           }}
         />
       </div>
