@@ -1,9 +1,11 @@
 import styles from "./startPage.module.scss";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import Logo from '@assets/logo/planU로고.svg?react';
 import Kakao from "@assets/logo/kakaoLogin.svg?react";
 
 const StartPage: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className={styles.Container}>
       <Logo />
@@ -12,9 +14,13 @@ const StartPage: React.FC = () => {
         <input className={styles.Input} placeholder="Password" />
       </div>
       <div className={styles.BottomButtonBox}>
-        <p className={styles.Cursor}>로그인</p>
+        <p className={styles.Cursor} onClick={() => navigate("/login")}>
+          로그인
+        </p>
         <p>|</p>
-        <p className={styles.Cursor}>회원가입</p>
+        <p className={styles.Cursor} onClick={() => navigate("/registerAccount")}>
+          회원가입
+        </p>
       </div>
       <div className={styles.EasyLoginBox}>
         <p className={styles.EasyLoginTitle}>간편 로그인</p>
