@@ -1,16 +1,16 @@
 .Container {
-    font-size: 14px;
-    display: flex;
-    gap: 8px;
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
 }
 
 .Text {
-    color: var(--white);
+  color: var(--gray-200);
 }
 
 .ButtonText {
-    color: var(--violet-100);
-    border-bottom: 1px solid var(--violet-100);
-    width: fit-content;
-    cursor: pointer;
+  color: var(--violet-100);
+  border-bottom: 1px solid var(--violet-100);
+  width: fit-content;
+  cursor: pointer;
 }

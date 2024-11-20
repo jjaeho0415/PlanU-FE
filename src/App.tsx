@@ -21,7 +21,6 @@ import LocationSharingPage from "@pages/LocationSharingPage/page";
 import InvitingPage from "@pages/InvitingPage/page";
 import Layout from "@layout/Layout";
 import StartPage from "@pages/StartPage";
-import React from "react";
 import RegisterPage from "@pages/RegisterPage/page";
 
 function App() {
