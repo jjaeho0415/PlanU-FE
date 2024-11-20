@@ -2,6 +2,7 @@ module.exports = {
   env: {
     browser: true,
     es2021: true,
+    node: true,
   },
   extends: [
     'airbnb',
@@ -18,5 +19,7 @@ module.exports = {
     project: './tsconfig.json',
   },
   plugins: ['@typescript-eslint', 'react', 'prettier'],
-  rules: { 'react/react-in-jsx-scope': "off" },
+  rules: { 'react/react-in-jsx-scope': "off",
+    "react/jsx-uses-react": "off",
+  },
 };
