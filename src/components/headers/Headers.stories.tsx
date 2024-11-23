@@ -9,7 +9,7 @@ import HasOnlyRightIconHeader from "./HasOnlyRightIconHeader";
 
 function Headers() {
   return (
-    <>
+    <div className={styles.MainContainer}>
       <div>
         <h1>HasOnlyBackArrowHeader</h1>
         <div className={styles.Container}>
@@ -31,8 +31,27 @@ function Headers() {
       <div>
         <h1>CalenderHeader</h1>
         <div className={styles.Container}>
-          <CalenderHeader />
-          <CalenderHeader />
+          <CalenderHeader
+            title="그룹 달력"
+            handleBackArrowClick={() => {
+              return;
+            }}
+            handleMiniCalenderClick={() => {
+              return;
+            }}
+            handleMoreIconClick={() => {
+              return;
+            }}
+          />
+          <CalenderHeader
+            title="이달의 달력"
+            handleBackArrowClick={() => {
+              return;
+            }}
+            handleMiniCalenderClick={() => {
+              return;
+            }}
+          />
         </div>
       </div>
 
@@ -59,7 +78,7 @@ function Headers() {
           <HasOnlyRightIconHeader />
         </div>
       </div>
-    </>
+    </div>
   );
 }
 
