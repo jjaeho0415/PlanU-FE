@@ -10,6 +10,7 @@ const StartPage: React.FC = () => {
 
   return (
     <div className={styles.Container}>
+      <div className={styles.LogoBox}></div>
       <Logo />
       <div className={styles.ButtonBox}>
         <LoginButton
@@ -26,7 +27,7 @@ const StartPage: React.FC = () => {
         />
       </div>
       <div className={styles.GoRegisterBox}>
-        <GoLogin textType="회원가입" />
+        <GoLogin textType="register" textColor="white" />
       </div>
     </div>
   );

@@ -1,0 +1,33 @@
+.Container {
+  width: 326px;
+  height: 60px;
+  background-color: var(--button);
+  border: 1px solid var(--pink);
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px 0 15px;
+}
+
+.Input {
+  border: none;
+  background-color: var(--button);
+  color: var(--gray-800);
+  font-size: 14px;
+  width: 230px;
+}
+
+.Input::placeholder {
+  font-size: 14px;
+  color: var(--gray-30);
+  color: var(--gray-200);
+}
+
+.Input:focus {
+  outline: none;
+}
+
+.Cursor {
+  cursor: pointer;
+}

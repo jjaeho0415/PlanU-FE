@@ -4,11 +4,17 @@
   gap: 8px;
 }
 
-.Text {
+.white {
+  color: var(--white);
+}
+
+.gray {
   color: var(--gray-200);
 }
 
 .ButtonText {
+  font-weight: 700;
+
   color: var(--violet-100);
   border-bottom: 1px solid var(--violet-100);
   width: fit-content;
