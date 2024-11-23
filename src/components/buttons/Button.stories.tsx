@@ -4,6 +4,9 @@ import { GoLogin } from "./GoLogin";
 import LoginButton from "./LoginButton";
 import SmallButton from "./SmallButton";
 import { MemoryRouter } from "react-router-dom";
+import React from "react";
+import CheckButton from "./CheckButton";
+import MiniButton from "./MiniButton";
 
 function Button() {
   return (
@@ -17,12 +20,13 @@ function Button() {
           }}
         />
       </div>
-
+      <hr />
       <div>
         <h1>GoLogin</h1>
-        <GoLogin textType="로그인" />
-        <GoLogin textType="회원가입" />
+        <GoLogin textType="login" textColor="gray" />
+        <GoLogin textType="register" textColor="gray" />
       </div>
+      <hr />
 
       <div>
         <h1>LoginButton</h1>
@@ -57,12 +61,104 @@ function Button() {
           }}
         />
       </div>
+      <hr />
 
       <div>
         <h1>SmallButton</h1>
         <SmallButton buttonText="확인" color="default" />
         <SmallButton buttonText="확인" color="light" />
       </div>
+      <hr />
+
+      <div>
+        <h1>checkButton</h1>
+        <CheckButton
+          buttonText="확인"
+          onClick={() => {
+            return;
+          }}
+        />
+        <CheckButton
+          buttonText="인증번호 전송"
+          onClick={() => {
+            return;
+          }}
+        />
+        <CheckButton
+          buttonText="중복 확인"
+          onClick={() => {
+            return;
+          }}
+        />
+      </div>
+
+      <hr />
+      <h1>MiniButton</h1>
+      <MiniButton
+        buttonText="완료"
+        color="purple"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="수락"
+        color="purple"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="거절"
+        color="white"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="요청중.."
+        color="white"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="요청취소"
+        color="red"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="달력보기"
+        color="white"
+        isCalendar={true}
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="친구요청"
+        color="purple_light"
+        isAddFriend={true}
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="그룹탈퇴"
+        color="red"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="강제퇴장"
+        color="gray"
+        onClick={() => {
+          return;
+        }}
+      />
     </>
   );
 }

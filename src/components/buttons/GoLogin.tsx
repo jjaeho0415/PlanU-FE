@@ -3,16 +3,17 @@ import styles from "./goLogin.module.scss";
 import React, { useEffect, useState } from "react";
 
 interface IGoLogin {
-  textType: "로그인" | "회원가입";
+  textType: "login" | "register";
+  textColor: "white" | "gray";
 }
 
-export const GoLogin: React.FC<IGoLogin> = ({ textType }) => {
+export const GoLogin: React.FC<IGoLogin> = ({ textType, textColor }) => {
   const navigate = useNavigate();
   const [text, setText] = useState<string>("");
   const [buttonText, setButtonText] = useState<string>("");
 
   const handleClickBtn = () => {
-    if (textType === "로그인") {
+    if (textType === "login") {
       navigate("/login");
     } else {
       navigate("/register");
@@ -20,10 +21,10 @@ export const GoLogin: React.FC<IGoLogin> = ({ textType }) => {
   };
 
   useEffect(() => {
-    if (textType === "로그인") {
+    if (textType === "login") {
       setText("기존 회원이신가요?");
       setButtonText("로그인");
-    } else if (textType === "회원가입") {
+    } else if (textType === "register") {
       setText("아직 회원이 아니신가요?");
       setButtonText("회원가입");
     }
@@ -31,7 +32,7 @@ export const GoLogin: React.FC<IGoLogin> = ({ textType }) => {
 
   return (
     <div className={styles.Container}>
-      <p className={styles.Text}>{text}</p>
+      <p className={styles[textColor]}>{text}</p>
       <p className={styles.ButtonText} onClick={handleClickBtn}>
         {buttonText}
       </p>

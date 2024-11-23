@@ -1,4 +1,28 @@
 .Container {
   height: 100svh;
   background-color: var(--background-50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.InputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.FindBox {
+  width: 100%;
+  padding: 0 30px;
+  margin-bottom: 30px;
+}
+
+.ButtonBox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.GoLoginBox {
 }
