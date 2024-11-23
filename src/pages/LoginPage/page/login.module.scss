@@ -10,19 +10,25 @@
   display: flex;
   flex-direction: column;
   gap: 25px;
+  margin-top: 50px;
 }
 
 .FindBox {
   width: 100%;
   padding: 0 30px;
-  margin-bottom: 30px;
+  flex-grow: 1;
 }
 
 .ButtonBox {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  flex-grow: 3;
 }
 
 .GoLoginBox {
+  flex-grow: 0.5;
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
 }

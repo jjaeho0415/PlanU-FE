@@ -11,6 +11,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex-grow: 1;
+  margin-top: 30px;
 }
 
 .ResendBox {
@@ -27,7 +29,10 @@
 }
 
 .ButtonBox {
-}
-
-.GoLoginBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
 }

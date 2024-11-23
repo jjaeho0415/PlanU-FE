@@ -4,8 +4,11 @@ import React, { useState } from "react";
 import Icon_alert from "@assets/Icons/Icon_alert.svg?react";
 import LoginButton from "@components/buttons/LoginButton";
 import LoginInput from "@components/inputBoxes/LoginInput";
+import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
+import { useNavigate } from "react-router-dom";
 
 const RegisterPage: React.FC = () => {
+  const navigate = useNavigate();
   const [isSendingEmailCode, setIsSendingEmailCode] = useState<boolean>(false);
 
   const handleCheckDuplication = () => {};
@@ -46,6 +49,13 @@ const RegisterPage: React.FC = () => {
 
   return (
     <div className={styles.Container}>
+      <HasOnlyBackArrowHeader
+        title="회원가입"
+        pageType="register"
+        handleClick={() => {
+          navigate(-1);
+        }}
+      />
       <div className={styles.InputBox}>
         {filteredInputList.map((input, index) => (
           <div key={index}>
@@ -73,8 +83,6 @@ const RegisterPage: React.FC = () => {
             return;
           }}
         />
-      </div>
-      <div className={styles.GoLoginBox}>
         <GoLogin textType="login" textColor="gray" />
       </div>
     </div>
