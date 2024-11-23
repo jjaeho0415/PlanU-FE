@@ -22,6 +22,7 @@ import InvitingPage from "@pages/InvitingPage/page";
 import Layout from "@layout/Layout";
 import StartPage from "@pages/StartPage";
 import RegisterPage from "@pages/RegisterPage/page";
+import FindPage from "@pages/FindPage/page";
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
           <Route path="/start" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/find" element={<FindPage />} />
           <Route path="/" element={<MyCalenderPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/groupList" element={<GroupListPage />} />
