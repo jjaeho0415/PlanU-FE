@@ -5,9 +5,11 @@
   align-items: center;
   display: flex;
   position: relative;
+  box-sizing: border-box;
+  padding-left: 16px;
+
   .iconSection {
     cursor: pointer;
-    margin-left: 16px;
   }
 
   .titleSection {
