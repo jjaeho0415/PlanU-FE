@@ -4,7 +4,7 @@ import { GoLogin } from "./GoLogin";
 import LoginButton from "./LoginButton";
 import SmallButton from "./SmallButton";
 import { MemoryRouter } from "react-router-dom";
-import styles from "./story.module.scss";
+import styles from "./buttonStory.module.scss";
 
 function Button() {
   return (
