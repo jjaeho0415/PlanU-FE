@@ -6,6 +6,7 @@ import SmallButton from "./SmallButton";
 import { MemoryRouter } from "react-router-dom";
 import React from "react";
 import CheckButton from "./CheckButton";
+import MiniButton from "./MiniButton";
 
 function Button() {
   return (
@@ -90,6 +91,74 @@ function Button() {
           }}
         />
       </div>
+
+      <hr />
+      <h1>MiniButton</h1>
+      <MiniButton
+        buttonText="완료"
+        color="purple"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="수락"
+        color="purple"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="거절"
+        color="white"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="요청중.."
+        color="white"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="요청취소"
+        color="red"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="달력보기"
+        color="white"
+        isCalendar={true}
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="친구요청"
+        color="purple_light"
+        isAddFriend={true}
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="그룹탈퇴"
+        color="red"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        buttonText="강제퇴장"
+        color="gray"
+        onClick={() => {
+          return;
+        }}
+      />
     </>
   );
 }
