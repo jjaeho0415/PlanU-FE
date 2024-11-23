@@ -4,6 +4,8 @@ import { GoLogin } from "./GoLogin";
 import LoginButton from "./LoginButton";
 import SmallButton from "./SmallButton";
 import { MemoryRouter } from "react-router-dom";
+import React from "react";
+import CheckButton from "./CheckButton";
 
 function Button() {
   return (
@@ -17,12 +19,13 @@ function Button() {
           }}
         />
       </div>
-
+      <hr />
       <div>
         <h1>GoLogin</h1>
-        <GoLogin textType="로그인" />
-        <GoLogin textType="회원가입" />
+        <GoLogin textType="login" textColor="gray" />
+        <GoLogin textType="register" textColor="gray" />
       </div>
+      <hr />
 
       <div>
         <h1>LoginButton</h1>
@@ -57,11 +60,35 @@ function Button() {
           }}
         />
       </div>
+      <hr />
 
       <div>
         <h1>SmallButton</h1>
         <SmallButton buttonText="확인" color="default" />
         <SmallButton buttonText="확인" color="light" />
+      </div>
+      <hr />
+
+      <div>
+        <h1>checkButton</h1>
+        <CheckButton
+          buttonText="확인"
+          onClick={() => {
+            return;
+          }}
+        />
+        <CheckButton
+          buttonText="인증번호 전송"
+          onClick={() => {
+            return;
+          }}
+        />
+        <CheckButton
+          buttonText="중복 확인"
+          onClick={() => {
+            return;
+          }}
+        />
       </div>
     </>
   );

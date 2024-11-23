@@ -3,6 +3,7 @@ import styles from "./login.module.scss";
 import LoginInput from "@components/inputBoxes/LoginInput";
 import { GoLogin } from "@components/buttons/GoLogin";
 import LoginButton from "@components/buttons/LoginButton";
+import FindComponent from "../components/FindComponent";
 
 const LoginPage: React.FC = () => {
   const inputList = [
@@ -26,7 +27,9 @@ const LoginPage: React.FC = () => {
           </div>
         ))}
       </div>
-      <div className={styles.FindBox}></div>
+      <div className={styles.FindBox}>
+        <FindComponent />
+      </div>
       <div className={styles.ButtonBox}>
         <LoginButton
           buttonType="login"

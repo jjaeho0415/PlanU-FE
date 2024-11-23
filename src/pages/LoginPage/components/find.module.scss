@@ -1,0 +1,17 @@
+.Container {
+  display: flex;
+  font-size: 14px;
+  color: var(--gray-200);
+  justify-content: space-between;
+  width: 100%;
+}
+
+.SaveIdBox {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.CheckBox {
+  cursor: pointer;
+}
