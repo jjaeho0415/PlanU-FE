@@ -1,0 +1,18 @@
+.mainContainer {
+  width: 100%;
+  height: 56px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .titleSection {
+    font-size: 20px;
+    font-weight: bold;
+    color: #080808;
+  }
+  &.whiteBackground {
+    background-color: var(--white);
+  }
+  &.purpleBackground {
+    background-color: var(--background-50);
+  }
+}

@@ -10,6 +10,7 @@ import { useState } from "react";
 import ChatListSearchHeader from "@pages/ChatListSearchPage/components/ChatListSearchHeader";
 import ChattingHeader from "@pages/ChattingPage/components/ChattingHeader";
 import cat from "@assets/images/cat.jpg";
+import OnlyTextHeader from "./OnlyTextHeader";
 
 function Headers() {
   const [isBookMark, setIsBookmark] = useState<boolean>(false);
@@ -168,7 +169,7 @@ function Headers() {
         <div className={styles.Container}>
           <HasTwoIconHeader
             title="2024.02.19 (화)"
-            rightType="icon"
+            rightType="moreIcon"
             handleLeftClick={() => {
               return;
             }}
@@ -190,6 +191,28 @@ function Headers() {
           />
           <HasTwoIconHeader
             title="2024.02.19 (화)"
+            rightType="button"
+            handleLeftClick={() => {
+              return;
+            }}
+            handleRightClick={() => {
+              return;
+            }}
+            backgroundColor="white"
+          />
+          <HasTwoIconHeader
+            title="검색"
+            rightType="checkIcon"
+            handleLeftClick={() => {
+              return;
+            }}
+            handleRightClick={() => {
+              return;
+            }}
+            backgroundColor="white"
+          />
+          <HasTwoIconHeader
+            title="검색"
             rightType="button"
             handleLeftClick={() => {
               return;
@@ -226,6 +249,21 @@ function Headers() {
             handleClick={handleClick}
             isBookmark={isBookMark}
           />
+          <HasOnlyRightIconHeader
+            title="새로운 일정"
+            rightType="x"
+            handleClick={() => {
+              return;
+            }}
+          />
+        </div>
+      </div>
+
+      <div>
+        <h1>OnlyTextHeader</h1>
+        <div className={styles.Container}>
+          <OnlyTextHeader title="가입 완료" backgroundColor="purple" />
+          <OnlyTextHeader title="마이페이지" backgroundColor="white" />
         </div>
       </div>
     </div>
