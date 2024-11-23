@@ -3,6 +3,7 @@ import styles from "./hasTwoIconHeader.module.scss";
 import More_Icon from "@assets/Icons/headers/moreIcon.svg?react";
 import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
 import Check_Icon from "@assets/Icons/headers/checkIcon.svg?react";
+import MiniButton from "@components/buttons/MiniButton";
 
 interface Props {
   title: string;
@@ -19,7 +20,6 @@ const HasTwoIconHeader: React.FC<Props> = ({
   handleRightClick,
   backgroundColor,
 }) => {
-
   return (
     <div className={`${styles.mainContainer} ${styles[backgroundColor]}`}>
       <div className={styles.leftSection}>
@@ -32,7 +32,13 @@ const HasTwoIconHeader: React.FC<Props> = ({
         ) : rightType === "checkIcon" ? (
           <Check_Icon width={24} height={24} />
         ) : (
-          <button className={styles.button}>완료</button>
+          <MiniButton
+            buttonText="완료"
+            color="purple"
+            onClick={() => {
+              return;
+            }}
+          />
         )}
       </div>
     </div>

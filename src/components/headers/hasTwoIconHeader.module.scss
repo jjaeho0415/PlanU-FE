@@ -7,9 +7,11 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+
   .leftSection {
     cursor: pointer;
   }
+
   .titleSection {
     font-size: 18px;
     font-weight: bold;
@@ -18,22 +20,9 @@
     left: 50%;
     transform: translateX(-50%);
   }
+
   .rightSection {
     cursor: pointer;
-    .button {
-      cursor: pointer;
-      border-radius: 8px;
-      width: 60px;
-      height: 26px;
-      border: none;
-      background-color: var(--violet-150);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 14px;
-      font-weight: lighter;
-      color: var(--white);
-    }
   }
 
   &.white {
