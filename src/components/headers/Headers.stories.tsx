@@ -82,9 +82,39 @@ function Headers() {
       <div>
         <h1>HasTwoIconHeader</h1>
         <div className={styles.Container}>
-          <HasTwoIconHeader />
-          <HasTwoIconHeader />
-          <HasTwoIconHeader />
+          <HasTwoIconHeader
+            title="2024.02.19 (화)"
+            rightType="icon"
+            handleLeftClick={() => {
+              return;
+            }}
+            handleRightClick={() => {
+              return;
+            }}
+            backgroundColor="purple"
+          />
+          <HasTwoIconHeader
+            title="2024.02.19 (화)"
+            rightType="button"
+            handleLeftClick={() => {
+              return;
+            }}
+            handleRightClick={() => {
+              return;
+            }}
+            backgroundColor="purple"
+          />
+          <HasTwoIconHeader
+            title="2024.02.19 (화)"
+            rightType="button"
+            handleLeftClick={() => {
+              return;
+            }}
+            handleRightClick={() => {
+              return;
+            }}
+            backgroundColor="white"
+          />
         </div>
       </div>
 
