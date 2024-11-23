@@ -58,7 +58,24 @@ function Headers() {
       <div>
         <h1>ChattingHeader</h1>
         <div className={styles.Container}>
-          <ChattingHeader />
+          <ChattingHeader
+            handleAlertClick={() => {
+              return;
+            }}
+            handleSearchClick={() => {
+              return;
+            }}
+            isExistNoReadAlarms={true}
+          />
+          <ChattingHeader
+            handleAlertClick={() => {
+              return;
+            }}
+            handleSearchClick={() => {
+              return;
+            }}
+            isExistNoReadAlarms={false}
+          />
         </div>
       </div>
 
