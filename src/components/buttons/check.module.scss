@@ -1,0 +1,16 @@
+.ButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--button);
+  color: var(--gray-200);
+  border-radius: 5px;
+  height: 26px;
+  width: fit-content;
+  white-space: nowrap;
+  padding: 10px 5px;
+  font-size: 10px;
+  border: 1px solid var(--gray-200);
+  min-width: 40px;
+  cursor: pointer;
+}
