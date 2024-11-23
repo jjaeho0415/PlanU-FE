@@ -9,11 +9,11 @@ import HasOnlyRightIconHeader from "./HasOnlyRightIconHeader";
 import { useState } from "react";
 import ChatListSearchHeader from "@pages/ChatListSearchPage/components/ChatListSearchHeader";
 import ChattingHeader from "@pages/ChattingPage/components/ChattingHeader";
-
+import cat from "@assets/images/cat.jpg";
 
 function Headers() {
-    const [isBookMark, setIsBookmark] = useState<boolean>(false);
-    const [searchText, setSearchText] = useState<string>("")
+  const [isBookMark, setIsBookmark] = useState<boolean>(false);
+  const [searchText, setSearchText] = useState<string>("");
 
   const handleClick = () => {
     setIsBookmark(!isBookMark);
@@ -138,21 +138,30 @@ function Headers() {
             isExistNoReadAlarms={false}
           />
         </div>
-          </div>
-          
-          <div>
-              <h1>ChatListSearchHeader</h1>
-              <div className={styles.Container}>
-                  <ChatListSearchHeader searchText={searchText}  setSearchText={setSearchText}/>
-              </div>
-          </div>
+      </div>
 
-          <div>
-              <h1>ChattingHeader</h1>
-              <div className={styles.Container}>
-                  <ChattingHeader/>
-              </div>
-          </div>
+      <div>
+        <h1>ChatListSearchHeader</h1>
+        <div className={styles.Container}>
+          <ChatListSearchHeader searchText={searchText} setSearchText={setSearchText} />
+        </div>
+      </div>
+
+      <div>
+        <h1>ChattingHeader</h1>
+        <div className={styles.Container}>
+          <ChattingHeader
+            groupImage={cat}
+            groupName="PlanU"
+            handleLeftClick={() => {
+              return;
+            }}
+            handleRightClick={() => {
+              return;
+            }}
+          />
+        </div>
+      </div>
 
       <div>
         <h1>HasTwoIconHeader</h1>
