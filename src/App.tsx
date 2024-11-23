@@ -22,6 +22,8 @@ import InvitingPage from "@pages/InvitingPage/page";
 import Layout from "@layout/Layout";
 import StartPage from "@pages/StartPage";
 import RegisterPage from "@pages/RegisterPage/page";
+import ChatListPage from "@pages/ChatListPage/page";
+import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import FindPage from "@pages/FindPage/page";
 
 function App() {
@@ -39,6 +41,8 @@ function App() {
           <Route path="/group/:groupId" element={<GroupPage />} />
           <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
           <Route path="/createGroup" element={<CreateGroupPage />} />
+          <Route path="/chatList" element={<ChatListPage />} />
+          <Route path="/chatList/search" element={<ChatListSearchPage />} />
           <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
           <Route path="/group/:groupId/calender" element={<GroupCalenderPage />} />
           <Route
