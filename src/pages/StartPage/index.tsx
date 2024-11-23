@@ -10,6 +10,7 @@ const StartPage: React.FC = () => {
 
   return (
     <div className={styles.Container}>
+      <div className={styles.LogoBox}></div>
       <Logo />
       <div className={styles.ButtonBox}>
         <LoginButton
