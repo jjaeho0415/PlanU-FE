@@ -2,18 +2,22 @@ import { Meta, StoryObj } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
 import styles from "./headerStory.module.scss";
 import HasOnlyBackArrowHeader from "./HasOnlyBackArrowHeader";
-import ChattingHeader from "./ChattingHeader";
+import ChatListHeader from "@pages/ChatListPage/components/ChatListHeader";
 import CalenderHeader from "./CalenderHeader";
 import HasTwoIconHeader from "./HasTwoIconHeader";
 import HasOnlyRightIconHeader from "./HasOnlyRightIconHeader";
 import { useState } from "react";
+import ChatListSearchHeader from "@pages/ChatListSearchPage/components/ChatListSearchHeader";
+import ChattingHeader from "@pages/ChattingPage/components/ChattingHeader";
+
 
 function Headers() {
-     const [isBookMark, setIsBookmark] = useState<boolean>(false);
+    const [isBookMark, setIsBookmark] = useState<boolean>(false);
+    const [searchText, setSearchText] = useState<string>("")
 
-    const handleClick = () => {
-      setIsBookmark(!isBookMark);
-    };
+  const handleClick = () => {
+    setIsBookmark(!isBookMark);
+  };
   return (
     <div className={styles.MainContainer}>
       <div>
@@ -21,12 +25,63 @@ function Headers() {
         <div className={styles.Container}>
           <HasOnlyBackArrowHeader
             title="가입하기"
+            pageType="login"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="로그인"
+            pageType="login"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="아이디/비밀번호 찾기"
+            pageType="login"
             handleClick={() => {
               return;
             }}
           />
           <HasOnlyBackArrowHeader
             title="가능한 날짜 선택"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="프로필 수정"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="친구 관리"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="그룹 생성하기"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="멤버"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="멤버 초개"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
+            title="회원 등록"
             handleClick={() => {
               return;
             }}
@@ -62,9 +117,9 @@ function Headers() {
       </div>
 
       <div>
-        <h1>ChattingHeader</h1>
+        <h1>ChatListHeader</h1>
         <div className={styles.Container}>
-          <ChattingHeader
+          <ChatListHeader
             handleAlertClick={() => {
               return;
             }}
@@ -73,7 +128,7 @@ function Headers() {
             }}
             isExistNoReadAlarms={true}
           />
-          <ChattingHeader
+          <ChatListHeader
             handleAlertClick={() => {
               return;
             }}
@@ -83,7 +138,21 @@ function Headers() {
             isExistNoReadAlarms={false}
           />
         </div>
-      </div>
+          </div>
+          
+          <div>
+              <h1>ChatListSearchHeader</h1>
+              <div className={styles.Container}>
+                  <ChatListSearchHeader searchText={searchText}  setSearchText={setSearchText}/>
+              </div>
+          </div>
+
+          <div>
+              <h1>ChattingHeader</h1>
+              <div className={styles.Container}>
+                  <ChattingHeader/>
+              </div>
+          </div>
 
       <div>
         <h1>HasTwoIconHeader</h1>
@@ -129,8 +198,8 @@ function Headers() {
         <div className={styles.Container}>
           <HasOnlyRightIconHeader
             title="PlanU"
-                      rightType="alert"
-                      isExistNoReadAlarms={true}
+            rightType="alert"
+            isExistNoReadAlarms={true}
             handleClick={() => {
               return;
             }}
@@ -142,7 +211,12 @@ function Headers() {
               return;
             }}
           />
-                  <HasOnlyRightIconHeader title="춘천팟" rightType="star" handleClick={handleClick} isBookmark={isBookMark} />
+          <HasOnlyRightIconHeader
+            title="춘천팟"
+            rightType="star"
+            handleClick={handleClick}
+            isBookmark={isBookMark}
+          />
         </div>
       </div>
     </div>
