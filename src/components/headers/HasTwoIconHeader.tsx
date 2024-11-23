@@ -3,7 +3,6 @@ import styles from "./hasTwoIconHeader.module.scss";
 import More_Icon from "@assets/Icons/headers/moreIcon.svg?react";
 import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
 import Check_Icon from "@assets/Icons/headers/checkIcon.svg?react";
-import classNames from "classnames";
 
 interface Props {
   title: string;
@@ -20,14 +19,9 @@ const HasTwoIconHeader: React.FC<Props> = ({
   handleRightClick,
   backgroundColor,
 }) => {
-  const mainContainerClass = classNames({
-    [styles.mainContainer]: true,
-    [styles.whiteBackground]: backgroundColor === "white",
-    [styles.purpleBackground]: backgroundColor === "purple",
-  });
 
   return (
-    <div className={mainContainerClass}>
+    <div className={`${styles.mainContainer} ${styles[backgroundColor]}`}>
       <div className={styles.leftSection}>
         <BackArrow2_Icon width={9} height={18} onClick={handleLeftClick} />
       </div>

@@ -20,9 +20,9 @@ function Headers() {
     setIsBookmark(!isBookMark);
   };
   return (
-    <div className={styles.MainContainer}>
+    <div className={styles.mainContainer}>
       <div>
-        <h1>HasOnlyBackArrowHeader</h1>
+        <h2>HasOnlyBackArrowHeader</h2>
         <div className={styles.Container}>
           <HasOnlyBackArrowHeader
             title="가입하기"
@@ -91,7 +91,7 @@ function Headers() {
       </div>
 
       <div>
-        <h1>CalenderHeader</h1>
+        <h2>CalenderHeader</h2>
         <div className={styles.Container}>
           <CalenderHeader
             title="그룹 달력"
@@ -118,7 +118,7 @@ function Headers() {
       </div>
 
       <div>
-        <h1>ChatListHeader</h1>
+        <h2>ChatListHeader</h2>
         <div className={styles.Container}>
           <ChatListHeader
             handleAlertClick={() => {
@@ -142,14 +142,14 @@ function Headers() {
       </div>
 
       <div>
-        <h1>ChatListSearchHeader</h1>
+        <h2>ChatListSearchHeader</h2>
         <div className={styles.Container}>
           <ChatListSearchHeader searchText={searchText} setSearchText={setSearchText} />
         </div>
       </div>
 
       <div>
-        <h1>ChattingHeader</h1>
+        <h2>ChattingHeader</h2>
         <div className={styles.Container}>
           <ChattingHeader
             groupImage={cat}
@@ -165,7 +165,7 @@ function Headers() {
       </div>
 
       <div>
-        <h1>HasTwoIconHeader</h1>
+        <h2>HasTwoIconHeader</h2>
         <div className={styles.Container}>
           <HasTwoIconHeader
             title="2024.02.19 (화)"
@@ -226,7 +226,7 @@ function Headers() {
       </div>
 
       <div>
-        <h1>HasOnlyRightIconHeader</h1>
+        <h2>HasOnlyRightIconHeader</h2>
         <div className={styles.Container}>
           <HasOnlyRightIconHeader
             title="PlanU"
@@ -260,7 +260,7 @@ function Headers() {
       </div>
 
       <div>
-        <h1>OnlyTextHeader</h1>
+        <h2>OnlyTextHeader</h2>
         <div className={styles.Container}>
           <OnlyTextHeader title="가입 완료" backgroundColor="purple" />
           <OnlyTextHeader title="마이페이지" backgroundColor="white" />
