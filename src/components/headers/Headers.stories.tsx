@@ -6,8 +6,14 @@ import ChattingHeader from "./ChattingHeader";
 import CalenderHeader from "./CalenderHeader";
 import HasTwoIconHeader from "./HasTwoIconHeader";
 import HasOnlyRightIconHeader from "./HasOnlyRightIconHeader";
+import { useState } from "react";
 
 function Headers() {
+     const [isBookMark, setIsBookmark] = useState<boolean>(false);
+
+    const handleClick = () => {
+      setIsBookmark(!isBookMark);
+    };
   return (
     <div className={styles.MainContainer}>
       <div>
@@ -121,8 +127,22 @@ function Headers() {
       <div>
         <h1>HasOnlyRightIconHeader</h1>
         <div className={styles.Container}>
-          <HasOnlyRightIconHeader />
-          <HasOnlyRightIconHeader />
+          <HasOnlyRightIconHeader
+            title="PlanU"
+                      rightType="alert"
+                      isExistNoReadAlarms={true}
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyRightIconHeader
+            title="PlanU"
+            rightType="alert"
+            handleClick={() => {
+              return;
+            }}
+          />
+                  <HasOnlyRightIconHeader title="춘천팟" rightType="star" handleClick={handleClick} isBookmark={isBookMark} />
         </div>
       </div>
     </div>

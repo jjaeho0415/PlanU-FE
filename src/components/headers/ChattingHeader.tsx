@@ -28,7 +28,7 @@ const ChattingHeader: React.FC<Props> = ({
         <div>
           <Alert_Icon
             width={24}
-            height={26}
+            height={24}
             onClick={handleAlertClick}
             className={styles.alertIcon}
           />
