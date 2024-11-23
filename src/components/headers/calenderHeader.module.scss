@@ -1,0 +1,30 @@
+.mainContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 56px;
+  background-color: var(--white);
+  padding: 0 10px 0 16px;
+  box-sizing: border-box;
+  .leftSection {
+    cursor: pointer;
+  }
+  .titleSection {
+    font-size: 20px;
+    color: var(--black);
+    font-weight: bold;
+  }
+  .rightSection {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 5px;
+    .miniCalenderIconSection {
+      cursor: pointer;
+    }
+    .moreIconSection {
+      cursor: pointer;
+    }
+  }
+}
