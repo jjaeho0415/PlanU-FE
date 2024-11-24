@@ -9,6 +9,7 @@ interface ILoginInput {
   buttonText: string;
   isPassword?: boolean;
   onClick?: () => void;
+  setInputValue?:  React.Dispatch<React.SetStateAction<string>>;
 }
 
 const LoginInput: React.FC<ILoginInput> = ({
@@ -16,12 +17,17 @@ const LoginInput: React.FC<ILoginInput> = ({
   buttonText,
   isPassword = false,
   onClick,
+  setInputValue,
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setInputValue && setInputValue(e.target.value);
+    };
+
   return (
     <div className={styles.Container}>
-      <input className={styles.Input} placeholder={inputText}></input>
+      <input className={styles.Input} placeholder={inputText} onChange={handleOnChange}></input>
       {isPassword && (
         <div onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? (

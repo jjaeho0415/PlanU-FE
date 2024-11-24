@@ -6,15 +6,20 @@ import LoginButton from "@components/buttons/LoginButton";
 import LoginInput from "@components/inputBoxes/LoginInput";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
+import { usePostEmailVerification } from "@api/user/postEmailVerification";
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [isSendingEmailCode, setIsSendingEmailCode] = useState<boolean>(false);
+  const [inputValue, setInputValue] = useState<string>('');
 
   const handleCheckDuplication = () => {};
 
+  const {mutate} = usePostEmailVerification();
+
   const handleSendCode = () => {
     setIsSendingEmailCode(true);
+    mutate(inputValue);
   };
 
   const handleConfirmCode = () => {};
@@ -64,6 +69,7 @@ const RegisterPage: React.FC = () => {
               buttonText={input.buttonText ?? ""}
               isPassword={input.isPassword}
               onClick={input.onClick}
+              setInputValue={setInputValue}              
             />
             {input.inputText === "인증코드 6자리 입력" && (
               <div className={styles.ResendBox}>

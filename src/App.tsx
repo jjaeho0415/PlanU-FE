@@ -17,7 +17,6 @@ import InvitingPage from "@pages/InvitingPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
 import ModifyLocationPage from "@pages/ModifyLocationPage/page";
-import MyCalenderPage from "@pages/MyCalenderPage/page";
 import MyPage from "@pages/MyPage/page";
 import MyScheduleDetailPage from "@pages/MyScheduleDetailPage/page";
 import NotificationPage from "@pages/NotificationPage/page";
@@ -26,17 +25,18 @@ import SignUpPage from "@pages/SignUpPage/page";
 import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
+import MyCalendarPage from "@pages/MyCalendarPage/page";
 
 function App() {
   return (
     <Router>
       <Routes>
         <Route path="/" element={<Layout />}>
-          <Route path="/start" element={<StartPage />} />
+          <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/find" element={<FindPage />} />
-          <Route path="/" element={<MyCalenderPage />} />
+          <Route path="/myCalendar" element={<MyCalendarPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/groupList" element={<GroupListPage />} />
           <Route path="/group/:groupId" element={<GroupPage />} />
