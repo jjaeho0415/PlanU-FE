@@ -11,15 +11,22 @@ import { usePostEmailVerification } from "@api/user/postEmailVerification";
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
   const [isSendingEmailCode, setIsSendingEmailCode] = useState<boolean>(false);
-  const [inputValue, setInputValue] = useState<string>('');
+  const [inputValue, setInputValue] = useState<string>("");
 
   const handleCheckDuplication = () => {};
 
-  const {mutate} = usePostEmailVerification();
+  const { mutate } = usePostEmailVerification();
 
   const handleSendCode = () => {
     setIsSendingEmailCode(true);
-    mutate(inputValue);
+    mutate(inputValue, {
+      onSuccess: () => {
+        alert("인증코드 발송 성공");
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+    });
   };
 
   const handleConfirmCode = () => {};
@@ -69,7 +76,7 @@ const RegisterPage: React.FC = () => {
               buttonText={input.buttonText ?? ""}
               isPassword={input.isPassword}
               onClick={input.onClick}
-              setInputValue={setInputValue}              
+              setInputValue={setInputValue}
             />
             {input.inputText === "인증코드 6자리 입력" && (
               <div className={styles.ResendBox}>

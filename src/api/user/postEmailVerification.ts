@@ -1,20 +1,20 @@
-import React from 'react';
-import api from '@api/fetcher';
-import apiRoutes from '@api/apiRoutes';
-import { useMutation } from '@tanstack/react-query';
+import React from "react";
+import api from "@api/fetcher";
+import apiRoutes from "@api/apiRoutes";
+import { useMutation } from "@tanstack/react-query";
 
 interface IResponseType {
-    resultCode: number;
-    resultMsg: string;
+  resultCode: number;
+  resultMsg: string;
 }
 
-async function postEmailVerification(email:string): Promise<IResponseType> {
-    const endpoint = `${apiRoutes.users}/email-verification/sends?email=${email}`;
-    return await api.post({ endpoint });
+async function postEmailVerification(email: string): Promise<IResponseType> {
+  const endpoint = `${apiRoutes.users}/email-verification/sends?email=${email}`;
+  return await api.post({ endpoint });
 }
 
 export const usePostEmailVerification = () => {
-    return useMutation({
-        mutationFn: (email:string) => postEmailVerification(email),
-    });
+  return useMutation({
+    mutationFn: (email: string) => postEmailVerification(email),
+  });
 };
