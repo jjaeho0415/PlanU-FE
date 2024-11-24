@@ -1,4 +1,5 @@
-export default {
+/* eslint-disable no-undef */
+module.exports= {
   parser: "typescript",
   singleQuote: false,
   semi: true,
