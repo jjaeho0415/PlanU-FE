@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import LoginPage from "@pages/LoginPage/page";
 import MyCalenderPage from "@pages/MyCalenderPage/page";
 import SignUpPage from "@pages/SignUpPage/page";
-import RegisterAccountPage from "@pages/RegisterAccountPage/page";
 import GroupListPage from "@pages/GroupListPage/page";
 import GroupPage from "@pages/GroupPage/page";
 import GroupMemberPage from "@pages/GroupMemberPage/page";
@@ -24,6 +23,10 @@ import LocationSharingPage from "@pages/LocationSharingPage/page";
 import InvitingPage from "@pages/InvitingPage/page";
 import Layout from "@layout/Layout";
 import StartPage from "@pages/StartPage";
+import RegisterPage from "@pages/RegisterPage/page";
+import ChatListPage from "@pages/ChatListPage/page";
+import ChatListSearchPage from "@pages/ChatListSearchPage/page";
+import FindPage from "@pages/FindPage/page";
 
 function App() {
   return (
@@ -32,13 +35,16 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route path="/start" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+          <Route path="/find" element={<FindPage />} />
           <Route path="/" element={<MyCalenderPage />} />
           <Route path="/signUp" element={<SignUpPage />} />
-          <Route path="/registerAccount" element={<RegisterAccountPage />} />
           <Route path="/groupList" element={<GroupListPage />} />
           <Route path="/group/:groupId" element={<GroupPage />} />
           <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
           <Route path="/createGroup" element={<CreateGroupPage />} />
+          <Route path="/chatList" element={<ChatListPage />} />
+          <Route path="/chatList/search" element={<ChatListSearchPage />} />
           <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
           <Route path="/group/:groupId/calender" element={<GroupCalenderPage />} />
           <Route

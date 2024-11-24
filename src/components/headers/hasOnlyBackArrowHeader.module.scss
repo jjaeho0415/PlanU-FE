@@ -1,0 +1,23 @@
+.mainContainer {
+  width: 100%;
+  height: 56px;
+  background-color: var(--background-50);
+  align-items: center;
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  padding-left: 12px;
+
+  .iconSection {
+    cursor: pointer;
+  }
+
+  .titleSection {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--black);
+  }
+}
