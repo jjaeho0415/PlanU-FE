@@ -7,6 +7,9 @@
   justify-content: space-between;
   align-items: center;
   background-color: var(--background-50);
+  z-index: 50;
+  position: sticky;
+  top: 0;
 
   .titleSection {
     font-size: 36px;

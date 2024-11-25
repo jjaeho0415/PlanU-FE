@@ -8,6 +8,9 @@
   justify-content: center;
   align-items: center;
   background-color: var(--background-50);
+  z-index: 50;
+  position: sticky;
+  top: 0;
   .searchSection {
     width: 308px;
     height: 40px;
@@ -28,9 +31,9 @@
       border: none;
       background-color: inherit;
     }
-    .inputSection:focus{
-        border: none;
-        outline: none;
+    .inputSection:focus {
+      border: none;
+      outline: none;
     }
   }
   .textSection {
