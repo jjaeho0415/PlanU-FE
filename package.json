@@ -14,8 +14,10 @@
   },
   "dependencies": {
     "@storybook/addon-docs": "^8.4.4",
+    "@tanstack/react-query": "^5.61.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-hook-form": "^7.53.2",
     "react-router-dom": "^6.26.2",
     "sass": "^1.80.6",
     "storybook": "^8.4.4",
