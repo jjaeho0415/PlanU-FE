@@ -1,12 +1,6 @@
-import React from "react";
 import api from "@api/fetcher";
 import apiRoutes from "@api/apiRoutes";
 import { useMutation } from "@tanstack/react-query";
-
-interface IResponseType {
-  resultCode: number;
-  resultMsg: string;
-}
 
 async function postEmailVerification(email: string): Promise<IResponseType> {
   const endpoint = `${apiRoutes.users}/email-verification/sends?email=${email}`;

@@ -8,6 +8,8 @@ import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
+import { useGetCheckIdDuplication } from "@api/user/getCheckIdDuplication";
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode";
 
 interface IRegisterFormData {
   name: string;
@@ -60,19 +62,26 @@ const RegisterPage: React.FC = () => {
       code: "",
     },
   });
+
+  const [isCheckingId, setIsCheckingId] = useState<boolean>(false);
+  const [isCheckedId, setIsCheckedId] = useState<boolean>(false);
   const [isSendingEmailCode, setIsSendingEmailCode] = useState<boolean>(false);
-  const { mutate } = usePostEmailVerification();
+  const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
+  const { mutate: sendCode } = usePostEmailVerification();
+  const { mutate: confirmCode } = usePostConfirmEmailCode();
+  const { data: idDuplicationData } = useGetCheckIdDuplication(watch("id"), isCheckingId);
 
-  const handleCheckDuplication = () => {};
-
-  const onSubmit = (data: IRegisterFormData) => {
-    console.log("Submitted Data:", data);
-    // 서버로 회원가입 데이터 전송 로직 추가
+  const handleCheckIdDuplication = () => {
+    setIsCheckingId(true);
+    if (idDuplicationData?.resultMsg === "true") {
+      setIsCheckedId(true);
+    }
+    setIsCheckingId(false);
   };
 
   const handleSendCode = (email: string) => {
     setIsSendingEmailCode(true);
-    mutate(email, {
+    sendCode(email, {
       onSuccess: () => {
         alert("인증코드 발송 성공");
       },
@@ -82,11 +91,21 @@ const RegisterPage: React.FC = () => {
     });
   };
 
-  const handleCheckPasswordMatch = (confirmPassword: string) => {
-    confirmPassword === watch("password") || "Passwords do not match";
+  const handleCheckPasswordMatch = (confirmPassword: string, password: string) => {
+    return confirmPassword === password || "비밀번호가 일치하지않습니다.";
   };
 
-  const handleConfirmCode = () => {};
+  const handleConfirmCode = (data: IPostConfirmEmailCode) => {
+    confirmCode(data, {
+      onSuccess: () => {
+        alert("인증코드 일치");
+        setIsCheckedCode(true);
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+    });
+  };
 
   const inputList: IInputItem[] = [
     {
@@ -112,7 +131,7 @@ const RegisterPage: React.FC = () => {
         },
       },
       onClick: () => {
-        // ID 중복 확인 로직
+        handleCheckIdDuplication();
       },
     },
     {
@@ -134,9 +153,10 @@ const RegisterPage: React.FC = () => {
       type: "password",
       rules: {
         required: "Please confirm your password",
-        validate: (value: string) => value === watch("password") || "Passwords do not match",
+        validate: (value: string) => {
+          return handleCheckPasswordMatch(value, watch("password"));
+        },
       },
-      onClick: () => handleCheckPasswordMatch(watch("confirmPassword")),
     },
     {
       name: "email",
@@ -163,8 +183,16 @@ const RegisterPage: React.FC = () => {
         required: "Code is required",
         pattern: { value: /^\d{6}$/, message: "Code must be 6 digits" },
       },
+      onClick: () => handleConfirmCode({ email: watch("email"), verificationCode: watch("code") }),
     });
   }
+
+  const onSubmit = (data: IRegisterFormData) => {
+    console.log("Submitted Data:", data);
+
+    if (isCheckedId && isCheckedCode) {
+    }
+  };
 
   return (
     <div className={styles.Container}>
@@ -192,7 +220,7 @@ const RegisterPage: React.FC = () => {
                 <p className={styles.Error}>
                   {errors[input.name as keyof IRegisterFormData]?.message}
                 </p>
-              )}{" "}
+              )}
             </div>
           </div>
         ))}
