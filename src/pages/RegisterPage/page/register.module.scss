@@ -1,6 +1,7 @@
 .Container {
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
+  overflow: scroll;
   background-color: var(--background-50);
   display: flex;
   flex-direction: column;
@@ -11,6 +12,8 @@
   display: flex;
   flex-direction: column;
   gap: 20px;
+  flex-grow: 1;
+  margin-top: 30px;
 }
 
 .ResendBox {
@@ -27,7 +30,10 @@
 }
 
 .ButtonBox {
-}
-
-.GoLoginBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  gap: 20px;
+  flex-grow: 1;
 }
