@@ -9,11 +9,10 @@ interface ILoginInputProps {
   buttonText: string;
   isPassword?: boolean;
   onClick?: () => void;
-  type: string;
 }
 
 const LoginInput = forwardRef<HTMLInputElement, ILoginInputProps>(
-  ({ inputText, buttonText, isPassword, onClick, type, ...props }, ref) => {
+  ({ inputText, buttonText, isPassword, onClick, ...props }, ref) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 
     return (

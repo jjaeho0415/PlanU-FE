@@ -212,7 +212,6 @@ const RegisterPage: React.FC = () => {
                 buttonText={input.buttonText || ""}
                 isPassword={input.type === "password"}
                 onClick={input.onClick}
-                type={input.type}
                 {...register(input.name as keyof IRegisterFormData, input.rules)}
               />
               {/* 에러 메시지 출력 */}
