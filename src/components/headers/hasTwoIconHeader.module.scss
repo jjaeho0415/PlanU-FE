@@ -7,6 +7,9 @@
   justify-content: space-between;
   align-items: center;
   position: relative;
+  z-index: 50;
+  position: sticky;
+  top: 0;
 
   .leftSection {
     cursor: pointer;

@@ -101,9 +101,6 @@ function Headers() {
             handleMiniCalenderClick={() => {
               return;
             }}
-            handleMoreIconClick={() => {
-              return;
-            }}
           />
           <CalenderHeader
             title="이달의 달력"

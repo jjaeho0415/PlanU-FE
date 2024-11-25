@@ -8,6 +8,10 @@
   align-items: center;
   background-color: var(--background-50);
   position: relative;
+  z-index: 50;
+  position: sticky;
+  top: 0;
+
   .titleSection {
     position: absolute;
     left: 50%;

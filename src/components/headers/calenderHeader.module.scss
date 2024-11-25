@@ -7,6 +7,9 @@
   background-color: var(--white);
   padding: 0 12px;
   box-sizing: border-box;
+  z-index: 50;
+  position: sticky;
+  top: 0;
   .leftSection {
     cursor: pointer;
   }
