@@ -1,45 +1,43 @@
-import React, { useState } from "react";
+import { forwardRef, useState } from "react";
 import styles from "./loginInput.module.scss";
 import Icon_eyeOff from "@assets/Icons/eye/Icon_eyeOff.svg?react";
 import Icon_eyeOn from "@assets/Icons/eye/Icon_eyeOn.svg?react";
 import CheckButton from "@components/buttons/CheckButton";
 
-interface ILoginInput {
+interface ILoginInputProps {
   inputText: string;
   buttonText: string;
   isPassword?: boolean;
   onClick?: () => void;
-  setInputValue?:  React.Dispatch<React.SetStateAction<string>>;
+  type: string;
 }
 
-const LoginInput: React.FC<ILoginInput> = ({
-  inputText,
-  buttonText,
-  isPassword = false,
-  onClick,
-  setInputValue,
-}) => {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
+const LoginInput = forwardRef<HTMLInputElement, ILoginInputProps>(
+  ({ inputText, buttonText, isPassword, onClick, type, ...props }, ref) => {
+    const [isOpen, setIsOpen] = useState<boolean>(false);
 
-    const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-      setInputValue && setInputValue(e.target.value);
-    };
-
-  return (
-    <div className={styles.Container}>
-      <input className={styles.Input} placeholder={inputText} onChange={handleOnChange}></input>
-      {isPassword && (
-        <div onClick={() => setIsOpen(!isOpen)}>
-          {isOpen ? (
-            <Icon_eyeOff className={styles.Cursor} />
-          ) : (
-            <Icon_eyeOn className={styles.Cursor} />
-          )}
-        </div>
-      )}
-      {buttonText !== "" && onClick && <CheckButton buttonText={buttonText} onClick={onClick} />}
-    </div>
-  );
-};
+    return (
+      <div className={styles.Container}>
+        <input
+          className={styles.Input}
+          placeholder={inputText}
+          type={isPassword && isOpen ? "text" : isPassword ? "password" : "text"}
+          ref={ref}
+          {...props}
+        />
+        {isPassword && buttonText !== "확인" && (
+          <div onClick={() => setIsOpen(!isOpen)}>
+            {isOpen ? (
+              <Icon_eyeOff className={styles.Cursor} />
+            ) : (
+              <Icon_eyeOn className={styles.Cursor} />
+            )}
+          </div>
+        )}
+        {buttonText !== "" && onClick && <CheckButton buttonText={buttonText} onClick={onClick} />}
+      </div>
+    );
+  },
+);
 
 export default LoginInput;
