@@ -103,7 +103,7 @@ function Headers() {
             }}
           />
           <CalenderHeader
-            title="이달의 달력"
+            title="나의 달력"
             handleBackArrowClick={() => {
               return;
             }}
