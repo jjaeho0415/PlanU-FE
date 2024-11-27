@@ -6,7 +6,6 @@ import { useState } from "react";
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("");
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   const handleBirthOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setUserBirth(e.target.value);
@@ -26,8 +25,7 @@ const RegisterAccountPage = () => {
         <div className={styles.middleSection}>
           <div className={styles.birthSection}>
             <div>생년월일</div>
-            <input value={userBirth} onChange={handleBirthOnChange} className={styles.birthInput} />
-            {errorMessage && <div className={styles.errorMessage}>{errorMessage}</div>}
+            <div className={styles.birthInput} />
           </div>
         </div>
       </div>
