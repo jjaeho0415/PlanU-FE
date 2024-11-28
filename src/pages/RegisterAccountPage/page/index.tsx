@@ -3,13 +3,11 @@ import ProfileEdit_Icon from "@assets/Icons/Icon_ProfileImageEdit.svg?react";
 import DefaultProfile_Icon from "@assets/Icons/Icon_DefaultProfile.svg?react";
 import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useState } from "react";
+import DatePicker from "../components/DatePicker";
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("");
-
-  const handleBirthOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setUserBirth(e.target.value);
-  };
+  const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
 
   return (
     <div className={styles.mainContainer}>
@@ -25,7 +23,11 @@ const RegisterAccountPage = () => {
         <div className={styles.middleSection}>
           <div className={styles.birthSection}>
             <div>생년월일</div>
-            <div className={styles.birthInput} />
+            {isBirthInputClick ? (
+              <DatePicker userBirth={userBirth} setUserBirth={setUserBirth} />
+            ) : (
+              <div className={styles.birthInput} onClick={() => {setIsBirthInputClick(true)}}/>
+            )}
           </div>
         </div>
       </div>
