@@ -6,7 +6,7 @@ import { useState } from "react";
 import DatePicker from "../components/DatePicker";
 
 const RegisterAccountPage = () => {
-  const [userBirth, setUserBirth] = useState<string>("");
+  const [userBirth, setUserBirth] = useState<string>("2000-04-15");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
 
   return (
@@ -24,9 +24,16 @@ const RegisterAccountPage = () => {
           <div className={styles.birthSection}>
             <div>생년월일</div>
             {isBirthInputClick ? (
-              <DatePicker userBirth={userBirth} setUserBirth={setUserBirth} />
+              <div className={styles.datePickerSection}>
+                <DatePicker userBirth={userBirth} setUserBirth={setUserBirth} />
+              </div>
             ) : (
-              <div className={styles.birthInput} onClick={() => {setIsBirthInputClick(true)}}/>
+              <div
+                className={styles.birthInput}
+                onClick={() => {
+                  setIsBirthInputClick(true);
+                }}
+              />
             )}
           </div>
         </div>

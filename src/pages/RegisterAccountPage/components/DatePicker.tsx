@@ -24,7 +24,7 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth }) => {
     } else {
       updateUserBirth(year, month, day);
     }
-  }, [userBirth]);
+  }, []);
 
   // userBirth 업데이트 함수
   const updateUserBirth = (year: number, month: number, day: number) => {
@@ -110,36 +110,42 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth }) => {
     <div className={styles.mainContainer}>
       <div className={styles.inputContainer}>
         <div className={styles.inputSection}>
-          <TopArrow_Icon onClick={() => incrementValue("year")} />
-          <input
-            type="text"
-            value={year}
-            onChange={(e) => handleInputChange(e, "year")}
-            className={styles.input}
-          />
-          <BottomArrow_Icon onClick={() => decrementValue("year")} />
+          <div className={styles.birthInputSection}>
+            <TopArrow_Icon onClick={() => incrementValue("year")} />
+            <input
+              type="text"
+              value={year}
+              onChange={(e) => handleInputChange(e, "year")}
+              className={styles.input}
+            />
+            <BottomArrow_Icon onClick={() => decrementValue("year")} />
+          </div>
           <span>년</span>
         </div>
         <div className={styles.inputSection}>
-          <TopArrow_Icon onClick={() => incrementValue("month")} />
-          <input
-            type="text"
-            value={month}
-            onChange={(e) => handleInputChange(e, "month")}
-            className={styles.input}
-          />
-          <BottomArrow_Icon onClick={() => decrementValue("month")} />
+          <div className={styles.birthInputSection}>
+            <TopArrow_Icon onClick={() => incrementValue("month")} />
+            <input
+              type="text"
+              value={month}
+              onChange={(e) => handleInputChange(e, "month")}
+              className={styles.input}
+            />
+            <BottomArrow_Icon onClick={() => decrementValue("month")} />
+          </div>
           <span>월</span>
         </div>
         <div className={styles.inputSection}>
-          <TopArrow_Icon onClick={() => incrementValue("day")} />
-          <input
-            type="text"
-            value={day}
-            onChange={(e) => handleInputChange(e, "day")}
-            className={styles.input}
-          />
-          <BottomArrow_Icon onClick={() => decrementValue("day")} />
+          <div className={styles.birthInputSection}>
+            <TopArrow_Icon onClick={() => incrementValue("day")} />
+            <input
+              type="text"
+              value={day}
+              onChange={(e) => handleInputChange(e, "day")}
+              className={styles.input}
+            />
+            <BottomArrow_Icon onClick={() => decrementValue("day")} />
+          </div>
           <span>일</span>
         </div>
       </div>

@@ -43,19 +43,31 @@
       .birthSection {
         display: flex;
         flex-direction: column;
+        .datePickerSection {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: 350px;
+          height: 82px;
+          background-color: var(--background-50);
+          border-radius: 10px;
+          margin-top: 10px;
+          box-shadow:
+          /* 아래쪽 그림자 */
+            0 4px 4px rgba(0, 0, 0, 0.1),
+            /* 왼쪽 그림자 */ -2px 2px 4px rgba(0, 0, 0, 0.05),
+            /* 오른쪽 그림자 */ 2px 2px 4px rgba(0, 0, 0, 0.05);
+        }
         .birthInput {
           height: 40px;
           cursor: pointer;
-          font-size: 25px;
-          color: var(--black);
-          font-weight: lighter;
           background-color: inherit;
           border: none;
           border-bottom: 1px solid var(--gray-800);
         }
-        .errorMessage{
-            color: var(--error);
-            font-size: 10px;
+        .errorMessage {
+          color: var(--error);
+          font-size: 10px;
         }
       }
     }
