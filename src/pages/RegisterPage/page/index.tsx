@@ -81,14 +81,17 @@ const RegisterPage: React.FC = () => {
 
   const handleSendCode = (email: string) => {
     setIsSendingEmailCode(true);
-    sendCode(email, {
-      onSuccess: () => {
-        alert("인증코드 발송 성공");
+    sendCode(
+      { email },
+      {
+        onSuccess: () => {
+          alert("인증코드 발송 성공");
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
       },
-      onError: (error) => {
-        alert(error.message);
-      },
-    });
+    );
   };
 
   const handleCheckPasswordMatch = (confirmPassword: string, password: string) => {
@@ -178,6 +181,7 @@ const RegisterPage: React.FC = () => {
     inputList.push({
       name: "code",
       text: "인증코드 6자리 입력",
+      buttonText: "확인",
       type: "text",
       rules: {
         required: "Code is required",
