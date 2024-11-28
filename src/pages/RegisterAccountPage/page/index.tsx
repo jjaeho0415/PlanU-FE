@@ -4,10 +4,16 @@ import DefaultProfile_Icon from "@assets/Icons/Icon_DefaultProfile.svg?react";
 import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useState } from "react";
 import DatePicker from "../components/DatePicker";
+import MiniButton from "@components/buttons/MiniButton";
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("2000-04-15");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
+  const [isBirthError, setIsBirthError] = useState<boolean>(false);
+
+  const handleConfirmBirth = () => {
+    isBirthError && alert("생년월일을 알맞게 입력해주세요.")
+  }
 
   return (
     <div className={styles.mainContainer}>
@@ -22,10 +28,22 @@ const RegisterAccountPage = () => {
         </div>
         <div className={styles.middleSection}>
           <div className={styles.birthSection}>
-            <div>생년월일</div>
+            <div className={styles.birthTextSection}>
+              <div>생년월일</div>
+              {isBirthInputClick && (
+                <div className={styles.button}>
+                  <MiniButton buttonText="확인" color="purple_light" onClick={handleConfirmBirth} />
+                </div>
+              )}
+            </div>
+
             {isBirthInputClick ? (
               <div className={styles.datePickerSection}>
-                <DatePicker userBirth={userBirth} setUserBirth={setUserBirth} />
+                <DatePicker
+                  userBirth={userBirth}
+                  setUserBirth={setUserBirth}
+                  setIsBirthError={setIsBirthError}
+                />
               </div>
             ) : (
               <div
@@ -33,7 +51,9 @@ const RegisterAccountPage = () => {
                 onClick={() => {
                   setIsBirthInputClick(true);
                 }}
-              />
+              >
+                {userBirth}
+              </div>
             )}
           </div>
         </div>

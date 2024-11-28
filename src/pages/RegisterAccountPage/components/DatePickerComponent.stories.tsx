@@ -4,11 +4,17 @@ import { useState } from "react";
 
 function DatePickerComponent() {
   const [userBirth, setUserBirth] = useState<string>("2000-04-15");
+  const [isBirthError, setIsBirthError] = useState<boolean>(false);
+  console.log(isBirthError)
   return (
     <>
       <div>
         <h1>DatePickerComponent</h1>
-        <DatePicker userBirth={userBirth} setUserBirth={setUserBirth} />
+        <DatePicker
+          userBirth={userBirth}
+          setUserBirth={setUserBirth}
+          setIsBirthError={setIsBirthError}
+        />
       </div>
       <hr />
     </>

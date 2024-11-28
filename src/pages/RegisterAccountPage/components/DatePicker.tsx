@@ -6,13 +6,13 @@ import styles from "./datePicker.module.scss";
 interface Props {
   userBirth: string;
   setUserBirth: React.Dispatch<React.SetStateAction<string>>;
+  setIsBirthError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth }) => {
+const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth, setIsBirthError }) => {
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1); // 월은 0부터 시작하므로 +1
   const [day, setDay] = useState<number>(new Date().getDate());
-  const [errorMessage, setErrorMessage] = useState<string>("");
 
   // userBirth 초기화
   useEffect(() => {
@@ -40,18 +40,18 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth }) => {
   // 유효성 검사
   const validateDate = (y: number, m: number, d: number): boolean => {
     if (y < 1900 || y > new Date().getFullYear()) {
-      setErrorMessage("년도가 유효하지 않습니다.");
+      setIsBirthError(true);
       return false;
     }
-    if (m < 1 || m > 12) {
-      setErrorMessage("월이 유효하지 않습니다.");
+      if (m < 1 || m > 12) {
+          setIsBirthError(true);
       return false;
     }
-    if (d < 1 || d > getDaysInMonth(y, m)) {
-      setErrorMessage("일이 유효하지 않습니다.");
+      if (d < 1 || d > getDaysInMonth(y, m)) {
+        setIsBirthError(true);
       return false;
     }
-    setErrorMessage(""); // 에러가 없으면 초기화
+    setIsBirthError(false); // 에러가 없으면 초기화
     return true;
   };
 
@@ -149,7 +149,6 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth }) => {
           <span>일</span>
         </div>
       </div>
-      {errorMessage && <div className={styles.error}>{errorMessage}</div>}
     </div>
   );
 };
