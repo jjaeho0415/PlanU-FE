@@ -17,6 +17,7 @@ import InvitingPage from "@pages/InvitingPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
 import ModifyLocationPage from "@pages/ModifyLocationPage/page";
+import MyCalendarPage from "@pages/MyCalendarPage/page";
 import MyPage from "@pages/MyPage/page";
 import MyScheduleDetailPage from "@pages/MyScheduleDetailPage/page";
 import NotificationPage from "@pages/NotificationPage/page";
@@ -25,7 +26,6 @@ import SignUpPage from "@pages/SignUpPage/page";
 import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
-import MyCalendarPage from "@pages/MyCalendarPage/page";
 
 function App() {
   return (
