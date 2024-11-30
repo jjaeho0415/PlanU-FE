@@ -5,15 +5,85 @@ import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useState } from "react";
 import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
+import { DefaultButton } from "@components/buttons/DefaultButton";
+import { useNavigate } from "react-router-dom";
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("2000-04-15");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
   const [isBirthError, setIsBirthError] = useState<boolean>(false);
+  const [gender, setGender] = useState<string>("male");
+  const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] = useState<boolean>(false);
+  const [isTermsOfServiceAgreed, setIsTermsOfServiceAgreed] = useState<boolean>(false);
+  const [isSnsReceiveAgreed, setIsSnsReceiveAgreed] = useState<boolean>(false);
+  const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
+  const [userImage, setUserImage] = useState<string | null>(null);
+  const navigate = useNavigate();
+  const userName = "이수현";
 
   const handleConfirmBirth = () => {
-    isBirthError && alert("생년월일을 알맞게 입력해주세요.")
-  }
+    isBirthError ? alert("생년월일을 알맞게 입력해주세요.") : setIsBirthInputClick(false);
+  };
+
+  const handleSelectGender = (gender: string) => {
+    gender === "male" ? setGender("male") : setGender("female");
+  };
+
+  const handleTermsClick = (type: string) => {
+    if (type === "privacy") {
+      if (isPrivacyPolicyAgreed && isAllAgreed) {
+        setIsAllAgreed(false);
+      }
+      setIsPrivacyPolicyAgreed(!isPrivacyPolicyAgreed);
+    } else if (type === "service") {
+      if (isTermsOfServiceAgreed && isAllAgreed) {
+        setIsAllAgreed(false);
+      }
+      setIsTermsOfServiceAgreed(!isTermsOfServiceAgreed);
+    } else if (type === "sns") {
+      if (isSnsReceiveAgreed && isAllAgreed) {
+        setIsAllAgreed(false);
+      }
+      setIsSnsReceiveAgreed(!isSnsReceiveAgreed);
+    } else if (type === "all") {
+      if (isAllAgreed) {
+        setIsAllAgreed(false);
+        setIsPrivacyPolicyAgreed(false);
+        setIsSnsReceiveAgreed(false);
+        setIsTermsOfServiceAgreed(false);
+      } else {
+        setIsAllAgreed(true);
+        setIsPrivacyPolicyAgreed(true);
+        setIsSnsReceiveAgreed(true);
+        setIsTermsOfServiceAgreed(true);
+      }
+    }
+  };
+
+  const handleNextBtnClick = () => {
+    if (!userBirth) {
+      alert("생년월일을 입력해주세요");
+      return;
+    }
+    if (!isPrivacyPolicyAgreed) {
+      alert("이용약관 동의는 필수항목입니다.");
+      return;
+    }
+    if (!isTermsOfServiceAgreed) {
+      alert("개인정보 수집 및 이용동의는 필수항목입니다.");
+      return;
+    }
+
+    console.log("userImage : ", userImage);
+    console.log("userBirth : ", userBirth);
+    console.log("userName : ", userName);
+    console.log("gender : ", gender);
+    console.log("isAllAgreed : ", isAllAgreed);
+    console.log("isPrivacyPolicyAgreed : ", isPrivacyPolicyAgreed);
+    console.log("isTermsOfServiceAgreed : ", isTermsOfServiceAgreed);
+    console.log("isSnsReceiveAgreed : ", isSnsReceiveAgreed);
+    navigate("/myCalendar");
+  };
 
   return (
     <div className={styles.mainContainer}>
@@ -24,7 +94,7 @@ const RegisterAccountPage = () => {
             <DefaultProfile_Icon width={130} height={130} />
             <ProfileEdit_Icon width={24} height={24} className={styles.profileEditIcon} />
           </div>
-          <div>이수현 님</div>
+          <div>{userName} 님</div>
         </div>
         <div className={styles.middleSection}>
           <div className={styles.birthSection}>
@@ -56,7 +126,66 @@ const RegisterAccountPage = () => {
               </div>
             )}
           </div>
+          <div className={styles.genderContainer}>
+            <div>성별</div>
+            <div className={styles.bottomBoarder}>
+              <div className={styles.genderRadioSection}>
+                <div
+                  className={styles.genderSection}
+                  onClick={() => {
+                    handleSelectGender("male");
+                  }}
+                >
+                  <div className={styles.selectBox}>
+                    {gender === "male" && <div className={styles.selectBoxChecked} />}
+                  </div>
+                  <div className={styles.genderText}>남자</div>
+                </div>
+                <div
+                  className={styles.genderSection}
+                  onClick={() => {
+                    handleSelectGender("female");
+                  }}
+                >
+                  <div className={styles.selectBox}>
+                    {gender === "female" && <div className={styles.selectBoxChecked} />}
+                  </div>
+                  <div className={styles.genderText}>여자</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
+        <div className={styles.bottomSection}>
+          <div className={styles.firstSection}>
+            <div className={styles.selectBox} onClick={() => handleTermsClick("all")}>
+              {isAllAgreed && <div className={styles.selectBoxChecked} />}
+            </div>
+            <div>약관 전체 동의</div>
+          </div>
+          <div className={styles.line} />
+          <div className={styles.otherSection}>
+            <div className={styles.selectBox} onClick={() => handleTermsClick("privacy")}>
+              {isPrivacyPolicyAgreed && <div className={styles.selectBoxChecked} />}
+            </div>
+            <div>이용약관 동의(필수)</div>
+          </div>
+          <div className={styles.otherSection}>
+            <div className={styles.selectBox} onClick={() => handleTermsClick("service")}>
+              {isTermsOfServiceAgreed && <div className={styles.selectBoxChecked} />}
+            </div>
+            <div>개인정보 수집 및 이용동의(필수)</div>
+          </div>
+          <div className={styles.otherSection}>
+            <div className={styles.selectBox} onClick={() => handleTermsClick("sns")}>
+              {isSnsReceiveAgreed && <div className={styles.selectBoxChecked} />}
+            </div>
+            <div>E-mail 및 SNS 광고성 수신 동의(선택)</div>
+          </div>
+        </div>
+      </div>
+      <div className={styles.buttonSection}>
+        <DefaultButton buttonText="다음" onClick={handleNextBtnClick} />
       </div>
     </div>
   );

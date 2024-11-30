@@ -1,7 +1,9 @@
 .mainContainer {
   width: 100%;
-  height: 100svh;
+  height: 100dvh;
   background-color: var(--background-50);
+  overflow: scroll;
+  scrollbar-width: none;
   .contentContainer {
     display: flex;
     width: 100%;
@@ -38,18 +40,28 @@
       color: var(--gray-800);
       display: flex;
       flex-direction: column;
-      gap: 20px;
+      gap: 30px;
       padding: 0 20px;
       .birthSection {
         display: flex;
         flex-direction: column;
-        .birthTextSection{
+        .birthTextSection {
           display: flex;
           justify-content: space-between;
           align-items: center;
-          .button{
+          .button {
             cursor: pointer;
           }
+        }
+        .birthInput {
+          height: 40px;
+          font-size: 20px;
+          cursor: pointer;
+          background-color: inherit;
+          display: flex;
+          align-items: center;
+          border: none;
+          border-bottom: 1px solid var(--gray-800);
         }
         .datePickerSection {
           display: flex;
@@ -66,21 +78,106 @@
             /* 왼쪽 그림자 */ -2px 2px 4px rgba(0, 0, 0, 0.05),
             /* 오른쪽 그림자 */ 2px 2px 4px rgba(0, 0, 0, 0.05);
         }
-        .birthInput {
-          height: 40px;
-          font-size: 20px;
-          cursor: pointer;
-          background-color: inherit;
-          display: flex;
-          align-items: center;
-          border: none;
-          border-bottom: 1px solid var(--gray-800);
-        }
+
         .errorMessage {
           color: var(--error);
           font-size: 10px;
         }
       }
+
+      .genderContainer {
+        display: flex;
+        flex-direction: column;
+        .bottomBoarder {
+          height: 40px;
+          font-size: 20px;
+          background-color: inherit;
+          display: flex;
+          align-items: center;
+          border: none;
+          border-bottom: 1px solid var(--gray-800);
+          gap: 90px;
+          .genderRadioSection {
+            width: 204px;
+            height: 24px;
+            display: flex;
+            justify-content: space-between;
+          }
+        }
+      }
+    }
+    .bottomSection {
+      margin-top: 50px;
+      width: 100%;
+      height: 147px;
+      display: flex;
+      flex-direction: column;
+      gap: 9px;
+
+      .firstSection {
+        display: flex;
+        gap: 7px;
+        font-size: 17px;
+        font-weight: medium;
+        color: var(--black);
+        align-items: center;
+        padding: 0 25px;
+      }
+      .otherSection {
+        display: flex;
+        gap: 7px;
+        font-size: 16px;
+        color: var(--gray-800);
+        font-weight: lighter;
+        align-items: center;
+        padding: 0 25px;
+      }
+      .line {
+        width: 100%;
+        border-bottom: 1px solid #959595;
+        margin: 5px 0;
+      }
     }
   }
+}
+
+.genderText {
+  font-size: 14px;
+  font-weight: lighter;
+  color: var(--black);
+}
+
+.genderSection {
+  width: 60px;
+  height: 24px;
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  cursor: pointer;
+}
+
+.selectBox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  border: 1px solid var(--gray-200);
+  background-color: var(--white);
+  cursor: pointer;
+  .selectBoxChecked {
+    background-color: var(--black);
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+  }
+}
+
+.buttonSection {
+  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
 }

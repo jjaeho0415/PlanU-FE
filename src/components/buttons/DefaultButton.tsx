@@ -6,9 +6,9 @@ interface IDefaultButton {
   onClick: () => void;
 }
 
-export const DefaultButton: React.FC<IDefaultButton> = ({ buttonText }) => {
+export const DefaultButton: React.FC<IDefaultButton> = ({ buttonText, onClick }) => {
   return (
-    <div className={styles.Container}>
+    <div className={styles.Container} onClick={onClick}>
       <p className={styles.buttonText}>{buttonText}</p>
     </div>
   );
