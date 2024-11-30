@@ -1,8 +1,8 @@
 import { DefaultButton } from "@components/buttons/DefaultButton";
 import { useState } from "react";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
-import GroupNameInput from "../components/GroupNameInput";
-import ImageUploader from "../components/ImageUploader";
+import GroupNameInput from "../../CreateGroupPage/components/GroupNameInput";
+import ImageUploader from "../../CreateGroupPage/components/ImageUploader";
 import styles from "./groupCreation.module.scss";
 
 function GroupCreationPage() {

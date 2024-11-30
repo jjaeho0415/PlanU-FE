@@ -2,7 +2,7 @@ import styles from "./groupNameInput.module.scss";
 
 interface groupNameInputProps {
   groupName: string;
-  setGroupName: (value: string) => void;
+  setGroupName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 function GroupNameInput({ groupName, setGroupName }: groupNameInputProps) {

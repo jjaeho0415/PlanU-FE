@@ -8,7 +8,7 @@ import styles from "./imageUploader.module.scss";
 interface Props {
   iconType: "edit" | "camera";
   image: string | null;
-  setImage: (url: string | null) => void;
+  setImage: React.Dispatch<React.SetStateAction<string | null>>;
 }
 
 function ImageUploader({ iconType, image, setImage }: Props) {
