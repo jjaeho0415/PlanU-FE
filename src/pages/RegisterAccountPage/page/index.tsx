@@ -7,6 +7,7 @@ import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
 import { DefaultButton } from "@components/buttons/DefaultButton";
 import { useNavigate } from "react-router-dom";
+import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("2000-04-15");
@@ -91,10 +92,11 @@ const RegisterAccountPage = () => {
       <div className={styles.contentContainer}>
         <div className={styles.topSection}>
           <div className={styles.profileImageSection}>
-            <DefaultProfile_Icon width={130} height={130} />
-            <ProfileEdit_Icon width={24} height={24} className={styles.profileEditIcon} />
+            <div className={styles.profileImage}>
+              <ImageUploader iconType="edit" image={userImage} setImage={setUserImage} />
+            </div>
+            <div>{userName} 님</div>
           </div>
-          <div>{userName} 님</div>
         </div>
         <div className={styles.middleSection}>
           <div className={styles.birthSection}>

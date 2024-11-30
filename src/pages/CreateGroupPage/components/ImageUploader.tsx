@@ -42,7 +42,7 @@ function ImageUploader({ iconType, image, setImage }: Props) {
           {iconType === "camera" ? (
             <CameraIcon width={24} height={24} className={styles.CameraIcon} />
           ) : (
-            <EditIcon width={24} height={24} className={styles.CameraIcon} />
+            <EditIcon width={17} height={17} className={styles.CameraIcon} />
           )}
         </label>
       </div>
