@@ -1,6 +1,4 @@
 import styles from "./registerAccount.module.scss";
-import ProfileEdit_Icon from "@assets/Icons/Icon_ProfileImageEdit.svg?react";
-import DefaultProfile_Icon from "@assets/Icons/Icon_DefaultProfile.svg?react";
 import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useState } from "react";
 import DatePicker from "../components/DatePicker";
@@ -8,9 +6,10 @@ import MiniButton from "@components/buttons/MiniButton";
 import { DefaultButton } from "@components/buttons/DefaultButton";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
+import RightArrow_Icon from "@assets/Icons/RightArrow.svg?react";
 
 const RegisterAccountPage = () => {
-  const [userBirth, setUserBirth] = useState<string>("2000-04-15");
+  const [userBirth, setUserBirth] = useState<string>("");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
   const [isBirthError, setIsBirthError] = useState<boolean>(false);
   const [gender, setGender] = useState<string>("male");
@@ -84,6 +83,13 @@ const RegisterAccountPage = () => {
     console.log("isTermsOfServiceAgreed : ", isTermsOfServiceAgreed);
     console.log("isSnsReceiveAgreed : ", isSnsReceiveAgreed);
     navigate("/myCalendar");
+  };
+
+  const handleArrowIconClick = () => {
+    window.open(
+      "https://quartz-guavaberry-b5f.notion.site/14ec348b5aab80d2ae60e91438fed778",
+      "_blank",
+    );
   };
 
   return (
@@ -176,7 +182,12 @@ const RegisterAccountPage = () => {
             <div className={styles.selectBox} onClick={() => handleTermsClick("service")}>
               {isTermsOfServiceAgreed && <div className={styles.selectBoxChecked} />}
             </div>
-            <div>개인정보 수집 및 이용동의(필수)</div>
+            <div className={styles.privacySection}>
+              <div>개인정보 수집 및 이용동의(필수)</div>
+              <div className={styles.arrowIcon} onClick={handleArrowIconClick}>
+                <RightArrow_Icon width={8} height={12} />
+              </div>
+            </div>
           </div>
           <div className={styles.otherSection}>
             <div className={styles.selectBox} onClick={() => handleTermsClick("sns")}>
