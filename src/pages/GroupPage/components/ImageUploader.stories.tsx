@@ -1,21 +1,20 @@
-import { Meta, StoryObj } from "@storybook/react";
+import { useState } from "react";
 import ImageUploader from "./ImageUploader";
 
-const meta: Meta<typeof ImageUploader> = {
+export default {
   title: "Components/ImageUploader",
   component: ImageUploader,
-  decorators: [
-    (Story) => (
-      <div style={{ padding: "20px" }}>
-        <Story />
-      </div>
-    ),
-  ],
+  args: {
+    iconType: "edit", // 기본값을 "edit"으로 설정
+  },
 };
-export default meta;
 
-type Story = StoryObj<typeof ImageUploader>;
+export const Default = (args: any) => {
+  const [image, setImage] = useState<string | null>(null);
 
-export const Default: Story = {
-  args: {},
+  return (
+    <div>
+      <ImageUploader {...args} image={image} setImage={setImage} />
+    </div>
+  );
 };
