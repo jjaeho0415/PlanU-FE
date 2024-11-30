@@ -1,15 +1,18 @@
-.GroupCreationPage {
+.CreateGroupPage {
   display: flex;
   flex-direction: column;
   height: 100vh;
   background-color: var(--background-50);
   padding: 16px;
 }
-
 .ContentWrapper {
   display: flex;
   flex-direction: column;
   align-items: center;
   flex-grow: 1;
   gap: 70px;
+}
+.ButtonWrapper {
+  display: flex;
+  justify-content: center;
 }
