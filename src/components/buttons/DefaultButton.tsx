@@ -1,5 +1,5 @@
-import styles from "./defaultButton.module.scss";
 import React from "react";
+import styles from "./defaultButton.module.scss";
 
 interface IDefaultButton {
   buttonText: string;

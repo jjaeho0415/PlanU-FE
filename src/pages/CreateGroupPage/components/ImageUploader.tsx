@@ -1,0 +1,53 @@
+import EditIcon from "@assets/Icons/Profile Picture/Icon_.pencil.svg?react";
+import CameraIcon from "@assets/Icons/Profile Picture/Icon_camera.svg?react";
+import DefaultGroupImage from "@assets/Icons/Profile Picture/Icon_default_group.svg?react"; // 비어있는 배경인 그룹 기본 이미지
+import DefaultProfileImage from "@assets/Icons/Profile Picture/Icon_default_profile.svg?react"; // 기본 프로필 이미지
+import React from "react";
+import styles from "./imageUploader.module.scss";
+
+interface Props {
+  iconType: "edit" | "camera";
+  image: string | null;
+  setImage: React.Dispatch<React.SetStateAction<string | null>>;
+}
+
+function ImageUploader({ iconType, image, setImage }: Props) {
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      setImage(imageUrl);
+    }
+  };
+
+  return (
+    <div className={styles.ImageCircle}>
+      {image ? (
+        <img src={image} alt="Uploaded preview" className={styles.PreviewImage} />
+      ) : iconType === "edit" ? (
+        <DefaultProfileImage className={styles.DefaultImage} />
+      ) : (
+        <DefaultGroupImage className={styles.DefaultImage} />
+      )}
+
+      <div className={styles.SmallCircle}>
+        <label htmlFor="image-upload" className={styles.CameraWrapper}>
+          <input
+            type="file"
+            id="image-upload"
+            accept="image/*"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
+          {iconType === "camera" ? (
+            <CameraIcon width={24} height={24} className={styles.CameraIcon} />
+          ) : (
+            <EditIcon width={24} height={24} className={styles.CameraIcon} />
+          )}
+        </label>
+      </div>
+    </div>
+  );
+}
+
+export default ImageUploader;

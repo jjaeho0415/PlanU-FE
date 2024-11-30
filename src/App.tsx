@@ -2,7 +2,7 @@ import Layout from "@layout/Layout";
 import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
-import CreateGroupPage from "@pages/CreateGroupPage/page";
+import { default as CreateGroupPage, default as GroupPage } from "@pages/CreateGroupPage/page";
 import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage";
 import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
@@ -11,12 +11,12 @@ import FriendManagementPage from "@pages/FriendManagementPage/page";
 import GroupCalenderPage from "@pages/GroupCalenderPage/page";
 import GroupListPage from "@pages/GroupListPage/page";
 import GroupMemberPage from "@pages/GroupMemberPage/page";
-import GroupPage from "@pages/GroupPage/page";
 import GroupScheduleDetailPage from "@pages/GroupScheduleDetailPage/page";
 import InvitingPage from "@pages/InvitingPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
 import ModifyLocationPage from "@pages/ModifyLocationPage/page";
+import MyCalendarPage from "@pages/MyCalendarPage/page";
 import MyPage from "@pages/MyPage/page";
 import MyScheduleDetailPage from "@pages/MyScheduleDetailPage/page";
 import NotificationPage from "@pages/NotificationPage/page";
@@ -25,7 +25,7 @@ import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import RegisterAccountPage from "@pages/RegisterAccountPage/page";
-import MyCalendarPage from "@pages/MyCalendarPage/page";
+
 
 function App() {
   return (
