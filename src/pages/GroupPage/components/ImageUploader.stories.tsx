@@ -5,7 +5,7 @@ export default {
   title: "Components/ImageUploader",
   component: ImageUploader,
   args: {
-    iconType: "edit", // 기본값을 "edit"으로 설정
+    iconType: "edit",
   },
 };
 

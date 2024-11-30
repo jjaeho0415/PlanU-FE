@@ -1,6 +1,6 @@
 import EditIcon from "@assets/Icons/Profile Picture/Icon_.pencil.svg?react";
 import CameraIcon from "@assets/Icons/Profile Picture/Icon_camera.svg?react";
-import DefaultGroupImage from "@assets/Icons/Profile Picture/Icon_default_group.svg?react"; // 기본 그룹 이미지
+import DefaultGroupImage from "@assets/Icons/Profile Picture/Icon_default_group.svg?react"; // 비어있는 배경인 그룹 기본 이미지
 import DefaultProfileImage from "@assets/Icons/Profile Picture/Icon_default_profile.svg?react"; // 기본 프로필 이미지
 import React from "react";
 import styles from "./imageUploader.module.scss";
