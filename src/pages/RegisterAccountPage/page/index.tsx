@@ -6,18 +6,18 @@ import MiniButton from "@components/buttons/MiniButton";
 import { DefaultButton } from "@components/buttons/DefaultButton";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
-import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react"
+import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
   const [isBirthError, setIsBirthError] = useState<boolean>(false);
-  const [gender, setGender] = useState<string>("male");
+  const [gender, setGender] = useState<string>("M");
   const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] = useState<boolean>(false);
   const [isTermsOfServiceAgreed, setIsTermsOfServiceAgreed] = useState<boolean>(false);
   const [isSnsReceiveAgreed, setIsSnsReceiveAgreed] = useState<boolean>(false);
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
-  const [userImage, setUserImage] = useState<string | null>(null);
+  const [userImage, setUserImage] = useState<File | string | null>(null);
   const navigate = useNavigate();
   const userName = "이수현";
 
@@ -26,7 +26,7 @@ const RegisterAccountPage = () => {
   };
 
   const handleSelectGender = (gender: string) => {
-    gender === "male" ? setGender("male") : setGender("female");
+    gender === "M" ? setGender("M") : setGender("F");
   };
 
   const handleTermsClick = (type: string) => {
@@ -141,22 +141,22 @@ const RegisterAccountPage = () => {
                 <div
                   className={styles.genderSection}
                   onClick={() => {
-                    handleSelectGender("male");
+                    handleSelectGender("M");
                   }}
                 >
                   <div className={styles.selectBox}>
-                    {gender === "male" && <div className={styles.selectBoxChecked} />}
+                    {gender === "M" && <div className={styles.selectBoxChecked} />}
                   </div>
                   <div className={styles.genderText}>남자</div>
                 </div>
                 <div
                   className={styles.genderSection}
                   onClick={() => {
-                    handleSelectGender("female");
+                    handleSelectGender("F");
                   }}
                 >
                   <div className={styles.selectBox}>
-                    {gender === "female" && <div className={styles.selectBoxChecked} />}
+                    {gender === "F" && <div className={styles.selectBoxChecked} />}
                   </div>
                   <div className={styles.genderText}>여자</div>
                 </div>

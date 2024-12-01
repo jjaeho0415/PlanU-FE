@@ -7,7 +7,7 @@ import styles from "./createGroup.module.scss";
 
 function CreateGroupPage() {
   const [groupName, setGroupName] = useState("");
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<File | string | null>(null);
 
   const handleCompletion = () => {
     if (!groupName) {
