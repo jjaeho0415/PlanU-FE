@@ -1,5 +1,6 @@
 const apiRoutes = {
-    users : '/users',
+    users: '/users',
+    userInformation: '/users/profile/exists'
 };
 
 export default apiRoutes;
