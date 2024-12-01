@@ -6,7 +6,7 @@ import MiniButton from "@components/buttons/MiniButton";
 import { DefaultButton } from "@components/buttons/DefaultButton";
 import { useNavigate } from "react-router-dom";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
-import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
+import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react"
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("");

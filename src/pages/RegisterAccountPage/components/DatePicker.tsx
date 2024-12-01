@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import TopArrow_Icon from "@assets/Icons/arrow/TopArrow.svg?react";
-import BottomArrow_Icon from "@assets/Icons/arrow/BottomArrow.svg";
+import BottomArrow_Icon from "@assets/Icons/arrow/BottomArrow.svg?react";
 import styles from "./datePicker.module.scss";
 
 interface Props {
