@@ -21,10 +21,11 @@ import MyPage from "@pages/MyPage/page";
 import MyScheduleDetailPage from "@pages/MyScheduleDetailPage/page";
 import NotificationPage from "@pages/NotificationPage/page";
 import RegisterPage from "@pages/RegisterPage/page";
-import SignUpPage from "@pages/SignUpPage/page";
 import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
+import RegisterAccountPage from "@pages/RegisterAccountPage/page";
+
 
 function App() {
   return (
@@ -34,9 +35,9 @@ function App() {
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/registerAccount" element={<RegisterAccountPage />} />
           <Route path="/find" element={<FindPage />} />
           <Route path="/myCalendar" element={<MyCalendarPage />} />
-          <Route path="/signUp" element={<SignUpPage />} />
           <Route path="/groupList" element={<GroupListPage />} />
           <Route path="/group/:groupId" element={<GroupPage />} />
           <Route path="/group/:groupId/members" element={<GroupMemberPage />} />

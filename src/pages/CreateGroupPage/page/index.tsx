@@ -29,7 +29,10 @@ function CreateGroupPage() {
     <div className={styles.CreateGroupPage}>
       <HasOnlyBackArrowHeader title="그룹 생성하기" handleClick={handleBackClick} />
       <div className={styles.ContentWrapper}>
-        <ImageUploader iconType="camera" image={image} setImage={setImage} />
+        <div style={{ width: "200px", height: "200px" }}>
+          <ImageUploader iconType="camera" image={image} setImage={setImage} />
+        </div>
+
         <GroupNameInput groupName={groupName} setGroupName={setGroupName} />
       </div>
       <div className={styles.ButtonWrapper}>
