@@ -11,8 +11,8 @@ async function postEmailVerification(body: IemailBody): Promise<IResponseType> {
   return await api.post({ endpoint, body });
 }
 
-export const usePostEmailVerification = () => {
+export function usePostEmailVerification() {
   return useMutation({
     mutationFn: (data: IemailBody) => postEmailVerification(data),
   });
-};
+}

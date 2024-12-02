@@ -4,14 +4,14 @@ import Icon_eyeOff from "@assets/Icons/eye/Icon_eyeOff.svg?react";
 import Icon_eyeOn from "@assets/Icons/eye/Icon_eyeOn.svg?react";
 import CheckButton from "@components/buttons/CheckButton";
 
-interface ILoginInputProps {
+interface props {
   inputText: string;
   buttonText: string;
   isPassword?: boolean;
   onClick?: () => void;
 }
 
-const LoginInput = forwardRef<HTMLInputElement, ILoginInputProps>(
+const LoginInput = forwardRef<HTMLInputElement, props>(
   ({ inputText, buttonText, isPassword, onClick, ...props }, ref) => {
     const [isOpen, setIsOpen] = useState<boolean>(false);
 

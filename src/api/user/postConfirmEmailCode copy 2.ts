@@ -7,8 +7,8 @@ async function postConfirmEmailCode(body: IPostConfirmEmailCode): Promise<IRespo
   return await api.post({ endpoint, body });
 }
 
-export const usePostConfirmEmailCode = () => {
+export function usePostConfirmEmailCode() {
   return useMutation({
     mutationFn: (data: IPostConfirmEmailCode) => postConfirmEmailCode(data),
   });
-};
+}

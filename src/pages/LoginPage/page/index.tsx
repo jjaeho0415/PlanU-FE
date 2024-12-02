@@ -6,17 +6,54 @@ import LoginButton from "@components/buttons/LoginButton";
 import FindComponent from "../components/FindComponent";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
+import { usePostLogin } from "@api/user/postLogin";
+import { useForm } from "react-hook-form";
+
+interface ILoginFormData {
+  id: string;
+  password: string;
+}
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const { mutate: login } = usePostLogin();
+
+  const { register, handleSubmit, watch } = useForm<ILoginFormData>({
+    defaultValues: {
+      id: "",
+      password: "",
+    },
+  });
+
   const inputList = [
     {
       inputText: "ID",
       buttonText: null,
       isPassword: false,
+      rules: {
+        required: "ID is required",
+        pattern: {
+          value: /^[A-Za-z0-9]{5,12}$/,
+          message: "시작은 영문 대소문자 또는 숫자, 5~12",
+        },
+      },
     },
-    { inputText: "Password", buttonText: null, isPassword: true },
+    {
+      inputText: "Password",
+      buttonText: null,
+      isPassword: true,
+      rules: {
+        required: "Password is required",
+        pattern: {
+          value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&()]{8,15}$/,
+          message: "비밀번호는 대소문자,특수문자,숫자 포함 8-15자 가능",
+        },
+      },
+    },
   ];
+
+  const onSubmit = () => {};
+
   return (
     <div className={styles.Container}>
       <HasOnlyBackArrowHeader
@@ -26,17 +63,18 @@ const LoginPage: React.FC = () => {
           navigate(-1);
         }}
       />
-      <div className={styles.InputBox}>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.InputBox}>
         {inputList.map((input, index) => (
           <div key={index}>
             <LoginInput
               inputText={input.inputText}
               buttonText={input.buttonText ?? ""}
               isPassword={input.isPassword}
+              {...register(input.inputText as keyof ILoginFormData, input.rules)}
             />
           </div>
         ))}
-      </div>
+      </form>
       <div className={styles.FindBox}>
         <FindComponent />
       </div>

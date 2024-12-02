@@ -9,7 +9,8 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
 import { useGetCheckIdDuplication } from "@api/user/getCheckIdDuplication";
-import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode";
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
+import { usePostRegister } from "@api/user/posRegister";
 
 interface IRegisterFormData {
   name: string;
@@ -69,6 +70,7 @@ const RegisterPage: React.FC = () => {
   const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
   const { mutate: sendCode } = usePostEmailVerification();
   const { mutate: confirmCode } = usePostConfirmEmailCode();
+  const { mutate: registerAccount } = usePostRegister();
   const { data: idDuplicationData } = useGetCheckIdDuplication(watch("id"), isCheckingId);
 
   const handleCheckIdDuplication = () => {
