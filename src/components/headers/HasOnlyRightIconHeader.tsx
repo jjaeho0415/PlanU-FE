@@ -4,10 +4,11 @@ import StarIcon from "@components/iconComponent/StarIcon";
 import RedDot_Icon from "@assets/Icons/headers/redDot.svg?react";
 import Alert_Icon from "@assets/Icons/headers/alertIcon.svg?react";
 import X_Icon from "@assets/Icons/headers/xIcon.svg?react"
+import MiniCalender_Icon from "@assets/Icons/headers/miniCalender.svg?react";
 
 interface Props {
   title: "PlanU" | string;
-  rightType: "alert" | "star" | "x";
+  rightType: "alert" | "star" | "x" | "calender";
   handleClick: () => void;
   isExistNoReadAlarms?: boolean;
   isBookmark?: boolean;
@@ -33,7 +34,7 @@ const HasOnlyRightIconHeader: React.FC<Props> = ({
           </div>
         ) : rightType === "star" ? (
           <StarIcon isBookmark={isBookmark} id={groupId} handleClick={handleClick} />
-        ) : <X_Icon width={24} height={24}/>}
+        ) : rightType === "x" ? <X_Icon width={24} height={24}/> : <MiniCalender_Icon />}
       </div>
     </div>
   );
