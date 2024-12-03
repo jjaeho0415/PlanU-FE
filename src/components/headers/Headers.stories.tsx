@@ -52,6 +52,12 @@ function Headers() {
             }}
           />
           <HasOnlyBackArrowHeader
+            title="가능한 날짜 보기"
+            handleClick={() => {
+              return;
+            }}
+          />
+          <HasOnlyBackArrowHeader
             title="프로필 수정"
             handleClick={() => {
               return;
@@ -95,6 +101,7 @@ function Headers() {
         <div className={styles.Container}>
           <CalenderHeader
             title="그룹 달력"
+            type="group"
             handleBackArrowClick={() => {
               return;
             }}
@@ -104,6 +111,7 @@ function Headers() {
           />
           <CalenderHeader
             title="나의 달력"
+            type="my"
             handleBackArrowClick={() => {
               return;
             }}
@@ -253,6 +261,13 @@ function Headers() {
               return;
             }}
           />
+          <HasOnlyRightIconHeader
+            title="가능한 날짜 보기"
+            rightType="calender"
+            handleClick={() => {
+              return;
+            }}
+          />
         </div>
       </div>
 
@@ -261,6 +276,7 @@ function Headers() {
         <div className={styles.Container}>
           <OnlyTextHeader title="가입 완료" backgroundColor="purple" />
           <OnlyTextHeader title="마이페이지" backgroundColor="white" />
+          <OnlyTextHeader title="가능한 날짜 보기" backgroundColor="purple" />
         </div>
       </div>
     </div>
