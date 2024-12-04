@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
 import { DefaultButton } from "@components/buttons/DefaultButton";
-import { useNavigate } from "react-router-dom";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
@@ -32,7 +31,6 @@ const RegisterAccountPage = () => {
   const [isSnsReceiveAgreed, setIsSnsReceiveAgreed] = useState<boolean>(false);
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
   const [userImage, setUserImage] = useState<File | string | null>(null);
-  const navigate = useNavigate();
   const userName = "이수현";
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
   const { mutate: registerUserInformation } = usePostUserInformation();
