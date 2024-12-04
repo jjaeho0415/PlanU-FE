@@ -58,22 +58,26 @@ const InviteModal: React.FC<Props> = ({
           <div>{groupName}에서 사용자를 초대함</div>
         </div>
         <div className={styles.centerSection}>
-          <p>{groupName} 단체 모임에서 회원님을</p>
-          <p>초대했습니다. 포대를 수락하면</p>
-          <p>팀원들과 위치 공유가 가능해지며</p>
-          <p>회원님의 달력이 팀원들에게</p>
-          <p>공유됩니다.</p>
+          <div>{groupName} 단체 모임에서 회원님을</div>
+          <div>초대했습니다. 초대를 수락하면</div>
+          <div>팀원들과 위치 공유가 가능해지며</div>
+          <div>회원님의 달력이 팀원들에게</div>
+          <div>공유됩니다.</div>
         </div>
         <div className={styles.bottomSection}>
-          <div onClick={() => handleButtonClick("accept")}>
+          <div className={styles.hr} />
+          <div className={styles.clickSection} onClick={() => handleButtonClick("accept")}>
             수락
           </div>
-          <hr className={styles.hr} />
-          <div  onClick={() => handleButtonClick("reject")}>
+          <div className={styles.hr} />
+          <div className={styles.clickSection} onClick={() => handleButtonClick("reject")}>
             거부
           </div>
-          <hr className={styles.hr} />
-          <div onClick={() => handleButtonClick("later")}>나중에 하기</div>
+          <div className={styles.hr} />
+          <div className={styles.clickSection} onClick={() => handleButtonClick("later")}>
+            나중에 하기
+          </div>
+          <div className={styles.hr} />
         </div>
       </div>
     </div>,
