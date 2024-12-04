@@ -1,6 +1,5 @@
 .mainContainer {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   width: 100%;
   height: 56px;
@@ -12,14 +11,21 @@
   top: 0;
   .leftSection {
     cursor: pointer;
+    justify-content: start;
+    width: 100%;
   }
   .titleSection {
     font-size: 20px;
     color: var(--black);
     font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
   }
   .rightSection {
     display: flex;
+    width: 100%;
+    justify-content: end;
     align-items: center;
     flex-direction: row;
     gap: 5px;
