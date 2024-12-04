@@ -1,6 +1,6 @@
 const apiRoutes = {
     users: '/users',
-    userInformation: '/users/profile/exists'
+    userInformation: '/users/profile'
 };
 
 export default apiRoutes;
