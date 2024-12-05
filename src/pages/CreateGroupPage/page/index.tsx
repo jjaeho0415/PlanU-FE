@@ -5,9 +5,9 @@ import GroupNameInput from "../components/GroupNameInput";
 import ImageUploader from "../components/ImageUploader";
 import styles from "./createGroup.module.scss";
 
-function CreateGroupPage() {
+const CreateGroupPage = () => {
   const [groupName, setGroupName] = useState("");
-  const [image, setImage] = useState<string | null>(null);
+  const [image, setImage] = useState<File | string | null>(null);
 
   const handleCompletion = () => {
     if (!groupName) {
@@ -40,6 +40,6 @@ function CreateGroupPage() {
       </div>
     </div>
   );
-}
+};
 
 export default CreateGroupPage;

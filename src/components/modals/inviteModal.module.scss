@@ -1,0 +1,71 @@
+.overLay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  z-index: 50;
+  .modalContainer {
+    box-sizing: border-box;
+    width: 260px;
+    height: 454px;
+    border-radius: 20px;
+    background-color: #260839;
+    border: 1px solid #4b0f71;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--white);
+    gap: 28px;
+    font-size: 14px;
+    .topSection {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      .imageSection {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        object-fit: cover;
+        .image {
+          width: 100%;
+          height: 100%;
+          border-radius: 50%;
+        }
+      }
+    }
+
+    .centerSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      font-size: 13px;
+      gap: 5px;
+      font-weight: lighter;
+    }
+
+    .bottomSection {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 5px;
+      .hr {
+        border: 1px solid #480f6c;
+        width: 100%;
+      }
+      .clickSection {
+        cursor: pointer;
+        width: 100%;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+    }
+  }
+}
