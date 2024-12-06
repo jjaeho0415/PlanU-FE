@@ -19,7 +19,7 @@ interface IPostOptions<T = unknown> {
 
 interface IDeleteOptions {
   endpoint: string;
-  authorization: string;
+  authorization?: string;
 }
 
 const _fetch = async <T = unknown, R = unknown>({
