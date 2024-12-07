@@ -11,6 +11,11 @@ import { usePostEmailVerification } from "@api/user/postEmailVerification";
 import { useGetCheckIdDuplication } from "@api/user/getCheckIdDuplication";
 import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
 import { usePostRegister } from "@api/user/posRegister";
+import {
+  EMAIL_VALIDATION,
+  PASSWORD_VALIDATION,
+  USER_ID_VALIDATION,
+} from "src/constants/validation";
 
 interface IRegisterFormData {
   name: string;
@@ -131,7 +136,7 @@ const RegisterPage: React.FC = () => {
       rules: {
         required: "ID is required",
         pattern: {
-          value: /^[A-Za-z0-9]{5,12}$/,
+          value: USER_ID_VALIDATION,
           message: "시작은 영문 대소문자 또는 숫자, 5~12",
         },
       },
@@ -146,7 +151,7 @@ const RegisterPage: React.FC = () => {
       rules: {
         required: "Password is required",
         pattern: {
-          value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&()]{8,15}$/,
+          value: PASSWORD_VALIDATION,
           message: "비밀번호는 대소문자,특수문자,숫자 포함 8-15자 가능",
         },
       },
@@ -171,7 +176,7 @@ const RegisterPage: React.FC = () => {
       rules: {
         required: "Email is required",
         pattern: {
-          value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
+          value: EMAIL_VALIDATION,
           message: "Invalid email format",
         },
       },
@@ -197,6 +202,7 @@ const RegisterPage: React.FC = () => {
     console.log("Submitted Data:", data);
 
     if (isCheckedId && isCheckedCode) {
+      registerAccount;
     }
   };
 
