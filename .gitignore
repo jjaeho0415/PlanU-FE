@@ -29,3 +29,6 @@ dist-ssr
 
 # https
 *.pem
+
+# typescript
+*.tsbuildinfo

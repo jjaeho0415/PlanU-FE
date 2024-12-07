@@ -14,3 +14,15 @@ type IPostLogin = {
   userId: string;
   password: string;
 };
+type IPostUserInformationType = {
+  UserProfileRequest: {
+    birthDate: string;
+    gender: string;
+    profileImage: File | null;
+  };
+  TermsRequest: {
+    isPrivacyPolicyAgreed: string;
+    isTermsOfServiceAgreed: string;
+    isSnsReceiveAgreed: string;
+  };
+};

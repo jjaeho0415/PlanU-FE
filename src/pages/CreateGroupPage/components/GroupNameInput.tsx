@@ -5,7 +5,7 @@ interface groupNameInputProps {
   setGroupName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-function GroupNameInput({ groupName, setGroupName }: groupNameInputProps) {
+const GroupNameInput:React.FC<groupNameInputProps> = ({ groupName, setGroupName }) => {
   return (
     <div className={styles.GroupNameInputSection}>
       <input

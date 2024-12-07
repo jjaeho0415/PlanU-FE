@@ -1,32 +1,68 @@
 import styles from "./registerAccount.module.scss";
 import OnlyTextHeader from "@components/headers/OnlyTextHeader";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
 import { DefaultButton } from "@components/buttons/DefaultButton";
-import { useNavigate } from "react-router-dom";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
-import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react"
+import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
+import { usePostUserInformation } from "@api/user/postUserInformation";
+
+const userInformation: IPostUserInformationType = {
+  UserProfileRequest: {
+    birthDate: "",
+    gender: "M",
+    profileImage: null,
+  },
+  TermsRequest: {
+    isPrivacyPolicyAgreed: "false",
+    isTermsOfServiceAgreed: "false",
+    isSnsReceiveAgreed: "false",
+  },
+};
 
 const RegisterAccountPage = () => {
   const [userBirth, setUserBirth] = useState<string>("");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
   const [isBirthError, setIsBirthError] = useState<boolean>(false);
-  const [gender, setGender] = useState<string>("male");
+  const [gender, setGender] = useState<string>("M");
   const [isPrivacyPolicyAgreed, setIsPrivacyPolicyAgreed] = useState<boolean>(false);
   const [isTermsOfServiceAgreed, setIsTermsOfServiceAgreed] = useState<boolean>(false);
   const [isSnsReceiveAgreed, setIsSnsReceiveAgreed] = useState<boolean>(false);
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
-  const [userImage, setUserImage] = useState<string | null>(null);
-  const navigate = useNavigate();
+  const [userImage, setUserImage] = useState<File | string | null>(null);
   const userName = "이수현";
+  const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
+  const { mutate: registerUserInformation } = usePostUserInformation();
+
+  useEffect(() => {
+    setPostBody({
+      UserProfileRequest: {
+        birthDate: userBirth,
+        gender: gender,
+        profileImage: typeof userImage === "string" ? null : userImage,
+      },
+      TermsRequest: {
+        isPrivacyPolicyAgreed: isPrivacyPolicyAgreed ? "true" : "false",
+        isTermsOfServiceAgreed: isTermsOfServiceAgreed ? "true" : "false",
+        isSnsReceiveAgreed: isSnsReceiveAgreed ? "true" : "false",
+      },
+    });
+  }, [
+    userBirth,
+    gender,
+    userImage,
+    isPrivacyPolicyAgreed,
+    isTermsOfServiceAgreed,
+    isSnsReceiveAgreed,
+  ]);
 
   const handleConfirmBirth = () => {
     isBirthError ? alert("생년월일을 알맞게 입력해주세요.") : setIsBirthInputClick(false);
   };
 
   const handleSelectGender = (gender: string) => {
-    gender === "male" ? setGender("male") : setGender("female");
+    gender === "M" ? setGender("M") : setGender("F");
   };
 
   const handleTermsClick = (type: string) => {
@@ -74,15 +110,7 @@ const RegisterAccountPage = () => {
       return;
     }
 
-    console.log("userImage : ", userImage);
-    console.log("userBirth : ", userBirth);
-    console.log("userName : ", userName);
-    console.log("gender : ", gender);
-    console.log("isAllAgreed : ", isAllAgreed);
-    console.log("isPrivacyPolicyAgreed : ", isPrivacyPolicyAgreed);
-    console.log("isTermsOfServiceAgreed : ", isTermsOfServiceAgreed);
-    console.log("isSnsReceiveAgreed : ", isSnsReceiveAgreed);
-    navigate("/myCalendar");
+    registerUserInformation(postBody);
   };
 
   const handleArrowIconClick = () => {
@@ -141,22 +169,22 @@ const RegisterAccountPage = () => {
                 <div
                   className={styles.genderSection}
                   onClick={() => {
-                    handleSelectGender("male");
+                    handleSelectGender("M");
                   }}
                 >
                   <div className={styles.selectBox}>
-                    {gender === "male" && <div className={styles.selectBoxChecked} />}
+                    {gender === "M" && <div className={styles.selectBoxChecked} />}
                   </div>
                   <div className={styles.genderText}>남자</div>
                 </div>
                 <div
                   className={styles.genderSection}
                   onClick={() => {
-                    handleSelectGender("female");
+                    handleSelectGender("F");
                   }}
                 >
                   <div className={styles.selectBox}>
-                    {gender === "female" && <div className={styles.selectBoxChecked} />}
+                    {gender === "F" && <div className={styles.selectBoxChecked} />}
                   </div>
                   <div className={styles.genderText}>여자</div>
                 </div>
