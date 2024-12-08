@@ -27,6 +27,7 @@
 .Span {
   margin-left: 5px;
   border-bottom: 1px solid var(--gray-200);
+  cursor: pointer;
 }
 
 .ButtonBox {
@@ -36,4 +37,11 @@
   align-items: center;
   gap: 20px;
   flex-grow: 1;
+}
+
+.Error{
+  font-size: 10px;
+  color: red;
+  margin: 5px 0 0 0;
+  padding-left: 6px;
 }
