@@ -1,17 +1,17 @@
 import React from "react";
-import styles from "./calenderHeader.module.scss";
+import styles from "./calendarHeader.module.scss";
 import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
-import MiniCalender_Icon from "@assets/Icons/headers/miniCalender.svg?react";
+import MiniCalender_Icon from "@assets/Icons/headers/miniCalendar.svg?react";
 
 interface Props {
   title: "그룹 달력" | "나의 달력" | string;
   type: "my" | "group";
   handleBackArrowClick: () => void;
-  handleMiniCalenderClick: () => void;
+  handleMiniCalendarClick: () => void;
 }
 
 const CalenderHeader: React.FC<Props> = ({
-  handleMiniCalenderClick,
+  handleMiniCalendarClick,
   handleBackArrowClick,
   title,
   type,
@@ -29,7 +29,7 @@ const CalenderHeader: React.FC<Props> = ({
         <MiniCalender_Icon
           width={27}
           height={26}
-          onClick={handleMiniCalenderClick}
+          onClick={handleMiniCalendarClick}
           className={styles.miniCalenderIconSection}
         />
       </div>
