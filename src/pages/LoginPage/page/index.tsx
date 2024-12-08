@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./login.module.scss";
 import LoginInput from "@components/inputBoxes/LoginInput";
 import { GoLogin } from "@components/buttons/GoLogin";
@@ -8,22 +8,25 @@ import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
 import { usePostLogin } from "@api/user/postLogin";
 import { useForm } from "react-hook-form";
-
-interface ILoginFormData {
-  id: string;
-  password: string;
-}
+import useAuthStore from "@store/useAuthStore";
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { mutate: login } = usePostLogin();
 
-  const { register, handleSubmit, watch } = useForm<ILoginFormData>({
+  const { register, handleSubmit, watch, setValue } = useForm<IPostLogin>({
     defaultValues: {
-      id: "",
+      username: "",
       password: "",
     },
   });
+
+  useEffect(() => {
+    const savedId = localStorage.getItem("storedUserId");
+    if (savedId) {
+      setValue("username", savedId);
+    }
+  }, [setValue]);
 
   const inputList = [
     {
@@ -52,7 +55,27 @@ const LoginPage: React.FC = () => {
     },
   ];
 
-  const onSubmit = () => {};
+  const onSubmit = (data: IPostLogin) => {
+    console.log("보낼 데이터", data);
+    login(data, {
+      onSuccess: (accessToken: string) => {
+        if (accessToken) {
+          console.log(accessToken);
+          useAuthStore.getState().setIsLogin(true);
+          useAuthStore.getState().setAccessToken(accessToken);
+          localStorage.setItem("userStoredId", data.username);
+        } else {
+          console.error("Access token not found in the response");
+        }
+
+        navigate("/myCalendar");
+      },
+      onError: (error) => {
+        console.error(error);
+        alert("ID와 Password를 다시 확인하세요");
+      },
+    });
+  };
 
   return (
     <div className={styles.Container}>
@@ -70,7 +93,7 @@ const LoginPage: React.FC = () => {
               inputText={input.inputText}
               buttonText={input.buttonText ?? ""}
               isPassword={input.isPassword}
-              {...register(input.inputText as keyof ILoginFormData, input.rules)}
+              {...register(input.inputText as keyof IPostLogin, input.rules)}
             />
           </div>
         ))}
@@ -79,12 +102,7 @@ const LoginPage: React.FC = () => {
         <FindComponent />
       </div>
       <div className={styles.ButtonBox}>
-        <LoginButton
-          buttonType="login"
-          onClick={() => {
-            return;
-          }}
-        />
+        <LoginButton buttonType="login" onClick={handleSubmit(onSubmit)} />
         <LoginButton
           buttonType="login_kakao_white"
           onClick={() => {
