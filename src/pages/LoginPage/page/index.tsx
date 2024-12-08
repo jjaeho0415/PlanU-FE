@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { postLogin } from "@api/user/postLogin";
 import { useForm } from "react-hook-form";
 import useAuthStore from "@store/useAuthStore";
+import { getIsExistUserProfile } from "@api/user/getIsExistUserProfile";
 
 type ILoginFormData = {
   ID: string;
@@ -74,13 +75,23 @@ const LoginPage: React.FC = () => {
       console.log(accessToken);
 
       if (accessToken) {
-        console.log("로그인 성공:", accessToken);
         useAuthStore.getState().setIsLogin(true);
         useAuthStore.getState().setAccessToken(accessToken);
         localStorage.setItem("userStoredId", postData.username);
-        navigate("/myCalendar");
+
+        try {
+          const isExistUserProfile = await getIsExistUserProfile(accessToken);
+          if (isExistUserProfile === "true") {
+            navigate("/myCalendar");
+          } else {
+            navigate("/registerAccount");
+          }
+        } catch (profileError) {
+          console.error("프로필 확인 실패:", profileError);
+          alert("프로필 확인 중 오류가 발생했습니다.");
+        }
       } else {
-        console.error("Access token not found in the response");
+        console.error("응답에서 액세스 토큰을 찾을 . 수없습니다");
       }
     } catch (error) {
       console.error("로그인 실패:", error);
