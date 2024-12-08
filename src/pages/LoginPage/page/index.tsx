@@ -21,7 +21,6 @@ const LoginPage: React.FC = () => {
   const {
     register,
     handleSubmit,
-    watch,
     setValue,
     formState: { errors },
   } = useForm<ILoginFormData>({
@@ -79,7 +78,6 @@ const LoginPage: React.FC = () => {
         useAuthStore.getState().setIsLogin(true);
         useAuthStore.getState().setAccessToken(accessToken);
         localStorage.setItem("userStoredId", postData.username);
-
         navigate("/myCalendar");
       } else {
         console.error("Access token not found in the response");
