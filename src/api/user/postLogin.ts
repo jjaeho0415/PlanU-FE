@@ -1,7 +1,6 @@
 import apiRoutes from "@api/apiRoutes";
-import { useMutation } from "@tanstack/react-query";
 
-const postLogin = async (body: IPostLogin): Promise<string> => {
+export const postLogin = async (body: IPostLogin): Promise<string> => {
   const endpoint = `${import.meta.env.VITE_API_URL}${apiRoutes.users}/login`;
 
   const requestOptions: RequestInit = {
@@ -11,6 +10,7 @@ const postLogin = async (body: IPostLogin): Promise<string> => {
       "Content-Type": "application/json",
     },
     body: JSON.stringify(body),
+    credentials: "include",
   };
 
   try {
@@ -21,7 +21,8 @@ const postLogin = async (body: IPostLogin): Promise<string> => {
       throw new Error(errorData.message || "Login failed");
     }
 
-    const authorization = response.headers.get("authorization");
+    const authorization = response.headers.get("Authorization");
+    console.log(authorization);
     if (!authorization) {
       throw new Error("Authorization header is missing");
     }
@@ -36,11 +37,4 @@ const postLogin = async (body: IPostLogin): Promise<string> => {
     console.error("Error in postLogin:", error);
     throw error;
   }
-};
-
-
-export const usePostLogin = () => {
-  return useMutation({
-    mutationFn: (data: IPostLogin) => postLogin(data),
-  });
 };

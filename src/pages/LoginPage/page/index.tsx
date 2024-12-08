@@ -6,13 +6,17 @@ import LoginButton from "@components/buttons/LoginButton";
 import FindComponent from "../components/FindComponent";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
-import { usePostLogin } from "@api/user/postLogin";
+import { postLogin } from "@api/user/postLogin";
 import { useForm } from "react-hook-form";
 import useAuthStore from "@store/useAuthStore";
 
+type ILoginFormData = {
+  ID: string;
+  Password: string;
+};
+
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { mutate: login } = usePostLogin();
 
   const {
     register,
@@ -20,17 +24,17 @@ const LoginPage: React.FC = () => {
     watch,
     setValue,
     formState: { errors },
-  } = useForm<IPostLogin>({
+  } = useForm<ILoginFormData>({
     defaultValues: {
-      username: "",
-      password: "",
+      ID: "",
+      Password: "",
     },
   });
 
   useEffect(() => {
     const savedId = localStorage.getItem("storedUserId");
     if (savedId) {
-      setValue("username", savedId);
+      setValue("ID", savedId);
     }
   }, [setValue]);
 
@@ -61,26 +65,29 @@ const LoginPage: React.FC = () => {
     },
   ];
 
-  const onSubmit = (data: IPostLogin) => {
-    console.log("보낼 데이터", data);
-    login(data, {
-      onSuccess: (accessToken: string) => {
-        if (accessToken) {
-          console.log(accessToken);
-          useAuthStore.getState().setIsLogin(true);
-          useAuthStore.getState().setAccessToken(accessToken);
-          localStorage.setItem("userStoredId", data.username);
-        } else {
-          console.error("Access token not found in the response");
-        }
+  const onSubmit = async (data: ILoginFormData) => {
+    const postData: IPostLogin = {
+      username: data.ID,
+      password: data.Password,
+    };
+    try {
+      const accessToken = await postLogin(postData);
+      console.log(accessToken);
+
+      if (accessToken) {
+        console.log("로그인 성공:", accessToken);
+        useAuthStore.getState().setIsLogin(true);
+        useAuthStore.getState().setAccessToken(accessToken);
+        localStorage.setItem("userStoredId", postData.username);
 
         navigate("/myCalendar");
-      },
-      onError: (error) => {
-        console.error(error);
-        alert("ID와 Password를 다시 확인하세요");
-      },
-    });
+      } else {
+        console.error("Access token not found in the response");
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("ID와 Password를 다시 확인하세요");
+    }
   };
 
   return (
@@ -99,11 +106,13 @@ const LoginPage: React.FC = () => {
               inputText={input.inputText}
               buttonText={input.buttonText ?? ""}
               isPassword={input.isPassword}
-              {...register(input.inputText as keyof IPostLogin, input.rules)}
+              {...register(input.inputText as keyof ILoginFormData, input.rules)}
             />
             {/* 에러 메시지 출력 */}
-            {errors[input.inputText as keyof IPostLogin] && (
-              <p className={styles.Error}>{errors[input.inputText as keyof IPostLogin]?.message}</p>
+            {errors[input.inputText as keyof ILoginFormData] && (
+              <p className={styles.Error}>
+                {errors[input.inputText as keyof ILoginFormData]?.message}
+              </p>
             )}
           </div>
         ))}
