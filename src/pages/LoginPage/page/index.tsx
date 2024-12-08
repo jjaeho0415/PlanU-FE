@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
       buttonText: null,
       isPassword: false,
       rules: {
-        required: "ID is required",
+        required: "ID를 입력하세요",
         pattern: {
           value: /^[A-Za-z0-9]{5,12}$/,
           message: "시작은 영문 대소문자 또는 숫자, 5 ~ 12자 가능합니다",
@@ -43,7 +43,7 @@ const LoginPage: React.FC = () => {
       buttonText: null,
       isPassword: true,
       rules: {
-        required: "Password is required",
+        required: "패스워드를 입력하세요",
         pattern: {
           value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&()]{8,15}$/,
           message: "비밀번호는 대소문자, 특수 문자, 숫자 포함 8 ~ 15자 가능합니다",
