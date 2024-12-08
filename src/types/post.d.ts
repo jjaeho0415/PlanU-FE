@@ -1,6 +1,24 @@
 type IPostConfirmEmailCode = {
   email: string;
   verificationCode: string;
+  purpose: "register" | "findUsername" | "findPassword"
+};
+
+type IEmailBody = {
+  email: string;
+  purpose: "register" | "findUsername" | "findPassword";
+}
+
+type IPostRegister = {
+  username: string;
+  password: string;
+  name: string;
+  email: string;
+};
+
+type IPostLogin = {
+  userName: string;
+  password: string;
 };
 
 type IPostUserInformationType = {

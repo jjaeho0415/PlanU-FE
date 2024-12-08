@@ -9,40 +9,13 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
 import { useGetCheckIdDuplication } from "@api/user/getCheckIdDuplication";
-import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode";
-
-interface IRegisterFormData {
-  name: string;
-  id: string;
-  password: string;
-  confirmPassword: string;
-  email: string;
-  code: string;
-}
-
-interface IInputItem {
-  name: string;
-  text: string;
-  type: string;
-  rules: {
-    required?: string;
-    pattern?: {
-      value: RegExp;
-      message: string;
-    };
-    minLength?: {
-      value: number;
-      message: string;
-    };
-    maxLength?: {
-      value: number;
-      message: string;
-    };
-    validate?: (value: string) => string | true;
-  };
-  buttonText?: string;
-  onClick?: () => void;
-}
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
+import { usePostRegister } from "@api/user/posRegister";
+import {
+  EMAIL_VALIDATION,
+  PASSWORD_VALIDATION,
+  USER_ID_VALIDATION,
+} from "../../../constants/validation";
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -69,26 +42,45 @@ const RegisterPage: React.FC = () => {
   const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
   const { mutate: sendCode } = usePostEmailVerification();
   const { mutate: confirmCode } = usePostConfirmEmailCode();
-  const { data: idDuplicationData } = useGetCheckIdDuplication(watch("id"), isCheckingId);
+  const { mutate: registerAccount } = usePostRegister();
+  const { refetch } = useGetCheckIdDuplication(watch("id"), isCheckingId);
 
-  const handleCheckIdDuplication = () => {
-    setIsCheckingId(true);
-    if (idDuplicationData?.resultMsg === "true") {
-      setIsCheckedId(true);
+  const handleCheckIdDuplication = async () => {
+    if (!watch("id")) {
+      return alert("ID를 입력해주세요.");
     }
-    setIsCheckingId(false);
+
+    setIsCheckingId(true);
+    try {
+      const { data: idDuplicationData } = await refetch();
+      if (idDuplicationData && idDuplicationData.resultMsg === "false") {
+        setIsCheckedId(true);
+        alert("사용 가능한 ID입니다.");
+      } else {
+        alert("이미 사용 중인 ID입니다.");
+      }
+    } catch (error) {
+      alert("중복 확인에 실패했습니다. 다시 시도해주세요.");
+    } finally {
+      setIsCheckingId(false);
+    }
   };
 
   const handleSendCode = (email: string) => {
+    if (!email) {
+      alert("이메일을 입력해주세요");
+      return;
+    }
     setIsSendingEmailCode(true);
     sendCode(
-      { email },
+      { email, purpose: "register" },
       {
         onSuccess: () => {
           alert("인증코드 발송 성공");
         },
         onError: (error) => {
-          alert(error.message);
+          alert("인증코드 발송 실패");
+          console.error(error);
         },
       },
     );
@@ -105,7 +97,8 @@ const RegisterPage: React.FC = () => {
         setIsCheckedCode(true);
       },
       onError: (error) => {
-        alert(error.message);
+        console.error(error);
+        alert("인증코드 불일치");
       },
     });
   };
@@ -116,8 +109,8 @@ const RegisterPage: React.FC = () => {
       text: "Name",
       type: "text",
       rules: {
-        required: "Name is required",
-        minLength: { value: 2, message: "Name must be at least 2 characters" },
+        required: "이름을 입력해주세요",
+        minLength: { value: 2, message: "이름은 최소 2자이상부터 가능합니다" },
         maxLength: { value: 6, message: "이름은 최대 6자까지 가능합니다" },
       },
     },
@@ -127,10 +120,10 @@ const RegisterPage: React.FC = () => {
       type: "text",
       buttonText: "중복 확인",
       rules: {
-        required: "ID is required",
+        required: "ID를 입력해주세요",
         pattern: {
-          value: /^[A-Za-z0-9]{5,12}$/,
-          message: "시작은 영문 대소문자 또는 숫자, 5~12",
+          value: USER_ID_VALIDATION,
+          message: "시작은 영문 대소문자 또는 숫자, 5 ~ 12자 가능합니다",
         },
       },
       onClick: () => {
@@ -142,10 +135,10 @@ const RegisterPage: React.FC = () => {
       text: "Password",
       type: "password",
       rules: {
-        required: "Password is required",
+        required: "비밀번호를 입력해주세요",
         pattern: {
-          value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&()]{8,15}$/,
-          message: "비밀번호는 대소문자,특수문자,숫자 포함 8-15자 가능",
+          value: PASSWORD_VALIDATION,
+          message: "비밀번호는 대소문자, 특수 문자, 숫자 포함 8 ~ 15자 가능합니다",
         },
       },
     },
@@ -155,7 +148,7 @@ const RegisterPage: React.FC = () => {
       buttonText: "확인",
       type: "password",
       rules: {
-        required: "Please confirm your password",
+        required: "비밀번호를 다시 확인해주세요",
         validate: (value: string) => {
           return handleCheckPasswordMatch(value, watch("password"));
         },
@@ -167,10 +160,10 @@ const RegisterPage: React.FC = () => {
       type: "email",
       buttonText: "인증번호 발송",
       rules: {
-        required: "Email is required",
+        required: "이메일을 입력해주세요",
         pattern: {
-          value: /^[\w-.]+@([\w-]+\.)+[\w-]{2,4}$/g,
-          message: "Invalid email format",
+          value: EMAIL_VALIDATION,
+          message: "잘못된 이메일 형식입니다.",
         },
       },
       onClick: () => handleSendCode(watch("email")),
@@ -184,17 +177,38 @@ const RegisterPage: React.FC = () => {
       buttonText: "확인",
       type: "text",
       rules: {
-        required: "Code is required",
-        pattern: { value: /^\d{6}$/, message: "Code must be 6 digits" },
+        required: "인증코드를 입력해주세요",
+        pattern: { value: /^\d{6}$/, message: "인증코드는 6자리입니다" },
       },
-      onClick: () => handleConfirmCode({ email: watch("email"), verificationCode: watch("code") }),
+      onClick: () =>
+        handleConfirmCode({
+          email: watch("email"),
+          verificationCode: watch("code"),
+          purpose: "register",
+        }),
     });
   }
 
   const onSubmit = (data: IRegisterFormData) => {
-    console.log("Submitted Data:", data);
+    const transformedData = {
+      username: data.id,
+      password: data.password,
+      name: data.name,
+      email: data.email,
+    };
 
     if (isCheckedId && isCheckedCode) {
+      registerAccount(transformedData, {
+        onSuccess: () => {
+          navigate("/registerSuccess");
+        },
+        onError: (error) => {
+          alert("회원가입에 실패");
+          console.error(error);
+        },
+      });
+    } else {
+      alert("ID 중복 확인 및 이메일 인증을 완료해주세요.");
     }
   };
 
