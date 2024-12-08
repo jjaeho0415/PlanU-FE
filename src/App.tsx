@@ -25,7 +25,7 @@ import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import RegisterAccountPage from "@pages/RegisterAccountPage/page";
-
+import RegisterSuccessPage from "@pages/RegisterSuccessPage/page/inedx";
 
 function App() {
   return (
@@ -35,6 +35,7 @@ function App() {
           <Route path="/" element={<StartPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/register" element={<RegisterPage />} />
+          <Route path="/registerSuccess" element={<RegisterSuccessPage />} />
           <Route path="/registerAccount" element={<RegisterAccountPage />} />
           <Route path="/find" element={<FindPage />} />
           <Route path="/myCalendar" element={<MyCalendarPage />} />
