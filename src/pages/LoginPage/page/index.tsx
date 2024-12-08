@@ -14,7 +14,13 @@ const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { mutate: login } = usePostLogin();
 
-  const { register, handleSubmit, watch, setValue } = useForm<IPostLogin>({
+  const {
+    register,
+    handleSubmit,
+    watch,
+    setValue,
+    formState: { errors },
+  } = useForm<IPostLogin>({
     defaultValues: {
       username: "",
       password: "",
@@ -95,6 +101,10 @@ const LoginPage: React.FC = () => {
               isPassword={input.isPassword}
               {...register(input.inputText as keyof IPostLogin, input.rules)}
             />
+            {/* 에러 메시지 출력 */}
+            {errors[input.inputText as keyof IPostLogin] && (
+              <p className={styles.Error}>{errors[input.inputText as keyof IPostLogin]?.message}</p>
+            )}
           </div>
         ))}
       </form>
