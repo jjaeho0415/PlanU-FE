@@ -1,5 +1,5 @@
 import styles from "./loginBtn.module.scss";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Icon_kakao from "@assets/Icons/startPage/Icon_Kakao.svg?react";
 
 interface ILoginBtn {
@@ -8,24 +8,24 @@ interface ILoginBtn {
 }
 
 const LoginButton: React.FC<ILoginBtn> = ({ onClick, buttonType }) => {
-  const [buttonText, setButtonText] = useState<string>("");
-
-  useEffect(() => {
-    if (buttonType === "login_kakao") {
-      setButtonText("카카오톡으로 로그인");
-    } else if (buttonType === "login_kakao_white") {
-      setButtonText("카카오 로그인");
-    } else if (buttonType === "login_other") {
-      setButtonText("다른 방법으로 로그인");
-    } else if (buttonType === "register") {
-      setButtonText("회원가입");
-    } else if (buttonType === "login") {
-      setButtonText("로그인");
+  const buttonText = (() => {
+    switch (buttonType) {
+      case "login_kakao":
+        return "카카오톡으로 로그인";
+      case "login_kakao_white":
+        return "카카오 로그인";
+      case "login_other":
+        return "다른 방법으로 로그인";
+      case "register":
+        return "회원가입";
+      case "login":
+      default:
+        return "로그인";
     }
-  }, []);
+  })();
 
   return (
-    <div className={`${styles.Container} ${styles[buttonType]}`} onClick={onClick}>
+    <div role="button" className={`${styles.Container} ${styles[buttonType]}`} onClick={onClick}>
       {(buttonType === "login_kakao" || buttonType === "login_kakao_white") && <Icon_kakao />}
       <p>{buttonText}</p>
     </div>

@@ -47,7 +47,7 @@ const RegisterPage: React.FC = () => {
 
   const handleCheckIdDuplication = async () => {
     if (!watch("id")) {
-      return alert("ID를 입력해주세요.");
+      return alert("ID를 입력하세요.");
     }
 
     setIsCheckingId(true);
@@ -68,7 +68,7 @@ const RegisterPage: React.FC = () => {
 
   const handleSendCode = (email: string) => {
     if (!email) {
-      alert("이메일을 입력해주세요");
+      alert("이메일을 입력하세요");
       return;
     }
     setIsSendingEmailCode(true);
@@ -109,7 +109,7 @@ const RegisterPage: React.FC = () => {
       text: "Name",
       type: "text",
       rules: {
-        required: "이름을 입력해주세요",
+        required: "이름을 입력하세요",
         minLength: { value: 2, message: "이름은 최소 2자이상부터 가능합니다" },
         maxLength: { value: 6, message: "이름은 최대 6자까지 가능합니다" },
       },
@@ -120,7 +120,7 @@ const RegisterPage: React.FC = () => {
       type: "text",
       buttonText: "중복 확인",
       rules: {
-        required: "ID를 입력해주세요",
+        required: "ID를 입력하세요",
         pattern: {
           value: USER_ID_VALIDATION,
           message: "시작은 영문 대소문자 또는 숫자, 5 ~ 12자 가능합니다",
@@ -135,7 +135,7 @@ const RegisterPage: React.FC = () => {
       text: "Password",
       type: "password",
       rules: {
-        required: "비밀번호를 입력해주세요",
+        required: "비밀번호를 입력하세요",
         pattern: {
           value: PASSWORD_VALIDATION,
           message: "비밀번호는 대소문자, 특수 문자, 숫자 포함 8 ~ 15자 가능합니다",
@@ -160,7 +160,7 @@ const RegisterPage: React.FC = () => {
       type: "email",
       buttonText: "인증번호 발송",
       rules: {
-        required: "이메일을 입력해주세요",
+        required: "이메일을 입력하세요",
         pattern: {
           value: EMAIL_VALIDATION,
           message: "잘못된 이메일 형식입니다.",
@@ -177,7 +177,7 @@ const RegisterPage: React.FC = () => {
       buttonText: "확인",
       type: "text",
       rules: {
-        required: "인증코드를 입력해주세요",
+        required: "인증코드를 입력하세요",
         pattern: { value: /^\d{6}$/, message: "인증코드는 6자리입니다" },
       },
       onClick: () =>

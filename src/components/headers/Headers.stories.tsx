@@ -3,7 +3,7 @@ import { MemoryRouter } from "react-router-dom";
 import styles from "./headerStory.module.scss";
 import HasOnlyBackArrowHeader from "./HasOnlyBackArrowHeader";
 import ChatListHeader from "@pages/ChatListPage/components/ChatListHeader";
-import CalenderHeader from "./CalenderHeader";
+import CalendarHeader from "./CalendarHeader";
 import HasTwoIconHeader from "./HasTwoIconHeader";
 import HasOnlyRightIconHeader from "./HasOnlyRightIconHeader";
 import { useState } from "react";
@@ -97,25 +97,25 @@ function Headers() {
       </div>
 
       <div>
-        <h2>CalenderHeader</h2>
+        <h2>CalendarHeader</h2>
         <div className={styles.Container}>
-          <CalenderHeader
+          <CalendarHeader
             title="그룹 달력"
             type="group"
             handleBackArrowClick={() => {
               return;
             }}
-            handleMiniCalenderClick={() => {
+            handleMiniCalendarClick={() => {
               return;
             }}
           />
-          <CalenderHeader
+          <CalendarHeader
             title="나의 달력"
             type="my"
             handleBackArrowClick={() => {
               return;
             }}
-            handleMiniCalenderClick={() => {
+            handleMiniCalendarClick={() => {
               return;
             }}
           />
@@ -263,7 +263,7 @@ function Headers() {
           />
           <HasOnlyRightIconHeader
             title="가능한 날짜 보기"
-            rightType="calender"
+            rightType="calendar"
             handleClick={() => {
               return;
             }}

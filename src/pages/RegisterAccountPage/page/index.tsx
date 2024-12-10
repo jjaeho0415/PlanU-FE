@@ -7,6 +7,7 @@ import { DefaultButton } from "@components/buttons/DefaultButton";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
+import useAuthStore from "@store/useAuthStore";
 
 const userInformation: IPostUserInformationType = {
   UserProfileRequest: {
@@ -34,6 +35,7 @@ const RegisterAccountPage = () => {
   const userName = "이수현";
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
   const { mutate: registerUserInformation } = usePostUserInformation();
+  const { accessToken } = useAuthStore.getState();
 
   useEffect(() => {
     setPostBody({
@@ -110,7 +112,7 @@ const RegisterAccountPage = () => {
       return;
     }
 
-    registerUserInformation(postBody);
+    registerUserInformation({ body: postBody, token: accessToken });
   };
 
   const handleArrowIconClick = () => {

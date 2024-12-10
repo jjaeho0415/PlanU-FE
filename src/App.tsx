@@ -8,7 +8,7 @@ import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
 import FindPage from "@pages/FindPage/page";
 import FriendManagementPage from "@pages/FriendManagementPage/page";
-import GroupCalenderPage from "@pages/GroupCalenderPage/page";
+import GroupCalendarPage from "@pages/GroupCalendarPage/page";
 import GroupListPage from "@pages/GroupListPage/page";
 import GroupMemberPage from "@pages/GroupMemberPage/page";
 import GroupScheduleDetailPage from "@pages/GroupScheduleDetailPage/page";
@@ -46,14 +46,14 @@ function App() {
           <Route path="/chatList" element={<ChatListPage />} />
           <Route path="/chatList/search" element={<ChatListSearchPage />} />
           <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
-          <Route path="/group/:groupId/calender" element={<GroupCalenderPage />} />
+          <Route path="/group/:groupId/calendar" element={<GroupCalendarPage />} />
           <Route
-            path="/group/:groupId/calender/createSchedule"
+            path="/group/:groupId/calendar/createSchedule"
             element={<CreateGroupSchedulePage />}
           />
           <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
           <Route
-            path="/group/:groupId/calender/schedule/:scheduleId"
+            path="/group/:groupId/calendar/schedule/:scheduleId"
             element={<GroupScheduleDetailPage />}
           />
           <Route path="/modifyLocation" element={<ModifyLocationPage />} />
@@ -62,7 +62,7 @@ function App() {
           <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
           <Route path="/notification" element={<NotificationPage />} />
           <Route
-            path="/group/:groupId/calender/schedule/:scheduleId/locationSharing"
+            path="/group/:groupId/calendar/schedule/:scheduleId/locationSharing"
             element={<LocationSharingPage />}
           />
           <Route path="/memberInvitation" element={<InvitingPage />} />

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import styles from "./bottomNavBar.module.scss";
-import CalenderIcon from "@assets/Icons/bottomNavBar/Calendar.svg?react";
+import CalendarIcon from "@assets/Icons/bottomNavBar/Calendar.svg?react";
 import UsersIcon from "@assets/Icons/bottomNavBar/Users.svg?react";
 import ChatIcon from "@assets/Icons/bottomNavBar/chat_bubble.svg?react";
 import PersonIcon from "@assets/Icons/bottomNavBar/person.svg?react";
@@ -19,7 +19,7 @@ const BottomNavBar: React.FC = () => {
 
     switch (index) {
       case 0:
-        return <CalenderIcon {...iconProps} width={36} height={34} />;
+        return <CalendarIcon {...iconProps} width={36} height={34} />;
       case 1:
         return <UsersIcon {...iconProps} width={36} height={34} />;
       case 2:
