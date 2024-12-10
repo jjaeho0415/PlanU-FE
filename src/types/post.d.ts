@@ -17,7 +17,7 @@ type IPostRegister = {
 };
 
 type IPostLogin = {
-  userName: string;
+  username: string;
   password: string;
 };
 

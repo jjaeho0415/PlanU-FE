@@ -3,8 +3,13 @@ import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-
-const postUserInformation = async (body: IPostUserInformationType): Promise<IResponseType> => {
+const postUserInformation = async ({
+  body,
+  token,
+}: {
+  body: IPostUserInformationType;
+  token: string;
+}): Promise<IResponseType> => {
   const formData = new FormData();
 
   if (body.UserProfileRequest.profileImage) {
@@ -21,6 +26,7 @@ const postUserInformation = async (body: IPostUserInformationType): Promise<IRes
     const data = await api.post<FormData, IResponseType>({
       endpoint: `${apiRoutes.userInformation}`,
       body: formData,
+      authorization: token,
     });
     return data;
   } catch (error) {
@@ -31,10 +37,11 @@ const postUserInformation = async (body: IPostUserInformationType): Promise<IRes
 export const usePostUserInformation = () => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (body: IPostUserInformationType) => postUserInformation(body),
+    mutationFn: ({ body, token }: { body: IPostUserInformationType; token: string }) =>
+      postUserInformation({ body, token }),
     onSuccess: (data) => {
       alert(data.resultMsg);
-      navigate("/myCalender");
+      navigate("/myCalendar");
     },
     onError: (error) => {
       alert("회원정보 등록에 실패하셨습니다.");

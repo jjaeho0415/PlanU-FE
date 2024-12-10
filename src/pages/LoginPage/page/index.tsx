@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import styles from "./login.module.scss";
 import LoginInput from "@components/inputBoxes/LoginInput";
 import { GoLogin } from "@components/buttons/GoLogin";
@@ -6,24 +6,37 @@ import LoginButton from "@components/buttons/LoginButton";
 import FindComponent from "../components/FindComponent";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
-import { usePostLogin } from "@api/user/postLogin";
+import { postLogin } from "@api/user/postLogin";
 import { useForm } from "react-hook-form";
+import useAuthStore from "@store/useAuthStore";
+import { getIsExistUserProfile } from "@api/user/getIsExistUserProfile";
 
-interface ILoginFormData {
-  id: string;
-  password: string;
-}
+type ILoginFormData = {
+  ID: string;
+  Password: string;
+};
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
-  const { mutate: login } = usePostLogin();
 
-  const { register, handleSubmit, watch } = useForm<ILoginFormData>({
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<ILoginFormData>({
     defaultValues: {
-      id: "",
-      password: "",
+      ID: "",
+      Password: "",
     },
   });
+
+  useEffect(() => {
+    const savedId = localStorage.getItem("storedUserId");
+    if (savedId) {
+      setValue("ID", savedId);
+    }
+  }, [setValue]);
 
   const inputList = [
     {
@@ -31,10 +44,10 @@ const LoginPage: React.FC = () => {
       buttonText: null,
       isPassword: false,
       rules: {
-        required: "ID is required",
+        required: "ID를 입력하세요",
         pattern: {
           value: /^[A-Za-z0-9]{5,12}$/,
-          message: "시작은 영문 대소문자 또는 숫자, 5~12",
+          message: "시작은 영문 대소문자 또는 숫자, 5 ~ 12자 가능합니다",
         },
       },
     },
@@ -43,16 +56,48 @@ const LoginPage: React.FC = () => {
       buttonText: null,
       isPassword: true,
       rules: {
-        required: "Password is required",
+        required: "패스워드를 입력하세요",
         pattern: {
           value: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&()])[A-Za-z\d@$!%*?&()]{8,15}$/,
-          message: "비밀번호는 대소문자,특수문자,숫자 포함 8-15자 가능",
+          message: "비밀번호는 대소문자, 특수 문자, 숫자 포함 8 ~ 15자 가능합니다",
         },
       },
     },
   ];
 
-  const onSubmit = () => {};
+  const onSubmit = async (data: ILoginFormData) => {
+    const postData: IPostLogin = {
+      username: data.ID,
+      password: data.Password,
+    };
+    try {
+      const accessToken = await postLogin(postData);
+      console.log(accessToken);
+
+      if (accessToken) {
+        useAuthStore.getState().setIsLogin(true);
+        useAuthStore.getState().setAccessToken(accessToken);
+        localStorage.setItem("userStoredId", postData.username);
+
+        try {
+          const isExistUserProfile = await getIsExistUserProfile(accessToken);
+          if (isExistUserProfile === "true") {
+            navigate("/myCalendar");
+          } else {
+            navigate("/registerAccount");
+          }
+        } catch (profileError) {
+          console.error("프로필 확인 실패:", profileError);
+          alert("프로필 확인 중 오류가 발생했습니다.");
+        }
+      } else {
+        console.error("응답에서 액세스 토큰을 찾을 . 수없습니다");
+      }
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("ID와 Password를 다시 확인하세요");
+    }
+  };
 
   return (
     <div className={styles.Container}>
@@ -72,6 +117,12 @@ const LoginPage: React.FC = () => {
               isPassword={input.isPassword}
               {...register(input.inputText as keyof ILoginFormData, input.rules)}
             />
+            {/* 에러 메시지 출력 */}
+            {errors[input.inputText as keyof ILoginFormData] && (
+              <p className={styles.Error}>
+                {errors[input.inputText as keyof ILoginFormData]?.message}
+              </p>
+            )}
           </div>
         ))}
       </form>
@@ -79,12 +130,7 @@ const LoginPage: React.FC = () => {
         <FindComponent />
       </div>
       <div className={styles.ButtonBox}>
-        <LoginButton
-          buttonType="login"
-          onClick={() => {
-            return;
-          }}
-        />
+        <LoginButton buttonType="login" onClick={handleSubmit(onSubmit)} />
         <LoginButton
           buttonType="login_kakao_white"
           onClick={() => {

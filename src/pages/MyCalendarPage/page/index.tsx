@@ -1,5 +1,5 @@
 const MyCalendarPage: React.FC = () => {
-  return <div>MyCalenderPage</div>;
+  return <div>MyCalendarPage</div>;
 };
 
 export default MyCalendarPage;
