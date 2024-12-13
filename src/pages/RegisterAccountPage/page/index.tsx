@@ -36,7 +36,7 @@ const RegisterAccountPage = () => {
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
   const { mutate: registerUserInformation } = usePostUserInformation();
   const { accessToken } = useAuthStore.getState();
-  const {data: name, isLoading} = useGetUserInfo(accessToken)
+  const {data: name } = useGetUserInfo(accessToken)
 
   useEffect(() => {
     setPostBody({

@@ -13,30 +13,28 @@ const postUserInformation = async ({
   const formData = new FormData();
 
   if (body.UserProfileRequest.profileImage) {
-    formData.append("UserProfileRequest.profileImgUrl", body.UserProfileRequest.profileImage);
+    formData.append("userProfileRequest.profileImage", body.UserProfileRequest.profileImage);
   }
 
-  formData.append("UserProfileRequest.birthDate", body.UserProfileRequest.birthDate);
-  formData.append("UserProfileRequest.gender", body.UserProfileRequest.gender);
+  formData.append("userProfileRequest.birthDate", body.UserProfileRequest.birthDate);
+  formData.append("userProfileRequest.gender", body.UserProfileRequest.gender);
   formData.append(
-    "TermsRequest.isPrivacyPolicyAgreed",
+    "termsRequest.isPrivacyPolicyAgreed",
     body.TermsRequest.isPrivacyPolicyAgreed.toString(),
   );
   formData.append(
-    "TermsRequest.isTermsOfServiceAgreed",
+    "termsRequest.isTermsOfServiceAgreed",
     body.TermsRequest.isTermsOfServiceAgreed.toString(),
   );
   formData.append(
-    "TermsRequest.isSnsReceiveAgreed",
+    "termsRequest.isSnsReceiveAgreed",
     body.TermsRequest.isSnsReceiveAgreed.toString(),
   );
 
   try {
-    for (let key of formData.keys()) {
-      console.log("key : ", key);
-    }
-    for (let value of formData.values()) {
-      console.log("value : ", value);
+    let entries = formData.entries();
+    for (const pair of entries) {
+      console.log(pair[0] + ", " + pair[1]);
     }
     const data = await api.post<FormData, IResponseType>({
       endpoint: `${apiRoutes.userInformation}`,
@@ -62,6 +60,5 @@ export const usePostUserInformation = () => {
       alert("회원정보 등록에 실패하셨습니다.");
       console.error(error);
     },
-    
   });
 };
