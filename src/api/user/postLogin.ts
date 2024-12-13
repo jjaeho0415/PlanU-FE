@@ -22,7 +22,6 @@ export const postLogin = async (body: IPostLogin): Promise<string> => {
     }
 
     const authorization = response.headers.get("Authorization");
-    console.log(authorization);
     if (!authorization) {
       throw new Error("Authorization header is missing");
     }
