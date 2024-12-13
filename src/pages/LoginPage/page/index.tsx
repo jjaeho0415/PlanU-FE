@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./login.module.scss";
 import LoginInput from "@components/inputBoxes/LoginInput";
 import { GoLogin } from "@components/buttons/GoLogin";
@@ -18,6 +18,10 @@ type ILoginFormData = {
 
 const LoginPage: React.FC = () => {
   const navigate = useNavigate();
+  const storedIsSavedId = localStorage.getItem("isSavedId");
+  const booleanStoredSavedId = storedIsSavedId ? JSON.parse(storedIsSavedId) : false;
+  const [isSaveId, setIsSaveId] = useState<boolean>(booleanStoredSavedId);
+ 
 
   const {
     register,
@@ -32,7 +36,7 @@ const LoginPage: React.FC = () => {
   });
 
   useEffect(() => {
-    const savedId = localStorage.getItem("storedUserId");
+    const savedId = localStorage.getItem("userStoredId");
     if (savedId) {
       setValue("ID", savedId);
     }
@@ -72,12 +76,13 @@ const LoginPage: React.FC = () => {
     };
     try {
       const accessToken = await postLogin(postData);
-      console.log(accessToken);
 
       if (accessToken) {
         useAuthStore.getState().setIsLogin(true);
         useAuthStore.getState().setAccessToken(accessToken);
-        localStorage.setItem("userStoredId", postData.username);
+        isSaveId
+          ? localStorage.setItem("userStoredId", postData.username)
+          : localStorage.removeItem("userStoredId");
 
         try {
           const isExistUserProfile = await getIsExistUserProfile(accessToken);
@@ -90,8 +95,6 @@ const LoginPage: React.FC = () => {
           console.error("프로필 확인 실패:", profileError);
           alert("프로필 확인 중 오류가 발생했습니다.");
         }
-      } else {
-        console.error("응답에서 액세스 토큰을 찾을 . 수없습니다");
       }
     } catch (error) {
       console.error("로그인 실패:", error);
@@ -127,7 +130,7 @@ const LoginPage: React.FC = () => {
         ))}
       </form>
       <div className={styles.FindBox}>
-        <FindComponent />
+        <FindComponent isSaveId={isSaveId} setIsSaveId={setIsSaveId} />
       </div>
       <div className={styles.ButtonBox}>
         <LoginButton buttonType="login" onClick={handleSubmit(onSubmit)} />
