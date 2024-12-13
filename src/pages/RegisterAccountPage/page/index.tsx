@@ -8,6 +8,7 @@ import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
 import useAuthStore from "@store/useAuthStore";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 
 const userInformation: IPostUserInformationType = {
   UserProfileRequest: {
@@ -32,10 +33,10 @@ const RegisterAccountPage = () => {
   const [isSnsReceiveAgreed, setIsSnsReceiveAgreed] = useState<boolean>(false);
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
   const [userImage, setUserImage] = useState<File | string | null>(null);
-  const userName = "이수현";
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
   const { mutate: registerUserInformation } = usePostUserInformation();
   const { accessToken } = useAuthStore.getState();
+  const {data: name, isLoading} = useGetUserInfo(accessToken)
 
   useEffect(() => {
     setPostBody({
@@ -131,7 +132,7 @@ const RegisterAccountPage = () => {
             <div className={styles.profileImage}>
               <ImageUploader iconType="edit" image={userImage} setImage={setUserImage} />
             </div>
-            <div>{userName} 님</div>
+            {name && <div>{name.name} 님</div>}
           </div>
         </div>
         <div className={styles.middleSection}>

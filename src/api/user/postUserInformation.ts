@@ -13,16 +13,31 @@ const postUserInformation = async ({
   const formData = new FormData();
 
   if (body.UserProfileRequest.profileImage) {
-    formData.append("profileImgUrl", body.UserProfileRequest.profileImage);
+    formData.append("UserProfileRequest.profileImgUrl", body.UserProfileRequest.profileImage);
   }
 
-  formData.append("birthDate", body.UserProfileRequest.birthDate);
-  formData.append("gender", body.UserProfileRequest.gender);
-  formData.append("isPrivacyPolicyAgreed", body.TermsRequest.isPrivacyPolicyAgreed.toString());
-  formData.append("isSnsReceiveAgreed", body.TermsRequest.isSnsReceiveAgreed.toString());
-  formData.append("isTermsOfServiceAgreed", body.TermsRequest.isTermsOfServiceAgreed.toString());
+  formData.append("UserProfileRequest.birthDate", body.UserProfileRequest.birthDate);
+  formData.append("UserProfileRequest.gender", body.UserProfileRequest.gender);
+  formData.append(
+    "TermsRequest.isPrivacyPolicyAgreed",
+    body.TermsRequest.isPrivacyPolicyAgreed.toString(),
+  );
+  formData.append(
+    "TermsRequest.isTermsOfServiceAgreed",
+    body.TermsRequest.isTermsOfServiceAgreed.toString(),
+  );
+  formData.append(
+    "TermsRequest.isSnsReceiveAgreed",
+    body.TermsRequest.isSnsReceiveAgreed.toString(),
+  );
 
   try {
+    for (let key of formData.keys()) {
+      console.log("key : ", key);
+    }
+    for (let value of formData.values()) {
+      console.log("value : ", value);
+    }
     const data = await api.post<FormData, IResponseType>({
       endpoint: `${apiRoutes.userInformation}`,
       body: formData,
@@ -47,5 +62,6 @@ export const usePostUserInformation = () => {
       alert("회원정보 등록에 실패하셨습니다.");
       console.error(error);
     },
+    
   });
 };
