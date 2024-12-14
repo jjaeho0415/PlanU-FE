@@ -1,0 +1,21 @@
+.myPageContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-50);
+}
+.whiteBackground {
+  background-color: var(--white);
+  border-radius: 0 0 30px 30px;
+  box-shadow: 0px 6px 6px -2px rgba(171, 137, 177, 0.199);
+  padding: 20px 16px;
+  min-height: 270px;
+}
+.profileSection {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.buttonSection {
+  margin-top: 20px;
+}
