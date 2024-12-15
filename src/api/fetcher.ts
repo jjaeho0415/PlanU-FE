@@ -80,7 +80,7 @@ const _fetch = async <T = unknown, R = unknown>({
           useAuthStore.getState().setIsLogin(false);
           useAuthStore.getState().setAccessToken("");
           // ProtectedRoute 구현하면 window.location.reload로 수정해야함
-          // window.location.href = `${window.location.origin}`;
+          window.location.href = `${window.location.origin}`;
           throw new Error("Session expired. Please log in again.");
         }
       }
