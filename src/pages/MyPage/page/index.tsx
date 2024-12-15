@@ -1,8 +1,8 @@
-import Header from "../../../components/headers/OnlyTextHeader"; // Header 컴포넌트 경로
-import Footer from "../../../components/nav-bar/BottomNavBar"; // Footer 컴포넌트 경로
-import ButtonSection from "../components/ButtonSection"; // ButtonSection 컴포넌트 경로
-import MenuSection from "../components/MenuSection"; // MenuSection 컴포넌트 경로
-import ProfileSection from "../components/ProfileSection"; // ProfileSection 컴포넌트 경로
+import Header from "../../../components/headers/OnlyTextHeader";
+import Footer from "../../../components/nav-bar/BottomNavBar";
+import ButtonSection from "../components/ButtonSection";
+import MenuSection from "../components/MenuSection";
+import ProfileSection from "../components/ProfileSection";
 
 import styles from "./myPage.module.scss";
 
