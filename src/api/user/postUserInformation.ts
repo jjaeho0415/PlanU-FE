@@ -13,11 +13,11 @@ const postUserInformation = async ({
   const formData = new FormData();
 
   if (body.UserProfileRequest.profileImage) {
-    formData.append("userProfileRequest.profileImage", body.UserProfileRequest.profileImage);
+    formData.append("profileImage", body.UserProfileRequest.profileImage);
   }
 
-  formData.append("userProfileRequest.birthDate", body.UserProfileRequest.birthDate);
-  formData.append("userProfileRequest.gender", body.UserProfileRequest.gender);
+  formData.append("birthDate", body.UserProfileRequest.birthDate);
+  formData.append("gender", body.UserProfileRequest.gender);
   formData.append(
     "termsRequest.isPrivacyPolicyAgreed",
     body.TermsRequest.isPrivacyPolicyAgreed.toString(),
@@ -32,15 +32,14 @@ const postUserInformation = async ({
   );
 
   try {
-    let entries = formData.entries();
-    for (const pair of entries) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
-    const data = await api.post<FormData, IResponseType>({
-      endpoint: `${apiRoutes.userInformation}`,
-      body: formData,
-      authorization: token,
-    });
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${apiRoutes.userInformation}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData
+    })
+    const data: IResponseType = await response.json();
     return data;
   } catch (error) {
     throw error;
