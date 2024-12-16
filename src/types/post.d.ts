@@ -1,13 +1,13 @@
 type IPostConfirmEmailCode = {
   email: string;
   verificationCode: string;
-  purpose: "register" | "findUsername" | "findPassword"
+  purpose: "register" | "findUsername" | "findPassword";
 };
 
 type IEmailBody = {
   email: string;
   purpose: "register" | "findUsername" | "findPassword";
-}
+};
 
 type IPostRegister = {
   username: string;
@@ -32,4 +32,14 @@ type IPostUserInformationType = {
     isTermsOfServiceAgreed: string;
     isSnsReceiveAgreed: string;
   };
+};
+
+type IPostFindId = {
+  email: string;
+};
+
+type IPostFindPassword = {
+  username: string;
+  email: string;
+  newPassword: string;
 };

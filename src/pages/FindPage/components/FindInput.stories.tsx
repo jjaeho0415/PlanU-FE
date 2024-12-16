@@ -1,9 +1,9 @@
 import { Meta, StoryObj } from "@storybook/react";
-import FindTypeTab from "./FindTypeTab";
+import FindInput from "./FindInput";
 
-const meta: Meta<typeof FindTypeTab> = {
-  title: "Components/FindPage/FindTypeTab",
-  component: FindTypeTab,
+const meta: Meta<typeof FindInput> = {
+  title: "Components/FindPage/FindInput",
+  component: FindInput,
   decorators: [
     (Story) => (
       <div style={{ padding: "20px", maxWidth: "400px" }}>
@@ -15,7 +15,7 @@ const meta: Meta<typeof FindTypeTab> = {
 
 export default meta;
 
-type Story = StoryObj<typeof FindTypeTab>;
+type Story = StoryObj<typeof FindInput>;
 
 export const Default: Story = {
   args: {},

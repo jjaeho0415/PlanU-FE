@@ -30,3 +30,16 @@ type IInputItem = {
   buttonText?: string;
   onClick?: () => void;
 };
+
+type IFindIdFormData = {
+  email: string;
+  code: string;
+};
+
+type IFindPWFormData = {
+  id: string;
+  email: string;
+  code: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};
