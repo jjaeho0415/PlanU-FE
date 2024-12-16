@@ -13,21 +13,33 @@ const postUserInformation = async ({
   const formData = new FormData();
 
   if (body.UserProfileRequest.profileImage) {
-    formData.append("profileImgUrl", body.UserProfileRequest.profileImage);
+    formData.append("profileImage", body.UserProfileRequest.profileImage);
   }
 
   formData.append("birthDate", body.UserProfileRequest.birthDate);
   formData.append("gender", body.UserProfileRequest.gender);
-  formData.append("isPrivacyPolicyAgreed", body.TermsRequest.isPrivacyPolicyAgreed.toString());
-  formData.append("isSnsReceiveAgreed", body.TermsRequest.isSnsReceiveAgreed.toString());
-  formData.append("isTermsOfServiceAgreed", body.TermsRequest.isTermsOfServiceAgreed.toString());
+  formData.append(
+    "termsRequest.isPrivacyPolicyAgreed",
+    body.TermsRequest.isPrivacyPolicyAgreed.toString(),
+  );
+  formData.append(
+    "termsRequest.isTermsOfServiceAgreed",
+    body.TermsRequest.isTermsOfServiceAgreed.toString(),
+  );
+  formData.append(
+    "termsRequest.isSnsReceiveAgreed",
+    body.TermsRequest.isSnsReceiveAgreed.toString(),
+  );
 
   try {
-    const data = await api.post<FormData, IResponseType>({
-      endpoint: `${apiRoutes.userInformation}`,
-      body: formData,
-      authorization: token,
-    });
+    const response = await fetch(`${import.meta.env.VITE_API_URL}${apiRoutes.userInformation}`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: formData
+    })
+    const data: IResponseType = await response.json();
     return data;
   } catch (error) {
     throw error;
