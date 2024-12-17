@@ -10,7 +10,7 @@ type IRegisterFormData = {
 type IInputItem = {
   name: string;
   text: string;
-  type: string;
+  type?: string;
   rules: {
     required?: string;
     pattern?: {
