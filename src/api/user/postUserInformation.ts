@@ -1,5 +1,4 @@
 import apiRoutes from "@api/apiRoutes";
-import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -12,9 +11,7 @@ const postUserInformation = async ({
 }): Promise<IResponseType> => {
   const formData = new FormData();
 
-  if (body.UserProfileRequest.profileImage) {
-    formData.append("profileImage", body.UserProfileRequest.profileImage);
-  }
+  formData.append("profileImage", body.UserProfileRequest.profileImage || "");
 
   formData.append("birthDate", body.UserProfileRequest.birthDate);
   formData.append("gender", body.UserProfileRequest.gender);
@@ -37,8 +34,8 @@ const postUserInformation = async ({
       headers: {
         Authorization: `Bearer ${token}`,
       },
-      body: formData
-    })
+      body: formData,
+    });
     const data: IResponseType = await response.json();
     return data;
   } catch (error) {
