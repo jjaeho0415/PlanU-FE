@@ -1,0 +1,31 @@
+.mainContainer {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--background-50);
+  .centerSection {
+    display: flex;
+    flex-direction: column;
+    color: #656565;
+    font-size: 14px;
+    font-weight: medium;
+    justify-content: center;
+    align-items: center;
+    height:calc(100% - 130px);
+    gap: 21px;
+
+    .bigText {
+      color: var(--black);
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .smallText{
+      text-align: center;
+    }
+  }
+
+  .bottomSection {
+    display: flex;
+    justify-content: center;
+  }
+}
