@@ -1,12 +1,12 @@
+import { useGetUserInfo } from "@api/user/getUserInfo";
 import useAuthStore from "@store/useAuthStore";
 import { Navigate, Outlet } from "react-router-dom";
 
 const ProtectedRoute = () => {
-    const { accessToken } = useAuthStore();
+  const { accessToken } = useAuthStore();
+  const { isSuccess } = useGetUserInfo(accessToken);
 
-  if (!accessToken) {
-    const currentPath = window.location.pathname + window.location.search;
-    localStorage.setItem("redirectedFrom", currentPath);
+  if (!isSuccess) {
     return <Navigate to="/" replace />;
   }
 

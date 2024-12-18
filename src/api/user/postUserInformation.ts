@@ -1,5 +1,4 @@
 import apiRoutes from "@api/apiRoutes";
-import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
