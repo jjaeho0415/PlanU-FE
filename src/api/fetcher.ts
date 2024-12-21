@@ -71,8 +71,8 @@ const _fetch = async <T = unknown, R = unknown>({
             );
 
             if (!retryRes.ok) {
-              const retryErrorData = await retryRes.json();
-              throw new Error(retryErrorData.message);
+              const {resultMsg} = await retryRes.json();
+              throw new Error(resultMsg.message);
             }
             return await retryRes.json();
           }
