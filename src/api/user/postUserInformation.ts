@@ -36,6 +36,11 @@ const postUserInformation = async ({
       },
       body: formData,
     });
+    if (!response.ok) {
+      const { resultMsg } = await response.json();
+      throw new Error(resultMsg.message);
+    }
+
     const data: IResponseType = await response.json();
     return data;
   } catch (error) {

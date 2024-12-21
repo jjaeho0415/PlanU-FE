@@ -52,12 +52,15 @@ const RegisterPage: React.FC = () => {
 
     setIsCheckingId(true);
     try {
-      const { data: idDuplicationData } = await refetch();
+      const { data: idDuplicationData, error } = await refetch();
       if (idDuplicationData && idDuplicationData.resultMsg === "false") {
         setIsCheckedId(true);
         alert("사용 가능한 ID입니다.");
       } else {
         alert("이미 사용 중인 ID입니다.");
+      }
+      if (error) {
+        console.error(error.message);
       }
     } catch (error) {
       alert("중복 확인에 실패했습니다. 다시 시도해주세요.");
