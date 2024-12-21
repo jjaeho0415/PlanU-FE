@@ -84,8 +84,8 @@ const _fetch = async <T = unknown, R = unknown>({
           throw new Error("Session expired. Please log in again.");
         }
       }
-      const errorData = await res.json();
-      throw new Error(errorData.message);
+      const {resultMsg} = await res.json();
+      throw new Error(resultMsg);
     }
     return await res.json();
   } catch (error) {

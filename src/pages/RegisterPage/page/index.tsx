@@ -79,8 +79,7 @@ const RegisterPage: React.FC = () => {
           alert("인증코드 발송 성공");
         },
         onError: (error) => {
-          alert("인증코드 발송 실패");
-          console.error(error);
+          alert(error.message);
         },
       },
     );
@@ -97,8 +96,7 @@ const RegisterPage: React.FC = () => {
         setIsCheckedCode(true);
       },
       onError: (error) => {
-        console.error(error);
-        alert("인증코드 불일치");
+        alert(error.message);
       },
     });
   };
@@ -203,8 +201,7 @@ const RegisterPage: React.FC = () => {
           navigate("/registerSuccess");
         },
         onError: (error) => {
-          alert("회원가입에 실패");
-          console.error(error);
+          alert(error.message);
         },
       });
     } else {
