@@ -9,7 +9,7 @@ import { DefaultButton } from "@components/buttons/DefaultButton";
 const FindPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState<"id" | "pw">("id");
-  const [buttonText, setButtonText] = useState<string>();
+  const [buttonText, setButtonText] = useState<string>("");
 
   useEffect(() => {
     switch (selectedTab) {
@@ -32,7 +32,7 @@ const FindPage: React.FC = () => {
       <FindInput findType={selectedTab} />
       <div className={styles.ButtonBox}>
         <DefaultButton
-          buttonText={selectedTab === "id" ? "아이디 찾기" : "비밀번호 찾기"}
+          buttonText={buttonText}
           onClick={() => {
             return;
           }}

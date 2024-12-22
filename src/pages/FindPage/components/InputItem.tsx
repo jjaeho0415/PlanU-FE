@@ -25,11 +25,11 @@ const InputItem = forwardRef<HTMLInputElement, props>(
           {...props}
         />
         {isPassword && buttonText !== "확인" && (
-          <div onClick={() => setIsOpen(!isOpen)}>
+          <div className={styles.EyeIcon} onClick={() => setIsOpen(!isOpen)}>
             {isOpen ? (
-              <Icon_eyeOff className={styles.Cursor} />
-            ) : (
               <Icon_eyeOn className={styles.Cursor} />
+            ) : (
+              <Icon_eyeOff className={styles.Cursor} />
             )}
           </div>
         )}
