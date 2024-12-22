@@ -43,7 +43,7 @@ const groupSchedules: IGroupSchedulesType[] = [
     id: 3,
     title: "수현이 생일파티 겸 노는 날",
     startDateTime: "2024-12-22",
-    endDateTime: "2024-12-22",
+    endDateTime: "2024-12-31",
     color: "#56e246",
   },
 ];
