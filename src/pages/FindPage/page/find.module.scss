@@ -1,4 +1,15 @@
 .Container {
   background-color: var(--background-50);
   height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ButtonBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  flex-grow: 1;
+  margin-bottom: 30px;
 }
