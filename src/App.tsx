@@ -2,7 +2,7 @@ import Layout from "@layout/Layout";
 import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
-import { default as CreateGroupPage, default as GroupPage } from "@pages/CreateGroupPage/page";
+import  CreateGroupPage from "@pages/CreateGroupPage/page";
 import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage";
 import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
@@ -26,6 +26,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import RegisterAccountPage from "@pages/RegisterAccountPage/page";
 import RegisterSuccessPage from "@pages/RegisterSuccessPage/page/inedx";
+import GroupPage from "@pages/GroupPage/page";
 
 function App() {
   return (
