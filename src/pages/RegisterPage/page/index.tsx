@@ -52,12 +52,15 @@ const RegisterPage: React.FC = () => {
 
     setIsCheckingId(true);
     try {
-      const { data: idDuplicationData } = await refetch();
+      const { data: idDuplicationData, error } = await refetch();
       if (idDuplicationData && idDuplicationData.resultMsg === "false") {
         setIsCheckedId(true);
         alert("사용 가능한 ID입니다.");
       } else {
         alert("이미 사용 중인 ID입니다.");
+      }
+      if (error) {
+        console.error(error.message);
       }
     } catch (error) {
       alert("중복 확인에 실패했습니다. 다시 시도해주세요.");
@@ -79,8 +82,7 @@ const RegisterPage: React.FC = () => {
           alert("인증코드 발송 성공");
         },
         onError: (error) => {
-          alert("인증코드 발송 실패");
-          console.error(error);
+          alert(error.message);
         },
       },
     );
@@ -97,8 +99,7 @@ const RegisterPage: React.FC = () => {
         setIsCheckedCode(true);
       },
       onError: (error) => {
-        console.error(error);
-        alert("인증코드 불일치");
+        alert(error.message);
       },
     });
   };
@@ -203,8 +204,7 @@ const RegisterPage: React.FC = () => {
           navigate("/registerSuccess");
         },
         onError: (error) => {
-          alert("회원가입에 실패");
-          console.error(error);
+          alert(error.message);
         },
       });
     } else {
