@@ -37,7 +37,7 @@ const GroupOptions: React.FC<Props> = ({ title, groupId }) => {
       case "게시물":
         return alert("서비스 준비중")
       case "그룹 달력":
-        return navigate(`/group/${groupId}/calendar`);
+        return navigate(`/group/${groupId}/groupCalendar`);
       case "정산하기":
         return alert("서비스 준비중");
       case "멤버":
