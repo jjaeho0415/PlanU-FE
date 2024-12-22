@@ -1,4 +1,5 @@
 .Container {
+  width: 100%;
   height: 100svh;
   background-color: var(--background-50);
   display: flex;
@@ -14,8 +15,7 @@
 }
 
 .FindBox {
-  width: 100%;
-  padding: 0 30px;
+  width: 326px;
   flex-grow: 1;
 }
 
