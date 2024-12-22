@@ -1,3 +1,4 @@
+import useBottomStore from "@store/useBottomStore";
 import Header from "../../../components/headers/OnlyTextHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import ButtonSection from "../components/ButtonSection";
@@ -5,8 +6,15 @@ import MenuSection from "../components/MenuSection";
 import ProfileSection from "../components/ProfileSection";
 
 import styles from "./myPage.module.scss";
+import { useEffect } from "react";
 
 const MyPage = () => {
+  const { bottomIndex, setBottomIndex } = useBottomStore();
+  useEffect(() => {
+    if (bottomIndex !== 3) {
+      setBottomIndex(3);
+    }
+  }, []);
   const menuData = [
     {
       title: "앱 설정",
