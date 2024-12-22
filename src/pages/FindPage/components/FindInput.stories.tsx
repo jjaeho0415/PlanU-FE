@@ -7,7 +7,7 @@ function Input() {
       <h1>Find ID</h1>
       <FindInput findType="id" />
       <h1>Find Password</h1>
-      <FindInput findType="password" />
+      <FindInput findType="pw" />
     </div>
   );
 }
