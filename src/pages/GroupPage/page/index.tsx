@@ -5,6 +5,7 @@ import GroupOptions from "../components/GroupOptions";
 import { useNavigate } from "react-router-dom";
 import TodayScheduleList from "../components/TodayScheduleList";
 import BottomNavBar from "@components/nav-bar/BottomNavBar";
+import GroupScheduleCalendar from "../components/GroupScheduleCalendar";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 
@@ -22,6 +23,30 @@ const todayScheduleList: ITodaySchedulesType[] = [
     location: "강원대 후문",
   },
 ];
+
+const groupSchedules: IGroupSchedulesType[] = [
+  {
+			id: 5,
+			title: "술약",
+			startDateTime: "2024-02-20",
+			endDateTime: "2024-02-20",
+			color: "#44AA44"
+		},
+		{
+			id: 8,
+			title: "1박 2일 여행",
+			startDateTime: "2024-02-02",
+			endDateTime: "2024-02-03",
+			color: "#55FFFF"
+		},
+		{
+			id: 3,
+			title: "수현이 생일파티",
+			startDateTime: "2024-02-19",
+			endDateTime: "2024-02-19",
+			color: "#22FFFF"
+		}
+]
 
 const GroupPage = () => {
   const navigate = useNavigate();
@@ -63,6 +88,9 @@ const GroupPage = () => {
         </div>
         <div className={styles.todayScheduleList}>
           <TodayScheduleList todayScheduleList={todayScheduleList} groupId={groupInfo.id} />
+        </div>
+        <div className={styles.calendarSection}>
+          <GroupScheduleCalendar groupSchedules={groupSchedules}/>
         </div>
           </div>
           <BottomNavBar />
