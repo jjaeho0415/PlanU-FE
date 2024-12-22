@@ -4,25 +4,28 @@ import styles from "./findInput.module.scss";
 import InputItem from "./InputItem";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
 import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
-import { usePostFindId } from "@api/user/postFindId";
-import { usePostFindPw } from "@api/user/postFindPw";
-import { useNavigate } from "react-router-dom";
+import { usePostRegister } from "@api/user/posRegister";
 
 interface props {
   findType: "id" | "pw";
   setIsDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
+  setUsername: React.Dispatch<React.SetStateAction<string>>;
+  setEmail: React.Dispatch<React.SetStateAction<string>>;
+  setNewPassword: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const FindInput: React.FC<props> = ({ findType, setIsDisabledButton }) => {
-  const navigate = useNavigate();
+const FindInput: React.FC<props> = ({
+  findType,
+  setIsDisabledButton,
+  setUsername,
+  setEmail,
+  setNewPassword,
+}) => {
   const [selectedInputType, setSelectedInputType] = useState<IInputItem[]>([]);
   const [isSendedEmailCode, setIsSendedEmailCode] = useState<boolean>(false);
   const { mutate: sendCode } = usePostEmailVerification();
   const { mutate: confirmCode } = usePostConfirmEmailCode();
   const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
-  const { mutate: findId } = usePostFindId();
-  const { mutate: changePassword } = usePostFindPw();
-
   const {
     register: idRegister,
     handleSubmit: idHandleSubmit,
@@ -73,6 +76,9 @@ const FindInput: React.FC<props> = ({ findType, setIsDisabledButton }) => {
         onError: (error) => {
           alert(error.message);
         },
+        onSettled: () => {
+          setIsSendedEmailCode(true);
+        },
       },
     );
   };
@@ -88,6 +94,7 @@ const FindInput: React.FC<props> = ({ findType, setIsDisabledButton }) => {
       onSuccess: () => {
         alert("인증코드 일치");
         setIsCheckedCode(true);
+        setEmail(data.email);
         if (findType === "id") {
           setIsDisabledButton(false);
         }
@@ -179,39 +186,10 @@ const FindInput: React.FC<props> = ({ findType, setIsDisabledButton }) => {
     }
   }, [findType]);
 
-  const handleFindId = (data: IFindIdFormData) => {
-    findId(
-      { email: data.email },
-      {
-        onSuccess: (res) => {},
-        onError: (err) => {
-          console.log(err);
-        },
-      },
-    );
-  };
-
-  const handleChangePassword = (data: IFindPWFormData) => {
-    changePassword(
-      { username: data.id, email: data.email, newPassword: data.confirmNewPassword },
-      {
-        onSuccess: () => {
-          alert("비밀번호가 변경되었습니다.");
-          navigate("login");
-        },
-        onError: (err) => {
-          console.log(err);
-        },
-      },
-    );
-  };
+  const handleSubmit = () => {};
 
   return (
-    <form
-      onSubmit={
-        findType === "id" ? idHandleSubmit(handleFindId) : pwHandleSubmit(handleChangePassword)
-      }
-    >
+    <form onSubmit={handleSubmit}>
       <div className={styles.InputsBox}>
         {selectedInputType.map((input) => {
           const registerProps =
