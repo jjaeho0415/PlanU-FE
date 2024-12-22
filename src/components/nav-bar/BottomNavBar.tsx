@@ -1,19 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./bottomNavBar.module.scss";
 import CalendarIcon from "@assets/Icons/bottomNavBar/Calendar.svg?react";
 import UsersIcon from "@assets/Icons/bottomNavBar/Users.svg?react";
 import ChatIcon from "@assets/Icons/bottomNavBar/chat_bubble.svg?react";
 import PersonIcon from "@assets/Icons/bottomNavBar/person.svg?react";
+import useBottomStore from "@store/useBottomStore";
+import { useNavigate } from "react-router-dom";
 
 const BottomNavBar: React.FC = () => {
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-
+  const { bottomIndex, setBottomIndex } = useBottomStore();
+  const navigate = useNavigate();
   const handleClick = (index: number) => {
-    setActiveIndex(index);
+    setBottomIndex(index);
+    switch (index) {
+      case 0:
+        return navigate(`/myCalendar`);
+      case 1:
+        return navigate(`/groupList`);
+      case 2:
+        return navigate(`/chatList`);
+      case 3:
+        return navigate(`/myPage`);
+      default:
+        return;
+    }
   };
 
   const getIcon = (index: number) => {
-    const isActive = activeIndex === index;
+    const isActive = bottomIndex === index;
     const strokeColor = isActive ? "var(--violet-icon)" : "var(--black)";
     const iconProps = { stroke: strokeColor };
 
@@ -36,7 +50,7 @@ const BottomNavBar: React.FC = () => {
       {[0, 1, 2, 3].map((index) => (
         <div
           key={index}
-          className={`${styles.NavItem} ${activeIndex === index ? styles.Active : ""}`}
+          className={`${styles.NavItem} ${bottomIndex === index ? styles.Active : ""}`}
           onClick={() => handleClick(index)}
         >
           {getIcon(index)}
