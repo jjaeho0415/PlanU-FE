@@ -19,7 +19,7 @@ const handleScheduleItemClick = (id: number) => {
       <div className={styles.topSection}>오늘의 일정</div>
       <div className={styles.contentSection}>
         {todayScheduleList.map((todayScheduleItem) => (
-          <TodayScheduleItem onClick={() => handleScheduleItemClick(todayScheduleItem.id)} todayScheduleItem={todayScheduleItem}/>
+          <TodayScheduleItem key={todayScheduleItem.id} onClick={() => handleScheduleItemClick(todayScheduleItem.id)} todayScheduleItem={todayScheduleItem}/>
         ))}
       </div>
     </div>

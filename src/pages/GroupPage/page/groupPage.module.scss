@@ -7,18 +7,18 @@
   .contentContainer {
     width: 100%;
     border-top: 1px solid var(--violet-50);
-    padding: 25px 28px;
+    padding: 25px 28px 80px 28px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    gap: 30px;
     .iconSection {
       display: flex;
       gap: 16px;
       justify-content: center;
     }
     .buttonSection {
-      margin: 28px 0 20px 0;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -40,14 +40,17 @@
       color: var(--white);
       cursor: pointer;
     }
-    .todayScheduleList{
-      width: 100%;
+    .todayScheduleList {
+      width: 335px;
+      height: 231px;
       background-color: var(--white);
       border-radius: 10px;
     }
-    .calendarSection{
-      width: 326px;
+    .groupCalendar {
+      width: 336px;
       height: 272px;
+      display: flex;
+      justify-content: center;
     }
   }
 }

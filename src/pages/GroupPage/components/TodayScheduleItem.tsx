@@ -1,3 +1,4 @@
+import { getFormattedLocation } from "../../../constants/truncation";
 import styles from "./todayScheduleItem.module.scss";
 import LocationMarkerIcon from "@assets/Icons/groupPage/locationMarkerIcon.svg?react";
 
@@ -19,11 +20,6 @@ const getFormattedDate = () => {
   return `${year}.${month}.${date} (${day}) `;
 };
     
-    const getFormattedLocation = (location: string) => {
-        const formattedLocation = location.length > 10 ? `${location.slice(0, 10)}...` : location;
-        return formattedLocation
-    }
-
   return (
     <div className={styles.scheduleItemContainer} onClick={onClick}>
       <div className={styles.title}>{todayScheduleItem.title}</div>

@@ -26,27 +26,27 @@ const todayScheduleList: ITodaySchedulesType[] = [
 
 const groupSchedules: IGroupSchedulesType[] = [
   {
-			id: 5,
-			title: "술약",
-			startDateTime: "2024-02-20",
-			endDateTime: "2024-02-20",
-			color: "#44AA44"
-		},
-		{
-			id: 8,
-			title: "1박 2일 여행",
-			startDateTime: "2024-02-02",
-			endDateTime: "2024-02-03",
-			color: "#55FFFF"
-		},
-		{
-			id: 3,
-			title: "수현이 생일파티",
-			startDateTime: "2024-02-19",
-			endDateTime: "2024-02-19",
-			color: "#22FFFF"
-		}
-]
+    id: 5,
+    title: "술약",
+    startDateTime: "2024-12-20",
+    endDateTime: "2024-12-23",
+    color: "#ec8ae3",
+  },
+  {
+    id: 8,
+    title: "1박 2일 제주도 여행",
+    startDateTime: "2024-12-21",
+    endDateTime: "2024-12-22",
+    color: "#55FFFF",
+  },
+  {
+    id: 3,
+    title: "수현이 생일파티 겸 노는 날",
+    startDateTime: "2024-12-22",
+    endDateTime: "2024-12-22",
+    color: "#56e246",
+  },
+];
 
 const GroupPage = () => {
   const navigate = useNavigate();
@@ -68,6 +68,10 @@ const GroupPage = () => {
     navigate(`/group/${groupInfo.id}/calendar/createSchedule`);
   };
 
+  const handleCalendarClick = () => {
+    navigate(`/group/${groupInfo.id}/groupCalendar`);
+  }
+
   return (
     <div className={styles.mainContainer}>
       <HasOnlyRightIconHeader
@@ -80,7 +84,7 @@ const GroupPage = () => {
       <div className={styles.contentContainer}>
         <div className={styles.iconSection}>
           {iconOptionsTitle.map((title) => (
-            <GroupOptions title={title} groupId={groupInfo.id} />
+            <GroupOptions title={title} groupId={groupInfo.id} key={title} />
           ))}
         </div>
         <div className={styles.buttonSection} onClick={handleCreateSchedule}>
@@ -89,11 +93,11 @@ const GroupPage = () => {
         <div className={styles.todayScheduleList}>
           <TodayScheduleList todayScheduleList={todayScheduleList} groupId={groupInfo.id} />
         </div>
-        <div className={styles.calendarSection}>
-          <GroupScheduleCalendar groupSchedules={groupSchedules}/>
+        <div className={styles.groupCalendar}>
+          <GroupScheduleCalendar groupSchedules={groupSchedules} onClick={handleCalendarClick} />
         </div>
-          </div>
-          <BottomNavBar />
+      </div>
+      <BottomNavBar />
     </div>
   );
 };
