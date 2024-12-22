@@ -10,6 +10,7 @@ const FindPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedTab, setSelectedTab] = useState<"id" | "pw">("id");
   const [buttonText, setButtonText] = useState<string>("");
+  const [isDisabledButton, setIsDisabledButton] = useState<boolean>(true);
 
   useEffect(() => {
     switch (selectedTab) {
@@ -19,7 +20,7 @@ const FindPage: React.FC = () => {
       case "pw":
         setButtonText("비밀번호 변경");
     }
-  });
+  }, []);
 
   return (
     <div className={styles.Container}>
@@ -29,13 +30,15 @@ const FindPage: React.FC = () => {
         handleClick={() => navigate("/login")}
       />
       <FindTypeTab selectedTab={selectedTab} setSelectedTab={setSelectedTab} />
-      <FindInput findType={selectedTab} />
+      <FindInput findType={selectedTab} setIsDisabledButton={setIsDisabledButton} />
+      <div className={styles.UsernameBox}>{username}</div>
       <div className={styles.ButtonBox}>
         <DefaultButton
           buttonText={buttonText}
           onClick={() => {
-            return;
+            selectedTab === "id" ? handleFindId() : handleChangePassword();
           }}
+          isDisabled={isDisabledButton}
         />
       </div>
     </div>

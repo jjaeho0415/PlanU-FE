@@ -2,19 +2,33 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import styles from "./findInput.module.scss";
 import InputItem from "./InputItem";
+import { usePostEmailVerification } from "@api/user/postEmailVerification";
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
+import { usePostFindId } from "@api/user/postFindId";
+import { usePostFindPw } from "@api/user/postFindPw";
+import { useNavigate } from "react-router-dom";
 
 interface props {
   findType: "id" | "pw";
+  setIsDisabledButton: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const FindInput: React.FC<props> = ({ findType }) => {
+const FindInput: React.FC<props> = ({ findType, setIsDisabledButton }) => {
+  const navigate = useNavigate();
   const [selectedInputType, setSelectedInputType] = useState<IInputItem[]>([]);
+  const [isSendedEmailCode, setIsSendedEmailCode] = useState<boolean>(false);
+  const { mutate: sendCode } = usePostEmailVerification();
+  const { mutate: confirmCode } = usePostConfirmEmailCode();
+  const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
+  const { mutate: findId } = usePostFindId();
+  const { mutate: changePassword } = usePostFindPw();
 
   const {
     register: idRegister,
     handleSubmit: idHandleSubmit,
     formState: { errors: idErrors },
     watch: idWatch,
+    reset: idReset,
     clearErrors: idClearErrors,
   } = useForm<IFindIdFormData>({
     defaultValues: {
@@ -28,6 +42,7 @@ const FindInput: React.FC<props> = ({ findType }) => {
     handleSubmit: pwHandleSubmit,
     formState: { errors: pwErrors },
     watch: pwWatch,
+    reset: pwReset,
     clearErrors: pwClearErrors,
   } = useForm<IFindPWFormData>({
     defaultValues: {
@@ -39,6 +54,50 @@ const FindInput: React.FC<props> = ({ findType }) => {
     },
   });
 
+  useEffect(() => {
+    idReset();
+    pwReset();
+  }, [findType]);
+
+  const handleSendCode = (email: string, purpose: "register" | "findUsername" | "findPassword") => {
+    if (!email) {
+      alert("이메일을 입력하세요");
+      return;
+    }
+    sendCode(
+      { email, purpose: purpose },
+      {
+        onSuccess: () => {
+          alert("인증코드 발송 성공");
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
+      },
+    );
+  };
+
+  const handleCheckPasswordMatch = (password: string, confirmPassword: string) => {
+    confirmPassword === password
+      ? isCheckedCode && setIsDisabledButton(false)
+      : "비밀번호가 일치하지않습니다.";
+  };
+
+  const handleConfirmCode = (data: IPostConfirmEmailCode) => {
+    confirmCode(data, {
+      onSuccess: () => {
+        alert("인증코드 일치");
+        setIsCheckedCode(true);
+        if (findType === "id") {
+          setIsDisabledButton(false);
+        }
+      },
+      onError: (error) => {
+        alert(error.message);
+      },
+    });
+  };
+
   const idInputList: IInputItem[] = [
     {
       name: "email",
@@ -48,16 +107,20 @@ const FindInput: React.FC<props> = ({ findType }) => {
         required: "이메일을 입력하세요.",
       },
       onClick: () => {
-        return;
+        handleSendCode(idWatch("email"), "findUsername");
       },
     },
     {
       name: "code",
       text: "인증번호 입력",
       buttonText: "확인",
-      rules: {},
+      rules: { required: "인증번호를 입력하세요" },
       onClick: () => {
-        return;
+        handleConfirmCode({
+          email: idWatch("email"),
+          verificationCode: idWatch("code"),
+          purpose: "findUsername",
+        });
       },
     },
   ];
@@ -66,43 +129,44 @@ const FindInput: React.FC<props> = ({ findType }) => {
     {
       name: "id",
       text: "아이디 입력",
-      buttonText: "확인",
-      rules: {},
-      onClick: () => {
-        return;
-      },
+      rules: { required: "ID를 입력하세요" },
     },
     {
       name: "email",
       text: "이메일 입력",
       buttonText: "인증번호 전송",
-      rules: {},
+      rules: { required: "이메일을 입력하세요" },
       onClick: () => {
-        return;
+        handleSendCode(pwWatch("email"), "findPassword");
       },
     },
     {
       name: "code",
       text: "인증번호 입력",
       buttonText: "확인",
-      rules: {},
+      rules: { required: "인증번호를 입력하세요" },
       onClick: () => {
-        return;
+        handleConfirmCode({
+          email: pwWatch("email"),
+          verificationCode: pwWatch("code"),
+          purpose: "findPassword",
+        });
       },
     },
     {
       name: "newPassword",
       text: "새 비밀번호 입력",
       type: "password",
-      rules: {},
+      rules: { required: "새 비밀번호를 입력하세요" },
     },
     {
       name: "confirmNewPassword",
       text: "새 비밀번호 재입력",
       buttonText: "확인",
-      rules: {},
+      type: "password",
+      rules: { required: "새 비밀번호를 재입력하세요" },
       onClick: () => {
-        return;
+        handleCheckPasswordMatch(pwWatch("newPassword"), pwWatch("confirmNewPassword"));
       },
     },
   ];
@@ -115,16 +179,49 @@ const FindInput: React.FC<props> = ({ findType }) => {
     }
   }, [findType]);
 
-  const handleSubmit = () => {};
+  const handleFindId = (data: IFindIdFormData) => {
+    findId(
+      { email: data.email },
+      {
+        onSuccess: (res) => {},
+        onError: (err) => {
+          console.log(err);
+        },
+      },
+    );
+  };
+
+  const handleChangePassword = (data: IFindPWFormData) => {
+    changePassword(
+      { username: data.id, email: data.email, newPassword: data.confirmNewPassword },
+      {
+        onSuccess: () => {
+          alert("비밀번호가 변경되었습니다.");
+          navigate("login");
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      },
+    );
+  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form
+      onSubmit={
+        findType === "id" ? idHandleSubmit(handleFindId) : pwHandleSubmit(handleChangePassword)
+      }
+    >
       <div className={styles.InputsBox}>
         {selectedInputType.map((input) => {
           const registerProps =
             findType === "id"
               ? idRegister(input.name as keyof IFindIdFormData, input.rules)
               : pwRegister(input.name as keyof IFindPWFormData, input.rules);
+          const errorProps =
+            findType === "id"
+              ? idErrors[input.name as keyof IFindIdFormData]
+              : pwErrors[input.name as keyof IFindPWFormData];
 
           return (
             <div key={input.name}>
@@ -135,6 +232,7 @@ const FindInput: React.FC<props> = ({ findType }) => {
                 onClick={input.onClick}
                 {...registerProps}
               />
+              {errorProps && <p className={styles.Error}>{errorProps?.message}</p>}
             </div>
           );
         })}
