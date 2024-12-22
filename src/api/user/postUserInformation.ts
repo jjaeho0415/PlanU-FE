@@ -36,6 +36,11 @@ const postUserInformation = async ({
       },
       body: formData,
     });
+    if (!response.ok) {
+      const { resultMsg } = await response.json();
+      throw new Error(resultMsg.message);
+    }
+
     const data: IResponseType = await response.json();
     return data;
   } catch (error) {
@@ -53,8 +58,7 @@ export const usePostUserInformation = () => {
       navigate("/myCalendar");
     },
     onError: (error) => {
-      alert("회원정보 등록에 실패하셨습니다.");
-      console.error(error);
+      alert(error.message);
     },
   });
 };

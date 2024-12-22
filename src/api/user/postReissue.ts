@@ -10,7 +10,8 @@ export const postReissue = async () => {
     credentials: "include",
   });
   if (!response.ok) {
-    throw new Error("Failed to refresh token");
+    const { resultMsg } = await response.json();
+    throw new Error(resultMsg.message);
   }
   const authorization = response.headers.get("Authorization");
   if (!authorization) {
