@@ -1,0 +1,35 @@
+.scheduleItemContainer{
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--gray-100);
+    width: 100%;
+    gap: 5px;
+    height: 84px;
+    justify-content: center;
+    padding: 30px 0 20px 0;
+    cursor: pointer;
+     .title {
+      font-size: 18px;
+      font-weight: 500;
+    }
+    .infoSection {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+      .date {
+        font-size: 12px;
+        color: #333333;
+        padding: 4px 10px 4px 0;
+        border-right: 1px solid #bdbdbd;
+      }
+      .location {
+        font-size: 13px;
+        padding: 0 10px;
+        display: flex;
+        flex-direction: row;
+        gap: 10px;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+}

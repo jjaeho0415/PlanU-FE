@@ -1,0 +1,20 @@
+.mainContainer {
+    padding: 15px 10px;
+    width: 335px;
+    height: 231px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  .topSection {
+    font-size: 15px;
+    font-weight: lighter;
+    color: var(--black);
+  }
+  .contentSection {
+    font-weight: lighter;
+    color: var(--black);
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+}
