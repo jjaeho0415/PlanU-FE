@@ -258,7 +258,6 @@ const RegisterPage: React.FC = () => {
             </p>
           </div>
         )}
-
         <div className={styles.ButtonBox}>
           <LoginButton buttonType="register" onClick={handleSubmit(onSubmit)} />
           <GoLogin textType="login" textColor="gray" />
