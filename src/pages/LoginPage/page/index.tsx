@@ -91,12 +91,12 @@ const LoginPage: React.FC = () => {
           } else {
             navigate("/registerAccount");
           }
-        } catch (profileError) {
-          console.error("프로필 확인 실패:", profileError);
+        } catch (error) {
           alert("프로필 확인 중 오류가 발생했습니다.");
         }
       }
     } catch (error) {
+      // 백엔드에서 에러처리 해주면 다시 에러핸들링 해야함
       console.error("로그인 실패:", error);
       alert("ID와 Password를 다시 확인하세요");
     }

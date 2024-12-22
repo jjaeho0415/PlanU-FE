@@ -10,7 +10,7 @@ type IGetUserInfoResponseType = {
   birthday: string;
 };
 
-const getUserInfo = async (accessToken: string):Promise<IGetUserInfoResponseType> => {
+const getUserInfo = async (accessToken: string): Promise<IGetUserInfoResponseType> => {
   return await api.get({
     endpoint: `${apiRoutes.userProfile}`,
     authorization: accessToken,
@@ -18,9 +18,9 @@ const getUserInfo = async (accessToken: string):Promise<IGetUserInfoResponseType
 };
 
 export const useGetUserInfo = (accessToken: string) => {
-    return useQuery({
-        queryKey: ['UserProfile'],
-        queryFn: () => getUserInfo(accessToken),
-      
-    })
-}
+  return useQuery({
+    queryKey: ["UserProfile"],
+    queryFn: () => getUserInfo(accessToken),
+    enabled: accessToken !== "",
+  });
+};
