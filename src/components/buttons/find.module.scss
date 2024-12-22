@@ -1,0 +1,15 @@
+.ButtonContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background);
+  color: var(--violet-300);
+  border-radius: 100px;
+  height: 28px;
+  width: 78px;
+  white-space: nowrap;
+  padding: 10px 5px;
+  font-size: 11px;
+  border: 1.5px solid var(--violet-300);
+  cursor: pointer;
+}

@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import styles from "./Tab.module.scss";
+import styles from "./findInput.module.scss";
+import InputItem from "./InputItem";
 
 interface props {
-  findType: "id" | "password";
+  findType: "id" | "pw";
 }
 
 const FindInput: React.FC<props> = ({ findType }) => {
+  const [selectedInputType, setSelectedInputType] = useState<IInputItem[]>([]);
+
   const {
     register: idRegister,
     handleSubmit: idHandleSubmit,
@@ -44,12 +47,18 @@ const FindInput: React.FC<props> = ({ findType }) => {
       rules: {
         required: "이메일을 입력하세요.",
       },
+      onClick: () => {
+        return;
+      },
     },
     {
       name: "code",
       text: "인증번호 입력",
       buttonText: "확인",
       rules: {},
+      onClick: () => {
+        return;
+      },
     },
   ];
 
@@ -59,18 +68,27 @@ const FindInput: React.FC<props> = ({ findType }) => {
       text: "아이디 입력",
       buttonText: "확인",
       rules: {},
+      onClick: () => {
+        return;
+      },
     },
     {
       name: "email",
       text: "이메일 입력",
       buttonText: "인증번호 전송",
       rules: {},
+      onClick: () => {
+        return;
+      },
     },
     {
       name: "code",
       text: "인증번호 입력",
       buttonText: "확인",
       rules: {},
+      onClick: () => {
+        return;
+      },
     },
     {
       name: "newPassword",
@@ -81,20 +99,45 @@ const FindInput: React.FC<props> = ({ findType }) => {
     {
       name: "confirmNewPassword",
       text: "새 비밀번호 재입력",
-      type: "password",
-      buttonText: "새 비밀번호 재입력",
+      buttonText: "확인",
       rules: {},
+      onClick: () => {
+        return;
+      },
     },
   ];
+
+  useEffect(() => {
+    if (findType === "id") {
+      setSelectedInputType(idInputList);
+    } else {
+      setSelectedInputType(pwInputList);
+    }
+  }, [findType]);
 
   const handleSubmit = () => {};
 
   return (
     <form onSubmit={handleSubmit}>
       <div className={styles.InputsBox}>
-        {findType === "id"
-          ? idInputList.map(() => <div></div>)
-          : pwInputList.map(() => <div></div>)}
+        {selectedInputType.map((input) => {
+          const registerProps =
+            findType === "id"
+              ? idRegister(input.name as keyof IFindIdFormData, input.rules)
+              : pwRegister(input.name as keyof IFindPWFormData, input.rules);
+
+          return (
+            <div key={input.name}>
+              <InputItem
+                inputText={input.text}
+                buttonText={input.buttonText || ""}
+                isPassword={input.type === "password"}
+                onClick={input.onClick}
+                {...registerProps}
+              />
+            </div>
+          );
+        })}
       </div>
     </form>
   );
