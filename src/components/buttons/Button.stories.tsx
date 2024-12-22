@@ -7,6 +7,7 @@ import { MemoryRouter } from "react-router-dom";
 import styles from "./buttonStory.module.scss";
 import CheckButton from "./CheckButton";
 import MiniButton from "./MiniButton";
+import FindButton from "./FindButton";
 
 function Button() {
   return (
@@ -165,6 +166,21 @@ function Button() {
           return;
         }}
       />
+      <h1>FindButton</h1>
+      <div className={styles.Container}>
+        <FindButton
+          buttonText="인증번호 전송"
+          onClick={() => {
+            return;
+          }}
+        />
+        <FindButton
+          buttonText="확인"
+          onClick={() => {
+            return;
+          }}
+        />
+      </div>
     </>
   );
 }
