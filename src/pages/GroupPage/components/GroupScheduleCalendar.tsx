@@ -1,3 +1,4 @@
+import { getFormattedLocation } from "../../../constants/truncation";
 import styles from "./groupScheduleCalendar.module.scss";
 import {
   addDays,
@@ -10,6 +11,7 @@ import {
   format,
   isWithinInterval,
   parseISO,
+  isSameDay,
 } from "date-fns";
 
 interface Props {
@@ -68,15 +70,21 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
             >
               <span className={styles.dateNumber}>{format(date, "d")}</span>
               <div className={styles.scheduleContainer}>
-                {schedules.map((schedule) => (
-                  <div
-                    key={schedule.id}
-                    className={styles.schedule}
-                    style={{ backgroundColor: schedule.color }}
-                  >
-                    {schedule.title}
-                  </div>
-                ))}
+                {schedules.map((schedule) => {
+                  const isStartDate = isSameDay(date, parseISO(schedule.startDateTime));
+                  return (
+                    <div
+                      key={schedule.id}
+                      className={styles.schedule}
+                      style={{
+                        backgroundColor: schedule.color,
+                        opacity: isSameMonth(date, currentDate) ? "1" : "0.5",
+                      }}
+                    >
+                      {isStartDate && getFormattedLocation(schedule.title)}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           );
