@@ -21,6 +21,13 @@ function Button() {
               return;
             }}
           />
+          <DefaultButton
+            buttonText="완료"
+            onClick={() => {
+              return;
+            }}
+            isDisabled={true}
+          />
         </div>
       </div>
       <hr />

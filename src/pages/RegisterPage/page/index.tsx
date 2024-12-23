@@ -38,7 +38,7 @@ const RegisterPage: React.FC = () => {
 
   const [isCheckingId, setIsCheckingId] = useState<boolean>(false);
   const [isCheckedId, setIsCheckedId] = useState<boolean>(false);
-  const [isSendingEmailCode, setIsSendingEmailCode] = useState<boolean>(false);
+  const [isSendedEmailCode, setIsSendedEmailCode] = useState<boolean>(false);
   const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
   const { mutate: sendCode } = usePostEmailVerification();
   const { mutate: confirmCode } = usePostConfirmEmailCode();
@@ -70,11 +70,11 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleSendCode = (email: string) => {
+    setIsSendedEmailCode(true);
     if (!email) {
       alert("이메일을 입력하세요");
       return;
     }
-    setIsSendingEmailCode(true);
     sendCode(
       { email, purpose: "register" },
       {
@@ -171,7 +171,7 @@ const RegisterPage: React.FC = () => {
     },
   ];
 
-  if (isSendingEmailCode) {
+  if (isSendedEmailCode) {
     inputList.push({
       name: "code",
       text: "인증코드 6자리 입력",
@@ -241,7 +241,7 @@ const RegisterPage: React.FC = () => {
             </div>
           </div>
         ))}
-        {isSendingEmailCode && (
+        {isSendedEmailCode && (
           <div className={styles.ResendBox}>
             <Icon_alert />
             <p className={styles.ResendP}>
@@ -258,7 +258,6 @@ const RegisterPage: React.FC = () => {
             </p>
           </div>
         )}
-
         <div className={styles.ButtonBox}>
           <LoginButton buttonType="register" onClick={handleSubmit(onSubmit)} />
           <GoLogin textType="login" textColor="gray" />
