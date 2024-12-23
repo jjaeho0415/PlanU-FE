@@ -1,6 +1,16 @@
-import { formatDate } from "../../../constants/formatDate";
-import { getFormattedLocation } from "../../../constants/truncation";
 import styles from "./groupScheduleCalendar.module.scss";
+import {
+  addDays,
+  differenceInCalendarDays,
+  endOfMonth,
+  endOfWeek,
+  startOfMonth,
+  startOfWeek,
+  isSameMonth,
+  format,
+  isWithinInterval,
+  parseISO,
+} from "date-fns";
 
 interface Props {
   groupSchedules: IGroupSchedulesType[];
@@ -10,76 +20,32 @@ interface Props {
 const DAY_LIST = ["일", "월", "화", "수", "목", "금", "토"];
 
 const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => {
-  const renderCalendar = () => {
-    const currentYear = new Date().getFullYear();
-    const currentMonth = new Date().getMonth();
+  const currentDate = new Date();
+  const monthStart = startOfMonth(currentDate); // 현재 달의 시작 날짜 (요일 포함)
+  const monthEnd = endOfMonth(currentDate); // 현재 달의 마지막 날짜 (요일 포함)
+  const startDate = startOfWeek(monthStart); // 달력에 표시될 현재 달의 시작 날짜가 포함된 주의 시작 날짜
+  const endDate = endOfWeek(monthEnd); // 달력에 표시될 현재 달의 마지막 날짜가 포함된 주의 끝 날짜
 
-    const firstDay = new Date(currentYear, currentMonth, 1).getDay();
-    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    const daysInPrevMonth = new Date(currentYear, currentMonth, 0).getDate();
-    const prevMonthDaysToShow = firstDay;
-    const totalCells = 35;
-    const nextMonthDaysToShow = totalCells - (prevMonthDaysToShow + daysInMonth);
-
-    const calendarCells = [];
-
-    // 이전 달의 날짜 표시
-    for (let i = prevMonthDaysToShow; i > 0; i--) {
-      const day = daysInPrevMonth - i + 1;
-      calendarCells.push(
-        <div key={`prev-${day}`} className={`${styles.dataCell} ${styles.grayText}`}>
-          <span className={styles.dateNumber}>{day}</span>
-        </div>,
-      );
+  const currentMonthData = () => {
+    const monthArray = [];
+    let day = startDate;
+    while (differenceInCalendarDays(endDate, day) >= 0) {
+      monthArray.push(day);
+      day = addDays(day, 1);
     }
+    console.log(monthArray);
 
-    // 이번 달의 날짜 표시
-    for (let day = 1; day <= daysInMonth; day++) {
-      const currentDate = formatDate(new Date(currentYear, currentMonth, day)); 
+    return monthArray;
+  };
+  const monthArray = currentMonthData();
 
-      // 해당 날짜에 맞는 일정을 찾음
-      const daySchedules = groupSchedules.filter((schedule) => {
-        const startDate = schedule.startDateTime; 
-        const endDate = schedule.endDateTime;
-
-        return currentDate >= startDate && currentDate <= endDate;
-      });
-
-      calendarCells.push(
-        <div key={`current-${day}`} className={styles.dateCell}>
-          <span className={styles.dateNumber}>{day}</span>
-
-          {daySchedules.map((schedule) => {
-            const startDate = schedule.startDateTime;
-            const isFirstScheduleInRange = currentDate === startDate;
-            
-            // 텍스트는 startDate에만 표시하고, 색상은 startDate부터 연속적으로 이어짐
-            return (
-              <div
-                key={schedule.id}
-                className={styles.schedule}
-                style={{
-                  backgroundColor: schedule.color
-                }}
-              >
-                {isFirstScheduleInRange && getFormattedLocation(schedule.title)}
-              </div>
-            );
-          })}
-        </div>,
-      );
-    }
-
-    // 다음 달의 날짜 표시
-    for (let day = 1; day <= nextMonthDaysToShow; day++) {
-      calendarCells.push(
-        <div key={`next-${day}`} className={`${styles.dateCell} ${styles.grayText}`}>
-          <span className={styles.dateNumber}>{day}</span>
-        </div>,
-      );
-    }
-
-    return calendarCells;
+  const getSchedulesForDate = (date: Date) => {
+    return groupSchedules.filter((schedule) =>
+      isWithinInterval(date, {
+        start: parseISO(schedule.startDateTime),
+        end: parseISO(schedule.endDateTime),
+      }),
+    );
   };
 
   return (
@@ -91,7 +57,31 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
           </div>
         ))}
       </div>
-      <div className={styles.calendarGrid}>{renderCalendar()}</div>
+
+      <div className={styles.calendarGrid}>
+        {monthArray.map((date, index) => {
+          const schedules = getSchedulesForDate(date);
+          return (
+            <div
+              key={index}
+              className={`${styles.dateCell} ${isSameMonth(date, currentDate) ? "" : styles.grayText}`}
+            >
+              <span className={styles.dateNumber}>{format(date, "d")}</span>
+              <div className={styles.scheduleContainer}>
+                {schedules.map((schedule) => (
+                  <div
+                    key={schedule.id}
+                    className={styles.schedule}
+                    style={{ backgroundColor: schedule.color }}
+                  >
+                    {schedule.title}
+                  </div>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 };
