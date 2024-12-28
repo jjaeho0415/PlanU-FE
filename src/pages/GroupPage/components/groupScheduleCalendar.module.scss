@@ -1,0 +1,77 @@
+.calendarContainer {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f9f9f9;
+  border: 1px solid #333333;
+  .dayHeaders {
+    display: grid;
+    font-size: 12px;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    background: #ffffff;
+    height: 32px;
+    .dayHeader {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: bold;
+      color: #666666;
+      border-right: 0.5px solid #e0e0e0;
+    }
+    .dayHeader:last-child {
+      border-right: none;
+    }
+
+    .dayHeader:nth-child(1) {
+      color: #ff0000;
+    }
+
+    .dayHeader:nth-child(7) {
+      color: #2079ff;
+    }
+  }
+  .calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    border-top: 0.5px solid #ddd;
+    .dateCell{
+      background: white;
+      height: 48px;
+      padding: 1px 0;
+      border-right: 0.5px solid #e0e0e0;
+      border-bottom: 0.5px solid #e0e0e0;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+  }
+}
+
+.dateNumber {
+  padding-left: 2px;
+  font-weight: bold;
+  color: #333;
+  font-size: 10px;
+  margin-bottom: 1px;
+}
+
+.grayText .dateNumber {
+  padding-left: 2px;
+  font-weight: bold;
+  color: #bdbdbd;
+  font-size: 10px;
+  margin-bottom: 1px;
+}
+
+.schedule {
+  font-size: 5px;
+  height: 9px;
+  color: var(--black);
+  display: flex;
+  align-items: center;
+  margin-bottom: 1px;
+  padding-left: 0.5px;
+}

@@ -1,0 +1,18 @@
+.mainContainer{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 54px;
+    height: 54px;
+    gap: 6px;
+    cursor: pointer;
+    background-color: var(--white);
+    border-radius: 10px;
+
+    .titleSection{
+        font-size: 5px;
+        font-weight:400;
+        color: var(--black);
+    }
+}

@@ -2,7 +2,7 @@ import Layout from "@layout/Layout";
 import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
-import { default as CreateGroupPage, default as GroupPage } from "@pages/CreateGroupPage/page";
+import CreateGroupPage from "@pages/CreateGroupPage/page";
 import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage";
 import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
@@ -22,7 +22,8 @@ import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import RegisterAccountPage from "@pages/RegisterAccountPage/page";
-import RegisterSuccessPage from "@pages/RegisterSuccessPage/page/inedx";
+import RegisterSuccessPage from "@pages/RegisterSuccessPage/page";
+import GroupPage from "@pages/GroupPage/page";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import SelectLocationPage from "@pages/SelectLocationPage/page";
@@ -49,7 +50,7 @@ function App() {
             <Route path="/registerAccount" element={<RegisterAccountPage />} />
             <Route path="/myCalendar" element={<MyCalendarPage />} />
             <Route path="/myCalendarPossible" element={<MyCalendarPossiblePage />} />
-            <Route path="/group/:groupId/calendar" element={<GroupCalendarPage />} />
+            <Route path="/group/:groupId/groupCalendar" element={<GroupCalendarPage />} />
             <Route path="/groupCalendarPossible" element={<GroupCalendarPossiblePage />} />
             <Route path="/chatList" element={<ChatListPage />} />
             <Route path="/chatList/search" element={<ChatListSearchPage />} />
@@ -81,7 +82,7 @@ function App() {
             <Route path="/groupList" element={<GroupListPage />} />
             <Route path="/group/:groupId" element={<GroupPage />} />
             <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
-            <Route path="/group/:groupId/inviteGroupMember" element={<InviteGroupMemberPage/>}/>
+            <Route path="/group/:groupId/inviteGroupMember" element={<InviteGroupMemberPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Route>

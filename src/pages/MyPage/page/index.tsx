@@ -3,7 +3,6 @@ import Footer from "../../../components/nav-bar/BottomNavBar";
 import ButtonSection from "../components/ButtonSection";
 import MenuSection from "../components/MenuSection";
 import ProfileSection from "../components/ProfileSection";
-
 import styles from "./myPage.module.scss";
 
 const MyPage = () => {
