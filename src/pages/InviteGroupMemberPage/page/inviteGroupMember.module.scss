@@ -1,0 +1,23 @@
+.mainContainer {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--background-50);
+  overflow: scroll;
+  scrollbar-width: none;
+  .contentContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    
+    .searchContainer{
+        display: flex;
+        justify-content: center;
+    }
+    .line{
+        background-color: #F4E5FF;
+    }
+    .friendContainer{
+
+    }
+  }
+}
