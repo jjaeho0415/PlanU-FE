@@ -2,9 +2,9 @@ import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import BottomNavBar from "@components/nav-bar/BottomNavBar";
 import styles from "./groupList.module.scss";
 import GroupItem from "../components/GroupItem";
-import InvitateItem from "../components/InvitateItem";
 import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
 import { useNavigate } from "react-router-dom";
+import InviteItem from "../components/InviteItem";
 
 const GroupListPage: React.FC = () => {
   const navigate = useNavigate();
@@ -21,8 +21,8 @@ const GroupListPage: React.FC = () => {
       <div className={styles.Border} />
       <div className={styles.ContentBox}>
         <p className={styles.TitleP}>Invitation Request</p>
-        <InvitateItem />
-        <InvitateItem />
+        <InviteItem />
+        <InviteItem />
       </div>
       <div className={styles.Border} />
       <div className={styles.ContentBox}>

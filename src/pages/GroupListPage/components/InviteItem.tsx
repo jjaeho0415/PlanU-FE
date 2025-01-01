@@ -4,7 +4,7 @@ import DefaultProfileImage from "@assets/Icons/Default Profile/default_profile.s
 
 interface IProps {}
 
-const InvitateItem: React.FC<IProps> = () => {
+const InviteItem: React.FC<IProps> = () => {
   return (
     <div className={styles.Container}>
       <div className={styles.ProfileImg}>
@@ -17,4 +17,4 @@ const InvitateItem: React.FC<IProps> = () => {
   );
 };
 
-export default InvitateItem;
+export default InviteItem;
