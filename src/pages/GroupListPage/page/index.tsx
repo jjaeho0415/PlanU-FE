@@ -3,6 +3,7 @@ import BottomNavBar from "@components/nav-bar/BottomNavBar";
 import styles from "./groupList.module.scss";
 import GroupItem from "../components/GroupItem";
 import InvitateItem from "../components/InvitateItem";
+import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
 
 const GroupListPage: React.FC = () => {
   return (
@@ -25,8 +26,12 @@ const GroupListPage: React.FC = () => {
         <p className={styles.TitleP}>MyGroup</p>
         <GroupItem />
         <GroupItem />
+        <GroupItem />
+        <GroupItem />
+        <GroupItem />
       </div>
       <div className={styles.Border} />
+      <Icon_add className={styles.AddIcon} />
       <BottomNavBar />
     </div>
   );

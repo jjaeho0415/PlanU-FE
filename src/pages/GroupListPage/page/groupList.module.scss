@@ -1,6 +1,8 @@
 .Container {
   background-color: var(--background-50);
   height: 100dvh;
+  position: relative;
+  overflow: scroll;
 
   .Border {
     height: 17px;
@@ -13,6 +15,13 @@
     display: flex;
     flex-direction: column;
     gap: 10px;
+  }
+
+  .AddIcon {
+    cursor: pointer;
+    position: sticky;
+    bottom: 15%;
+    left: 80%;
   }
 }
 
