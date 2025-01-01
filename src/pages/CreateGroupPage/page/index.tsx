@@ -4,10 +4,12 @@ import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrow
 import GroupNameInput from "../components/GroupNameInput";
 import ImageUploader from "../components/ImageUploader";
 import styles from "./createGroup.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const CreateGroupPage = () => {
   const [groupName, setGroupName] = useState("");
   const [image, setImage] = useState<File | string | null>(null);
+  const navigate = useNavigate();
 
   const handleCompletion = () => {
     if (!groupName) {
@@ -23,7 +25,9 @@ const CreateGroupPage = () => {
     alert("그룹 생성 완료!");
   };
 
-  const handleBackClick = () => {};
+  const handleBackClick = () => {
+    navigate("/groupList");
+  };
 
   return (
     <div className={styles.CreateGroupPage}>

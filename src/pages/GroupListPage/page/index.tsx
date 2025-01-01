@@ -4,8 +4,11 @@ import styles from "./groupList.module.scss";
 import GroupItem from "../components/GroupItem";
 import InvitateItem from "../components/InvitateItem";
 import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
+import { useNavigate } from "react-router-dom";
 
 const GroupListPage: React.FC = () => {
+  const navigate = useNavigate();
+
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
@@ -31,7 +34,7 @@ const GroupListPage: React.FC = () => {
         <GroupItem />
       </div>
       <div className={styles.Border} />
-      <Icon_add className={styles.AddIcon} />
+      <Icon_add className={styles.AddIcon} onClick={() => navigate("/createGroup")} />
       <BottomNavBar />
     </div>
   );
