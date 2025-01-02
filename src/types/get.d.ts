@@ -18,3 +18,10 @@ type IGroupSchedulesType = {
     endDateTime: string;
     color: string;
 }
+
+type IGetFriendMemberType = {
+    profileImageUrl: string;
+    name: string;
+    username: string;
+    requestState: "progress" | "none";
+}

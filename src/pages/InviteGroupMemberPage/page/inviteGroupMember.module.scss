@@ -4,20 +4,31 @@
   background-color: var(--background-50);
   overflow: scroll;
   scrollbar-width: none;
-  .contentContainer{
+  .contentContainer {
     width: 100%;
     display: flex;
     flex-direction: column;
-    
-    .searchContainer{
-        display: flex;
-        justify-content: center;
+    gap: 20px;
+    .searchContainer {
+      display: flex;
+      justify-content: center;
     }
-    .line{
-        background-color: #F4E5FF;
+    .line {
+      background-color: var(--button);
+      height: 4px;
+      width: 100%;
     }
-    .friendContainer{
-
+    .friendContainer {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      gap: 15px;
+      padding: 0 24px;
+      .friendText {
+        font-size: 15px;
+        font-weight: lighter;
+        color: var(--gray-200);
+      }
     }
   }
 }
