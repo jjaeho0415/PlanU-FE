@@ -8,7 +8,7 @@ interface IMiniButton {
   color: "purple" | "purple_light" | "white" | "gray" | "red";
   isCalendar?: boolean;
   isAddFriend?: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const MiniButton: React.FC<IMiniButton> = ({

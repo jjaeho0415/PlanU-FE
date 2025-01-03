@@ -82,7 +82,7 @@ function App() {
             <Route path="/groupList" element={<GroupListPage />} />
             <Route path="/group/:groupId" element={<GroupPage />} />
             <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
-            <Route path="/group/:groupId/inviteGroupMember" element={<InviteGroupMemberPage />} />
+            <Route path="/group/:groupId/inviteMembers" element={<InviteGroupMemberPage />} />
           </Route>
           <Route path="*" element={<ErrorPage />} />
         </Route>

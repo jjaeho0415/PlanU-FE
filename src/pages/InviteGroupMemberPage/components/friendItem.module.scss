@@ -1,0 +1,26 @@
+.friendItem {
+  display: flex;
+  justify-content: space-between;
+  .leftSection {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: lighter;
+    color: var(--black);
+    gap: 15px;
+    .profileSection {
+      width: 42.43px;
+      height: 40px;
+      border: 1px solid #d9d9d9;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+  .rightSection {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+}
