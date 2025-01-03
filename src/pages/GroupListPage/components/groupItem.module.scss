@@ -1,0 +1,28 @@
+.Container {
+  width: 100%;
+  height: 75px;
+  display: flex;
+  border-bottom: 1px solid var(--gray-200);
+  align-items: center;
+  gap: 20px;
+
+  .ProfileImg {
+    width: 53px;
+    height: 53px;
+    border-radius: 100%;
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .InfoBox {
+    .GroupName {
+      font-size: 17px;
+    }
+
+    .MembersNum {
+      font-size: 13px;
+    }
+  }
+}

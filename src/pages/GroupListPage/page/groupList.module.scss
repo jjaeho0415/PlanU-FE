@@ -1,0 +1,30 @@
+.Container {
+  background-color: var(--background-50);
+  height: 100dvh;
+  position: relative;
+  overflow: scroll;
+
+  .Border {
+    height: 17px;
+    background-color: var(--violet);
+  }
+
+  .ContentBox {
+    padding: 0 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .AddIcon {
+    cursor: pointer;
+    position: sticky;
+    bottom: 15%;
+    left: 80%;
+  }
+}
+
+.TitleP {
+  font-size: 18px;
+}
