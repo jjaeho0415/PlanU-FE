@@ -1,0 +1,33 @@
+.container {
+  margin-bottom: 16px;
+
+  .label {
+    font-size: 14px;
+    color: #888;
+    margin-bottom: 11px;
+  }
+
+  .valueContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 11px;
+
+    span {
+      font-size: 16px;
+      color: var(--black);
+    }
+  }
+
+  .arrow {
+    width: 16px;
+    height: 16px;
+    color: #666666;
+    cursor: pointer;
+  }
+
+  .bottomLine {
+    border-top: 1px solid #484848;
+    margin-top: 11px;
+  }
+}
