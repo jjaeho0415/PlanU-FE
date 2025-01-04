@@ -3,14 +3,36 @@
 
   .label {
     font-size: 14px;
-    color: #505051;
+    color: var(--gray-800);
   }
-
+  .inputWrapper {
+    position: relative;
+  }
   .input {
     font-size: 16px;
     border: none;
-    border-bottom: 1px solid #484848;
+    border-bottom: 1px solid var(--gray-800);
     padding: 11px 0;
     width: 100%;
+    background-color: transparent;
+  }
+  .iconButton {
+    background: none;
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-60%);
+    padding: 8px 12px;
+  }
+  .button {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-60%);
+    padding: 7px 11px;
+    background: var(--gray-100);
+    border-radius: 8px;
+    cursor: pointer;
   }
 }

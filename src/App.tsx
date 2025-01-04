@@ -20,6 +20,7 @@ import GroupScheduleDetailPage from "@pages/GroupScheduleDetailPage/page";
 import InviteGroupMemberPage from "@pages/InviteGroupMemberPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
+import ModifyMyAccountPage from "@pages/ModifyMyAccountPage/page";
 import MyCalendarPage from "@pages/MyCalendarPage/page";
 import MyCalendarPossiblePage from "@pages/MyCalendarPossiblePage/page";
 import MyPage from "@pages/MyPage/page";
@@ -58,6 +59,7 @@ function App() {
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
+            <Route path="/myPage/ModifyMyAccountPage" element={<ModifyMyAccountPage />} />
             <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
             <Route
               path="/group/:groupId/calendar/createSchedule"
