@@ -1,0 +1,17 @@
+.mainContainer {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--background-50);
+  overflow: scroll;
+  scrollbar-width: none;
+  .contentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .searchContainer {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
