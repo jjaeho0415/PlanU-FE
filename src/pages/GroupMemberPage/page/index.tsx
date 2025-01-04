@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./groupMember.module.scss";
 import { useState } from "react";
 import SearchBox from "@pages/InviteGroupMemberPage/components/SearchBox";
-import MemberList from "../components/memberList";
+import MemberList from "../components/MemberList";
 
 const groupMembers: IGetGroupMembersType = {
   members: [
