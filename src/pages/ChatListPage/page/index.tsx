@@ -62,7 +62,7 @@ const chatData = [
   },
 ];
 
-const MessagesPage: React.FC = () => {
+const ChatListPage: React.FC = () => {
   const handleSearchClick = () => {};
   const handleAlertClick = () => {};
 
@@ -83,4 +83,4 @@ const MessagesPage: React.FC = () => {
   );
 };
 
-export default MessagesPage;
+export default ChatListPage;
