@@ -16,8 +16,8 @@ const ProfileEditPage: React.FC = () => {
 
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const [password, setPassword] = useState("");
-  const [newPassword] = useState("********");
-  const [passwordConfirm] = useState("ehgkjko0630");
+  const newPassword = "********";
+  const passwordConfirm = "ehgkjko0630";
   const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false);
 
   const [isBirthDateModalOpen, setIsBirthDateModalOpen] = useState(false);
@@ -86,7 +86,18 @@ const ProfileEditPage: React.FC = () => {
   return (
     <div className={styles.container}>
       <HeaderBar title="프로필 수정" handleClick={() => console.log("뒤로가기 클릭됨")} />
-      <ProfileImageEdit iconType="edit" image={null} setImage={() => {}} />
+      <div
+        style={{
+          width: "120px",
+          height: "120px",
+          justifyContent: "center",
+          alignItems: "center",
+          margin: "25px auto",
+          display: "flex",
+        }}
+      >
+        <ProfileImageEdit iconType="edit" image={null} setImage={() => {}} />
+      </div>
       <div className={styles.profileItems}>
         <InlineEditableProfileItem label="이름" value="이다은" onChange={() => {}} />
         <InlineEditableProfileItem label="아이디" value="Eunii0713" onChange={() => {}} />
