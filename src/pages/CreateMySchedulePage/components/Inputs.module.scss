@@ -1,0 +1,110 @@
+.Box {
+  width: 360px;
+  height: 40px;
+  border: 1px solid var(--gray-800);
+  border-radius: 5px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  justify-content: space-between;
+}
+
+.Title {
+  font-size: 15px;
+  color: var(--gray-100);
+}
+
+// title
+.Input {
+  width: 340px;
+  height: 40px;
+  border: 1px solid var(--gray-800);
+  background-color: var(--white);
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 15px;
+}
+
+.Input::placeholder {
+  font-size: 15px;
+  color: var(--gray-100);
+}
+
+//color
+.RightBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Color {
+  background-color: pink;
+  height: 22px;
+  width: 22px;
+  border-radius: 100%;
+}
+
+// time
+.TimeTopBox {
+  width: 360px;
+  height: 40px;
+  border: 1px solid var(--gray-800);
+  border-bottom: none;
+  background-color: var(--white);
+  padding: 0 10px;
+  border-radius: 5px 5px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.TimeMiddleBox {
+  width: 360px;
+  height: 40px;
+  border: 1px solid var(--gray-800);
+  border-bottom: none;
+  background-color: var(--white);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+}
+
+.TimeLastBox {
+  width: 360px;
+  height: 40px;
+  border: 1px solid var(--gray-800);
+  background-color: var(--white);
+  padding: 0 10px;
+  border-radius: 0 0 5px 5px;
+  display: flex;
+  align-items: center;
+}
+
+// location
+.LocationContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.MapBox {
+  width: 360px;
+  height: 200px;
+  background-color: var(--white);
+}
+
+// note
+.TextArea {
+  width: 340px;
+  padding: 10px;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid var(--gray-800);
+  font-size: 15px;
+}
+
+.TextArea::placeholder {
+  font-size: 15px;
+  color: var(--gray-100);
+}

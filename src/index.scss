@@ -15,6 +15,7 @@ body {
 
 /* input, textarea의 기본 스타일 제거 */
 input {
+  font-family: "GmarketSansMedium";
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
@@ -26,6 +27,10 @@ input:focus {
   outline: none;
 }
 
+textarea {
+  font-family: "GmarketSansMedium";
+}
+
 .root {
   min-width: 390px;
   max-width: 430px;
@@ -33,7 +38,6 @@ input:focus {
   height: 100dvh;
   margin: 0 auto;
 }
-
 
 div {
   box-sizing: border-box;
