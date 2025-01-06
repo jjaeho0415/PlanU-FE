@@ -25,3 +25,15 @@ type IGetFriendMemberType = {
     username: string;
     requestState: "progress" | "none";
 }
+
+type IGetGroupMembersType = {
+    members: IGroupMemberType[];
+}
+
+type IGroupMemberType = {
+    name: string;
+    username: string;
+    profileImageUrl: string;
+    groupRole: "LEADER" | "PARTICIPANT";
+    friendStatus: "RECEIVE" | "FRIEND" | "NOT_FRIEND" | "ME";
+}

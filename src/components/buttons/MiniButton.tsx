@@ -2,12 +2,14 @@ import React from "react";
 import styles from "./mini.module.scss";
 import Icon_calendar from "@assets/Icons/Icon_calendar.svg?react";
 import Icon_add from "@assets/Icons/Icon_add.svg?react";
+import Icon_check from "@assets/Icons/groupPage/checkIcon.svg?react";
 
 interface IMiniButton {
   buttonText: string;
   color: "purple" | "purple_light" | "white" | "gray" | "red";
   isCalendar?: boolean;
   isAddFriend?: boolean;
+  isCheck?: boolean;
   onClick?: () => void;
 }
 
@@ -16,6 +18,7 @@ const MiniButton: React.FC<IMiniButton> = ({
   color,
   isCalendar = false,
   isAddFriend = false,
+  isCheck = false,
   onClick,
 }) => {
   return (
@@ -23,6 +26,7 @@ const MiniButton: React.FC<IMiniButton> = ({
       {isCalendar && <Icon_calendar />}
       <p>{buttonText}</p>
       {isAddFriend && <Icon_add />}
+      {isCheck && <Icon_check />}
     </div>
   );
 };
