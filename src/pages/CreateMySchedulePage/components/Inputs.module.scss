@@ -66,14 +66,12 @@
 
 .Middle {
   border: 1px solid var(--gray-800);
-  border-bottom: none;
-  cursor: pointer;
 }
 
 .Last {
   border: 1px solid var(--gray-800);
+  border-top: none;
   border-radius: 0 0 5px 5px;
-  cursor: pointer;
 }
 
 .Cursor {
@@ -81,7 +79,11 @@
 }
 
 .Time {
+  display: flex;
+  align-items: center;
   color: var(--gray-800);
+  cursor: pointer;
+  gap: 15px;
 }
 
 // location

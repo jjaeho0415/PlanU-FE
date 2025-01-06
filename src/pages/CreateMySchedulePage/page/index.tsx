@@ -11,6 +11,9 @@ import { useState } from "react";
 
 const CreateMySchedulePage: React.FC = () => {
   const [isAllDay, setIsAllDay] = useState<boolean>(false);
+  const [startDate, setStartDate] = useState<string>("");
+  const [endDate, setEndDate] = useState<string>("");
+
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
