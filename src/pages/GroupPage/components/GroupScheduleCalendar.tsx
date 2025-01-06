@@ -11,8 +11,9 @@ import {
   format,
   isWithinInterval,
   parseISO,
-  isSameDay,
+  getDay,
 } from "date-fns";
+import HOLIDAYS from "../../../constants/holidays";
 
 interface Props {
   groupSchedules: IGroupSchedulesType[];
@@ -35,7 +36,6 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
       monthArray.push(day);
       day = addDays(day, 1);
     }
-    console.log(monthArray);
 
     return monthArray;
   };
@@ -48,6 +48,11 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
         end: parseISO(schedule.endDateTime),
       }),
     );
+  };
+
+  const isHoliday = (date: Date): boolean => {
+    const formattedDate = format(date, "MM-dd"); // MM-DD 형식으로 변환
+    return HOLIDAYS.includes(formattedDate);
   };
 
   return (
@@ -63,28 +68,39 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
       <div className={styles.calendarGrid}>
         {monthArray.map((date, index) => {
           const schedules = getSchedulesForDate(date);
+          const dayOfWeek = getDay(date);
+          const dateNumberStyle = isHoliday(date)
+            ? { color: "#ff0000" }
+            : dayOfWeek === 0 // 일요일
+              ? { color: "#ff0000" }
+              : dayOfWeek === 6 // 토요일
+                ? { color: "#2079ff" }
+                : {};
+
           return (
             <div
               key={index}
               className={`${styles.dateCell} ${isSameMonth(date, currentDate) ? "" : styles.grayText}`}
+              style={{
+                opacity: isSameMonth(date, currentDate) ? "1" : "0.5", 
+              }}
             >
-              <span className={styles.dateNumber}>{format(date, "d")}</span>
+              <span className={styles.dateNumber} style={dateNumberStyle}>
+                {format(date, "d")}
+              </span>
               <div className={styles.scheduleContainer}>
-                {schedules.map((schedule) => {
-                  const isStartDate = isSameDay(date, parseISO(schedule.startDateTime));
-                  return (
-                    <div
-                      key={schedule.id}
-                      className={styles.schedule}
-                      style={{
-                        backgroundColor: schedule.color,
-                        opacity: isSameMonth(date, currentDate) ? "1" : "0.5",
-                      }}
-                    >
-                      {isStartDate && getFormattedLocation(schedule.title)}
-                    </div>
-                  );
-                })}
+                {schedules.map((schedule) => (
+                  <div
+                    key={schedule.id}
+                    className={styles.schedule}
+                    style={{
+                      backgroundColor: schedule.color,
+                      opacity: isSameMonth(date, currentDate) ? "1" : "0.5",
+                    }}
+                  >
+                    {getFormattedLocation(schedule.title)}
+                  </div>
+                ))}
               </div>
             </div>
           );
