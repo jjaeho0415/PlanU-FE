@@ -8,6 +8,7 @@
   align-items: center;
   background-color: var(--white);
   justify-content: space-between;
+  cursor: pointer;
 }
 
 .Title {
@@ -17,13 +18,14 @@
 
 // title
 .Input {
-  width: 340px;
-  height: 40px;
+  width: 360px;
+  min-height: 40px;
   border: 1px solid var(--gray-800);
   background-color: var(--white);
   border-radius: 5px;
   padding: 0 10px;
   font-size: 15px;
+  color: var(--gray-800);
 }
 
 .Input::placeholder {
@@ -46,39 +48,40 @@
 }
 
 // time
-.TimeTopBox {
+.TimeBox {
   width: 360px;
   height: 40px;
-  border: 1px solid var(--gray-800);
-  border-bottom: none;
   background-color: var(--white);
   padding: 0 10px;
-  border-radius: 5px 5px 0 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.TimeMiddleBox {
-  width: 360px;
-  height: 40px;
+.Top {
   border: 1px solid var(--gray-800);
   border-bottom: none;
-  background-color: var(--white);
-  padding: 0 10px;
-  display: flex;
-  align-items: center;
+  border-radius: 5px 5px 0 0;
 }
 
-.TimeLastBox {
-  width: 360px;
-  height: 40px;
+.Middle {
   border: 1px solid var(--gray-800);
-  background-color: var(--white);
-  padding: 0 10px;
+  border-bottom: none;
+  cursor: pointer;
+}
+
+.Last {
+  border: 1px solid var(--gray-800);
   border-radius: 0 0 5px 5px;
-  display: flex;
-  align-items: center;
+  cursor: pointer;
+}
+
+.Cursor {
+  cursor: pointer;
+}
+
+.Time {
+  color: var(--gray-800);
 }
 
 // location
@@ -96,12 +99,15 @@
 
 // note
 .TextArea {
-  width: 340px;
+  width: 360px;
+  height: 40px;
   padding: 10px;
   resize: none;
   border-radius: 5px;
   border: 1px solid var(--gray-800);
   font-size: 15px;
+  max-height: 240px; /* 최대 높이 (12줄 기준, line-height * 12) */
+  line-height: 20px;
 }
 
 .TextArea::placeholder {

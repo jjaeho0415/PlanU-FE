@@ -21,6 +21,7 @@ input {
   appearance: none;
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
 input:focus {
@@ -29,6 +30,7 @@ input:focus {
 
 textarea {
   font-family: "GmarketSansMedium";
+  box-sizing: border-box;
 }
 
 .root {

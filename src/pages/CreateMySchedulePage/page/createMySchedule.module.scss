@@ -1,20 +1,21 @@
 .Container {
   height: 100dvh;
   width: 100%;
-  overflow: scroll;
-  background-color: var(--background-50);
+  position: relative;
 
   .ContentContainer {
-    height: 100dvh;
+    background-color: var(--background-50);
     display: flex;
+    overflow: scroll;
     flex-direction: column;
     gap: 20px;
     align-items: center;
-    margin-top: 20px;
+    padding-top: 20px;
+    padding-bottom: 30px;
   }
 
   .ButtonBox {
-    position: absolute;
+    position: sticky;
     bottom: 0;
     width: 100%;
     height: 60px;

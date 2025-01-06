@@ -10,19 +10,21 @@ interface props {
 const TimeBox: React.FC<props> = ({ isAllDay, setIsAllDay }) => {
   return (
     <div>
-      <div className={styles.TimeTopBox}>
+      <div className={`${styles.TimeBox} ${styles.Top}`}>
         <p className={styles.Title}>종일</p>
         {isAllDay ? (
-          <Toggle_abled onClick={() => setIsAllDay(false)} />
+          <Toggle_abled className={styles.Cursor} onClick={() => setIsAllDay(false)} />
         ) : (
-          <Toggle_disabled onClick={() => setIsAllDay(true)} />
+          <Toggle_disabled className={styles.Cursor} onClick={() => setIsAllDay(true)} />
         )}
       </div>
-      <div className={styles.TimeMiddleBox}>
+      <div className={`${styles.TimeBox} ${styles.Middle}`}>
         <p className={styles.Title}>시작</p>
+        <p className={styles.Time}>2024년 11월 5일 (수) 19:00 </p>
       </div>
-      <div className={styles.TimeLastBox}>
+      <div className={`${styles.TimeBox} ${styles.Last}`}>
         <p className={styles.Title}>종료</p>
+        <p className={styles.Time}>2024년 11월 5일 (수) 21:00 </p>
       </div>
     </div>
   );
