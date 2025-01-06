@@ -11,8 +11,8 @@ import { useState } from "react";
 
 const CreateMySchedulePage: React.FC = () => {
   const [isAllDay, setIsAllDay] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<string>("");
-  const [endDate, setEndDate] = useState<string>("");
+  const [startDate, setStartDate] = useState<Date>(new Date());
+  const [endDate, setEndDate] = useState<Date>(new Date());
 
   return (
     <div className={styles.Container}>
@@ -26,7 +26,14 @@ const CreateMySchedulePage: React.FC = () => {
       <div className={styles.ContentContainer}>
         <TitleBox />
         <ColorBox />
-        <TimeBox isAllDay={isAllDay} setIsAllDay={setIsAllDay} />
+        <TimeBox
+          isAllDay={isAllDay}
+          setIsAllDay={setIsAllDay}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
         <LocationBox />
         <MemberBox />
         <NoteBox />
