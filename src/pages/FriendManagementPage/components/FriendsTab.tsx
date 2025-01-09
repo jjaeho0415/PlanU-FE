@@ -1,12 +1,12 @@
 import React from "react";
 import styles from "./friendsTab.module.scss";
 
-interface FriendsTabProps {
+interface Props {
   activeTab: "친구목록" | "받은요청" | "보낸요청";
   setActiveTab: (tab: "친구목록" | "받은요청" | "보낸요청") => void;
 }
 
-const FriendsTab: React.FC<FriendsTabProps> = ({ activeTab, setActiveTab }) => {
+const FriendsTab: React.FC<Props> = ({ activeTab, setActiveTab }) => {
   return (
     <div className={styles.container}>
       <div className={styles.tabs}>
