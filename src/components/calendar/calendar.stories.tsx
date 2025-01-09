@@ -56,12 +56,12 @@ function Calendar_Story() {
     <div
       style={{
         display: "flex",
-        gap: "20px",
+        gap: "50px",
         flexDirection: "column",
         backgroundColor: "#F4E5FF",
         width: "500px",
-        height: "1200px",
-        padding: "30px",
+        height: "1300px",
+        padding: "40px",
       }}
     >
       <div>

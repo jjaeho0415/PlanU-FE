@@ -10,6 +10,9 @@ import {
   addDays,
   isSameMonth,
   isSameDay,
+  startOfDay,
+  isBefore,
+  isAfter,
 } from "date-fns";
 import styles from "./Calendar.module.scss";
 import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
@@ -69,7 +72,10 @@ const Calendar: React.FC<Props> = ({
     let day = startDate;
 
     const handleDateClick = (date: string) => {
-      if (type === "myPossible") {
+      const today = startOfDay(new Date());
+      const selectedDate = startOfDay(new Date(date));
+
+      if (type === "myPossible" && !isAfter(today, selectedDate)) {
         setAvailableDates!((prev) => {
           if (prev.includes(date)) {
             return prev.filter((d) => d !== date);
@@ -109,6 +115,8 @@ const Calendar: React.FC<Props> = ({
 
         const isHoliday = HOLIDAYS.includes(format(day, "MM-dd"));
         const isSunday = format(day, "i") === "7";
+        const isClickable =
+          type === "myPossible" && !isAfter(startOfDay(new Date()), startOfDay(day));
 
         days.push(
           <div
@@ -116,7 +124,7 @@ const Calendar: React.FC<Props> = ({
             className={styles.dateCell}
             onClick={() => handleDateClick(formattedDate)}
             style={{
-              cursor: type === "myPossible" ? "pointer" : "default",
+              cursor: isClickable ? "pointer" : "default",
               color: isNotCurrentMonth ? "#767676" : isSunday || isHoliday ? "#FF0101" : "#111111",
               backgroundColor,
               borderRadius: isToday || isAvailable || groupAvailableDate ? "50%" : "0",
