@@ -71,7 +71,7 @@ function Calendar_Story() {
       <div>
         <div>나의 달력 - 가능한 날짜 선택</div>
         <Calendar
-          type="possible"
+          type="myPossible"
           availableDates={availableDates}
           setAvailableDates={setAvailableDates}
           scheduleData={schedule}
