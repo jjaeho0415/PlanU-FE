@@ -3,27 +3,25 @@ import EyeOpenIcon from "@assets/icons/eye/Icon_eyeOn.svg?react";
 import React, { useState } from "react";
 import styles from "./inlineEditableProfileItem.module.scss";
 
-interface InlineEditableProfileItemWithButtonProps {
+interface Props {
   label: string;
   value: string;
   onChange: (newValue: string) => void;
   buttonLabel?: string;
   onButtonClick?: () => void;
-  showEyeIcon?: boolean;
 }
 
-const InlineEditableProfileItemWithButton: React.FC<InlineEditableProfileItemWithButtonProps> = ({
+const InlineEditableProfileItemWithButton: React.FC<Props> = ({
   label,
   value,
   onChange,
   buttonLabel,
   onButtonClick,
-  showEyeIcon = false,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setIsPasswordVisible(!isPasswordVisible);
+    setIsPasswordVisible((prev) => !prev);
   };
 
   return (
@@ -32,16 +30,14 @@ const InlineEditableProfileItemWithButton: React.FC<InlineEditableProfileItemWit
       <div className={styles.inputWrapper}>
         <input
           className={styles.input}
-          type={showEyeIcon && !isPasswordVisible ? "password" : "text"}
+          type={isPasswordVisible ? "text" : "password"}
           value={value}
           onChange={(e) => onChange(e.target.value)}
         />
 
-        {showEyeIcon && (
-          <button type="button" className={styles.iconButton} onClick={togglePasswordVisibility}>
-            {isPasswordVisible ? <EyeOpenIcon /> : <EyeClosedIcon />}
-          </button>
-        )}
+        <button type="button" className={styles.iconButton} onClick={togglePasswordVisibility}>
+          {isPasswordVisible ? <EyeOpenIcon /> : <EyeClosedIcon />}
+        </button>
 
         {buttonLabel && onButtonClick && (
           <button className={styles.button} onClick={onButtonClick}>
