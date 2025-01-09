@@ -1,5 +1,5 @@
 // 공휴일 정의 (MM-DD 형식)
-const HOLIDAYS = [
+export const HOLIDAYS = [
   // 2025년 기준, 매년 달라져서 바꿔줘야할듯, 아니면 공휴일 api(국가 공공 데이터 api) 사용해야함
   "01-01", // 신정
   "01-28", // 설날 연휴
@@ -19,4 +19,4 @@ const HOLIDAYS = [
   "12-25", // 성탄절
 ];
 
-export default HOLIDAYS;
+export const DAY_LIST = ["일", "월", "화", "수", "목", "금", "토"];

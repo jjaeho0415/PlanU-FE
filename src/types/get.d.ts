@@ -37,3 +37,14 @@ type IGroupMemberType = {
     groupRole: "LEADER" | "PARTICIPANT";
     friendStatus: "RECEIVE" | "FRIEND" | "NOT_FRIEND" | "ME";
 }
+
+type IGetScheduleType = {
+  date: string;
+  isSchedule: boolean;
+  isBirthday: boolean;
+};
+
+type IGetGroupPossibleScheduleType = {
+    date: string;
+    possibleRatio: number;
+}
