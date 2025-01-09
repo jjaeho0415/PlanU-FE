@@ -18,7 +18,7 @@ import IsBirthdayIcon from "@assets/Icons/calendar/isBirthdayIcon.svg?react";
 import { DAY_LIST, HOLIDAYS } from "../../constants/holidays";
 
 interface Props {
-  type: "view" | "possible" | "groupPossible";
+  type: "view" | "myPossible" | "groupPossible";
   availableDates?: string[];
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
   scheduleData: IGetScheduleType[];
@@ -69,7 +69,7 @@ const Calendar: React.FC<Props> = ({
     let day = startDate;
 
     const handleDateClick = (date: string) => {
-      if (type === "possible") {
+      if (type === "myPossible") {
         setAvailableDates!((prev) => {
           if (prev.includes(date)) {
             return prev.filter((d) => d !== date);
@@ -90,7 +90,7 @@ const Calendar: React.FC<Props> = ({
         const groupAvailableDate = groupAvailableDates?.find((item) => item.date === formattedDate);
 
         let backgroundColor = "transparent";
-        if (type === "possible" && isAvailable) {
+        if (type === "myPossible" && isAvailable) {
           backgroundColor = "#C9ACE7";
         } else if (type === "groupPossible" && groupAvailableDate) {
           const possibleRatio = groupAvailableDate.possibleRatio;
@@ -116,7 +116,7 @@ const Calendar: React.FC<Props> = ({
             className={styles.dateCell}
             onClick={() => handleDateClick(formattedDate)}
             style={{
-              cursor: type === "possible" ? "pointer" : "default",
+              cursor: type === "myPossible" ? "pointer" : "default",
               color: isNotCurrentMonth ? "#767676" : isSunday || isHoliday ? "#FF0101" : "#111111",
               backgroundColor,
               borderRadius: isToday || isAvailable || groupAvailableDate ? "50%" : "0",
