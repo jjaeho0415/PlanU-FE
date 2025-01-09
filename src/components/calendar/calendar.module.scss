@@ -1,0 +1,66 @@
+.calendarContainer {
+  width: 350px;
+  height: 340px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 32px;
+  background-color: #ffffff;
+  padding: 16px;
+  .header {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    height: 44px;
+    align-items: center;
+    margin-bottom: 8px;
+    .leftArrow {
+      transform: rotate(180deg);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+    }
+    .rightArrow{
+        cursor: pointer;
+    }
+    .monthLabel {
+      font-size: 16px;
+      font-weight: bold;
+      color: var(--black);
+      display: flex;
+      align-items: center;
+    }
+  }
+}
+
+.dayRow,
+.weekRow {
+  display: flex;
+  justify-content: space-between;
+}
+
+.day {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.dateCell {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-direction: column;
+  position: relative
+}
+
+.icons{
+    position: absolute;
+    transform: translateY(13px);
+    display: flex;
+    gap: 4px;
+}
