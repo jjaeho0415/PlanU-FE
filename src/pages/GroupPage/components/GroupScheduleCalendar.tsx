@@ -13,14 +13,12 @@ import {
   parseISO,
   getDay,
 } from "date-fns";
-import HOLIDAYS from "../../../constants/holidays";
+import {DAY_LIST, HOLIDAYS} from "../../../constants/holidays";
 
 interface Props {
   groupSchedules: IGroupSchedulesType[];
   onClick: () => void;
 }
-
-const DAY_LIST = ["일", "월", "화", "수", "목", "금", "토"];
 
 const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => {
   const currentDate = new Date();
