@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import styles from "./idInput.module.scss";
 
 const IDInput: React.FC = () => {
-  const [id, setId] = useState("");
+  const [id, setId] = useState<string>("");
   const maxLength = 20;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
