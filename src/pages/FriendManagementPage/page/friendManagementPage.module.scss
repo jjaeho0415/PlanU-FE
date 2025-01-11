@@ -1,0 +1,52 @@
+.friendManagementPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background-50);
+}
+
+.idInput {
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 16px;
+}
+
+.myIdInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 390px;
+  padding: 8px;
+  background: var(--violet);
+  color: var(--gray-200);
+  font-size: 14px;
+  margin-bottom: 90px;
+}
+
+.tabContent {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-100);
+  overflow-y: auto;
+}
+.tabContent::-webkit-scrollbar {
+  display: none;
+}
+
+.friendList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 15px;
+  margin-top: 40px;
+}
+
+.footer {
+  margin-top: 50px;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
