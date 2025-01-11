@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from "react";
-import TopArrow_Icon from "@assets/Icons/arrow/TopArrow.svg?react";
 import BottomArrow_Icon from "@assets/Icons/arrow/BottomArrow.svg?react";
+import TopArrow_Icon from "@assets/Icons/arrow/TopArrow.svg?react";
+import React, { useEffect, useState } from "react";
 import styles from "./datePicker.module.scss";
 
 interface Props {
@@ -121,7 +121,7 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth, setIsBirthError 
     } else if (type === "month") {
       if (numericValue >= 1 && numericValue <= 12) {
         const maxDaysInMonth = getDaysInMonth(year, numericValue);
-        const newDay = Math.min(day, maxDaysInMonth); 
+        const newDay = Math.min(day, maxDaysInMonth);
         setMonth(numericValue);
         setDay(newDay);
       }
