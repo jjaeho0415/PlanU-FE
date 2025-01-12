@@ -1,0 +1,26 @@
+.profileItem {
+  display: flex;
+  align-items: center;
+  background-color: var(--background-50);
+  padding: 10px;
+  gap: 10px;
+  width: 100%;
+}
+
+.avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.name {
+  flex: 1;
+  color: var(--black);
+  font-size: 17px;
+}
+
+.removeButton {
+  background: none;
+  cursor: pointer;
+  color: var(--gray-200);
+}
