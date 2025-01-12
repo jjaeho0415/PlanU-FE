@@ -19,14 +19,14 @@ const ReverseGeocoding = (userLatLng: UserLatLngType): Promise<string> => {
 };
 
 // 지오코딩 : 주소를 이용해 위도 경도로 변환
-const Geocoding = (address: string): Promise<{ userLat: string; userLng: string }> => {
+const Geocoding = (address: string): Promise<{ userLat: number; userLng: number }> => {
   return new Promise((resolve, reject) => {
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, (results: google.maps.GeocoderResult[] | null) => {
       if (results !== null) {
         const location = results[0].geometry.location;
-        const userLat = String(location.lat());
-        const userLng = String(location.lng());
+        const userLat = location.lat();
+        const userLng = location.lng();
         resolve({ userLat, userLng });
       } else {
         reject("Geocoding failed");
