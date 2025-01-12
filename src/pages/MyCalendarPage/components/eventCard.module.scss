@@ -1,0 +1,53 @@
+.eventCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 17px;
+  border-radius: 30px;
+  background: var(--white);
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+
+  .detailButton {
+    position: absolute;
+    top: 16px;
+    right: 11px;
+    background: none;
+    color: var(--gray-200);
+    font-size: 14px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .time {
+    color: var(--white);
+    padding: 8px 12px;
+    border-radius: 14px;
+    font-size: 14px;
+    text-align: center;
+    margin-bottom: 8px;
+  }
+
+  .info {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+
+    .title {
+      font-weight: bold;
+      font-size: 18px;
+      margin-left: 2px;
+    }
+
+    .location {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-left: 3px;
+      color: var(--gray-200);
+      font-size: 15px;
+    }
+  }
+}
