@@ -21,3 +21,5 @@ export const DefaultButton: React.FC<IDefaultButton> = ({
     </div>
   );
 };
+
+export default DefaultButton;

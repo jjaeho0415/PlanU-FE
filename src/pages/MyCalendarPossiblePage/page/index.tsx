@@ -1,10 +1,10 @@
-import EditIcon from "@assets/Icons/myCalendar/EditIcon.svg?react";
 import React, { useState } from "react";
+import EditButton from "../../../components/buttons/DefaultButton";
 import Calendar from "../../../components/calendar/Calendar";
-import CalendarHeader from "../../../components/headers/CalendarHeader";
+import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import EventCard from "../../MyCalendarPage/components/EventCard";
-import styles from "./myCalendarPage.module.scss";
+import styles from "./myCalendarPossible.module.scss";
 
 interface IGetScheduleType {
   date: string;
@@ -14,6 +14,7 @@ interface IGetScheduleType {
 
 const MyCalendarPossiblePage: React.FC = () => {
   const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const [isEditing, setIsEditing] = useState(false);
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
@@ -21,17 +22,16 @@ const MyCalendarPossiblePage: React.FC = () => {
     { date: "2025-01-16", isSchedule: true, isBirthday: true },
     { date: "2025-01-26", isSchedule: true, isBirthday: false },
   ];
-
-  const handleBackArrowClick = () => console.log();
-  const handleMiniCalendarClick = () => console.log();
-
+  const handleEditClick = () => {
+    setIsEditing((prev) => !prev);
+  };
   return (
     <div className={styles.page}>
       <CalendarHeader
-        title="나의 달력"
-        type="my"
-        handleBackArrowClick={handleBackArrowClick}
-        handleMiniCalendarClick={handleMiniCalendarClick}
+        title="가능한 날짜 선택"
+        handleClick={() => {
+          return;
+        }}
       />
 
       <div className={styles.content}>
@@ -44,18 +44,26 @@ const MyCalendarPossiblePage: React.FC = () => {
           />
         </div>
         <div className={styles.scheduleSection}>
-          <div className={styles.scheduleHeaderContainer}>
-            <h1 className={styles.scheduleHeader}>1월 16일 (목)</h1>
-            <EditIcon className={styles.editIcon} />
-          </div>
-          <div className={styles.subText}>나의 스케줄</div>
+          <div className={styles.scheduleHeader}>1월 12일 (일)</div>
+          <div className={styles.subText}>오늘 나의 스케줄</div>
           <EventCard
-            time="19:00 ~ 20:00"
-            title="수현이의 생일파티"
-            location="홍대입구역 2번 출구 앞"
+            time="08:00 ~ 12:00"
+            title="새벽 등산 3km 왕복 달리기/ 걷기"
+            location="제주 서귀포시 토평동 산 15-1"
+            timeColor="var(--violet-350)"
+          />
+          <EventCard
+            time="15:00 ~ 17:00"
+            title="컴퓨터 수업 듣고 친구 만나기"
+            location="강원 춘천시 효자동 768-4"
+            timeColor="var(--violet-400)"
           />
         </div>
+        <div className={styles.editButton}>
+          <EditButton buttonText={isEditing ? "완료" : "수정하기"} onClick={handleEditClick} />
+        </div>
       </div>
+
       <Footer />
     </div>
   );
