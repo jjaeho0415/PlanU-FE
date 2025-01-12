@@ -1,0 +1,15 @@
+.messagesPage {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--background-50);
+  padding-bottom: 70px;
+}
+.chatList {
+  padding-top: 30px;
+  overflow-y: auto;
+}
+.chatList::-webkit-scrollbar {
+  display: none;
+}

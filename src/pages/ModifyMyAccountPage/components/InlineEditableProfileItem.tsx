@@ -1,0 +1,26 @@
+import React, { useState } from "react";
+import styles from "./inlineEditableProfileItem.module.scss";
+
+interface Props {
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+}
+
+const InlineEditableProfileItem: React.FC<Props> = ({ label, value, onChange }) => {
+  const [inputValue, setInputValue] = useState(value);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+    onChange(e.target.value);
+  };
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.label}>{label}</div>
+      <input type="text" value={inputValue} onChange={handleInputChange} className={styles.input} />
+    </div>
+  );
+};
+
+export default InlineEditableProfileItem;

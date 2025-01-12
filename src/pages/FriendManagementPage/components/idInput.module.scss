@@ -1,0 +1,25 @@
+.container {
+  width: 100%;
+  padding: 10px 0;
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  border: none;
+  font-size: 17px;
+  padding: 3px 0px;
+  background: transparent;
+  color: var(--gray-200);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.counter {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 12px;
+  color: var(--gray-200);
+  padding: 52px 0;
+  transform: translateY(30%);
+}

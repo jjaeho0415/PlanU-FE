@@ -1,0 +1,37 @@
+.memberCardContainer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-radius: 15px;
+  box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.1);
+  background-color: var(--white);
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profileSection {
+  display: flex;
+  align-items: center;
+}
+
+.textSection {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.idSection {
+  font-size: 12px;
+  color: var(--gray-200);
+}
+
+.rightSection {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
