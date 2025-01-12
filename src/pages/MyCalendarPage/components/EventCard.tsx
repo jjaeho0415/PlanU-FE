@@ -1,5 +1,5 @@
-import LocationIcon from "@assets/icons/Location/location.svg?react";
 import ArrowIcon from "@assets/icons/arrow/RightArrow.svg?react";
+import LocationIcon from "@assets/icons/myCalendar/location.svg?react";
 import React from "react";
 import styles from "./eventCard.module.scss";
 
