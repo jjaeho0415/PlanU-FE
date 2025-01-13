@@ -3,6 +3,7 @@ import styles from "./Inputs.module.scss";
 import Toggle_disabled from "../../../assets/Icons/toggleButton/toggle_disabled.svg?react";
 import Toggle_abled from "../../../assets/Icons/toggleButton/toggle_abled.svg?react";
 import TimePicker from "./TimePicker";
+import DatePicker from "@components/createSchedule/DatePicker";
 
 interface props {
   isAllDay: boolean;
@@ -55,6 +56,7 @@ const TimeBox: React.FC<props> = ({
           )}
         </div>
       </div>
+      {isDateClicked === 0 && <DatePicker type="view" />}
       {isTimeClicked === 0 && (
         <TimePicker
           isStartDay={true}
@@ -79,6 +81,7 @@ const TimeBox: React.FC<props> = ({
           )}
         </div>
       </div>
+      {isDateClicked === 1 && <DatePicker type="view" />}
       {isTimeClicked === 1 && (
         <TimePicker
           isStartDay={false}
