@@ -5,8 +5,8 @@ import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
 import { useNavigate } from "react-router-dom";
 import { loadGoogleMapsAPI } from "@api/googleMapLoader";
 import SearchInput from "../components/SearchInput";
-
 import SearchResultList from "../components/SearchResultList";
+import { calculateDistance } from "../../../constants/calculateDistance";
 
 const SelectLocationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -96,7 +96,9 @@ const SelectLocationPage = () => {
         const initialMarker = new google.maps.Marker({
           map: newMap,
           position: userLatLng,
+          
         });
+
         setMarker(initialMarker);
       } catch (error) {
         console.error("Error initializing map: ", error);
@@ -120,25 +122,15 @@ const SelectLocationPage = () => {
       marker.setMap(null); // 이전 핀을 지도에서 제거
     }
 
+   
     // 새로운 핀 추가
     const newMarker = new google.maps.Marker({
       map,
       position: { lat: location.lat, lng: location.lng },
+   
     });
 
-    setMarker(newMarker); // 새 핀을 상태에 저장
-  };
-
-  const calculateDistance = (lat1: number, lng1: number, lat2: number, lng2: number) => {
-    const toRad = (value: number) => (value * Math.PI) / 180;
-    const R = 6371; // 지구 반지름 (km)
-    const dLat = toRad(lat2 - lat1);
-    const dLng = toRad(lng2 - lng1);
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) * Math.sin(dLng / 2);
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    return R * c;
+    setMarker(newMarker);
   };
 
   const handleSave = () => {
