@@ -1,4 +1,4 @@
-import { getFormattedLocation } from "../../../constants/truncation";
+import { getFormattedLocation } from "../../../utils/truncation";
 import styles from "./todayScheduleItem.module.scss";
 import LocationMarkerIcon from "@assets/Icons/groupPage/locationMarkerIcon.svg?react";
 

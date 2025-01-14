@@ -178,7 +178,6 @@ const ProfileEditPage: React.FC = () => {
               label="새로운 비밀번호"
               value={newPassword}
               onChange={() => {}}
-              showEyeIcon={true}
             />
 
             {/*비밀번호 확인*/}
@@ -186,7 +185,6 @@ const ProfileEditPage: React.FC = () => {
               label="비밀번호 확인"
               value={passwordConfirm}
               onChange={() => {}}
-              showEyeIcon={true}
             />
           </>
         )}

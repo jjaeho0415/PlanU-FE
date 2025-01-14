@@ -1,4 +1,4 @@
-import { getFormattedLocation } from "../../../constants/truncation";
+import { getFormattedLocation } from "../../../utils/truncation";
 import styles from "./groupScheduleCalendar.module.scss";
 import {
   addDays,
