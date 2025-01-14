@@ -3,10 +3,10 @@ import styles from "./selectLocation.module.scss";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
 import { useNavigate } from "react-router-dom";
-import { loadGoogleMapsAPI } from "@api/googleMapLoader";
 import SearchInput from "../components/SearchInput";
 import SearchResultList from "../components/SearchResultList";
-import { calculateDistance } from "../../../constants/calculateDistance";
+import { calculateDistance } from "../../../utils/calculateDistance";
+import { initializeMap, createCustomPin, createMarker } from "../../../utils/drawMap";
 
 const SelectLocationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -17,153 +17,129 @@ const SelectLocationPage = () => {
     null,
   );
   const navigate = useNavigate();
-  const [userLatLng, setUserLatLng] = useState<UserLatLngType>({
-    lat: 0,
-    lng: 0,
-  });
-  const [map, setMap] = useState<google.maps.Map | null>(null);
+  const [userLatLng, setUserLatLng] = useState<UserLatLngType>();
   const [marker, setMarker] = useState<google.maps.marker.AdvancedMarkerElement | null>(null);
 
   useEffect(() => {
     if (inputValue === "") {
       setSearchResults([]);
     }
-  }, [inputValue, searchResults]);
-
-  const handleSearchIconClick = async () => {
-    if (!inputValue) {
-      return;
-    }
-
-    try {
-      await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
-      const { PlacesService } = (await google.maps.importLibrary(
-        "places",
-      )) as google.maps.PlacesLibrary;
-
-      const service = new PlacesService(mapRef.current as HTMLDivElement);
-
-      const request: google.maps.places.TextSearchRequest = {
-        query: inputValue,
-        location: userLatLng,
-        radius: 10000,
-      };
-
-      service.textSearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-          const formattedResults = results.map((place) => ({
-            name: String(place.name),
-            formatted_address: String(place.formatted_address),
-            lat: Number(place.geometry?.location?.lat()),
-            lng: Number(place.geometry?.location?.lng()),
-          }));
-          const sortedResults = formattedResults.sort((a, b) => {
-            const distanceA = calculateDistance(userLatLng.lat, userLatLng.lng, a.lat, a.lng);
-            const distanceB = calculateDistance(userLatLng.lat, userLatLng.lng, b.lat, b.lng);
-            return distanceA - distanceB;
-          });
-
-          setSearchResults(sortedResults);
-          if (map) {
-            map.setCenter(userLatLng);
-          }
-        } else {
-          console.error("Failed to fetch places: ", status);
-        }
-      });
-    } catch (error) {
-      console.error("Error searching for places: ", error);
-    }
-  };
+  }, [inputValue]);
 
   useEffect(() => {
-    async function initMap() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        setUserLatLng({
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        });
+      },
+      (error) => {
+        console.error("Error getting user's location: ", error);
+      },
+    );
+  }, []);
+
+  useEffect(() => {
+    const initMap = async () => {
+      if (!userLatLng || !mapRef.current) {
+        return;
+      }
       try {
-        await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
-        const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary(
-          "marker",
-        )) as google.maps.MarkerLibrary;
-
-        if (userLatLng.lat === 0 && userLatLng.lng === 0) {
-          navigator.geolocation.getCurrentPosition(
-            (position) => {
-              setUserLatLng({
-                lat: position.coords.latitude,
-                lng: position.coords.longitude,
-              });
-            },
-            (error) => {
-              console.error("Error getting user's location: ", error);
-            },
-          );
-        }
-
-        const newMap = new google.maps.Map(mapRef.current as HTMLElement, {
-          center: userLatLng,
-          zoom: 16,
-          mapId: import.meta.env.VITE_GOOGLE_MAP_ID,
-          fullscreenControl: false,
-          mapTypeControl: false,
-          zoomControl: false,
-          streetViewControl: false,
-        });
-        setMap(newMap);
-
-        const pin = new PinElement({
-          scale: 1.2,
-          borderColor: "#F6ECFE",
-          background: "#A676B2",
-          glyphColor: "#F6ECFE",
-          // glyph: "T",
-        });
-
-        const initialMarker = new AdvancedMarkerElement({
-          map: newMap,
-          position: userLatLng,
-          content: pin.element,
-        });
+        const newMap = await initializeMap(
+          mapRef.current,
+          userLatLng,
+          import.meta.env.VITE_GOOGLE_MAP_ID,
+        );
+        const pin = await createCustomPin();
+        const initialMarker = await createMarker(newMap, userLatLng, pin.element);
 
         setMarker(initialMarker);
       } catch (error) {
         console.error("Error initializing map: ", error);
       }
+    };
+
+    initMap();
+  }, [userLatLng]);
+
+  const handleSearchIconClick = async () => {
+    if (!inputValue || !userLatLng || !mapRef.current) {
+      return;
     }
-    if (mapRef.current) {
-      initMap();
+
+    if (userLatLng) {
+      try {
+        const initialMap = await initializeMap(
+          mapRef.current,
+          userLatLng,
+          import.meta.env.VITE_GOOGLE_MAP_ID,
+        );
+        const pin = await createCustomPin();
+        const initialMarker = await createMarker(initialMap, userLatLng, pin.element);
+        const { PlacesService } = (await google.maps.importLibrary(
+          "places",
+        )) as google.maps.PlacesLibrary;
+
+        setMarker(initialMarker);
+
+        const service = new PlacesService(mapRef.current as HTMLDivElement);
+
+        const request: google.maps.places.TextSearchRequest = {
+          query: inputValue,
+          location: userLatLng,
+          radius: 10000,
+        };
+
+        service.textSearch(request, (results, status) => {
+          if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+            const formattedResults = results.map((place) => ({
+              name: String(place.name),
+              formatted_address: String(place.formatted_address),
+              lat: Number(place.geometry?.location?.lat()),
+              lng: Number(place.geometry?.location?.lng()),
+            }));
+            const sortedResults = formattedResults.sort((a, b) => {
+              const distanceA = calculateDistance(userLatLng.lat, userLatLng.lng, a.lat, a.lng);
+              const distanceB = calculateDistance(userLatLng.lat, userLatLng.lng, b.lat, b.lng);
+              return distanceA - distanceB;
+            });
+
+            setSearchResults(sortedResults);
+          } else {
+            console.error("Failed to fetch places: ", status);
+          }
+        });
+      } catch (error) {
+        console.error("Error searching for places: ", error);
+      }
     }
-  }, [mapRef, userLatLng]);
+  };
 
   const handleResultClick = async (location: SearchLocationResultType) => {
-    if (!map) return;
-    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary(
-      "marker",
-    )) as google.maps.MarkerLibrary;
+    if (!mapRef.current || !userLatLng) {
+      return;
+    }
+
+    const selectedMap = await initializeMap(
+      mapRef.current,
+      { lat: location.lat, lng: location.lng },
+      import.meta.env.VITE_GOOGLE_MAP_ID,
+    );
+    const pin = await createCustomPin();
+    const selectedMarker = await createMarker(
+      selectedMap,
+      { lat: location.lat, lng: location.lng },
+      pin.element,
+    );
+
     setSelectedLocationInfo(location);
-
-    // 지도 중심 이동
-    map.setCenter({ lat: location.lat, lng: location.lng });
-
     // 기존 핀 제거
     if (marker) {
       marker.map = null;
     }
 
-    const pin = new PinElement({
-      scale: 1.2,
-      borderColor: "#F6ECFE",
-      background: "#A676B2",
-      glyphColor: "#F6ECFE",
-      // glyph: "T",
-    });
-
-    // 새로운 핀 추가
-    const newMarker = new AdvancedMarkerElement({
-      map,
-      position: { lat: location.lat, lng: location.lng },
-      content: pin.element,
-    });
-
-    setMarker(newMarker);
+    setMarker(selectedMarker);
   };
 
   const handleSave = () => {
@@ -205,16 +181,18 @@ const SelectLocationPage = () => {
         />
         <div
           className={`${styles.searchResultsContainer} ${
-            inputValue === "" || searchResults.length === 0 ? styles.hidden : ""
+            searchResults.length === 0 ? styles.hidden : ""
           }`}
         >
-          <SearchResultList
-            handleResultClick={handleResultClick}
-            calculateDistance={calculateDistance}
-            selectedLocationInfo={selectedLocationInfo}
-            searchResults={searchResults}
-            userLatLng={userLatLng}
-          />
+          {userLatLng && (
+            <SearchResultList
+              handleResultClick={handleResultClick}
+              calculateDistance={calculateDistance}
+              selectedLocationInfo={selectedLocationInfo}
+              searchResults={searchResults}
+              userLatLng={userLatLng}
+            />
+          )}
         </div>
       </div>
     </div>
