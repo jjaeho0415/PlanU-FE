@@ -1,16 +1,14 @@
 .searchResultItem {
-  min-height: 65px;
   display: flex;
   gap: 20px;
   align-items: center;
-  padding: 5px 10px;
+  padding: 10px;
   cursor: pointer;
   border-bottom: 0.1px solid var(--gray-100);
   .distance {
     font-size: 9px;
     color: var(--gray-200);
   }
-
   .selectedInfo {
     display: flex;
     flex-direction: column;

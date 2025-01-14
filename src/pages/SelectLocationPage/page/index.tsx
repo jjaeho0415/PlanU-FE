@@ -22,7 +22,13 @@ const SelectLocationPage = () => {
     lng: 0,
   });
   const [map, setMap] = useState<google.maps.Map | null>(null);
-  const [marker, setMarker] = useState<google.maps.Marker | null>(null);
+  const [marker, setMarker] = useState<google.maps.marker.AdvancedMarkerElement | null>(null);
+
+  useEffect(() => {
+    if (inputValue === "") {
+      setSearchResults([]);
+    }
+  }, [inputValue, searchResults]);
 
   const handleSearchIconClick = async () => {
     if (!inputValue) {
@@ -40,7 +46,7 @@ const SelectLocationPage = () => {
       const request: google.maps.places.TextSearchRequest = {
         query: inputValue,
         location: userLatLng,
-        radius: 10000, // 10km
+        radius: 10000,
       };
 
       service.textSearch(request, (results, status) => {
@@ -51,7 +57,13 @@ const SelectLocationPage = () => {
             lat: Number(place.geometry?.location?.lat()),
             lng: Number(place.geometry?.location?.lng()),
           }));
-          setSearchResults(formattedResults);
+          const sortedResults = formattedResults.sort((a, b) => {
+            const distanceA = calculateDistance(userLatLng.lat, userLatLng.lng, a.lat, a.lng);
+            const distanceB = calculateDistance(userLatLng.lat, userLatLng.lng, b.lat, b.lng);
+            return distanceA - distanceB;
+          });
+
+          setSearchResults(sortedResults);
           if (map) {
             map.setCenter(userLatLng);
           }
@@ -68,6 +80,10 @@ const SelectLocationPage = () => {
     async function initMap() {
       try {
         await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
+        const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary(
+          "marker",
+        )) as google.maps.MarkerLibrary;
+
         if (userLatLng.lat === 0 && userLatLng.lng === 0) {
           navigator.geolocation.getCurrentPosition(
             (position) => {
@@ -93,10 +109,18 @@ const SelectLocationPage = () => {
         });
         setMap(newMap);
 
-        const initialMarker = new google.maps.Marker({
+        const pin = new PinElement({
+          scale: 1.2,
+          borderColor: "#F6ECFE",
+          background: "#A676B2",
+          glyphColor: "#F6ECFE",
+          // glyph: "T",
+        });
+
+        const initialMarker = new AdvancedMarkerElement({
           map: newMap,
           position: userLatLng,
-          
+          content: pin.element,
         });
 
         setMarker(initialMarker);
@@ -109,9 +133,11 @@ const SelectLocationPage = () => {
     }
   }, [mapRef, userLatLng]);
 
-  const handleResultClick = (location: SearchLocationResultType) => {
+  const handleResultClick = async (location: SearchLocationResultType) => {
     if (!map) return;
-
+    const { AdvancedMarkerElement, PinElement } = (await google.maps.importLibrary(
+      "marker",
+    )) as google.maps.MarkerLibrary;
     setSelectedLocationInfo(location);
 
     // 지도 중심 이동
@@ -119,15 +145,22 @@ const SelectLocationPage = () => {
 
     // 기존 핀 제거
     if (marker) {
-      marker.setMap(null); // 이전 핀을 지도에서 제거
+      marker.map = null;
     }
 
-   
+    const pin = new PinElement({
+      scale: 1.2,
+      borderColor: "#F6ECFE",
+      background: "#A676B2",
+      glyphColor: "#F6ECFE",
+      // glyph: "T",
+    });
+
     // 새로운 핀 추가
-    const newMarker = new google.maps.Marker({
+    const newMarker = new AdvancedMarkerElement({
       map,
       position: { lat: location.lat, lng: location.lng },
-   
+      content: pin.element,
     });
 
     setMarker(newMarker);
