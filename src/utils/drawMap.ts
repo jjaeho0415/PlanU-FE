@@ -1,7 +1,7 @@
 import { loadGoogleMapsAPI } from "@api/googleMapLoader";
 
 export const initializeMap = async (
-  mapContainer: HTMLElement,
+  mapContainer: HTMLDivElement,
   center: google.maps.LatLngLiteral,
   mapId: string,
 ): Promise<google.maps.Map> => {
