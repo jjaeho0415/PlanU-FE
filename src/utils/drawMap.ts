@@ -8,7 +8,7 @@ export const initializeMap = async (
   await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
   return new google.maps.Map(mapContainer, {
     center,
-    zoom: 16,
+    zoom: 17,
     mapId,
     fullscreenControl: false,
     mapTypeControl: false,
