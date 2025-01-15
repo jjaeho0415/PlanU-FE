@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   addMonths,
   subMonths,
@@ -11,27 +11,30 @@ import {
   isSameMonth,
   isSameDay,
   startOfDay,
-  isBefore,
-  isAfter,
 } from "date-fns";
 import styles from "./datePicker.module.scss";
 import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { DAY_LIST, HOLIDAYS } from "../../constants/holidays";
 
 interface Props {
-  type: "view" | "myPossible" | "groupPossible";
-  availableDates?: string[];
-  setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
-  groupAvailableDates?: IGetGroupPossibleScheduleType[];
+  isStartDay: boolean;
+  startDate: Date;
+  setStartDate: React.Dispatch<React.SetStateAction<Date>>;
+  endDate: Date;
+  setEndDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const DatePicker: React.FC<Props> = ({
-  type,
-  availableDates,
-  setAvailableDates,
-  groupAvailableDates,
-}) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
+const DatePicker: React.FC<Props> = ({ isStartDay, setStartDate, setEndDate }) => {
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+
+  useEffect(() => {
+    if (isStartDay) {
+      setStartDate(selectedDate);
+    } else {
+      setEndDate(selectedDate);
+    }
+  }, [selectedDate]);
 
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => subMonths(prev, 1));
@@ -68,50 +71,23 @@ const DatePicker: React.FC<Props> = ({
     let day = startDate;
 
     const handleDateClick = (date: string) => {
-      const today = startOfDay(new Date());
-      const selectedDate = startOfDay(new Date(date));
-
-      if (type === "myPossible" && !isAfter(today, selectedDate)) {
-        setAvailableDates!((prev) => {
-          if (prev.includes(date)) {
-            return prev.filter((d) => d !== date);
-          } else {
-            return [...prev, date];
-          }
-        });
-      }
+      setSelectedDate(new Date(date));
     };
 
     while (day <= endDate) {
       for (let i = 0; i < 7; i++) {
-        const isToday = isSameDay(day, new Date());
+        const isSelectedDay = isSameDay(day, selectedDate);
         const isNotCurrentMonth = !isSameMonth(day, currentMonth);
         const formattedDate = format(day, "yyyy-MM-dd");
-        const isAvailable = availableDates?.includes(formattedDate);
-        const groupAvailableDate = groupAvailableDates?.find((item) => item.date === formattedDate);
 
         let backgroundColor = "transparent";
-        if (type === "myPossible" && isAvailable) {
-          backgroundColor = "#C9ACE7";
-        } else if (type === "groupPossible" && groupAvailableDate) {
-          const possibleRatio = groupAvailableDate.possibleRatio;
-          if (possibleRatio >= 0 && possibleRatio <= 25) {
-            backgroundColor = "var(--people-50)";
-          } else if (possibleRatio >= 26 && possibleRatio <= 50) {
-            backgroundColor = "var(--people-100)";
-          } else if (possibleRatio >= 51 && possibleRatio <= 75) {
-            backgroundColor = "var(--people-200)";
-          } else if (possibleRatio >= 76 && possibleRatio <= 100) {
-            backgroundColor = "var(--people-300)";
-          }
-        } else if (isToday) {
+
+        if (isSelectedDay) {
           backgroundColor = "#F1F3F5";
         }
 
         const isHoliday = HOLIDAYS.includes(format(day, "MM-dd"));
         const isSunday = format(day, "i") === "7";
-        const isClickable =
-          type === "myPossible" && !isAfter(startOfDay(new Date()), startOfDay(day));
 
         days.push(
           <div
@@ -119,11 +95,11 @@ const DatePicker: React.FC<Props> = ({
             className={styles.dateCell}
             onClick={() => handleDateClick(formattedDate)}
             style={{
-              cursor: isClickable ? "pointer" : "default",
+              cursor: "pointer",
               color: isNotCurrentMonth ? "#767676" : isSunday || isHoliday ? "#FF0101" : "#111111",
               backgroundColor,
-              borderRadius: isToday || isAvailable || groupAvailableDate ? "50%" : "0",
-              fontWeight: isToday ? "bold" : "500",
+              borderRadius: isSelectedDay ? "50%" : "0",
+              fontWeight: isSelectedDay ? "bold" : "500",
             }}
           >
             {format(day, "d")}

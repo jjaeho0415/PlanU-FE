@@ -33,6 +33,20 @@ const TimeBox: React.FC<props> = ({
     return `${formattedHours}:${formattedMinutes}`;
   };
 
+  const handleDateClick = (isStart: boolean) => {
+    isStart
+      ? setIsDateClicked(isDateClicked === 0 ? -1 : 0)
+      : setIsDateClicked(isDateClicked === 1 ? -1 : 1);
+    setIsTimeClicked(-1);
+  };
+
+  const handleTimeClick = (isStart: boolean) => {
+    setIsDateClicked(-1);
+    isStart
+      ? setIsTimeClicked(isTimeClicked === 0 ? -1 : 0)
+      : setIsTimeClicked(isTimeClicked === 1 ? -1 : 1);
+  };
+
   return (
     <div>
       <div className={`${styles.TimeBox} ${styles.Top}`}>
@@ -46,17 +60,19 @@ const TimeBox: React.FC<props> = ({
       <div className={`${styles.TimeBox} ${styles.Middle}`}>
         <p className={styles.Title}>시작</p>
         <div className={styles.Time}>
-          <p onClick={() => setIsDateClicked(isDateClicked === 0 ? -1 : 0)}>
-            {startDate.toISOString().split("T")[0]}
-          </p>
-          {!isAllDay && (
-            <p onClick={() => setIsTimeClicked(isTimeClicked === 0 ? -1 : 0)}>
-              {formatTime(startDate)}
-            </p>
-          )}
+          <p onClick={() => handleDateClick(true)}>{startDate.toISOString().split("T")[0]}</p>
+          {!isAllDay && <p onClick={() => handleTimeClick(true)}>{formatTime(startDate)}</p>}
         </div>
       </div>
-      {isDateClicked === 0 && <DatePicker type="view" />}
+      {isDateClicked === 0 && (
+        <DatePicker
+          isStartDay={true}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
+      )}
       {isTimeClicked === 0 && (
         <TimePicker
           isStartDay={true}
@@ -71,17 +87,19 @@ const TimeBox: React.FC<props> = ({
       >
         <p className={styles.Title}>종료</p>
         <div className={styles.Time}>
-          <p onClick={() => setIsDateClicked(isDateClicked === 1 ? -1 : 1)}>
-            {endDate.toISOString().split("T")[0]}
-          </p>
-          {!isAllDay && (
-            <p onClick={() => setIsTimeClicked(isTimeClicked === 1 ? -1 : 1)}>
-              {formatTime(endDate)}
-            </p>
-          )}
+          <p onClick={() => handleDateClick(false)}>{endDate.toISOString().split("T")[0]}</p>
+          {!isAllDay && <p onClick={() => handleTimeClick(false)}>{formatTime(endDate)}</p>}
         </div>
       </div>
-      {isDateClicked === 1 && <DatePicker type="view" />}
+      {isDateClicked === 1 && (
+        <DatePicker
+          isStartDay={false}
+          startDate={startDate}
+          setStartDate={setStartDate}
+          endDate={endDate}
+          setEndDate={setEndDate}
+        />
+      )}
       {isTimeClicked === 1 && (
         <TimePicker
           isStartDay={false}
