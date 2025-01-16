@@ -5,7 +5,7 @@ export const loadGoogleMapsAPI = (apiKey: string): Promise<void> => {
       return;
     }
     const script = document.createElement("script");
-    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&libraries=places`;
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}&v=weekly&libraries=places,marker`;
     script.async = true;
     script.defer = true;
     script.onload = () => resolve();

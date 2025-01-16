@@ -78,8 +78,8 @@ function Button() {
       <div>
         <h1>SmallButton</h1>
         <div className={styles.Container}>
-          <SmallButton buttonText="확인" color="default" />
-          <SmallButton buttonText="확인" color="light" />
+          <SmallButton buttonText="확인" color="default" onClick={() => { return }} />
+          <SmallButton buttonText="확인" color="light" onClick={()=> {return} } />
         </div>
       </div>
       <hr />

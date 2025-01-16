@@ -11,7 +11,6 @@ import {
   isSameMonth,
   isSameDay,
   startOfDay,
-  isBefore,
   isAfter,
 } from "date-fns";
 import styles from "./Calendar.module.scss";

@@ -43,6 +43,9 @@ const Map: React.FC<Props> = ({ latLng }) => {
           center: userLatLng,
           zoom: 16,
           mapId: import.meta.env.VITE_GOOGLE_MAP_ID,
+          mapTypeControl: false,
+          zoomControl: false,
+          streetViewControl: false,
         });
 
         new AdvancedMarkerElement({
