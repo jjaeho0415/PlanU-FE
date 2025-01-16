@@ -6,6 +6,7 @@
   .ContentContainer {
     background-color: var(--background-50);
     display: flex;
+    height: 100dvh;
     overflow: scroll;
     flex-direction: column;
     gap: 20px;
