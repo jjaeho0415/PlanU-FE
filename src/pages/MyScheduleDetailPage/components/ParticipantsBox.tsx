@@ -9,12 +9,6 @@ const participants = [
   { name: "최준혁" },
   { name: "김도하" },
   { name: "이상준" },
-  { name: "이수현" },
-  { name: "이다은" },
-  { name: "정재호" },
-  { name: "최준혁" },
-  { name: "김도하" },
-  { name: "이상준" },
 ];
 
 const ParticipantsBox: React.FC = () => {
