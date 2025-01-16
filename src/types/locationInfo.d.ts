@@ -1,7 +1,5 @@
-type ILocationInfoType = {
+type ILocationInfoType  =  UserLatLngType & {
   location: string;
-  latitude: string;
-  longitude: string;
 };
 
 type UserLatLngType = {
