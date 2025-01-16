@@ -36,7 +36,7 @@ const RegisterAccountPage = () => {
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
   const { mutate: registerUserInformation } = usePostUserInformation();
   const { accessToken } = useAuthStore.getState();
-  const {data: name } = useGetUserInfo(accessToken)
+  const {data: userInfo } = useGetUserInfo(accessToken)
 
   useEffect(() => {
     setPostBody({
@@ -132,7 +132,7 @@ const RegisterAccountPage = () => {
             <div className={styles.profileImage}>
               <ImageUploader iconType="edit" image={userImage} setImage={setUserImage} />
             </div>
-            {name && <div>{name.name} 님</div>}
+            {userInfo && <div>{userInfo.name} 님</div>}
           </div>
         </div>
         <div className={styles.middleSection}>
