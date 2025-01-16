@@ -1,0 +1,76 @@
+.Container {
+  width: 100%;
+  height: 50%;
+  position: absolute;
+  bottom: 0;
+  background-color: var(--white);
+  border-radius: 20px 20px 0 0;
+  box-shadow: 0 -3px 5px rgba(0, 0, 0, 0.3);
+
+  .TopBox {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--gray-800);
+    padding: 10px 15px;
+  }
+
+  .CommentsBox {
+    width: 100%;
+    height: calc(100% - 77px);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 15px;
+    overflow: scroll;
+
+    .CommentItemBox {
+      display: flex;
+      width: 100%;
+      gap: 10px;
+
+      .ProfileImg {
+        border-radius: 100%;
+        width: 24px;
+        height: 24px;
+        background-color: var(--gray-800);
+      }
+      .CommentRightBox {
+        .CommentTopBox {
+          display: flex;
+          align-items: center;
+          gap: 5px;
+
+          .Name {
+            font-size: 13px;
+          }
+          .Time {
+            font-size: 8px;
+            color: var(--gray-200);
+          }
+        }
+        .ContentBox {
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  .InputBox {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 20px;
+    align-items: center;
+
+    .Input {
+      background-color: var(--gray-100);
+      width: 320px;
+      height: 27px;
+      border-radius: 5px;
+      padding: 0 10px;
+    }
+  }
+
+  .Icon {
+    cursor: pointer;
+  }
+}
