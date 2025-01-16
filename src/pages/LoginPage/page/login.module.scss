@@ -1,6 +1,6 @@
 .Container {
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   background-color: var(--background-50);
   display: flex;
   flex-direction: column;
@@ -33,7 +33,7 @@
   justify-content: end;
 }
 
-.Error{
+.Error {
   font-size: 10px;
   color: red;
   margin: 5px 0 0 0;
