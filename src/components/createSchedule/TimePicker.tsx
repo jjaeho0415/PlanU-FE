@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import styles from "./timePicker.module.scss";
-import Icon_topArrow from "../../../assets/Icons/arrow/TopArrow_sm.svg?react";
-import Icon_bottomArrow from "../../../assets/Icons/arrow/BottomArrow_sm.svg?react";
+import Icon_topArrow from "@assets/Icons/arrow/TopArrow_sm.svg?react";
+import Icon_bottomArrow from "@assets/Icons/arrow/BottomArrow_sm.svg?react";
 
 interface props {
   isStartDay: boolean;

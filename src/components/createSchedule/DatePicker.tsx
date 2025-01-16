@@ -10,7 +10,6 @@ import {
   addDays,
   isSameMonth,
   isSameDay,
-  startOfDay,
 } from "date-fns";
 import styles from "./datePicker.module.scss";
 import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";

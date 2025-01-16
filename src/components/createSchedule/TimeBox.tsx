@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./Inputs.module.scss";
-import Toggle_disabled from "../../../assets/Icons/toggleButton/toggle_disabled.svg?react";
-import Toggle_abled from "../../../assets/Icons/toggleButton/toggle_abled.svg?react";
+import Toggle_disabled from "@assets/Icons/toggleButton/toggle_disabled.svg?react";
+import Toggle_abled from "@assets/Icons/toggleButton/toggle_abled.svg?react";
 import TimePicker from "./TimePicker";
 import DatePicker from "@components/createSchedule/DatePicker";
 

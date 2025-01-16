@@ -1,6 +1,6 @@
 import styles from "./participants.module.scss";
-import Icon_uncheckbox from "../../../assets/Icons/checkbox/Icon_blankBox.svg?react";
-import Icon_checkbox from "../../../assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
+import Icon_uncheckbox from "@assets/Icons/checkbox/Icon_blankBox.svg?react";
+import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
 
 const members = [
   { userId: "shuding", name: "이수현" },

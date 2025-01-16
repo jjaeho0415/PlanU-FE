@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Inputs.module.scss";
-import Icon_search from "../../../assets/Icons/Icon_search.svg?react";
+import Icon_search from "@assets/Icons/Icon_search.svg?react";
 import Map from "@components/map/Map";
 
 const LocationBox: React.FC = () => {

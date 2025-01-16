@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Inputs.module.scss";
-import Icon_arrow from "../../../assets/Icons/arrow/RightArrow.svg?react";
+import Icon_arrow from "@assets/Icons/arrow/RightArrow.svg?react";
 
 const ColorBox: React.FC = () => {
   return (
