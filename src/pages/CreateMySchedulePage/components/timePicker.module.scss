@@ -1,0 +1,48 @@
+.Container {
+  width: 360px;
+  height: 87px;
+  background-color: var(--white);
+  border: 1px solid var(--gray-800);
+  border-top: none;
+  border-radius: 0 0 5 5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+
+  .WithTextBox {
+    display: flex;
+
+    .AMPMBox {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      height: 30px;
+      width: 40px;
+      border: 1px solid var(--gray-800);
+      border-radius: 5px;
+    }
+    .Box {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .Input {
+        height: 30px;
+        max-width: 40px;
+        background-color: var(--gray);
+        border-radius: 5px;
+        text-align: center;
+        font-size: 12px;
+      }
+      .Cursor {
+        cursor: pointer;
+      }
+    }
+    .Text {
+      display: flex;
+      align-items: center;
+      color: var(--gray-200);
+    }
+  }
+}
