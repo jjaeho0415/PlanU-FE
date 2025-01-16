@@ -5,34 +5,35 @@ import ChattingPage from "@pages/ChattingPage/page";
 import CreateGroupPage from "@pages/CreateGroupPage/page";
 import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage";
 import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
+import EditGroupSchedulePage from "@pages/EditGroupSchedulePage/page";
+import EditMySchedulePage from "@pages/EditMySchedulePage/page";
+import EditProfilePage from "@pages/EditProfilePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
 import FindPage from "@pages/FindPage/page";
 import FriendManagementPage from "@pages/FriendManagementPage/page";
 import GroupCalendarPage from "@pages/GroupCalendarPage/page";
+import GroupCalendarPossiblePage from "@pages/GroupCalendarPossiblePage/page";
 import GroupListPage from "@pages/GroupListPage/page";
 import GroupMemberPage from "@pages/GroupMemberPage/page";
+import GroupPage from "@pages/GroupPage/page";
 import GroupScheduleDetailPage from "@pages/GroupScheduleDetailPage/page";
+import InviteGroupMemberPage from "@pages/InviteGroupMemberPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
+import ModifyMyAccountPage from "@pages/ModifyMyAccountPage/page";
 import MyCalendarPage from "@pages/MyCalendarPage/page";
+import MyCalendarPossiblePage from "@pages/MyCalendarPossiblePage/page";
 import MyPage from "@pages/MyPage/page";
 import MyScheduleDetailPage from "@pages/MyScheduleDetailPage/page";
+import RegisterAccountPage from "@pages/RegisterAccountPage/page";
 import RegisterPage from "@pages/RegisterPage/page";
+import RegisterSuccessPage from "@pages/RegisterSuccessPage/page";
+import SelectLocationPage from "@pages/SelectLocationPage/page";
 import StartPage from "@pages/StartPage";
 import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
-import RegisterAccountPage from "@pages/RegisterAccountPage/page";
-import RegisterSuccessPage from "@pages/RegisterSuccessPage/page";
-import GroupPage from "@pages/GroupPage/page";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import SelectLocationPage from "@pages/SelectLocationPage/page";
-import MyCalendarPossiblePage from "@pages/MyCalendarPossiblePage/page";
-import GroupCalendarPossiblePage from "@pages/GroupCalendarPossiblePage/page";
-import EditProfilePage from "@pages/EditProfilePage/page";
-import EditMySchedulePage from "@pages/EditMySchedulePage/page";
-import EditGroupSchedulePage from "@pages/EditGroupSchedulePage/page";
-import InviteGroupMemberPage from "@pages/InviteGroupMemberPage/page";
 
 function App() {
   return (
@@ -58,6 +59,7 @@ function App() {
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
+            <Route path="/myPage/ModifyMyAccountPage" element={<ModifyMyAccountPage />} />
             <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
             <Route
               path="/group/:groupId/calendar/createSchedule"
