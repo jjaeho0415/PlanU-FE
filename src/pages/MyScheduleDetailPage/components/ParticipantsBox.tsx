@@ -1,8 +1,14 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
-import Icon_checkbox from "../../../assets/Icons/checkbox/Icon_checkBox_check.svg?react";
+import Icon_checkbox from "../../../assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
 
 const participants = [
+  { name: "이수현" },
+  { name: "이다은" },
+  { name: "정재호" },
+  { name: "최준혁" },
+  { name: "김도하" },
+  { name: "이상준" },
   { name: "이수현" },
   { name: "이다은" },
   { name: "정재호" },
@@ -17,8 +23,8 @@ const ParticipantsBox: React.FC = () => {
       <p>참석자</p>
       <div className={styles.ParticipantsBox}>
         {participants.map((participant) => (
-          <div key={participant.name}>
-            <Icon_checkbox />
+          <div className={styles.ParticipantItem} key={participant.name}>
+            <Icon_checkbox className={styles.Checkbox} />
             <p>{participant.name}</p>
           </div>
         ))}

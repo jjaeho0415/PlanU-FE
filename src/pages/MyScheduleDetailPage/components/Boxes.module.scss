@@ -9,7 +9,7 @@
   color: var(--gray-800);
   display: flex;
   align-items: center;
-  padding-left: 10px;
+  padding: 10px;
   color: var(--gray-800);
   gap: 5px;
 
@@ -51,6 +51,10 @@
     align-items: center;
     justify-content: space-between;
     padding: 0 10px;
+  }
+
+  .Time {
+    color: var(--gray-200);
   }
 }
 
@@ -110,8 +114,25 @@
   color: var(--gray-800);
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  padding: 10px;
   color: var(--gray-800);
+  gap: 10px;
+
+  .ParticipantsBox {
+    display: grid;
+    gap: 15px;
+    grid-template-columns: repeat(5, 1fr);
+    .ParticipantItem {
+      display: flex;
+      font-size: 12px;
+      align-items: center;
+      color: var(--gray-200);
+      .Checkbox {
+        width: 15px;
+        height: 15px;
+      }
+    }
+  }
 }
 
 //MemoBox
@@ -126,8 +147,9 @@
   color: var(--gray-800);
   display: flex;
   flex-direction: column;
-  padding: 0 10px;
+  padding: 10px;
   color: var(--gray-800);
+  gap: 10px;
 
   .MemoContent {
     font-size: 13px;
