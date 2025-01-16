@@ -98,7 +98,7 @@ const LocationSharingPage = () => {
   // 자신의 현재 위치 정보(경도, 위도)로 위치정보(한글) 변환
   useEffect(() => {
     const reverseGeocoding = async () => {
-      await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
+     
       if (userCurrentLatLng) {
         const formatted_address = await ReverseGeocoding(userCurrentLatLng);
         setUserCurrentLocationInfo({
@@ -113,7 +113,6 @@ const LocationSharingPage = () => {
 
   useEffect(() => {
     // 백엔드로 사용자의 현재위치 보내는 로직 작성해야함(몇초마다 보내주는걸로 debounce나 소켓 사용해야할듯)
-    console.log(userCurrentLocationInfo);
   }, [userCurrentLocationInfo]);
 
   // 그룹 멤버들의 위치와 도착장소를 핀으로 보여줌
