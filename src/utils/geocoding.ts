@@ -6,7 +6,6 @@ const ReverseGeocoding = (userLatLng: UserLatLngType): Promise<string> => {
       if (status === "OK") {
         if (results && results.length > 0) {
           const koreaAddress = results[0].formatted_address;
-          console.log(results);
           resolve(koreaAddress);
         } else {
           reject(new Error("No results found"));
