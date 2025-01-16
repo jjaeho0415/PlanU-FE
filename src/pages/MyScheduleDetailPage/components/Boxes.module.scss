@@ -122,11 +122,13 @@
     display: grid;
     gap: 15px;
     grid-template-columns: repeat(5, 1fr);
+
     .ParticipantItem {
       display: flex;
       font-size: 12px;
       align-items: center;
       color: var(--gray-200);
+      gap: 3px;
       .Checkbox {
         width: 15px;
         height: 15px;
