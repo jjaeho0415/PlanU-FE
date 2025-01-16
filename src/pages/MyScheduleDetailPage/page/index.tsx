@@ -5,6 +5,7 @@ import TimeBox from "../components/TimeBox";
 import LocationBox from "../components/LocationBox";
 import ParticipantsBox from "../components/ParticipantsBox";
 import MemoBox from "../components/MemoBox";
+import Icon_comment from "@assets/Icons/Icon_comment.svg?react";
 
 const MyScheduleDetailPage: React.FC = () => {
   return (
@@ -26,6 +27,10 @@ const MyScheduleDetailPage: React.FC = () => {
         <LocationBox />
         <ParticipantsBox />
         <MemoBox />
+      </div>
+      <div className={styles.CommentIconBox}>
+        <Icon_comment />
+        <p>17</p>
       </div>
     </div>
   );
