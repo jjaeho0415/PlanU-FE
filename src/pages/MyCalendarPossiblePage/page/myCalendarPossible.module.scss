@@ -1,0 +1,43 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--background-50);
+}
+
+.content {
+  flex: 1;
+  padding-bottom: 90px;
+  overflow-y: auto;
+}
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.calendarSection {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.scheduleSection {
+  padding: 0 20px;
+
+  .scheduleHeader {
+    font-size: 19px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  .subText {
+    color: var(--gray-200);
+    margin-bottom: 20px;
+  }
+}
+.editButton {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
