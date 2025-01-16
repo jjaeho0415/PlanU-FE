@@ -1,7 +1,7 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
-import Icon_location from "../../../assets/Icons/Icon_location.svg?react";
-import Icon_arrow from "../../../assets/Icons/arrow/Icon_Arrow_upRight.svg?react";
+import Icon_location from "../../../assets/Icons/scheduleDetail/Icon_location.svg?react";
+import Icon_arrow from "@assets/Icons/arrow/Icon_Arrow_upRight.svg?react";
 import Map from "@components/map/Map";
 
 const LocationBox: React.FC = () => {
