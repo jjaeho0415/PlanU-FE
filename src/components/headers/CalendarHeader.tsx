@@ -6,7 +6,7 @@ import MiniCalender_Icon from "@assets/Icons/headers/miniCalendar.svg?react";
 interface Props {
   title: "그룹 달력" | "나의 달력" | string;
   type: "my" | "group";
-  handleBackArrowClick: () => void;
+  handleBackArrowClick?: () => void;
   handleMiniCalendarClick: () => void;
 }
 
