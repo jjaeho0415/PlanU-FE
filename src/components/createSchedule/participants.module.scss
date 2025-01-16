@@ -1,0 +1,23 @@
+.Container {
+  width: 360px;
+  max-height: 230px;
+  overflow: scroll;
+  background-color: var(--white);
+  border-radius: 0 0 5px 5px;
+  border-top: none;
+  border: 1px solid var(--gray-200);
+  padding: 10px;
+
+  .ItemBox {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid var(--gray-200);
+    font-size: 12px;
+    color: var(--gray-200);
+    gap: 10px;
+
+    .Checkbox {
+      cursor: pointer;
+    }
+  }
+}
