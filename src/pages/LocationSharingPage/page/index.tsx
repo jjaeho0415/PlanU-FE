@@ -7,7 +7,6 @@ import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import ArrivalPin from "@assets/images/arrivalPin.png";
 import { ReverseGeocoding } from "@utils/geocoding";
-import { loadGoogleMapsAPI } from "@api/googleMapLoader";
 
 const arrivalLocationInfo: ILocationInfoType = {
   location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
@@ -34,7 +33,7 @@ const groupMemberList: IGetGroupMemberItemType[] = [
     name: "정재호",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
     location: "서울특별시 마포구 홍익로",
-    lat: 37.5537201,
+    lat: 37.553,
     lng: 126.9229984,
   },
   {
@@ -67,10 +66,21 @@ const LocationSharingPage = () => {
   const { data: userInfo } = useGetUserInfo(accessToken);
   const [userCurrentLatLng, setUserCurrentLatLng] = useState<UserLatLngType>();
   const [userCurrentLocationInfo, setUserCurrentLocationInfo] = useState<ILocationInfoType>();
+  const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
+
 
   const handleGroupMemberClick = (lat: number, lng: number) => {
     if (map) {
       map.panTo(new google.maps.LatLng(lat, lng));
+
+      markersRef.current.forEach((marker) => {
+        if (marker.position?.lat === lat && marker.position.lng === lng) {
+          marker.zIndex = 10;
+        }
+        else {
+          marker.zIndex = 1;
+        }
+      })
     }
   };
 
@@ -98,7 +108,6 @@ const LocationSharingPage = () => {
   // 자신의 현재 위치 정보(경도, 위도)로 위치정보(한글) 변환
   useEffect(() => {
     const reverseGeocoding = async () => {
-     
       if (userCurrentLatLng) {
         const formatted_address = await ReverseGeocoding(userCurrentLatLng);
         setUserCurrentLocationInfo({
@@ -153,7 +162,9 @@ const LocationSharingPage = () => {
             glyph: member.profileImage,
             type: "sharing",
           });
-          await createMarker(newMap, { lat: member.lat, lng: member.lng }, memberPin.element);
+          const memberMarker = await createMarker(newMap, { lat: member.lat, lng: member.lng }, memberPin.element);
+          markersRef.current.push(memberMarker);
+          memberMarker.zIndex = 1;
         });
 
         const arrivalPin = await createCustomPin({
@@ -161,7 +172,8 @@ const LocationSharingPage = () => {
           glyph: ArrivalPin,
           type: "arrivalPin",
         });
-        await createMarker(
+        
+        const arrivalMarker = await createMarker(
           newMap,
           {
             lat: arrivalLocationInfo.lat,
@@ -169,6 +181,7 @@ const LocationSharingPage = () => {
           },
           arrivalPin.element,
         );
+        arrivalMarker.zIndex = 20;
       } catch (error) {
         console.error("Error initializing map: ", error);
       }
