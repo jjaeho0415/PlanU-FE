@@ -34,7 +34,7 @@ const _fetch = async <T = unknown, R = unknown>({
 }: IFetchOptions<T>): Promise<R> => {
   const headers: HeadersInit = {
     Accept: "application/json",
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
   };
 
   if (authorization) {
@@ -48,7 +48,11 @@ const _fetch = async <T = unknown, R = unknown>({
   };
 
   if (body) {
-    requestOptions.body = JSON.stringify(body);
+    if (body instanceof FormData) {
+      requestOptions.body = body;
+    } else if (body) {
+      requestOptions.body = JSON.stringify(body);
+    }
   }
 
   try {
@@ -72,7 +76,7 @@ const _fetch = async <T = unknown, R = unknown>({
             );
 
             if (!retryRes.ok) {
-              const {resultMsg} = await retryRes.json();
+              const { resultMsg } = await retryRes.json();
               throw new Error(resultMsg.message);
             }
             return await retryRes.json();
@@ -85,7 +89,7 @@ const _fetch = async <T = unknown, R = unknown>({
           throw new Error("Session expired. Please log in again.");
         }
       }
-      const {resultMsg} = await res.json();
+      const { resultMsg } = await res.json();
       throw new Error(resultMsg);
     }
     return await res.json();
