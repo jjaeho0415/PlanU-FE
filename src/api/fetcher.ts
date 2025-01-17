@@ -34,7 +34,7 @@ const _fetch = async <T = unknown, R = unknown>({
 }: IFetchOptions<T>): Promise<R> => {
   const headers: HeadersInit = {
     Accept: "application/json",
-    // "Content-Type": "application/json",
+    "Content-Type": "application/json",
   };
 
   if (authorization) {
@@ -47,12 +47,11 @@ const _fetch = async <T = unknown, R = unknown>({
     credentials: "include",
   };
 
-  if (body) {
-    if (body instanceof FormData) {
-      requestOptions.body = body;
-    } else if (body) {
-      requestOptions.body = JSON.stringify(body);
-    }
+  if (body instanceof FormData) {
+    delete headers["Content-Type"];
+    requestOptions.body = body;
+  } else if (body) {
+    requestOptions.body = JSON.stringify(body);
   }
 
   try {
