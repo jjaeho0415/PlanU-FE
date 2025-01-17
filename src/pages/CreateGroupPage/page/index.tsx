@@ -1,4 +1,4 @@
-import { DefaultButton } from "@components/buttons/DefaultButton";
+import DefaultButton from "@components/buttons/DefaultButton";
 import { useState } from "react";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import GroupNameInput from "../components/GroupNameInput";

@@ -1,6 +1,6 @@
 import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./createGroupSchedule.module.scss";
-import { DefaultButton } from "@components/buttons/DefaultButton";
+import DefaultButton from "@components/buttons/DefaultButton";
 import { useState } from "react";
 import TitleBox from "@components/createSchedule/TitleBox";
 import ColorBox from "@components/createSchedule/ColorBox";
