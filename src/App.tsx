@@ -3,7 +3,6 @@ import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
 import CreateGroupPage from "@pages/CreateGroupPage/page";
-import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage";
 import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
 import EditGroupSchedulePage from "@pages/EditGroupSchedulePage/page";
 import EditMySchedulePage from "@pages/EditMySchedulePage/page";
@@ -34,6 +33,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage/page";
 
 function App() {
   return (
@@ -59,7 +59,7 @@ function App() {
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
-            <Route path="/myPage/ModifyMyAccountPage" element={<ModifyMyAccountPage />} />
+            <Route path="/myPage/ModifyMyAccount" element={<ModifyMyAccountPage />} />
             <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
             <Route
               path="/group/:groupId/calendar/createSchedule"

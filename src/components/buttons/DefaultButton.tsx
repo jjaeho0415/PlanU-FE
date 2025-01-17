@@ -7,11 +7,7 @@ interface IDefaultButton {
   isDisabled?: boolean;
 }
 
-export const DefaultButton: React.FC<IDefaultButton> = ({
-  buttonText,
-  onClick,
-  isDisabled = false,
-}) => {
+const DefaultButton: React.FC<IDefaultButton> = ({ buttonText, onClick, isDisabled = false }) => {
   return (
     <div
       className={`${styles.Container} ${isDisabled ? styles.DisabledColor : styles.DefaultColor}`}
@@ -21,3 +17,5 @@ export const DefaultButton: React.FC<IDefaultButton> = ({
     </div>
   );
 };
+
+export default DefaultButton;
