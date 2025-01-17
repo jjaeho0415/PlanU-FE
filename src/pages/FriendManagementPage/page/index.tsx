@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { DefaultButton } from "../../../components/buttons/DefaultButton";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import FriendsTab from "../components/FriendsTab";
 import IDInput from "../components/IDInput";
 import MemberCard from "../components/MemberCard";
 import styles from "./friendManagementPage.module.scss";
+import DefaultButton from "@components/buttons/DefaultButton";
 
 const FriendManagementPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"친구목록" | "받은요청" | "보낸요청">("친구목록");
