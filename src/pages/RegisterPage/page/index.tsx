@@ -70,7 +70,7 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleSendCode = (email: string) => {
-    setIsSendedEmailCode(true);
+    
     if (!email) {
       alert("이메일을 입력하세요");
       return;
@@ -79,6 +79,7 @@ const RegisterPage: React.FC = () => {
       { email, purpose: "register" },
       {
         onSuccess: () => {
+          setIsSendedEmailCode(true);
           alert("인증코드 발송 성공");
         },
         onError: (error) => {
