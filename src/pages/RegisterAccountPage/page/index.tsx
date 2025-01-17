@@ -34,8 +34,8 @@ const RegisterAccountPage = () => {
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
   const [userImage, setUserImage] = useState<File | string | null>(null);
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
-  const { mutate: registerUserInformation } = usePostUserInformation();
-  const { accessToken } = useAuthStore.getState();
+   const { accessToken } = useAuthStore.getState();
+  const { mutate: registerUserInformation } = usePostUserInformation(accessToken);
   const { data: userInfo } = useGetUserInfo(accessToken);
 
   useEffect(() => {
@@ -113,7 +113,7 @@ const RegisterAccountPage = () => {
       return;
     }
 
-    registerUserInformation({ body: postBody, token: accessToken });
+    registerUserInformation(postBody);
   };
 
   const handleArrowIconClick = () => {

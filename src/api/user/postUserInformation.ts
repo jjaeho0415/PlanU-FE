@@ -1,4 +1,5 @@
 import apiRoutes from "@api/apiRoutes";
+import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
@@ -28,31 +29,19 @@ const postUserInformation = async ({
     body.TermsRequest.isSnsReceiveAgreed.toString(),
   );
 
-  try {
-    const response = await fetch(`${import.meta.env.VITE_API_URL}${apiRoutes.userInformation}`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: formData,
-    });
-    if (!response.ok) {
-      const { resultMsg } = await response.json();
-      throw new Error(resultMsg.message);
-    }
+  const response = await api.post<FormData, IResponseType>({
+    endpoint: apiRoutes.userInformation,
+    authorization: token,
+    body: formData,
+  });
 
-    const data: IResponseType = await response.json();
-    return data;
-  } catch (error) {
-    throw error;
-  }
+  return response;
 };
 
-export const usePostUserInformation = () => {
+export const usePostUserInformation = (token: string) => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: ({ body, token }: { body: IPostUserInformationType; token: string }) =>
-      postUserInformation({ body, token }),
+    mutationFn: (body: IPostUserInformationType) => postUserInformation({ body, token }),
     onSuccess: (data) => {
       alert(data.resultMsg);
       navigate("/myCalendar");
