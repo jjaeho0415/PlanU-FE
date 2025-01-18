@@ -1,0 +1,61 @@
+.mainContainer {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--white);
+  position: relative;
+  .arrowIcon {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 10;
+  }
+
+  .mapContainer {
+    width: 100%;
+    height: 100%;
+  }
+  .bottomSheetContainer {
+    width: 350px;
+    height: 342px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 30px;
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    background-color: var(--white);
+    padding: 11px 0 0 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    .line {
+      width: 70px;
+      height: 5px;
+      background-color: #d9d9d9;
+      border-radius: 30px;
+      display: flex;
+    }
+    .text {
+      font-weight: bold;
+      font-size: 21px;
+      color: var(--black);
+      padding-left: 18px;
+      align-self:self-start;
+    }
+    .groupMemberListContainer {
+      width: 297px;
+      height: 249px;
+      border-top-left-radius: 30px;
+      border-top-right-radius: 30px;
+      background-color: var(--gray);
+      overflow: auto;
+      scrollbar-width: none;
+      padding: 13px 10px 10px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+  }
+}

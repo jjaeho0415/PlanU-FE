@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { DefaultButton } from "../../../components/buttons/DefaultButton";
+import DefaultButton from "../../../components/buttons/DefaultButton";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import FriendsTab from "../components/FriendsTab";
 import IDInput from "../components/IDInput";

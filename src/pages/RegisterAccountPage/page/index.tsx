@@ -3,7 +3,7 @@ import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
-import { DefaultButton } from "@components/buttons/DefaultButton";
+import DefaultButton from "@components/buttons/DefaultButton";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
@@ -34,9 +34,9 @@ const RegisterAccountPage = () => {
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
   const [userImage, setUserImage] = useState<File | string | null>(null);
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
-  const { mutate: registerUserInformation } = usePostUserInformation();
-  const { accessToken } = useAuthStore.getState();
-  const {data: name } = useGetUserInfo(accessToken)
+   const { accessToken } = useAuthStore.getState();
+  const { mutate: registerUserInformation } = usePostUserInformation(accessToken);
+  const { data: userInfo } = useGetUserInfo(accessToken);
 
   useEffect(() => {
     setPostBody({
@@ -113,7 +113,7 @@ const RegisterAccountPage = () => {
       return;
     }
 
-    registerUserInformation({ body: postBody, token: accessToken });
+    registerUserInformation(postBody);
   };
 
   const handleArrowIconClick = () => {
@@ -132,7 +132,7 @@ const RegisterAccountPage = () => {
             <div className={styles.profileImage}>
               <ImageUploader iconType="edit" image={userImage} setImage={setUserImage} />
             </div>
-            {name && <div>{name.name} 님</div>}
+            {userInfo && <div>{userInfo.name} 님</div>}
           </div>
         </div>
         <div className={styles.middleSection}>
