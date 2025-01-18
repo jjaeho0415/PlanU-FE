@@ -66,7 +66,7 @@ function App() {
             />
             <Route path="/selectLocation" element={<SelectLocationPage />} />
             <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />
-            <Route path="/editSchedule/:pageType/:scheduleId" element={<EditSchedulePage />} />
+            <Route path="/editSchedule/:scheduleId" element={<EditSchedulePage />} />
             <Route
               path="/group/:groupId/calendar/schedule/:scheduleId"
               element={<GroupScheduleDetailPage />}
