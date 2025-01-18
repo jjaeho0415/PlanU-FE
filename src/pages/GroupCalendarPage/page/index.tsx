@@ -2,9 +2,9 @@ import EditIcon from "@assets/Icons/myCalendar/EditIcon.svg?react";
 import React, { useState } from "react";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
-import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./groupCalendarPage.module.scss";
 import EventCard from "@components/calendarPage/EventCard";
+import { useNavigate } from "react-router-dom";
 
 interface IGetScheduleType {
   date: string;
@@ -12,17 +12,20 @@ interface IGetScheduleType {
   isBirthday: boolean;
 }
 
+const scheduleData: IGetScheduleType[] = [
+  { date: "2025-01-04", isSchedule: true, isBirthday: false },
+  { date: "2025-01-13", isSchedule: false, isBirthday: true },
+  { date: "2025-01-16", isSchedule: true, isBirthday: true },
+  { date: "2025-01-26", isSchedule: true, isBirthday: false },
+];
+
 const GroupCalendarPage: React.FC = () => {
+  const navigate = useNavigate();
   const [availableDates, setAvailableDates] = useState<string[]>([]);
 
-  const scheduleData: IGetScheduleType[] = [
-    { date: "2025-01-04", isSchedule: true, isBirthday: false },
-    { date: "2025-01-13", isSchedule: false, isBirthday: true },
-    { date: "2025-01-16", isSchedule: true, isBirthday: true },
-    { date: "2025-01-26", isSchedule: true, isBirthday: false },
-  ];
-
-  const handleBackArrowClick = () => console.log();
+  const handleBackArrowClick = () => {
+    navigate("/group/1");
+  };
   const handleMiniCalendarClick = () => console.log();
 
   return (
