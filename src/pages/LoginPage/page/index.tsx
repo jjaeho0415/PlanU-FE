@@ -21,7 +21,6 @@ const LoginPage: React.FC = () => {
   const storedIsSavedId = localStorage.getItem("isSavedId");
   const booleanStoredSavedId = storedIsSavedId ? JSON.parse(storedIsSavedId) : false;
   const [isSaveId, setIsSaveId] = useState<boolean>(booleanStoredSavedId);
- 
 
   const {
     register,
@@ -141,9 +140,7 @@ const LoginPage: React.FC = () => {
           }}
         />
       </div>
-      <div className={styles.GoLoginBox}>
-        <GoLogin textType="register" textColor="gray" />
-      </div>
+      <GoLogin textType="register" textColor="gray" />
     </div>
   );
 };
