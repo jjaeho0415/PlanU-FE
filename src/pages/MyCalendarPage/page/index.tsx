@@ -3,8 +3,8 @@ import React, { useState } from "react";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
-import EventCard from "../components/EventCard";
 import styles from "./myCalendarPage.module.scss";
+import EventCard from "@components/calendarPage/EventCard";
 
 interface IGetScheduleType {
   date: string;
