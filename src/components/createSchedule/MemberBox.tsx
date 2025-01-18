@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Inputs.module.scss";
 import ParticipantsPicker from "./ParticipantsPicker";
 
@@ -7,9 +7,19 @@ interface IParticipant {
   name: string;
 }
 
-const MemberBox: React.FC = () => {
+interface props {
+  members?: IParticipant[];
+}
+
+const MemberBox: React.FC<props> = ({ members = [] }) => {
   const [participants, setParticipants] = useState<IParticipant[]>([]);
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (members.length !== 0) {
+      setParticipants(members);
+    }
+  }, []);
 
   return (
     <div>
