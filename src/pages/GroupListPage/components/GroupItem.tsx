@@ -15,7 +15,6 @@ const GroupItem: React.FC<IProps> = ({ groupItem }) => {
   return (
     <div
       className={styles.Container}
-      key={groupItem.groupId}
       onClick={() => handleGroupItemClick(groupItem.groupId)}
     >
       <div className={styles.ProfileImg}>
