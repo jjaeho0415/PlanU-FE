@@ -25,6 +25,7 @@ interface Props {
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
   scheduleData: IGetScheduleType[];
   groupAvailableDates?: IGetGroupPossibleScheduleType[];
+  setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Calendar: React.FC<Props> = ({
@@ -33,6 +34,7 @@ const Calendar: React.FC<Props> = ({
   setAvailableDates,
   scheduleData,
   groupAvailableDates,
+  setSelectedDate,
 }) => {
   const [currentMonth, setCurrentMonth] = useState(new Date());
 
@@ -73,6 +75,7 @@ const Calendar: React.FC<Props> = ({
     const handleDateClick = (date: string) => {
       const today = startOfDay(new Date());
       const selectedDate = startOfDay(new Date(date));
+      type === "view" && setSelectedDate!(date);
 
       if (type === "myPossible" && !isAfter(today, selectedDate)) {
         setAvailableDates!((prev) => {
