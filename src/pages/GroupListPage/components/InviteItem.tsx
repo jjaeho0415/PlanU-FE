@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import styles from "./groupItem.module.scss";
 import InviteModal from "@components/modals/InviteModal";
+import useAuthStore from "@store/useAuthStore";
+import {
+  useDeleteGroupInvite,
+  usePutGroupInviteAccept,
+} from "@api/group/putGroupInviteAcceptOrReject";
 
 interface IProps {
   groupInviteItem: IGetGroupInviteListItemType;
@@ -8,9 +13,18 @@ interface IProps {
 
 const InviteItem: React.FC<IProps> = ({ groupInviteItem }) => {
   const [isInviteModalOpen, setIsInviteModalOpen] = useState<boolean>(false);
-  const handleAcceptClick = () => {};
+  const { accessToken } = useAuthStore.getState();
+  const { mutate: acceptInvite } = usePutGroupInviteAccept(accessToken, setIsInviteModalOpen);
+  const { mutate: rejectInvite } = useDeleteGroupInvite(accessToken, setIsInviteModalOpen);
 
-  const handleRejectClick = () => {};
+  const handleAcceptClick = (groupId: number) => {
+    acceptInvite(groupId);
+  };
+
+  const handleRejectClick = (groupId: number) => {
+    rejectInvite(groupId);
+  };
+
   return (
     <div
       className={styles.Container}
@@ -33,8 +47,8 @@ const InviteItem: React.FC<IProps> = ({ groupInviteItem }) => {
           groupImage={groupInviteItem.groupImageUrl}
           groupName={groupInviteItem.groupName}
           setIsInviteModalOpen={setIsInviteModalOpen}
-          handleAcceptClick={handleAcceptClick}
-          handleRejectClick={handleRejectClick}
+          handleAcceptClick={() => handleAcceptClick(groupInviteItem.groupId)}
+          handleRejectClick={() => handleRejectClick(groupInviteItem.groupId)}
         />
       )}
     </div>
