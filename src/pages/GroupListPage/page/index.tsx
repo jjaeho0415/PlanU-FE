@@ -5,9 +5,13 @@ import GroupItem from "../components/GroupItem";
 import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
 import { useNavigate } from "react-router-dom";
 import InviteItem from "../components/InviteItem";
+import useAuthStore from "@store/useAuthStore";
+import { useGetGroupList } from "@api/group/getGroupList";
 
 const GroupListPage: React.FC = () => {
   const navigate = useNavigate();
+  const { accessToken } = useAuthStore.getState();
+  const { data: groupList } = useGetGroupList(accessToken);
 
   return (
     <div className={styles.Container}>
@@ -27,11 +31,10 @@ const GroupListPage: React.FC = () => {
       <div className={styles.Border} />
       <div className={styles.ContentBox}>
         <p className={styles.TitleP}>MyGroup</p>
-        <GroupItem />
-        <GroupItem />
-        <GroupItem />
-        <GroupItem />
-        <GroupItem />
+        {groupList &&
+          groupList.map((groupItem) => {
+            return <GroupItem groupItem={groupItem} />;
+          })}
       </div>
       <div className={styles.Border} />
       <Icon_add className={styles.AddIcon} onClick={() => navigate("/createGroup")} />
