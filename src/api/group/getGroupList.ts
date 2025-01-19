@@ -2,8 +2,12 @@ import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useQuery } from "@tanstack/react-query";
 
+type IResponseGetGroupListType = {
+  data: IGetGroupListItemType[];
+}
+
 const getGroupList = async (authorization: string) => {
-  const response = await api.get<IGetGroupListItemType[]>({
+  const response = await api.get<IResponseGetGroupListType>({
     endpoint: apiRoutes.showGroupList,
     authorization,
   });
