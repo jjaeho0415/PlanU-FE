@@ -1,13 +1,23 @@
 import React from "react";
 import styles from "./groupItem.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   groupItem: IGetGroupListItemType;
 }
 
 const GroupItem: React.FC<IProps> = ({ groupItem }) => {
+  const navigate = useNavigate();
+  const handleGroupItemClick = (groupId: number) => {
+    navigate(`/group/${groupId}`);
+  };
+
   return (
-    <div className={styles.Container}>
+    <div
+      className={styles.Container}
+      key={groupItem.groupId}
+      onClick={() => handleGroupItemClick(groupItem.groupId)}
+    >
       <div className={styles.ProfileImg}>
         <img
           src={groupItem.groupImageUrl}

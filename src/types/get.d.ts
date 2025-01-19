@@ -57,9 +57,12 @@ type IGetGroupMemberItemType = {
     profileImage: string;
 }
 
-type IGetGroupListItemType = {
+type IGetGroupListItemType = IGetGroupInviteListItemType & {
+    participant: number;
+}
+
+type IGetGroupInviteListItemType = {
     groupId: number;
     groupName: string;
     groupImageUrl: string;
-    participant: number;
 }
