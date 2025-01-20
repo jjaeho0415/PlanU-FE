@@ -19,7 +19,10 @@ export const usePutGroupInviteAccept = (
     mutationFn: (groupId: number) => putGroupInviteAccept(authorization, groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["GROUP_INVITE_LIST", "GROUP_LIST"],
+        queryKey: ["GROUP_INVITE_LIST"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["GROUP_LIST"],
       });
       setIsModalOpen(false);
     },
@@ -44,7 +47,10 @@ export const useDeleteGroupInvite = (
     mutationFn: (groupId: number) => deleteGroupInvite(authorization, groupId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["GROUP_INVITE_LIST", "GROUP_LIST"],
+        queryKey: ["GROUP_INVITE_LIST"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["GROUP_LIST"],
       });
       setIsModalOpen(false);
     },
