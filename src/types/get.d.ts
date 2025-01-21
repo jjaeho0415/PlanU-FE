@@ -35,7 +35,7 @@ type IGroupMemberType = {
     username: string;
     profileImageUrl: string;
     groupRole: "LEADER" | "PARTICIPANT";
-    friendStatus: "RECEIVE" | "FRIEND" | "NOT_FRIEND" | "ME";
+    friendStatus: "RECEIVE" | "FRIEND" | "NONE" | "ME";
 }
 
 type IGetScheduleType = {

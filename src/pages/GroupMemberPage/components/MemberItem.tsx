@@ -56,7 +56,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
         );
       } else if (memberInfo.friendStatus === "ME") {
         return <MiniButton buttonText="그룹탈퇴" color="red" onClick={handleLeaveGroup} />;
-      } else if (memberInfo.friendStatus === "NOT_FRIEND") {
+      } else if (memberInfo.friendStatus === "NONE") {
         return (
           <MiniButton
             buttonText="친구요청"
@@ -91,7 +91,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
             <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
           </>
         );
-      } else if (memberInfo.friendStatus === "NOT_FRIEND") {
+      } else if (memberInfo.friendStatus === "NONE") {
         return (
           <>
             <MiniButton

@@ -4,15 +4,15 @@ import SearchIcon from "@assets/Icons/Icon_search.svg?react";
 
 interface Props {
   type: "onlyClick" | "invite";
-  inputValue: string;
-    setInputValue: React.Dispatch<React.SetStateAction<string>>;
-    handleSearchIconClick: () => void;
+  inputValue?: string;
+  setInputValue?: React.Dispatch<React.SetStateAction<string>>;
+  handleSearchIconClick?: () => void;
 }
 
 const SearchBox: React.FC<Props> = ({ type, inputValue, setInputValue, handleSearchIconClick }) => {
   const navigate = useNavigate();
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
+    setInputValue!(e.target.value);
   };
 
   return (
