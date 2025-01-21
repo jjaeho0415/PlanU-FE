@@ -20,10 +20,10 @@ type IGroupSchedulesType = {
 };
 
 type IGetFriendMemberType = {
-  profileImageUrl: string;
+  profileImage: string;
   name: string;
   username: string;
-  requestState: "progress" | "none";
+  status: "PROGRESS" | "NONE";
 };
 
 type IGetGroupMembersType = {
@@ -33,7 +33,7 @@ type IGetGroupMembersType = {
 type IGroupMemberType = {
   name: string;
   username: string;
-  profileImageUrl: string;
+  profileImage: string;
   groupRole: "LEADER" | "PARTICIPANT";
   friendStatus: "RECEIVE" | "FRIEND" | "NONE" | "ME" | "REQUEST";
 };

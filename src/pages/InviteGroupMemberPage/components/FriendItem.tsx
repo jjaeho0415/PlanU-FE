@@ -1,6 +1,5 @@
 import MiniButton from "@components/buttons/MiniButton";
 import styles from "./friendItem.module.scss";
-import DefaultProfile from "@assets/Icons/Default Profile/default_profile.svg?react";
 
 interface Props {
   friendInfo: IGetFriendMemberType;
@@ -17,16 +16,12 @@ const FriendItem: React.FC<Props> = ({
     <div className={styles.friendItem}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          {friendInfo.profileImageUrl ? (
-            <img src={friendInfo.profileImageUrl} width={42.43} height={40} alt="profile" />
-          ) : (
-            <DefaultProfile width={40} height={25} />
-          )}
+          <img src={friendInfo.profileImage} width={42.43} height={40} alt="profile" />
         </div>
         <div>{friendInfo.name}</div>
       </div>
       <div className={styles.rightSection}>
-        {friendInfo.requestState === "none" ? (
+        {friendInfo.status === "NONE" ? (
           <MiniButton
             buttonText="친구 초대"
             color="purple_light"

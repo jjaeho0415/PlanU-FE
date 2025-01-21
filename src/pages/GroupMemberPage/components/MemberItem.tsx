@@ -1,5 +1,4 @@
 import styles from "./memberItem.module.scss";
-import DefaultProfile from "@assets/Icons/groupPage/smallCircleProfile.svg?react";
 import CrownIcon from "@assets/Icons/groupPage/crownIcon.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
 import { usePostRequestFriend } from "@api/friend/postRequestFriend";
@@ -7,7 +6,6 @@ import useAuthStore from "@store/useAuthStore";
 import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFriend";
 import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
 import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
-
 
 interface Props {
   memberInfo: IGroupMemberType;
@@ -27,11 +25,11 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
 
   const handleAcceptRequestFriend = (username: string) => {
     acceptRequestFriend(username);
-  }
+  };
 
   const handleRejectRequestFriend = (username: string) => {
     rejectRequestFriend(username);
-  }
+  };
 
   const handleCancelRequestFriend = (username: string) => {
     cancelRequestFriend(username);
@@ -176,11 +174,12 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
     <div className={styles.memberItemContainer}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          {memberInfo.profileImageUrl ? (
-            <img src={memberInfo.profileImageUrl} width={38} height={37} alt="profile" />
-          ) : (
-            <DefaultProfile width={38} height={37} />
-          )}
+          <img
+            src={memberInfo.profileImage}
+            width={38}
+            height={37}
+            alt="profile"
+          />
           {memberInfo.groupRole === "LEADER" && (
             <CrownIcon width={29} height={25} className={styles.crownIcon} />
           )}
