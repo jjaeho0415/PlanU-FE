@@ -1,8 +1,10 @@
 .Container {
   background-color: var(--background-50);
-  height: 100dvh;
+  height: 100vh;
   position: relative;
-  overflow: scroll;
+  overflow: auto;
+  padding-bottom: 80px;
+  scrollbar-width: none;
 
   .Border {
     height: 17px;
@@ -10,8 +12,7 @@
   }
 
   .ContentBox {
-    padding: 0 20px;
-    margin-bottom: 20px;
+    padding: 10px 20px 20px 20px;
     display: flex;
     flex-direction: column;
     gap: 10px;
@@ -20,6 +21,7 @@
   .AddIcon {
     cursor: pointer;
     position: sticky;
+    z-index: 10;
     bottom: 15%;
     left: 80%;
   }
