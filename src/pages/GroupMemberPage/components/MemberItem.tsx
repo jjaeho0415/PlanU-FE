@@ -4,7 +4,10 @@ import CrownIcon from "@assets/Icons/groupPage/crownIcon.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
 import { usePostRequestFriend } from "@api/friend/postRequestFriend";
 import useAuthStore from "@store/useAuthStore";
-import { useDeleteRequestFriend } from "@api/friend/deleteRequestFriend";
+import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFriend";
+import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
+import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
+
 
 interface Props {
   memberInfo: IGroupMemberType;
@@ -14,9 +17,24 @@ interface Props {
 const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
   const { accessToken } = useAuthStore.getState();
   const { mutate: requestFriend } = usePostRequestFriend(accessToken);
-  const { mutate: cancelRequestFriend } = useDeleteRequestFriend(accessToken);
+  const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
+  const { mutate: acceptRequestFriend } = usePostAcceptRequestFriend(accessToken);
+  const { mutate: rejectRequestFriend } = useDeleteRejectRequestFriend(accessToken);
+
   const handleRequestFriend = (username: string) => {
     requestFriend(username);
+  };
+
+  const handleAcceptRequestFriend = (username: string) => {
+    acceptRequestFriend(username);
+  }
+
+  const handleRejectRequestFriend = (username: string) => {
+    rejectRequestFriend(username);
+  }
+
+  const handleCancelRequestFriend = (username: string) => {
+    cancelRequestFriend(username);
   };
 
   const handleForcedExit = () => {
@@ -27,10 +45,6 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
   const handleShowFriendCalendar = () => {
     // 달력 보기
     return;
-  };
-
-  const handleCancelRequestFriend = (username: string) => {
-    cancelRequestFriend(username);
   };
 
   const handleLeaveGroup = () => {
@@ -83,7 +97,16 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
       } else {
         return (
           <>
-            <MiniButton buttonText="요청수락" color="purple_light" />
+            <MiniButton
+              buttonText="친구수락"
+              color="purple"
+              onClick={() => handleAcceptRequestFriend(memberInfo.username)}
+            />
+            <MiniButton
+              buttonText="친구거절"
+              color="red"
+              onClick={() => handleRejectRequestFriend(memberInfo.username)}
+            />
           </>
         );
       }
@@ -132,7 +155,16 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
       } else {
         return (
           <>
-            <MiniButton buttonText="요청수락" color="purple_light" />
+            <MiniButton
+              buttonText="친구수락"
+              color="purple_light"
+              onClick={() => handleAcceptRequestFriend(memberInfo.username)}
+            />
+            <MiniButton
+              buttonText="친구거절"
+              color="red"
+              onClick={() => handleRejectRequestFriend(memberInfo.username)}
+            />
             <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
           </>
         );
