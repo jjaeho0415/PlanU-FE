@@ -27,9 +27,7 @@ const StartPage: React.FC = () => {
           }}
         />
       </div>
-      <div className={styles.GoRegisterBox}>
-        <GoLogin textType="register" textColor="white" />
-      </div>
+      <GoLogin textType="register" textColor="white" />
     </div>
   );
 };

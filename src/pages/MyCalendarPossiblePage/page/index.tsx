@@ -3,8 +3,8 @@ import EditButton from "../../../components/buttons/DefaultButton";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
-import EventCard from "../../MyCalendarPage/components/EventCard";
 import styles from "./myCalendarPossible.module.scss";
+import EventCard from "@components/calendarPage/EventCard";
 
 interface IGetScheduleType {
   date: string;

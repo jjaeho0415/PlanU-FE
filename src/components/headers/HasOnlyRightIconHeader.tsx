@@ -3,12 +3,13 @@ import styles from "./hasOnlyRightIconHeader.module.scss";
 import StarIcon from "@components/iconComponent/StarIcon";
 import RedDot_Icon from "@assets/Icons/headers/redDot.svg?react";
 import Alert_Icon from "@assets/Icons/headers/alertIcon.svg?react";
-import X_Icon from "@assets/Icons/headers/xIcon.svg?react"
+import X_Icon from "@assets/Icons/headers/xIcon.svg?react";
 import MiniCalendar_Icon from "@assets/Icons/headers/miniCalendar.svg?react";
+import MiniButton from "@components/buttons/MiniButton";
 
 interface Props {
   title: "PlanU" | string;
-  rightType: "alert" | "star" | "x" | "calendar";
+  rightType: "alert" | "star" | "x" | "calendar" | "button";
   handleClick: () => void;
   isExistNoReadAlarms?: boolean;
   isBookmark?: boolean;
@@ -34,7 +35,19 @@ const HasOnlyRightIconHeader: React.FC<Props> = ({
           </div>
         ) : rightType === "star" ? (
           <StarIcon isBookmark={isBookmark} id={groupId} handleClick={handleClick} />
-        ) : rightType === "x" ? <X_Icon width={24} height={24}/> : <MiniCalendar_Icon />}
+        ) : rightType === "x" ? (
+          <X_Icon width={24} height={24} />
+        ) : rightType === "button" ? (
+          <MiniButton
+            buttonText="완료"
+            onClick={() => {
+              return;
+            }}
+            color="purple"
+          />
+        ) : (
+          <MiniCalendar_Icon />
+        )}
       </div>
     </div>
   );

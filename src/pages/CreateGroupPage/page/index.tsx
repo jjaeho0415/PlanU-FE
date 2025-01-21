@@ -1,10 +1,10 @@
-import DefaultButton from "@components/buttons/DefaultButton";
 import { useState } from "react";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import GroupNameInput from "../components/GroupNameInput";
 import ImageUploader from "../components/ImageUploader";
 import styles from "./createGroup.module.scss";
 import { useNavigate } from "react-router-dom";
+import DefaultButton from "@components/buttons/DefaultButton";
 import { usePostCreateGroup } from "@api/group/postCreateGroup";
 import useAuthStore from "@store/useAuthStore";
 
@@ -28,7 +28,6 @@ const CreateGroupPage = () => {
     if (typeof image !== "string") {
       postCreateGroup({ groupName, groupImage: image });
     }
-    
   };
 
   const handleBackClick = () => {

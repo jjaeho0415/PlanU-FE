@@ -3,7 +3,6 @@ import styles from "./find.module.scss";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
 import FindTypeTab from "../components/FindTypeTab";
-import DefaultButton from "@components/buttons/DefaultButton";
 import { usePostFindId } from "@api/user/postFindId";
 import { usePostFindPw } from "@api/user/postFindPw";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
@@ -11,6 +10,7 @@ import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
 import { useForm } from "react-hook-form";
 import InputItem from "../components/InputItem";
 import { getIdInputList, getPwInputList } from "../../../types/inputLists";
+import DefaultButton from "@components/buttons/DefaultButton";
 
 const FindPage: React.FC = () => {
   const navigate = useNavigate();

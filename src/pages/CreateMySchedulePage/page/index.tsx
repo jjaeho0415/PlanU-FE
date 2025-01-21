@@ -1,6 +1,5 @@
 import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./createMySchedule.module.scss";
-import DefaultButton from "@components/buttons/DefaultButton";
 import { useState } from "react";
 import TitleBox from "@components/createSchedule/TitleBox";
 import ColorBox from "@components/createSchedule/ColorBox";
@@ -8,6 +7,7 @@ import TimeBox from "@components/createSchedule/TimeBox";
 import LocationBox from "@components/createSchedule/LocationBox";
 import MemberBox from "@components/createSchedule/MemberBox";
 import NoteBox from "@components/createSchedule/NoteBox";
+import DefaultButton from "@components/buttons/DefaultButton";
 
 const CreateMySchedulePage: React.FC = () => {
   const [isAllDay, setIsAllDay] = useState<boolean>(false);
