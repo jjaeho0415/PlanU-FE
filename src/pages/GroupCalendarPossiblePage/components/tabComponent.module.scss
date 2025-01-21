@@ -1,0 +1,40 @@
+.Container {
+  height: 100dvh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .TabBox {
+    height: 36px;
+    display: flex;
+    width: 100%;
+    gap: 0;
+  }
+
+  .tabButton {
+    flex: 1;
+    padding: 12px 20px;
+    background: var(--background-50);
+    color: var(--gray-200);
+    cursor: pointer;
+    border-radius: 20px 20px 0 0;
+    font-size: 13px;
+    text-align: center;
+    box-shadow: 0 -3px 2px rgba(69, 21, 99, 0.2);
+  }
+
+  .active {
+    background: var(--background-100);
+    color: var(--black);
+    font-weight: bold;
+    position: relative;
+    box-shadow: 0 -3px 2px rgba(69, 21, 99, 0.2);
+  }
+
+  .ContentBox {
+    height: calc(100vh - 36px);
+    width: 100%;
+    background: var(--background-100);
+    overflow: scroll;
+  }
+}

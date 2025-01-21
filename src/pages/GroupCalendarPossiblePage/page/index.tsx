@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import EditButton from "../../../components/buttons/DefaultButton";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
-import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./groupCalendarPossible.module.scss";
-import EventCard from "@components/calendarPage/EventCard";
+import TabComponent from "../components/TabComponent";
+import PossibleMember from "../components/PossibleMember";
 
 interface IGetScheduleType {
   date: string;
@@ -13,7 +12,7 @@ interface IGetScheduleType {
 }
 
 const GroupCalendarPossiblePage: React.FC = () => {
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const [activeTab, setActiveTab] = useState<"멤버별" | "날짜별" | "순위">("멤버별");
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
@@ -23,27 +22,23 @@ const GroupCalendarPossiblePage: React.FC = () => {
   ];
 
   return (
-    <div className={styles.page}>
+    <div className={styles.Container}>
       <CalendarHeader
         title="가능한 날짜 보기"
         handleClick={() => {
           return;
         }}
       />
-
-      <div className={styles.content}>
-        <div className={styles.calendarSection}>
-          <Calendar
-            type="groupPossible"
-            availableDates={availableDates}
-            setAvailableDates={setAvailableDates}
-            scheduleData={scheduleData}
+      <div className={styles.ContentContainer}>
+        <Calendar type="groupPossible" scheduleData={scheduleData} />
+        <div className={styles.InfoBox}>
+          <p className={styles.Date}>9월 19일 (목)</p>
+          <PossibleMember
+            possibleMembers={["이수현", "이다은", "정재호", "최준혁", "이상준", "김도하"]}
           />
         </div>
-        <div className={styles.scheduleSection}></div>
+        <TabComponent activeTab={activeTab} setActiveTab={setActiveTab} />
       </div>
-
-      <Footer />
     </div>
   );
 };
