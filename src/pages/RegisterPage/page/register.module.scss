@@ -33,13 +33,13 @@
 .ButtonBox {
   display: flex;
   flex-direction: column;
-  justify-content: end;
   align-items: center;
   gap: 20px;
-  flex-grow: 1;
+  position: absolute;
+  bottom: 50px;
 }
 
-.Error{
+.Error {
   font-size: 10px;
   color: red;
   margin: 5px 0 0 0;
