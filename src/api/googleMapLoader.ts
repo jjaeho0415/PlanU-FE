@@ -1,7 +1,7 @@
 export const loadGoogleMapsAPI = (apiKey: string): Promise<void> => {
   return new Promise((resolve, reject) => {
     if (typeof google !== "undefined" && google.maps) {
-      resolve(); // 이미 로드된 경우
+      resolve(); 
       return;
     }
     const script = document.createElement("script");

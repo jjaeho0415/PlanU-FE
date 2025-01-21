@@ -3,12 +3,12 @@ import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
+import DefaultButton from "@components/buttons/DefaultButton";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
-import DefaultButton from "@components/buttons/DefaultButton";
 
 const userInformation: IPostUserInformationType = {
   UserProfileRequest: {
@@ -113,7 +113,7 @@ const RegisterAccountPage = () => {
       return;
     }
 
-    registerUserInformation({ body: postBody, token: accessToken });
+    registerUserInformation(postBody);
   };
 
   const handleArrowIconClick = () => {
@@ -132,7 +132,7 @@ const RegisterAccountPage = () => {
             <div className={styles.profileImage}>
               <ImageUploader iconType="edit" image={userImage} setImage={setUserImage} />
             </div>
-            {name && <div>{name.name} 님</div>}
+            {userInfo && <div>{userInfo.name} 님</div>}
           </div>
         </div>
         <div className={styles.middleSection}>

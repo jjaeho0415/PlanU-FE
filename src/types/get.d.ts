@@ -48,3 +48,11 @@ type IGetGroupPossibleScheduleType = {
     date: string;
     possibleRatio: number;
 }
+
+type IGetGroupMemberItemType = {
+    location: string;
+    lat: number;
+    lng: number;
+    name: string;
+    profileImage: string;
+}

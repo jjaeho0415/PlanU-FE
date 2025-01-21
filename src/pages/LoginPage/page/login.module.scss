@@ -1,10 +1,11 @@
 .Container {
   width: 100%;
-  height: 100%;
+  height: 100dvh;
   background-color: var(--background-50);
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding-bottom: 15px;
 }
 
 .InputBox {
@@ -17,6 +18,7 @@
 .FindBox {
   width: 326px;
   flex-grow: 1;
+  margin-top: 10px;
 }
 
 .ButtonBox {
@@ -33,7 +35,7 @@
   justify-content: end;
 }
 
-.Error{
+.Error {
   font-size: 10px;
   color: red;
   margin: 5px 0 0 0;
