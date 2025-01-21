@@ -1,9 +1,10 @@
 .Container {
   background-color: var(--background-50);
-  height: 100dvh;
+  height: 100vh;
   position: relative;
   overflow: auto;
   padding-bottom: 80px;
+  scrollbar-width: none;
 
   .Border {
     height: 17px;
@@ -19,10 +20,11 @@
 
   .AddIcon {
     cursor: pointer;
-    position: fixed;
-    bottom: 100px;
-    right: 30%;
-  } 
+    position: sticky;
+    z-index: 10;
+    bottom: 15%;
+    left: 80%;
+  }
 }
 
 .TitleP {
