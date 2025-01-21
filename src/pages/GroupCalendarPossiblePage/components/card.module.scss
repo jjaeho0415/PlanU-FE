@@ -50,13 +50,40 @@
 }
 
 //Rank
-.RankContainer {
-  width: 64px;
-  height: 38px;
-  border-radius: 30px;
-}
-.InfoContainer {
-  width: 275px;
-  height: 38px;
-  border-radius: 30px;
+.Container {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  position: relative;
+  padding-top: 15px;
+
+  .Crown {
+    position: absolute;
+    left: 40px;
+    bottom: 30px;
+  }
+
+  .RankContainer {
+    width: 64px;
+    height: 38px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 30px;
+    background-color: var(--white);
+  }
+  .InfoContainer {
+    width: 275px;
+    height: 38px;
+    border-radius: 30px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: var(--white);
+
+    .MembersBox {
+      display: flex;
+    }
+  }
 }

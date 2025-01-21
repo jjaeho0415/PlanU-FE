@@ -1,14 +1,24 @@
 import React from "react";
 import styles from "./card.module.scss";
+import Icon_crown from "@assets/Icons/calendar/Icon_crown_white.svg?react";
 
-const RankCard: React.FC = () => {
+interface rankProps {
+  rank: number;
+  date: string;
+  possibleMembers: number;
+}
+interface props {
+  item: rankProps;
+}
+const RankCard: React.FC<props> = ({ item }) => {
   return (
-    <div>
-      <div className={styles.RankContainer}></div>
+    <div className={styles.Container}>
+      {item.rank === 1 && <Icon_crown className={styles.Crown} />}
+      <div className={styles.RankContainer}>{item.rank}위</div>
       <div className={styles.InfoContainer}>
-        <p className={styles.Date}> 2025.01.21 (화)</p>
+        <p className={styles.Date}>{item.date}</p>
         <div className={styles.MembersBox}>
-          <p className={styles.Possible}>4</p>
+          <p className={styles.Possible}>{item.possibleMembers}</p>
           <p className={styles.MembersNum}>/8</p>
         </div>
       </div>
