@@ -2,6 +2,8 @@ import styles from "./memberItem.module.scss";
 import DefaultProfile from "@assets/Icons/groupPage/smallCircleProfile.svg?react";
 import CrownIcon from "@assets/Icons/groupPage/crownIcon.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
+import { usePostRequestFriend } from "@api/friend/postRequestFriend";
+import useAuthStore from "@store/useAuthStore";
 
 interface Props {
   memberInfo: IGroupMemberType;
@@ -9,9 +11,10 @@ interface Props {
 }
 
 const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
-  const handleRequestFriend = () => {
-    // 친구요청
-    return;
+  const { accessToken } = useAuthStore.getState();
+  const {mutate: requestFriend } = usePostRequestFriend(accessToken)
+  const handleRequestFriend = (username: string) => {
+    requestFriend(username);
   };
 
   const handleForcedExit = () => {
@@ -62,14 +65,22 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
             buttonText="친구요청"
             color="purple_light"
             isAddFriend={true}
-            onClick={handleRequestFriend}
+            onClick={() => handleRequestFriend(memberInfo.username)}
           />
         );
-      } else if (memberInfo.friendStatus === "RECEIVE") {
+      } else if (memberInfo.friendStatus === "REQUEST") {
         return (
           <>
             <MiniButton buttonText="요청중.." color="white" />
             <MiniButton buttonText="요청취소" color="red" onClick={handleCancelRequestFriend} />
+          </>
+        );
+      }
+      else {
+        return (
+          <>
+            <MiniButton buttonText="요청수락" color="purple_light" />
+            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
           </>
         );
       }
@@ -98,16 +109,24 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               buttonText="친구요청"
               color="purple_light"
               isAddFriend={true}
-              onClick={handleRequestFriend}
+              onClick={() => handleRequestFriend(memberInfo.username)}
             />
             <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
           </>
         );
-      } else {
+      } else if(memberInfo.friendStatus === "REQUEST") {
         return (
           <>
             <MiniButton buttonText="요청중.." color="white" />
             <MiniButton buttonText="요청취소" color="red" onClick={handleCancelRequestFriend} />
+            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
+          </>
+        );
+      }
+      else {
+        return (
+          <>
+            <MiniButton buttonText="요청수락" color="purple_light" />
             <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
           </>
         );
