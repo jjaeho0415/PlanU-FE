@@ -2,7 +2,7 @@ import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./groupPage.module.scss";
 import { useState } from "react";
 import GroupOptions from "../components/GroupOptions";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import TodayScheduleList from "../components/TodayScheduleList";
 import BottomNavBar from "@components/nav-bar/BottomNavBar";
 import GroupScheduleCalendar from "../components/GroupScheduleCalendar";
@@ -69,6 +69,7 @@ const GroupPage = () => {
     id: 1,
     isBookMark: true,
   });
+  const { groupId } = useParams<{ groupId: string }>();
 
   const handleBookMarkClick = () => {
     // api 연동 로직 작성해야함
@@ -98,7 +99,7 @@ const GroupPage = () => {
       <div className={styles.contentContainer}>
         <div className={styles.iconSection}>
           {iconOptionsTitle.map((title) => (
-            <GroupOptions title={title} groupId={groupInfo.id} key={title} />
+            <GroupOptions title={title} groupId={groupId!} key={title} />
           ))}
         </div>
         <div className={styles.buttonSection} onClick={handleCreateSchedule}>
