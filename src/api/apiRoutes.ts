@@ -15,9 +15,16 @@ const apiRoutes = {
   showGroupList: "/groups/list",
   rejectGroupInvitation: "/groups/decline",
   showGroupInvitationList: "/groups/inviteList",
-  leaveGroup:"groups/leave", 
+  leaveGroup: "groups/leave",
   deleteGroup: "/groups/delete",
-  
+  // 친구 관련
+  requestFriend: "/users/friends/request",
+  acceptFriendRequest: "/users/friends/request-accept",
+  rejectFriendRequest: "/users/friends/request-reject",
+  cancelFriendRequest: "/users/friends/request-cancel",
+  friend: "/users/friends",
+  showReceiveFriendList: "/users/friends/receive",
+  showRequestFriendList: "/users/friends/request",
 };
 
 export default apiRoutes;
