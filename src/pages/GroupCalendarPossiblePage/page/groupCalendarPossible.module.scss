@@ -1,0 +1,27 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background: var(--background-50);
+}
+
+.content {
+  flex: 1;
+  padding-bottom: 90px;
+  overflow-y: auto;
+}
+.content::-webkit-scrollbar {
+  display: none;
+}
+
+.calendarSection {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.scheduleSection {
+}
