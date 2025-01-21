@@ -47,7 +47,10 @@ const _fetch = async <T = unknown, R = unknown>({
     credentials: "include",
   };
 
-  if (body) {
+  if (body instanceof FormData) {
+    delete headers["Content-Type"];
+    requestOptions.body = body;
+  } else if (body) {
     requestOptions.body = JSON.stringify(body);
   }
 
@@ -72,7 +75,7 @@ const _fetch = async <T = unknown, R = unknown>({
             );
 
             if (!retryRes.ok) {
-              const {resultMsg} = await retryRes.json();
+              const { resultMsg } = await retryRes.json();
               throw new Error(resultMsg.message);
             }
             return await retryRes.json();
@@ -85,7 +88,7 @@ const _fetch = async <T = unknown, R = unknown>({
           throw new Error("Session expired. Please log in again.");
         }
       }
-      const {resultMsg} = await res.json();
+      const { resultMsg } = await res.json();
       throw new Error(resultMsg);
     }
     return await res.json();

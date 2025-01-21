@@ -59,7 +59,7 @@ function App() {
             <Route path="/myPage" element={<MyPage />} />
             <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
-            <Route path="/myPage/ModifyMyAccount" element={<ModifyMyAccountPage />} />
+            <Route path="/myPage/modifyMyAccount" element={<ModifyMyAccountPage />} />
             <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
             <Route
               path="/group/:groupId/calendar/createSchedule"
