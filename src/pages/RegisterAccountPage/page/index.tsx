@@ -34,9 +34,9 @@ const RegisterAccountPage = () => {
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
   const [userImage, setUserImage] = useState<File | string | null>(null);
   const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
-   const { accessToken } = useAuthStore.getState();
-  const { mutate: registerUserInformation } = usePostUserInformation(accessToken);
-  const { data: userInfo } = useGetUserInfo(accessToken);
+  const { mutate: registerUserInformation } = usePostUserInformation();
+  const { accessToken } = useAuthStore.getState();
+  const { data: name } = useGetUserInfo(accessToken);
 
   useEffect(() => {
     setPostBody({

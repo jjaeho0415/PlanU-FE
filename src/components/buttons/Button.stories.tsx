@@ -1,5 +1,4 @@
 import { Meta, StoryObj } from "@storybook/react";
-import DefaultButton from "./DefaultButton";
 import { GoLogin } from "./GoLogin";
 import LoginButton from "./LoginButton";
 import SmallButton from "./SmallButton";
@@ -8,6 +7,7 @@ import styles from "./buttonStory.module.scss";
 import CheckButton from "./CheckButton";
 import MiniButton from "./MiniButton";
 import FindButton from "./FindButton";
+import DefaultButton from "./DefaultButton";
 
 function Button() {
   return (
