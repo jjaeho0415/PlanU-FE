@@ -3,12 +3,12 @@ import OnlyTextHeader from "@components/headers/OnlyTextHeader";
 import { useEffect, useState } from "react";
 import DatePicker from "../components/DatePicker";
 import MiniButton from "@components/buttons/MiniButton";
+import DefaultButton from "@components/buttons/DefaultButton";
 import ImageUploader from "@pages/CreateGroupPage/components/ImageUploader";
 import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
-import DefaultButton from "@components/buttons/DefaultButton";
 
 const userInformation: IPostUserInformationType = {
   UserProfileRequest: {

@@ -1,18 +1,32 @@
 import React from "react";
 import styles from "./groupItem.module.scss";
-import DefaultProfileImage from "@assets/Icons/Default Profile/default_profile.svg?react";
 
-interface IProps {}
 
-const InviteItem: React.FC<IProps> = () => {
+interface IProps {
+  groupInviteItem: IGetGroupInviteListItemType;
+  setIsInviteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const InviteItem: React.FC<IProps> = ({ groupInviteItem,setIsInviteModalOpen }) => {
+  
+
+
   return (
-    <div className={styles.Container}>
+    <div
+      className={styles.Container}
+      onClick={() => setIsInviteModalOpen(true)}
+    >
       <div className={styles.ProfileImg}>
-        <DefaultProfileImage />
+        <img
+          src={groupInviteItem.groupImageUrl}
+          alt={`${groupInviteItem.groupName}의 프로필`}
+          className={styles.image}
+        />
       </div>
       <div className={styles.InfoBox}>
-        <p className={styles.GroupName}>planU 수다방</p>
+        <p className={styles.GroupName}>{groupInviteItem.groupName}</p>
       </div>
+      
     </div>
   );
 };

@@ -1,7 +1,11 @@
 import React, { useRef } from "react";
 import styles from "./Inputs.module.scss";
 
-const NoteBox: React.FC = () => {
+interface props {
+  value?: string;
+}
+
+const NoteBox: React.FC<props> = ({ value = "" }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const resizeHeight = () => {
@@ -28,6 +32,7 @@ const NoteBox: React.FC = () => {
       onInput={resizeHeight}
       onKeyDown={resizeHeight}
       placeholder="노트"
+      defaultValue={value ?? null}
     ></textarea>
   );
 };
