@@ -1,5 +1,5 @@
 import EditIcon from "@assets/Icons/myCalendar/EditIcon.svg?react";
-import React, { useState } from "react";
+import React from "react";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import styles from "./groupCalendarPage.module.scss";
@@ -21,7 +21,6 @@ const scheduleData: IGetScheduleType[] = [
 
 const GroupCalendarPage: React.FC = () => {
   const navigate = useNavigate();
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
 
   const handleBackArrowClick = () => {
     navigate("/group/1");
@@ -38,12 +37,7 @@ const GroupCalendarPage: React.FC = () => {
       />
       <div className={styles.content}>
         <div className={styles.calendarSection}>
-          <Calendar
-            type="view"
-            availableDates={availableDates}
-            setAvailableDates={setAvailableDates}
-            scheduleData={scheduleData}
-          />
+          <Calendar type="view" scheduleData={scheduleData} />
         </div>
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
