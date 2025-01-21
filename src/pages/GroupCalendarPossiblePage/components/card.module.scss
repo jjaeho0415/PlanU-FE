@@ -1,0 +1,62 @@
+.CardContainer {
+  width: 350px;
+  height: fit-content;
+  background-color: var(--white);
+  border-radius: 32px;
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  gap: 15px;
+
+  .LeftBox {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .RightBox {
+    border-left: 1px solid var(--gray-200);
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding-left: 15px;
+
+    .RightTopP {
+      font-size: 17px;
+      color: var(--gray-800);
+    }
+
+    .RightContentBox {
+      font-size: 15px;
+      color: var(--gray-200);
+    }
+  }
+}
+
+//MemberCard
+.Profile {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  background-color: gray;
+}
+
+//DateCard
+.MembersNum {
+  color: var(--gray-800);
+}
+.Possible {
+  color: var(--violet-300);
+}
+
+//Rank
+.RankContainer {
+  width: 64px;
+  height: 38px;
+  border-radius: 30px;
+}
+.InfoContainer {
+  width: 275px;
+  height: 38px;
+  border-radius: 30px;
+}

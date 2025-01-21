@@ -12,8 +12,6 @@ interface IGetScheduleType {
 }
 
 const GroupCalendarPossiblePage: React.FC = () => {
-  const [activeTab, setActiveTab] = useState<"멤버별" | "날짜별" | "순위">("멤버별");
-
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
     { date: "2025-01-13", isSchedule: false, isBirthday: true },
@@ -37,7 +35,9 @@ const GroupCalendarPossiblePage: React.FC = () => {
             possibleMembers={["이수현", "이다은", "정재호", "최준혁", "이상준", "김도하"]}
           />
         </div>
-        <TabComponent activeTab={activeTab} setActiveTab={setActiveTab} />
+        <div className={styles.TabBox}>
+          <TabComponent />
+        </div>
       </div>
     </div>
   );

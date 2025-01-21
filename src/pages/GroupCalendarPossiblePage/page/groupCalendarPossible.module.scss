@@ -1,18 +1,26 @@
 .Container {
-  height: 100dvh;
+  height: 100svh;
   background: var(--background-50);
+  position: relative;
+  overflow: scroll;
 
   .ContentContainer {
     display: flex;
     flex-direction: column;
     align-items: center;
+    gap: 30px;
 
     .InfoBox {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
       .Date {
         font-size: 20px;
       }
     }
-    .ScheduleContainer {
+
+    .TabBox {
+      width: 100%;
     }
   }
 }

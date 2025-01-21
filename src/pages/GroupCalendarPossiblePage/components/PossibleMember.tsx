@@ -8,12 +8,15 @@ interface props {
 const PossibleMember: React.FC<props> = ({ possibleMembers }) => {
   return (
     <div className={styles.Container}>
-      <p className={styles.TextTitle}>가능한 멤버 |</p>
-      {possibleMembers.map((member) => (
-        <p key={member} className={styles.TextMembers}>
-          {member},
-        </p>
-      ))}
+      <div className={styles.TitleBox}>가능한 멤버</div>
+      <div className={styles.MemberBox}>
+        {possibleMembers.map((member, index) => (
+          <p key={index} className={styles.TextMembers}>
+            {member}
+            {possibleMembers.length - 1 !== index && ","}
+          </p>
+        ))}
+      </div>
     </div>
   );
 };
