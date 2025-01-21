@@ -80,7 +80,6 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
         return (
           <>
             <MiniButton buttonText="요청수락" color="purple_light" />
-            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedExit} />
           </>
         );
       }
