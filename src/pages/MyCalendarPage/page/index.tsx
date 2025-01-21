@@ -1,5 +1,5 @@
 import EditIcon from "@assets/Icons/myCalendar/EditIcon.svg?react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
@@ -14,8 +14,8 @@ interface IGetScheduleType {
 }
 
 const MyCalendarPage: React.FC = () => {
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
   const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState<string>("");
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
@@ -25,8 +25,13 @@ const MyCalendarPage: React.FC = () => {
   ];
 
   const handleMiniCalendarClick = () => {
-    navigate('/myCalendarPossible')
-  }
+    navigate("/myCalendarPossible");
+  };
+
+  useEffect(() => {
+    // selectedDate의 값이 변할때마다 해당 날짜 일정 조회하는 api 호출
+    console.log(selectedDate);
+  }, [selectedDate]);
 
   return (
     <div className={styles.page}>
@@ -38,12 +43,7 @@ const MyCalendarPage: React.FC = () => {
 
       <div className={styles.content}>
         <div className={styles.calendarSection}>
-          <Calendar
-            type="view"
-            availableDates={availableDates}
-            setAvailableDates={setAvailableDates}
-            scheduleData={scheduleData}
-          />
+          <Calendar type="view" scheduleData={scheduleData} setSelectedDate={setSelectedDate} />
         </div>
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
