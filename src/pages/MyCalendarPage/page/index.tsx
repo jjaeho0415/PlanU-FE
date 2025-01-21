@@ -5,6 +5,7 @@ import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
 import EventCard from "@components/calendarPage/EventCard";
+import { useNavigate } from "react-router-dom";
 
 interface IGetScheduleType {
   date: string;
@@ -14,6 +15,7 @@ interface IGetScheduleType {
 
 const MyCalendarPage: React.FC = () => {
   const [availableDates, setAvailableDates] = useState<string[]>([]);
+  const navigate = useNavigate();
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
@@ -22,22 +24,22 @@ const MyCalendarPage: React.FC = () => {
     { date: "2025-01-26", isSchedule: true, isBirthday: false },
   ];
 
-  const handleBackArrowClick = () => console.log();
-  const handleMiniCalendarClick = () => console.log();
+  const handleMiniCalendarClick = () => {
+    navigate("/myCalendarPossible");
+  };
 
   return (
     <div className={styles.page}>
       <CalendarHeader
         title="나의 달력"
         type="my"
-        handleBackArrowClick={handleBackArrowClick}
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
 
       <div className={styles.content}>
         <div className={styles.calendarSection}>
           <Calendar
-            type="myPossible"
+            type="view"
             availableDates={availableDates}
             setAvailableDates={setAvailableDates}
             scheduleData={scheduleData}

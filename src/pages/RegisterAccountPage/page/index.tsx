@@ -113,7 +113,7 @@ const RegisterAccountPage = () => {
       return;
     }
 
-    registerUserInformation({ body: postBody, token: accessToken });
+    registerUserInformation(postBody);
   };
 
   const handleArrowIconClick = () => {
@@ -132,7 +132,7 @@ const RegisterAccountPage = () => {
             <div className={styles.profileImage}>
               <ImageUploader iconType="edit" image={userImage} setImage={setUserImage} />
             </div>
-            {name && <div>{name.name} 님</div>}
+            {userInfo && <div>{userInfo.name} 님</div>}
           </div>
         </div>
         <div className={styles.middleSection}>
