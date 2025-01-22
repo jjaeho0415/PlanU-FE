@@ -1,7 +1,7 @@
 import styles from "./groupMemberItem.module.scss";
 
 interface Props {
-  groupMemberItem: IGetGroupMemberItemType;
+  groupMemberItem: IGetGroupMemberLocationResponseType;
   handleGroupMemberClick: () => void;
 }
 

@@ -10,7 +10,7 @@ import { usePostUserInformation } from "@api/user/postUserInformation";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 
-const userInformation: IPostUserInformationType = {
+const userInformation: IPostUserInformationRequestBodyType = {
   UserProfileRequest: {
     birthDate: "",
     gender: "M",
@@ -33,7 +33,7 @@ const RegisterAccountPage = () => {
   const [isSnsReceiveAgreed, setIsSnsReceiveAgreed] = useState<boolean>(false);
   const [isAllAgreed, setIsAllAgreed] = useState<boolean>(false);
   const [userImage, setUserImage] = useState<File | string | null>(null);
-  const [postBody, setPostBody] = useState<IPostUserInformationType>(userInformation);
+  const [postBody, setPostBody] = useState<IPostUserInformationRequestBodyType>(userInformation);
   const { accessToken } = useAuthStore.getState();
   const { mutate: registerUserInformation } = usePostUserInformation(accessToken);
   const { data: userInfo } = useGetUserInfo(accessToken);

@@ -3,25 +3,13 @@ import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
-type IPostCreateGroupBodyType = {
-  groupName: string;
-  groupImage: File;
-};
-
-type IResponsePostCreateGroupType = {
-  groupId: number;
-  groupName: string;
-  leaderUserName: string;
-  groupImageUrl: string;
-};
-
-const postCreateGroup = async (body: IPostCreateGroupBodyType, authorization: string) => {
+const postCreateGroup = async (body: IPostCreateGroupRequestBodyType, authorization: string) => {
   const formData = new FormData();
  
   formData.append("groupName", body.groupName);
   formData.append("groupImage", body.groupImage);
   
-  const response = await api.post<FormData, IResponsePostCreateGroupType>({
+  const response = await api.post<FormData, IPostCreateGroupResponseBodyType>({
     endpoint: apiRoutes.createGroup,
     body: formData,
     authorization,
@@ -33,8 +21,8 @@ const postCreateGroup = async (body: IPostCreateGroupBodyType, authorization: st
 export const usePostCreateGroup = (authorization: string) => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (body: IPostCreateGroupBodyType) => postCreateGroup(body, authorization),
-    onSuccess: (data: IResponsePostCreateGroupType) => {
+    mutationFn: (body: IPostCreateGroupRequestBodyType) => postCreateGroup(body, authorization),
+    onSuccess: (data: IPostCreateGroupResponseBodyType) => {
       navigate(`/group/${data.groupId}`);
     },
     onError: (error) => {

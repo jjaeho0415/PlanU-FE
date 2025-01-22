@@ -12,7 +12,7 @@ import { useDeleteLeaveGroup } from "@api/group/deleteLeaveGroup";
 import { useDeleteForcedWithdrawalFromGroup } from "@api/group/deleteForcedWithdrawalFromGroup";
 
 interface Props {
-  memberInfo: IGroupMemberType;
+  memberInfo: IGroupMemberItemType;
   isUserLeader: boolean;
 }
 
