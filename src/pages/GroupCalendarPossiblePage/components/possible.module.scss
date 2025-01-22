@@ -1,0 +1,31 @@
+.Container {
+  width: 350px;
+  min-height: 44px;
+  height: auto;
+  background-color: var(--white);
+  display: flex;
+  align-items: center;
+  border-radius: 32px;
+  padding: 13px;
+  gap: 15px;
+
+  .TitleBox {
+    font-size: 17px;
+    height: 100%;
+    width: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: 1px solid black;
+  }
+  .MemberBox {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    .TextMembers {
+      font-size: 15px;
+      white-space: nowrap;
+      color: var(--gray-800);
+    }
+  }
+}
