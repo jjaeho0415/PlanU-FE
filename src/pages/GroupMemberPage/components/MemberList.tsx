@@ -3,7 +3,7 @@ import MemberItem from "./MemberItem";
 import styles from "./memberList.module.scss";
 
 interface Props {
-  memberList: IGroupMemberType[];
+  memberList: IGroupMemberItemType[];
 }
 
 const MemberList: React.FC<Props> = ({ memberList }) => {

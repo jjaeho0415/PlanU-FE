@@ -3,7 +3,7 @@ import styles from "./groupItem.module.scss";
 import { useNavigate } from "react-router-dom";
 
 interface IProps {
-  groupItem: IGetGroupListItemType;
+  groupItem: IGetGroupItemType;
 }
 
 const GroupItem: React.FC<IProps> = ({ groupItem }) => {

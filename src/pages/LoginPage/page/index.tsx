@@ -69,7 +69,7 @@ const LoginPage: React.FC = () => {
   ];
 
   const onSubmit = async (data: ILoginFormData) => {
-    const postData: IPostLogin = {
+    const postData: IPostLoginRequestBodyType = {
       username: data.ID,
       password: data.Password,
     };
