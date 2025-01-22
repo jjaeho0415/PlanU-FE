@@ -64,7 +64,7 @@ const _fetch = async <T = unknown, R = unknown>({
           if (newAccessToken) {
             useAuthStore.getState().setAccessToken(newAccessToken);
 
-            headers.access = newAccessToken;
+            headers.Authorization = "Bearer " + newAccessToken;
             const retryRequestOptions: RequestInit = {
               ...requestOptions,
               headers,

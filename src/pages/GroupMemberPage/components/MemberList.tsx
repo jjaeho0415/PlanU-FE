@@ -19,7 +19,7 @@ const MemberList: React.FC<Props> = ({ memberList }) => {
   return (
     <div className={styles.memberList}>
       {memberList.map((member) => (
-        <MemberItem memberInfo={member} isUserLeader={isUserLeader} />
+        <MemberItem memberInfo={member} isUserLeader={isUserLeader} key={member.username} />
       ))}
     </div>
   );

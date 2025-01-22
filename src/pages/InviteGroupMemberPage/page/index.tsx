@@ -7,40 +7,40 @@ import FriendList from "../components/FriendList";
 
 const friendMemberList: IGetFriendMemberType[] = [
   {
-    profileImageUrl: "",
+    profileImage: "",
     name: "정재호",
     username: "jjh",
-    requestState: "none",
+    status: "NONE",
   },
   {
-    profileImageUrl: "",
+    profileImage: "",
     name: "김도하",
     username: "kdh",
-    requestState: "none",
+    status: "NONE",
   },
   {
-    profileImageUrl: "",
+    profileImage: "",
     name: "이다은",
     username: "lde",
-    requestState: "none",
+    status: "NONE",
   },
   {
-    profileImageUrl: "",
+    profileImage: "",
     name: "이수현",
     username: "lsh",
-    requestState: "none",
+    status: "NONE",
   },
   {
-    profileImageUrl: "",
+    profileImage: "",
     name: "이상준",
     username: "lsj",
-    requestState: "none",
+    status: "NONE",
   },
   {
-    profileImageUrl: "",
+    profileImage: "",
     name: "최준혁",
     username: "cjh",
-    requestState: "progress",
+    status: "PROGRESS",
   },
 ];
 

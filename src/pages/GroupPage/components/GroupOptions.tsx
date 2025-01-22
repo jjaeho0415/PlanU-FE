@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   title: "정산하기" | "그룹 달력" | "게시물" | "멤버" | "채팅" | string;
-  groupId: number;
+  groupId: string;
 }
 
 const GroupOptions: React.FC<Props> = ({ title, groupId }) => {
