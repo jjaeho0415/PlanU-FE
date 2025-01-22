@@ -1,6 +1,6 @@
 import apiRoutes from "@api/apiRoutes";
 
-export const postLogin = async (body: IPostLogin): Promise<string> => {
+export const postLogin = async (body: IPostLoginRequestBodyType): Promise<string> => {
   const endpoint = `${import.meta.env.VITE_API_URL}${apiRoutes.users}/login`;
 
   const requestOptions: RequestInit = {

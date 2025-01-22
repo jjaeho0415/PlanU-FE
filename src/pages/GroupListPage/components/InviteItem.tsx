@@ -3,7 +3,7 @@ import styles from "./groupItem.module.scss";
 
 
 interface IProps {
-  groupInviteItem: IGetGroupInviteListItemType;
+  groupInviteItem: IGetGroupInviteItemType;
   setIsInviteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

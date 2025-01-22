@@ -13,3 +13,11 @@ type SearchLocationResultType = {
   lat: number;
   lng: number;
 };
+
+type IGetGroupMemberLocationResponseType = {
+  location: string;
+  lat: number;
+  lng: number;
+  name: string;
+  profileImage: string;
+};

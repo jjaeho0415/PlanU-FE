@@ -93,7 +93,7 @@ const RegisterPage: React.FC = () => {
     return confirmPassword === password || "비밀번호가 일치하지않습니다.";
   };
 
-  const handleConfirmCode = (data: IPostConfirmEmailCode) => {
+  const handleConfirmCode = (data: IPostConfirmEmailCodeRequestBodyType) => {
     confirmCode(data, {
       onSuccess: () => {
         alert("인증코드 일치");

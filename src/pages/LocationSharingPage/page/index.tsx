@@ -14,7 +14,7 @@ const arrivalLocationInfo: ILocationInfoType = {
   lng: 126.9273886,
 };
 
-const groupMemberList: IGetGroupMemberItemType[] = [
+const groupMemberList: IGetGroupMemberLocationResponseType[] = [
   {
     name: "최준혁",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",

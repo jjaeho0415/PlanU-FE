@@ -110,7 +110,7 @@ const FindPage: React.FC = () => {
     }
   };
 
-  const handleConfirmCode = (data: IPostConfirmEmailCode) => {
+  const handleConfirmCode = (data: IPostConfirmEmailCodeRequestBodyType) => {
     confirmCode(data, {
       onSuccess: () => {
         alert("인증코드 일치");

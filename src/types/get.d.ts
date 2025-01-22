@@ -26,18 +26,6 @@ type IGetFriendMemberType = {
   status: "PROGRESS" | "NONE";
 };
 
-type IGetGroupMembersType = {
-  members: IGroupMemberType[];
-};
-
-type IGroupMemberType = {
-  name: string;
-  username: string;
-  profileImage: string;
-  groupRole: "LEADER" | "PARTICIPANT";
-  friendStatus: "RECEIVE" | "FRIEND" | "NONE" | "ME" | "REQUEST";
-};
-
 type IGetScheduleType = {
   date: string;
   isSchedule: boolean;
@@ -47,24 +35,6 @@ type IGetScheduleType = {
 type IGetGroupPossibleScheduleType = {
   date: string;
   possibleRatio: number;
-};
-
-type IGetGroupMemberItemType = {
-  location: string;
-  lat: number;
-  lng: number;
-  name: string;
-  profileImage: string;
-};
-
-type IGetGroupListItemType = IGetGroupInviteListItemType & {
-  participant: number;
-};
-
-type IGetGroupInviteListItemType = {
-  groupId: number;
-  groupName: string;
-  groupImageUrl: string;
 };
 
 //가능한 날짜

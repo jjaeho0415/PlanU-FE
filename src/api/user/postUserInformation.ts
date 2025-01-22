@@ -7,7 +7,7 @@ const postUserInformation = async ({
   body,
   token,
 }: {
-  body: IPostUserInformationType;
+  body: IPostUserInformationRequestBodyType;
   token: string;
 }): Promise<IResponseType> => {
   const formData = new FormData();
@@ -41,7 +41,7 @@ const postUserInformation = async ({
 export const usePostUserInformation = (token: string) => {
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: (body: IPostUserInformationType) => postUserInformation({ body, token }),
+    mutationFn: (body: IPostUserInformationRequestBodyType) => postUserInformation({ body, token }),
     onSuccess: (data) => {
       alert(data.resultMsg);
       navigate("/myCalendar");

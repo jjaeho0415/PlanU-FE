@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import styles from "./groupCalendarPossible.module.scss";
