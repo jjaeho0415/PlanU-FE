@@ -15,7 +15,7 @@ const apiRoutes = {
   showGroupList: "/groups/list",
   rejectGroupInvitation: "/groups/decline",
   showGroupInvitationList: "/groups/inviteList",
-  leaveGroup: "groups/leave",
+  leaveGroup: "/groups/leave",
   deleteGroup: "/groups/delete",
   // 친구 관련
   requestFriend: "/users/friends/request",
