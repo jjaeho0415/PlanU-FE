@@ -82,15 +82,17 @@ const TimeBox: React.FC<props> = ({
           setEndDate={setEndDate}
         />
       )}
-      <div
-        className={`${styles.TimeBox} ${isTimeClicked === 1 || isDateClicked === 1 ? styles.Middle : styles.Last}`}
-      >
-        <p className={styles.Title}>종료</p>
-        <div className={styles.Time}>
-          <p onClick={() => handleDateClick(false)}>{endDate.toISOString().split("T")[0]}</p>
-          {!isAllDay && <p onClick={() => handleTimeClick(false)}>{formatTime(endDate)}</p>}
+      {!isAllDay && (
+        <div
+          className={`${styles.TimeBox} ${isTimeClicked === 1 || isDateClicked === 1 ? styles.Middle : styles.Last}`}
+        >
+          <p className={styles.Title}>종료</p>
+          <div className={styles.Time}>
+            <p onClick={() => handleDateClick(false)}>{endDate.toISOString().split("T")[0]}</p>
+            <p onClick={() => handleTimeClick(false)}>{formatTime(endDate)}</p>
+          </div>
         </div>
-      </div>
+      )}
       {isDateClicked === 1 && (
         <DatePicker
           isStartDay={false}
