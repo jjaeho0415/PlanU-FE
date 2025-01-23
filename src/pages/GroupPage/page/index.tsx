@@ -80,11 +80,11 @@ const GroupPage = () => {
   };
 
   const handleCreateSchedule = () => {
-    navigate(`/createSchedule/${groupInfo.id}`);
+    navigate(`/createSchedule/${groupId}`);
   };
 
   const handleCalendarClick = () => {
-    navigate(`/group/${groupInfo.id}/groupCalendar`);
+    navigate(`/group/${groupId}/groupCalendar`);
   };
 
   return (

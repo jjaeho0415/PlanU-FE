@@ -59,10 +59,6 @@ function App() {
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
             <Route path="/myPage/modifyMyAccount" element={<ModifyMyAccountPage />} />
             <Route path="/createSchedule/:groupId" element={<CreateSchedulePage />} />
-            {/* <Route
-              path="/group/:groupId/calendar/createSchedule"
-              element={<CreateGroupSchedulePage />}
-            /> */}
             <Route path="/selectLocation" element={<SelectLocationPage />} />
             <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />
             <Route path="/editSchedule/:scheduleId" element={<EditSchedulePage />} />

@@ -13,8 +13,10 @@ import { usePostCreateMyShcedule } from "@api/schedule/postCreateMySchedule";
 import { usePostCreateGroupSchedule } from "@api/schedule/postCreateGroupSchedule";
 import { format } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
+import { useNavigate, useParams } from "react-router-dom";
 
 const CreateSchedulePage: React.FC = () => {
+  const navigate = useNavigate();
   const [title, setTitle] = useState<string>("");
   const [color, setColor] = useState<string>("#3556d7e");
   const [isAllDay, setIsAllDay] = useState<boolean>(false);
@@ -25,9 +27,8 @@ const CreateSchedulePage: React.FC = () => {
   const [unregisteredParticipants, setUnregisteredParticipants] = useState<string[]>([]);
   const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
   const [memo, setMemo] = useState<string>("");
-  const queryParams = new URLSearchParams(location.search); // 쿼리스트링 파싱
-  const param = queryParams.get("groupId");
-  const groupId = param === "my" ? "my" : Number(param);
+  const { groupId } = useParams<{ groupId: string }>();
+  const id = groupId === "my" ? "my" : Number(groupId);
   const { accessToken } = useAuthStore();
   const { mutate: createMySchedule } = usePostCreateMyShcedule(accessToken);
   const { mutate: createGroupSchedule } = usePostCreateGroupSchedule(accessToken, Number(groupId));
@@ -52,11 +53,13 @@ const CreateSchedulePage: React.FC = () => {
       memo: memo,
     };
 
-    if (param === "my") {
+    if (id === "my") {
       createMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
     } else {
       createGroupSchedule(data);
     }
+
+    navigate(-1);
   };
 
   return (
@@ -65,7 +68,7 @@ const CreateSchedulePage: React.FC = () => {
         title="새로운 일정"
         rightType="x"
         handleClick={() => {
-          return;
+          navigate(-1);
         }}
       />
       <div className={styles.ContentContainer}>
