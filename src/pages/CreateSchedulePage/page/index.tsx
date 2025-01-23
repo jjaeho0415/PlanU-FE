@@ -46,8 +46,8 @@ const CreateSchedulePage: React.FC = () => {
       startDateTime: format(startDate, "YYYY-MM-DDTHH:MM"),
       endDateTime: format(endDate, "YYYY-MM-DDTHH:MM"),
       location: locationName ?? locationAddress,
-      latitude: String(lat),
-      longitude: String(lng),
+      latitude: lat,
+      longitude: lng,
       participants: postParticipantsData,
       memo: memo,
     };

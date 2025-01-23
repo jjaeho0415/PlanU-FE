@@ -5,8 +5,8 @@ type IPostCreateGroupScheduleType = {
   startDateTime: string;
   endDateTime: string;
   location: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   participants: string[];
   memo: string;
 };
@@ -23,8 +23,8 @@ type IPostCreateMyScheduleType = {
   startDateTime: string;
   endDateTime: string;
   location: string;
-  latitude: string;
-  longitude: string;
+  latitude: number;
+  longitude: number;
   participants: string[];
   unregisteredParticipants: string[];
   memo: string;
