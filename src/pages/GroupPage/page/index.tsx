@@ -80,12 +80,12 @@ const GroupPage = () => {
   };
 
   const handleCreateSchedule = () => {
-    navigate(`/group/${groupInfo.id}/calendar/createSchedule`);
+    navigate(`/createSchedule/${groupInfo.id}`);
   };
 
   const handleCalendarClick = () => {
     navigate(`/group/${groupInfo.id}/groupCalendar`);
-  }
+  };
 
   return (
     <div className={styles.mainContainer}>

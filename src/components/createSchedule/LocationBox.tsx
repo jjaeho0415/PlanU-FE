@@ -1,28 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Inputs.module.scss";
 import Icon_search from "@assets/Icons/Icon_search.svg?react";
 import Map from "@components/map/Map";
 import { useNavigate } from "react-router-dom";
+import useLocationInfoStore from "@store/useLocationInfoStore";
 
-interface props {
-  location?: string;
-}
-
-const LocationBox: React.FC<props> = ({ location = "" }) => {
+const LocationBox: React.FC = () => {
   const navigate = useNavigate();
+  const { lat, lng, name, location } = useLocationInfoStore();
+  const [locationName, setLocatonName] = useState<string>("");
+
+  useEffect(() => {
+    setLocatonName(name ?? location);
+  }, [name, location]);
 
   return (
     <div className={styles.LocationContainer} onClick={() => navigate("/selectLocation")}>
       <div className={styles.Box}>
-        {location === "" ? (
+        {locationName ? (
           <p className={styles.Title}>장소를 검색하세요.</p>
         ) : (
-          <p className={styles.LocationName}>{location}</p>
+          <p className={styles.LocationName}>{locationName}</p>
         )}
         <Icon_search />
       </div>
       <div className={styles.MapBox}>
-        <Map latLng={{ lat: 0, lng: 0 }} />
+        <Map latLng={{ lat: lat, lng: lng }} />
       </div>
     </div>
   );

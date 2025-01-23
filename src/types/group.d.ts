@@ -43,4 +43,3 @@ type IPostCreateGroupResponseBodyType = {
   leaderUserName: string;
   groupImageUrl: string;
 };
-

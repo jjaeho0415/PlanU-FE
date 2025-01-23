@@ -2,7 +2,12 @@ import React from "react";
 import styles from "./Inputs.module.scss";
 import Icon_arrow from "@assets/Icons/arrow/RightArrow.svg?react";
 
-const ColorBox: React.FC = () => {
+interface props {
+  color: string;
+  setColor: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const ColorBox: React.FC<props> = () => {
   return (
     <div className={styles.Box}>
       <p className={styles.Title}>색상</p>

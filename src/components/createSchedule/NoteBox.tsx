@@ -2,10 +2,11 @@ import React, { useRef } from "react";
 import styles from "./Inputs.module.scss";
 
 interface props {
-  value?: string;
+  memo: string;
+  setMemo: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const NoteBox: React.FC<props> = ({ value = "" }) => {
+const NoteBox: React.FC<props> = ({ memo, setMemo }) => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
 
   const resizeHeight = () => {
@@ -25,14 +26,18 @@ const NoteBox: React.FC<props> = ({ value = "" }) => {
     textarea.style.overflowY = scrollHeight > maxHeight ? "auto" : "hidden";
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setMemo(event.target.value);
+    resizeHeight();
+  };
+
   return (
     <textarea
       className={styles.TextArea}
       ref={textareaRef}
-      onInput={resizeHeight}
-      onKeyDown={resizeHeight}
+      onChange={handleChange}
       placeholder="노트"
-      defaultValue={value ?? null}
+      value={memo}
     ></textarea>
   );
 };

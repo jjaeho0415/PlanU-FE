@@ -2,24 +2,26 @@ import React, { useEffect, useState } from "react";
 import styles from "./Inputs.module.scss";
 import ParticipantsPicker from "./ParticipantsPicker";
 
-interface IParticipant {
-  userId: string;
-  name: string;
-}
-
 interface props {
-  members?: IParticipant[];
+  participants: IGetMemberType[];
+  setParticipants: React.Dispatch<React.SetStateAction<IGetMemberType[]>>;
+  unregisteredParticipnats?: string[];
+  setUnregisteredParticipants?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const MemberBox: React.FC<props> = ({ members = [] }) => {
-  const [participants, setParticipants] = useState<IParticipant[]>([]);
+const MemberBox: React.FC<props> = ({
+  participants,
+  setParticipants,
+  unregisteredParticipnats,
+  setUnregisteredParticipants,
+}) => {
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
 
   useEffect(() => {
-    if (members.length !== 0) {
-      setParticipants(members);
+    if (participants.length !== 0) {
+      setParticipants(participants);
     }
-  }, []);
+  }, [participants]);
 
   return (
     <div>

@@ -2,37 +2,33 @@ import styles from "./participants.module.scss";
 import Icon_uncheckbox from "@assets/Icons/checkbox/Icon_blankBox.svg?react";
 import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
 
-const members = [
-  { userId: "shuding", name: "이수현" },
-  { userId: "danii", name: "이다은" },
-  { userId: "ehgk", name: "김도하" },
-  { userId: "jezo", name: "정재호" },
-  { userId: "sangjun", name: "이상준" },
-  { userId: "twinklehigh", name: "최준혁" },
+const members: IGetMemberType[] = [
+  { userName: "shuding", name: "이수현", profileImage: "" },
+  { userName: "danii", name: "이다은", profileImage: "" },
+  { userName: "ehgk", name: "김도하", profileImage: "" },
+  { userName: "jezo", name: "정재호", profileImage: "" },
+  { userName: "sangjun", name: "이상준", profileImage: "" },
+  { userName: "twinklehigh", name: "최준혁", profileImage: "" },
 ];
 
-interface IParticipant {
-  userId: string;
-  name: string;
-}
-
 interface props {
-  participants: IParticipant[];
-  setParticipants: React.Dispatch<React.SetStateAction<IParticipant[]>>;
+  participants: IGetMemberType[];
+  setParticipants: React.Dispatch<React.SetStateAction<IGetMemberType[]>>;
 }
 
 const ParticipantsPicker: React.FC<props> = ({ participants, setParticipants }) => {
-  const handleAddParticipants = (member: IParticipant) => {
-    if (participants.some((p) => p.userId === member.userId)) {
-      setParticipants(participants.filter((p) => p.userId !== member.userId));
+  const handleAddParticipants = (member: IGetMemberType) => {
+    if (participants.some((p) => p.userName === member.userName)) {
+      setParticipants(participants.filter((p) => p.userName !== member.userName));
     } else {
       setParticipants([...participants, member]);
     }
   };
+
   return (
     <div className={styles.Container}>
       {members.map((member, index) => {
-        const isSelected = participants.some((p) => p.userId === member.userId);
+        const isSelected = participants.some((m) => m.userName === member.userName);
         return (
           <div key={index} className={styles.ItemBox}>
             <div className={styles.Checkbox} onClick={() => handleAddParticipants(member)}>
