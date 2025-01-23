@@ -199,7 +199,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
     <div className={styles.memberItemContainer}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          <img src={memberInfo.profileImage} width={38} height={37} alt="profile" />
+          <img src={memberInfo.profileImage} width={38} height={37} alt="profile" className={styles.profile} />
           {memberInfo.groupRole === "LEADER" && (
             <CrownIcon width={29} height={25} className={styles.crownIcon} />
           )}
