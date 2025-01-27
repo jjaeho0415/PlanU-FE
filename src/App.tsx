@@ -4,7 +4,6 @@ import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
 import CreateGroupPage from "@pages/CreateGroupPage/page";
 import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
-import EditProfilePage from "@pages/EditProfilePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
 import FindPage from "@pages/FindPage/page";
 import FriendManagementPage from "@pages/FriendManagementPage/page";
@@ -17,7 +16,6 @@ import GroupScheduleDetailPage from "@pages/GroupScheduleDetailPage/page";
 import InviteGroupMemberPage from "@pages/InviteGroupMemberPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
-import ModifyMyAccountPage from "@pages/ModifyMyAccountPage/page";
 import MyCalendarPage from "@pages/MyCalendarPage/page";
 import MyCalendarPossiblePage from "@pages/MyCalendarPossiblePage/page";
 import MyPage from "@pages/MyPage/page";
@@ -33,6 +31,7 @@ import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage/page";
 import EditSchedulePage from "@pages/EditMySchedulePage/page";
+import EditProfilePage from "@pages/EditProfilePage/page";
 
 function App() {
   return (
@@ -56,9 +55,8 @@ function App() {
             <Route path="/chatList/search" element={<ChatListSearchPage />} />
             <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
             <Route path="/myPage" element={<MyPage />} />
-            <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
-            <Route path="/myPage/modifyMyAccount" element={<ModifyMyAccountPage />} />
+            <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
             <Route
               path="/group/:groupId/calendar/createSchedule"
