@@ -29,6 +29,7 @@ type IGetGroupListResponseBodyType = {
 
 type IGetGroupItemType = IGetGroupInviteItemType & {
   participant: number;
+  isPin: boolean;
 };
 
 // 그룹 생성 api
@@ -48,7 +49,7 @@ type IPostCreateGroupResponseBodyType = {
 type IGetGroupTodaySchedulesResponseBodyType = {
   groupName: string;
   todaySchedules: ITodaySchedulesType[];
-}
+};
 
 type ITodaySchedulesType = {
   id: number;
@@ -60,7 +61,7 @@ type ITodaySchedulesType = {
 // 그룹 일정 조회 api
 type IGetGroupCalendarSchedulesResponseBodyType = {
   groupSchedules: IGroupSchedulesType[];
-}
+};
 
 type IGroupSchedulesType = {
   id: number;

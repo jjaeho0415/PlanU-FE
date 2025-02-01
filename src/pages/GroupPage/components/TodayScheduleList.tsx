@@ -3,7 +3,7 @@ import TodayScheduleItem from "./TodayScheduleItem";
 import styles from "./todayScheduleList.module.scss";
 
 interface Props {
-  todayScheduleList: ITodaySchedulesType[];
+  todayScheduleList: ITodaySchedulesType[] | undefined;
   groupId: number;
 }
 
@@ -18,9 +18,9 @@ const handleScheduleItemClick = (id: number) => {
     <div className={styles.mainContainer}>
       <div className={styles.topSection}>오늘의 일정</div>
       <div className={styles.contentSection}>
-        {todayScheduleList.map((todayScheduleItem) => (
+        {todayScheduleList && todayScheduleList.length !== 0 ?todayScheduleList.map((todayScheduleItem) => (
           <TodayScheduleItem key={todayScheduleItem.id} onClick={() => handleScheduleItemClick(todayScheduleItem.id)} todayScheduleItem={todayScheduleItem}/>
-        ))}
+        )): <div className={styles.error}>오늘의 일정이 없습니다!</div>}
       </div>
     </div>
   );
