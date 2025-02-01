@@ -13,8 +13,13 @@ const InviteGroupMemberPage = () => {
   const [inputValue, setInputValue] = useState<string>("");
   const { groupId } = useParams<{ groupId: string }>();
   const { accessToken } = useAuthStore.getState();
-  const { data: groupMemberInviteList } = useGetGroupMemberInviteList(groupId!, accessToken);
-  const { mutate: inviteGroupMember } = usePostInviteGroupMember(groupId!, accessToken)
+  const {
+    data: groupMemberInviteList,
+    isError,
+    error,
+    isLoading,
+  } = useGetGroupMemberInviteList(groupId!, accessToken);
+  const { mutate: inviteGroupMember } = usePostInviteGroupMember(groupId!, accessToken);
 
   const handleInviteGroupMemberClick = (username: string) => {
     inviteGroupMember(username);
@@ -44,12 +49,21 @@ const InviteGroupMemberPage = () => {
         <div className={styles.line}></div>
         <div className={styles.friendContainer}>
           <div className={styles.friendText}>친구</div>
-          {groupMemberInviteList && (
-            <FriendList
-              friendList={groupMemberInviteList.nonGroupFriends}
-              handleInviteGroupMemberClick={handleInviteGroupMemberClick}
-              handleCancelInviteClick={handleCancelInviteClick}
-            />
+          {isLoading ? (
+            <div className={styles.loading}>로딩중...</div>
+          ) : isError ? (
+            <div className={styles.error}>
+              <span className={styles.errorMsgRed}>Error </span>: {error.message}
+            </div>
+          ) : (
+            groupMemberInviteList &&
+            groupMemberInviteList.nonGroupFriends.length !== 0 ? (
+              <FriendList
+                friendList={groupMemberInviteList.nonGroupFriends}
+                handleInviteGroupMemberClick={handleInviteGroupMemberClick}
+                handleCancelInviteClick={handleCancelInviteClick}
+              />
+            ): <div className={styles.error}>검색 결과가 없습니다.</div>
           )}
         </div>
       </div>

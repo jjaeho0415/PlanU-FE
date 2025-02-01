@@ -9,6 +9,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    height: calc(100% - 56px);
     .searchContainer {
       display: flex;
       margin-top: 10px;
@@ -23,12 +24,24 @@
       display: flex;
       flex-direction: column;
       width: 100%;
+      flex: 1;
       gap: 15px;
       padding: 0 24px;
       .friendText {
         font-size: 15px;
         font-weight: lighter;
         color: var(--gray-200);
+      }
+      .error,
+      .loading {
+        display: flex;
+        font-size: 18px;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+      .errorMsgRed {
+        color: red;
       }
     }
   }

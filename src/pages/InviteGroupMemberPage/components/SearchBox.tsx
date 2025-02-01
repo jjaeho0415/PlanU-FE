@@ -29,7 +29,7 @@ const SearchBox: React.FC<Props> = ({
         value={inputValue}
         onChange={onInputChange}
         onClick={() => type === "onlyClick" && navigate(`/group/${groupId}/inviteMembers`)}
-        placeholder="아이디로 추가하기"
+        placeholder="아이디나 이름으로 검색하기"
         maxLength={15}
         style={{
           cursor: type === "onlyClick" ? "pointer" : "default",
