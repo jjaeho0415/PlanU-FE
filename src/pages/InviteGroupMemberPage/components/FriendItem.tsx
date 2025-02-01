@@ -2,8 +2,8 @@ import MiniButton from "@components/buttons/MiniButton";
 import styles from "./friendItem.module.scss";
 
 interface Props {
-  friendInfo: IGetFriendMemberType;
-  handleInviteGroupMemberClick: () => void;
+  friendInfo: IGetNonGroupFriendType;
+  handleInviteGroupMemberClick: (username:string) => void;
   handleCancelInviteClick: () => void;
 }
 
@@ -19,6 +19,7 @@ const FriendItem: React.FC<Props> = ({
           <img src={friendInfo.profileImage} width={42.43} height={40} alt="profile" />
         </div>
         <div>{friendInfo.name}</div>
+        {/* username도 보여줘야함 */}
       </div>
       <div className={styles.rightSection}>
         {friendInfo.status === "NONE" ? (
@@ -26,7 +27,7 @@ const FriendItem: React.FC<Props> = ({
             buttonText="친구 초대"
             color="purple_light"
             isAddFriend={true}
-            onClick={handleInviteGroupMemberClick}
+            onClick={() => handleInviteGroupMemberClick(friendInfo.username)}
           />
         ) : (
           <>

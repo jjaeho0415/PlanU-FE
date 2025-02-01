@@ -7,9 +7,16 @@ interface Props {
   inputValue?: string;
   setInputValue?: React.Dispatch<React.SetStateAction<string>>;
   handleSearchIconClick?: () => void;
+  groupId?: string;
 }
 
-const SearchBox: React.FC<Props> = ({ type, inputValue, setInputValue, handleSearchIconClick }) => {
+const SearchBox: React.FC<Props> = ({
+  type,
+  inputValue,
+  setInputValue,
+  handleSearchIconClick,
+  groupId,
+}) => {
   const navigate = useNavigate();
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue!(e.target.value);
@@ -21,7 +28,7 @@ const SearchBox: React.FC<Props> = ({ type, inputValue, setInputValue, handleSea
         className={styles.inputContainer}
         value={inputValue}
         onChange={onInputChange}
-        onClick={() => type === "onlyClick" && navigate("/group/:groupId/inviteMembers")}
+        onClick={() => type === "onlyClick" && navigate(`/group/${groupId}/inviteMembers`)}
         placeholder="아이디로 추가하기"
         maxLength={15}
         style={{

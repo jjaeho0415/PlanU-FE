@@ -19,13 +19,6 @@ type IGroupSchedulesType = {
   color: string;
 };
 
-type IGetFriendMemberType = {
-  profileImage: string;
-  name: string;
-  username: string;
-  status: "PROGRESS" | "NONE";
-};
-
 type IGetScheduleType = {
   date: string;
   isSchedule: boolean;

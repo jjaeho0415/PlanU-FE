@@ -2,8 +2,8 @@ import FriendItem from "./FriendItem";
 import styles from "./friendList.module.scss";
 
 interface Props {
-  friendList: IGetFriendMemberType[];
-  handleInviteGroupMemberClick: () => void;
+  friendList: IGetNonGroupFriendType[];
+  handleInviteGroupMemberClick: (username: string) => void;
   handleCancelInviteClick: () => void;
 }
 
