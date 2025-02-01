@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./groupItem.module.scss";
 import { useNavigate } from "react-router-dom";
+import PinIcon from "@assets/Icons/groupPage/pinIcon.svg?react";
 
 interface IProps {
   groupItem: IGetGroupItemType;
@@ -13,10 +14,7 @@ const GroupItem: React.FC<IProps> = ({ groupItem }) => {
   };
 
   return (
-    <div
-      className={styles.Container}
-      onClick={() => handleGroupItemClick(groupItem.groupId)}
-    >
+    <div className={styles.Container} onClick={() => handleGroupItemClick(groupItem.groupId)}>
       <div className={styles.ProfileImg}>
         <img
           src={groupItem.groupImageUrl}
@@ -25,7 +23,10 @@ const GroupItem: React.FC<IProps> = ({ groupItem }) => {
         />
       </div>
       <div className={styles.InfoBox}>
-        <p className={styles.GroupName}>{groupItem.groupName}</p>
+        <div className={styles.groupNameSection}>
+          <p className={styles.GroupName}>{groupItem.groupName}</p>
+          {groupItem.isPin && <PinIcon width={9} height={14} />}
+        </div>
         <p className={styles.MembersNum}>• {groupItem.participant}명 참여 중</p>
       </div>
     </div>
