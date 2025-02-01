@@ -44,3 +44,28 @@ type IPostCreateGroupResponseBodyType = {
   groupImageUrl: string;
 };
 
+// 그룹 Today 일정 조회 api
+type IGetGroupTodaySchedulesResponseBodyType = {
+  groupName: string;
+  todaySchedules: ITodaySchedulesType[];
+}
+
+type ITodaySchedulesType = {
+  id: number;
+  title: string;
+  startDateTime: string;
+  location: string;
+};
+
+// 그룹 일정 조회 api
+type IGetGroupCalendarSchedulesResponseBodyType = {
+  groupSchedules: IGroupSchedulesType[];
+}
+
+type IGroupSchedulesType = {
+  id: number;
+  title: string;
+  startDateTime: string;
+  endDateTime: string;
+  color: string;
+};
