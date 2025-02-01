@@ -70,3 +70,11 @@ type IGroupSchedulesType = {
   endDateTime: string;
   color: string;
 };
+
+// 그룹 정보 조회 api
+type IGetGroupInfoResponseBodyType = {
+  groupInfo: {
+    groupName: string;
+    isPin: boolean;
+  };
+};

@@ -12,7 +12,7 @@ interface Props {
   handleLeftClick: () => void;
   handleRightClick: () => void;
   backgroundColor: "purple" | "white";
-  isBookmark?: boolean;
+  isPin?: boolean;
   groupId?: number;
 }
 
@@ -22,7 +22,7 @@ const HasTwoIconHeader: React.FC<Props> = ({
   handleLeftClick,
   handleRightClick,
   backgroundColor,
-  isBookmark,
+  isPin,
   groupId
 }) => {
   return (
@@ -37,7 +37,7 @@ const HasTwoIconHeader: React.FC<Props> = ({
         ) : rightType === "checkIcon" ? (
           <Check_Icon width={24} height={24} />
         ) : rightType === "star" ? (
-          <StarIcon isBookmark={isBookmark} id={groupId} handleClick={handleRightClick} />
+          <StarIcon isPin={isPin} id={groupId} handleClick={handleRightClick} />
         ): (
           <MiniButton
             buttonText="완료"

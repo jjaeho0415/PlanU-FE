@@ -21,7 +21,7 @@ const GroupPage = () => {
   const endDate = endOfWeek(monthEnd); // 달력에 표시될 현재 달의 마지막 날짜가 포함된 주의 끝 날짜
   const [groupInfo, setGroupInfo] = useState({
     name: "춘천팟",
-    isBookMark: true,
+    isPin: true,
   });
   const { accessToken } = useAuthStore.getState();
   const { groupId } = useParams<{ groupId: string }>();
@@ -37,7 +37,7 @@ const GroupPage = () => {
     // api 연동 로직 작성해야함
     setGroupInfo((prevGroupInfo) => ({
       ...prevGroupInfo,
-      isBookMark: !prevGroupInfo.isBookMark,
+      isPin: !prevGroupInfo.isPin,
     }));
   };
 
@@ -55,7 +55,7 @@ const GroupPage = () => {
         backgroundColor="purple"
         title={groupTodaySchedules!.groupName}
         rightType="star"
-        isBookmark={groupInfo.isBookMark}
+        isPin={groupInfo.isPin}
         groupId={Number(groupId!)}
         handleLeftClick={() => navigate(-1)}
         handleRightClick={handleBookMarkClick}
