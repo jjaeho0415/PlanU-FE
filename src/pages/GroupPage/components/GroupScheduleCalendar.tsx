@@ -12,7 +12,7 @@ import {
 import { DAY_LIST, HOLIDAYS } from "../../../constants/holidays";
 
 interface Props {
-  groupSchedules: IGroupSchedulesType[];
+  groupSchedules: IGroupSchedulesType[] | undefined;
   onClick: () => void;
   currentDate: Date;
   startDate: Date;

@@ -7,7 +7,7 @@ import MiniButton from "@components/buttons/MiniButton";
 import StarIcon from "@components/iconComponent/StarIcon";
 
 interface Props {
-  title: string;
+  title: string | undefined;
   rightType: "moreIcon" | "checkIcon" | "button" | "star";
   handleLeftClick: () => void;
   handleRightClick: () => void;

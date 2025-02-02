@@ -33,7 +33,7 @@ const GroupPage = () => {
     format(endDate,"yyyy-MM-dd")
   );
 
-  const handleBookMarkClick = () => {
+  const handlePinClick = () => {
     // api 연동 로직 작성해야함
     setGroupInfo((prevGroupInfo) => ({
       ...prevGroupInfo,
@@ -53,12 +53,12 @@ const GroupPage = () => {
     <div className={styles.mainContainer}>
       <HasTwoIconHeader
         backgroundColor="purple"
-        title={groupTodaySchedules!.groupName}
+        title={groupTodaySchedules?.groupName}
         rightType="star"
         isPin={groupInfo.isPin}
         groupId={Number(groupId!)}
         handleLeftClick={() => navigate(-1)}
-        handleRightClick={handleBookMarkClick}
+        handleRightClick={handlePinClick}
       />
       <div className={styles.contentContainer}>
         <div className={styles.iconSection}>
@@ -73,7 +73,7 @@ const GroupPage = () => {
           <TodayScheduleList todayScheduleList={groupTodaySchedules?.todaySchedules} groupId={Number(groupId!)} />
         </div>
         <div className={styles.groupCalendar}>
-          <GroupScheduleCalendar groupSchedules={groupCalendarSchedules!.groupSchedules} onClick={handleCalendarClick} currentDate={currentDate} startDate={startDate} endDate={endDate} />
+          <GroupScheduleCalendar groupSchedules={groupCalendarSchedules?.groupSchedules} onClick={handleCalendarClick} currentDate={currentDate} startDate={startDate} endDate={endDate} />
         </div>
       </div>
     </div>
