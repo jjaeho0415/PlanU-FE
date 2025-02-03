@@ -22,14 +22,21 @@ const SearchBox: React.FC<Props> = ({
     setInputValue!(e.target.value);
   };
 
+  const handleEnterDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter") {
+      handleSearchIconClick!()
+    }
+  } 
+
   return (
     <div className={styles.mainContainer}>
       <input
         className={styles.inputContainer}
         value={inputValue}
         onChange={onInputChange}
+        onKeyDown={handleEnterDown}
         onClick={() => type === "onlyClick" && navigate(`/group/${groupId}/inviteMembers`)}
-        placeholder="아이디나 이름으로 검색하기"
+        placeholder={type === "onlyClick" ? "아이디나 이름으로 추가하기":"아이디나 이름으로 검색하기"}
         maxLength={15}
         style={{
           cursor: type === "onlyClick" ? "pointer" : "default",

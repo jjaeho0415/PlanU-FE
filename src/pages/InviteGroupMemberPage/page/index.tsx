@@ -2,7 +2,7 @@ import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import styles from "./inviteGroupMember.module.scss";
 import { useNavigate, useParams } from "react-router-dom";
 import SearchBox from "../components/SearchBox";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import FriendList from "../components/FriendList";
 import useAuthStore from "@store/useAuthStore";
 import { useGetGroupMemberInviteList } from "@api/group/getGroupMemberInviteList";
@@ -18,20 +18,32 @@ const InviteGroupMemberPage = () => {
     isError,
     error,
     isLoading,
-  } = useGetGroupMemberInviteList(groupId!, accessToken);
+    refetch: refetchInviteGroupMember
+  } = useGetGroupMemberInviteList(groupId!, accessToken, inputValue);
   const { mutate: inviteGroupMember } = usePostInviteGroupMember(groupId!, accessToken);
+  const initialGetGroupMemberInviteList = useRef(groupMemberInviteList);
+
+  useEffect(() => {
+    if (!inputValue) {
+      if (groupMemberInviteList === initialGetGroupMemberInviteList.current) {
+        return;
+      }
+      refetchInviteGroupMember();
+    }
+  }, [inputValue, refetchInviteGroupMember, groupMemberInviteList])
 
   const handleInviteGroupMemberClick = (username: string) => {
     inviteGroupMember(username);
-    return;
   };
   const handleCancelInviteClick = () => {
     // 그룹 초대 취소 api 연동
     return;
   };
   const handleSearchIconClick = () => {
-    // 검색 api 호출 로직 작성
-    return;
+    if (!inputValue) {
+      return;
+    }
+    refetchInviteGroupMember();
   };
 
   return (
