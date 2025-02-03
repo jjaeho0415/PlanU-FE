@@ -73,8 +73,10 @@ type IGroupSchedulesType = {
 
 // 그룹 정보 조회 api
 type IGetGroupInfoResponseBodyType = {
-  groupInfo: {
-    groupName: string;
-    isPin: boolean;
-  };
+  groupInfo: IGroupInfoType;
+};
+
+type IGroupInfoType = {
+  groupName: string;
+  isPin: boolean;
 };

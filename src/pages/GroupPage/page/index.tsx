@@ -1,5 +1,5 @@
 import styles from "./groupPage.module.scss";
-import { useState } from "react";
+import { useOptimistic } from "react";
 import GroupOptions from "../components/GroupOptions";
 import { useNavigate, useParams } from "react-router-dom";
 import TodayScheduleList from "../components/TodayScheduleList";
@@ -9,6 +9,8 @@ import { useGetGroupTodaySchedules } from "@api/group/getGroupTodaySchedules";
 import useAuthStore from "@store/useAuthStore";
 import { endOfMonth, endOfWeek, startOfMonth, startOfWeek, format } from "date-fns";
 import { useGetGroupCalendarSchedules } from "@api/group/getGroupCalendarSchedules";
+import { usePatchGroupPin } from "@api/group/patchGroupPin";
+import { useQueryClient } from "@tanstack/react-query";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 
@@ -19,10 +21,10 @@ const GroupPage = () => {
   const monthEnd = endOfMonth(currentDate); // 현재 달의 마지막 날짜 (요일 포함)
   const startDate = startOfWeek(monthStart); // 달력에 표시될 현재 달의 시작 날짜가 포함된 주의 시작 날짜
   const endDate = endOfWeek(monthEnd); // 달력에 표시될 현재 달의 마지막 날짜가 포함된 주의 끝 날짜
-  const [groupInfo, setGroupInfo] = useState({
-    name: "춘천팟",
+  const groupInfo: IGroupInfoType = {
+    groupName: "춘천팟",
     isPin: true,
-  });
+  };
   const { accessToken } = useAuthStore.getState();
   const { groupId } = useParams<{ groupId: string }>();
   const { data: groupTodaySchedules } = useGetGroupTodaySchedules(groupId!, accessToken);
@@ -30,15 +32,32 @@ const GroupPage = () => {
     groupId!,
     accessToken,
     format(startDate, "yyyy-MM-dd"),
-    format(endDate,"yyyy-MM-dd")
+    format(endDate, "yyyy-MM-dd"),
   );
+  const [optimisticGroupInfo, setOptimisticGroupInfo] = useOptimistic(groupInfo);
+  const { mutate: patchGroupPin } = usePatchGroupPin(accessToken);
 
   const handlePinClick = () => {
-    // api 연동 로직 작성해야함
-    setGroupInfo((prevGroupInfo) => ({
-      ...prevGroupInfo,
-      isPin: !prevGroupInfo.isPin,
+    const queryClient = useQueryClient();
+    const previousIsPin = optimisticGroupInfo?.isPin;
+    setOptimisticGroupInfo((prev) => ({
+      ...prev,
+      isPin: !prev.isPin,
     }));
+    patchGroupPin(groupId!, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["GROUP_INFO"],
+        });
+      },
+      onError: (error) => {
+        setOptimisticGroupInfo((prev) => ({
+          ...prev,
+          isPin: previousIsPin,
+        }));
+        alert(error.message);
+      },
+    });
   };
 
   const handleCreateSchedule = () => {
@@ -53,7 +72,7 @@ const GroupPage = () => {
     <div className={styles.mainContainer}>
       <HasTwoIconHeader
         backgroundColor="purple"
-        title={groupTodaySchedules?.groupName}
+        title={groupInfo.groupName}
         rightType="star"
         isPin={groupInfo.isPin}
         groupId={Number(groupId!)}
@@ -70,10 +89,19 @@ const GroupPage = () => {
           일정 생성하기
         </div>
         <div className={styles.todayScheduleList}>
-          <TodayScheduleList todayScheduleList={groupTodaySchedules?.todaySchedules} groupId={Number(groupId!)} />
+          <TodayScheduleList
+            todayScheduleList={groupTodaySchedules?.todaySchedules}
+            groupId={Number(groupId!)}
+          />
         </div>
         <div className={styles.groupCalendar}>
-          <GroupScheduleCalendar groupSchedules={groupCalendarSchedules?.groupSchedules} onClick={handleCalendarClick} currentDate={currentDate} startDate={startDate} endDate={endDate} />
+          <GroupScheduleCalendar
+            groupSchedules={groupCalendarSchedules?.groupSchedules}
+            onClick={handleCalendarClick}
+            currentDate={currentDate}
+            startDate={startDate}
+            endDate={endDate}
+          />
         </div>
       </div>
     </div>
