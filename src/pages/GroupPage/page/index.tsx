@@ -1,11 +1,10 @@
-import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./groupPage.module.scss";
 import { useState } from "react";
 import GroupOptions from "../components/GroupOptions";
 import { useNavigate, useParams } from "react-router-dom";
 import TodayScheduleList from "../components/TodayScheduleList";
-import BottomNavBar from "@components/nav-bar/BottomNavBar";
 import GroupScheduleCalendar from "../components/GroupScheduleCalendar";
+import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 
@@ -89,12 +88,14 @@ const GroupPage = () => {
 
   return (
     <div className={styles.mainContainer}>
-      <HasOnlyRightIconHeader
+      <HasTwoIconHeader
+        backgroundColor="purple"
         title={groupInfo.name}
         rightType="star"
         isBookmark={groupInfo.isBookMark}
         groupId={groupInfo.id}
-        handleClick={handleBookMarkClick}
+        handleLeftClick={() => navigate(-1)}
+        handleRightClick={handleBookMarkClick}
       />
       <div className={styles.contentContainer}>
         <div className={styles.iconSection}>
@@ -112,7 +113,6 @@ const GroupPage = () => {
           <GroupScheduleCalendar groupSchedules={groupSchedules} onClick={handleCalendarClick} />
         </div>
       </div>
-      <BottomNavBar />
     </div>
   );
 };
