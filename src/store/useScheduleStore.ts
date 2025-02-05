@@ -11,8 +11,6 @@ interface IScheduleInfo {
   setStartDate: (info: Date) => void;
   endDate: Date;
   setEndDate: (info: Date) => void;
-  locationName: string;
-  setLocationName: (info: string) => void;
   participants: IGetMemberType[];
   setParticipants: (info: IGetMemberType[]) => void;
   unregisteredParticipants: string[];
@@ -32,8 +30,6 @@ const useScheduleStore = create<IScheduleInfo>((set) => ({
   setStartDate: (startDate) => set({ startDate }),
   endDate: new Date(),
   setEndDate: (endDate) => set({ endDate }),
-  locationName: "",
-  setLocationName: (locationName) => set({ locationName }),
   participants: [],
   setParticipants: (participants) => set({ participants }),
   unregisteredParticipants: [],

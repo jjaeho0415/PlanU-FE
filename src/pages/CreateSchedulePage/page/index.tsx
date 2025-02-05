@@ -28,7 +28,13 @@ const CreateSchedulePage: React.FC = () => {
     note,
     isAllDay,
   } = useScheduleStore();
-  const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
+  const {
+    lat,
+    lng,
+    name: locationName,
+    location: locationAddress,
+    setLocationInfo,
+  } = useLocationInfoStore();
   const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
   const { groupId } = useParams<{ groupId: string }>();
   const id = groupId === "my" ? "my" : Number(groupId);
@@ -65,6 +71,7 @@ const CreateSchedulePage: React.FC = () => {
       createGroupSchedule(data);
     }
     navigate(-1);
+    setLocationInfo("", 0, 0, "");
   };
 
   return (
