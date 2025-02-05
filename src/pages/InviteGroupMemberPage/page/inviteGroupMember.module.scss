@@ -43,6 +43,19 @@
       .errorMsgRed {
         color: red;
       }
+      .resultMsg{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        .addFriends{
+          font-size: 16px;
+          color: var(--gray-200);
+          border-bottom: 1px solid var(--gray-200);
+          cursor: pointer;
+        }
+      }
     }
   }
 }

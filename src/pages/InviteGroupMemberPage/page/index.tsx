@@ -18,7 +18,7 @@ const InviteGroupMemberPage = () => {
     isError,
     error,
     isLoading,
-    refetch: refetchInviteGroupMember
+    refetch: refetchInviteGroupMember,
   } = useGetGroupMemberInviteList(groupId!, accessToken, inputValue);
   const { mutate: inviteGroupMember } = usePostInviteGroupMember(groupId!, accessToken);
   const initialGetGroupMemberInviteList = useRef(groupMemberInviteList);
@@ -30,7 +30,7 @@ const InviteGroupMemberPage = () => {
       }
       refetchInviteGroupMember();
     }
-  }, [inputValue, refetchInviteGroupMember, groupMemberInviteList])
+  }, [inputValue, refetchInviteGroupMember, groupMemberInviteList]);
 
   const handleInviteGroupMemberClick = (username: string) => {
     inviteGroupMember(username);
@@ -67,15 +67,28 @@ const InviteGroupMemberPage = () => {
             <div className={styles.error}>
               <span className={styles.errorMsgRed}>Error </span>: {error.message}
             </div>
+          ) : groupMemberInviteList && groupMemberInviteList.nonGroupFriends.length !== 0 ? (
+            <FriendList
+              friendList={groupMemberInviteList.nonGroupFriends}
+              handleInviteGroupMemberClick={handleInviteGroupMemberClick}
+              handleCancelInviteClick={handleCancelInviteClick}
+            />
           ) : (
-            groupMemberInviteList &&
-            groupMemberInviteList.nonGroupFriends.length !== 0 ? (
-              <FriendList
-                friendList={groupMemberInviteList.nonGroupFriends}
-                handleInviteGroupMemberClick={handleInviteGroupMemberClick}
-                handleCancelInviteClick={handleCancelInviteClick}
-              />
-            ): <div className={styles.error}>검색 결과가 없습니다.</div>
+            <div className={styles.error}>
+              {inputValue === "" ? (
+                <div className={styles.resultMsg}>
+                  <div>친구목록이 없습니다.</div>
+                  <div
+                    className={styles.addFriends}
+                    onClick={() => navigate(`/myPage/friendsManagement`)}
+                  >
+                    친구 추가하러 가기
+                  </div>
+                </div>
+              ) : (
+                "검색 결과가 없습니다."
+              )}
+            </div>
           )}
         </div>
       </div>
