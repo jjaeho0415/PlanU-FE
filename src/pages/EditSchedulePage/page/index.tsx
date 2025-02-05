@@ -19,16 +19,8 @@ const members = [
 ];
 
 const EditSchedulePage: React.FC = () => {
-  const {
-    setTitle,
-    setColor,
-    setStartDate,
-    setEndDate,
-    setIsAllDay,
-    setParticipants,
-    setNote,
-    setLocationName,
-  } = useScheduleStore();
+  const { setTitle, setColor, setStartDate, setEndDate, setIsAllDay, setParticipants, setNote } =
+    useScheduleStore();
 
   useEffect(() => {
     setTitle("수현이 생일파티");
@@ -38,7 +30,6 @@ const EditSchedulePage: React.FC = () => {
     setIsAllDay(false);
     setParticipants(members);
     setNote("모두 참석바랍니다~!");
-    setLocationName("홍대 2번출구 앞");
   }, []);
 
   return (
