@@ -48,7 +48,12 @@ const MyCalendarPage: React.FC = () => {
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
             <h1 className={styles.scheduleHeader}>1월 16일 (목)</h1>
-            <EditIcon className={styles.editIcon} />
+            <EditIcon
+              className={styles.editIcon}
+              onClick={() => {
+                navigate("/createSchedule/my");
+              }}
+            />
           </div>
           <div className={styles.subText}>나의 스케줄</div>
           <EventCard

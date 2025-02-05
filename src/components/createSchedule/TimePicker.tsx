@@ -2,25 +2,17 @@ import React, { useEffect, useState } from "react";
 import styles from "./timePicker.module.scss";
 import Icon_topArrow from "@assets/Icons/arrow/TopArrow_sm.svg?react";
 import Icon_bottomArrow from "@assets/Icons/arrow/BottomArrow_sm.svg?react";
+import useScheduleStore from "@store/useScheduleStore";
 
 interface props {
   isStartDay: boolean;
-  startDate: Date;
-  setStartDate: React.Dispatch<React.SetStateAction<Date>>;
-  endDate: Date;
-  setEndDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const TimePicker: React.FC<props> = ({
-  isStartDay,
-  setStartDate,
-  startDate,
-  endDate,
-  setEndDate,
-}) => {
+const TimePicker: React.FC<props> = ({ isStartDay }) => {
   const [amPm, setAmPm] = useState<"오전" | "오후">("오전");
   const [hour, setHour] = useState<number>(new Date().getHours());
   const [minute, setMinute] = useState<number>(new Date().getMinutes());
+  const { startDate, setStartDate, endDate, setEndDate } = useScheduleStore();
 
   useEffect(() => {
     if (hour >= 12 && hour !== 24) {

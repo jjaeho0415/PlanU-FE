@@ -29,7 +29,7 @@ const HasOnlyRightIconHeader: React.FC<Props> = ({
             {isExistNoReadAlarms && <RedDot_Icon className={styles.redDotIcon} />}
           </div>
         ) : rightType === "x" ? (
-          <X_Icon width={24} height={24} />
+          <X_Icon width={24} height={24} onClick={handleClick} />
         ) : rightType === "button" ? (
           <MiniButton
             buttonText="완료"
