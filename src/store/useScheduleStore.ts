@@ -11,8 +11,8 @@ interface IScheduleInfo {
   setStartDate: (info: Date) => void;
   endDate: Date;
   setEndDate: (info: Date) => void;
-  participants: IGetMemberType[];
-  setParticipants: (info: IGetMemberType[]) => void;
+  participants: IGroupMemberItemType[];
+  setParticipants: (info: IGroupMemberItemType[]) => void;
   unregisteredParticipants: string[];
   setUnregisteredParticipants: (info: string[]) => void;
   note: string;

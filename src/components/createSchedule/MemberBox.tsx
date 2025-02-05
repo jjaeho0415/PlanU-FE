@@ -2,10 +2,18 @@ import React, { useEffect, useState } from "react";
 import styles from "./Inputs.module.scss";
 import ParticipantsPicker from "./ParticipantsPicker";
 import useScheduleStore from "@store/useScheduleStore";
+import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
+import useAuthStore from "@store/useAuthStore";
 
-const MemberBox: React.FC = ({}) => {
+interface props {
+  groupId?: string;
+}
+
+const MemberBox: React.FC<props> = ({ groupId = "" }) => {
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
   const { participants, setParticipants } = useScheduleStore();
+  const { accessToken } = useAuthStore();
+  const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
 
   useEffect(() => {
     if (participants.length !== 0) {
@@ -25,7 +33,7 @@ const MemberBox: React.FC = ({}) => {
       ></input>
       {isSelecting && (
         <>
-          <ParticipantsPicker />
+          <ParticipantsPicker groupMemberList={groupMemberList} />
           <div className={styles.Done} onClick={() => setIsSelecting(false)}>
             확인
           </div>

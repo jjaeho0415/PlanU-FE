@@ -38,7 +38,7 @@ const CreateSchedulePage: React.FC = () => {
 
   useEffect(() => {
     const filteredMemberId: string[] = participants.map(
-      (member: IGetMemberType) => member.userName,
+      (member: IGroupMemberItemType) => member.username,
     );
     setPostParticipantsData(filteredMemberId);
   }, [participants]);
@@ -80,7 +80,7 @@ const CreateSchedulePage: React.FC = () => {
         <ColorBox />
         <TimeBox />
         <LocationBox />
-        <MemberBox />
+        <MemberBox groupId={groupId} />
         <NoteBox />
       </div>
       <div className={styles.ButtonBox}>
