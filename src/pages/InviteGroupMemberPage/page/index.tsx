@@ -11,6 +11,7 @@ import { usePostInviteGroupMember } from "@api/group/postInviteGroupMember";
 const InviteGroupMemberPage = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState<string>("");
+  const prevInputValue = useRef<string>("");
   const { groupId } = useParams<{ groupId: string }>();
   const { accessToken } = useAuthStore.getState();
   const {
@@ -43,7 +44,11 @@ const InviteGroupMemberPage = () => {
     if (!inputValue) {
       return;
     }
+    if (prevInputValue.current === inputValue) {
+      return;
+    }
     refetchInviteGroupMember();
+    prevInputValue.current = inputValue
   };
 
   return (
