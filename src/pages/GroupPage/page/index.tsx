@@ -79,11 +79,11 @@ const GroupPage = () => {
   };
 
   const handleCreateSchedule = () => {
-    navigate(`/group/${groupInfo.id}/calendar/createSchedule`);
+    navigate(`/createSchedule/${groupId}`);
   };
 
   const handleCalendarClick = () => {
-    navigate(`/group/${groupInfo.id}/groupCalendar`);
+    navigate(`/group/${groupId}/groupCalendar`);
   };
 
   return (

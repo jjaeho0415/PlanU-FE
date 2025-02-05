@@ -25,6 +25,8 @@ const apiRoutes = {
   friend: "/users/friends",
   showReceiveFriendList: "/users/friends/receive",
   showRequestFriendList: "/users/friends/request",
+  //스케줄 관련
+  shedules: "/schedules",
 };
 
 export default apiRoutes;
