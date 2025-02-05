@@ -14,18 +14,16 @@ import {
 import styles from "./datePicker.module.scss";
 import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { DAY_LIST, HOLIDAYS } from "../../constants/holidays";
+import useScheduleStore from "@store/useScheduleStore";
 
 interface Props {
   isStartDay: boolean;
-  startDate: Date;
-  setStartDate: React.Dispatch<React.SetStateAction<Date>>;
-  endDate: Date;
-  setEndDate: React.Dispatch<React.SetStateAction<Date>>;
 }
 
-const DatePicker: React.FC<Props> = ({ isStartDay, setStartDate, setEndDate }) => {
+const DatePicker: React.FC<Props> = ({ isStartDay }) => {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
+  const { setStartDate, setEndDate } = useScheduleStore();
 
   useEffect(() => {
     if (isStartDay) {

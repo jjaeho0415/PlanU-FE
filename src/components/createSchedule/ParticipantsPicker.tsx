@@ -1,38 +1,27 @@
 import styles from "./participants.module.scss";
 import Icon_uncheckbox from "@assets/Icons/checkbox/Icon_blankBox.svg?react";
 import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
-
-const members = [
-  { userId: "shuding", name: "이수현" },
-  { userId: "danii", name: "이다은" },
-  { userId: "ehgk", name: "김도하" },
-  { userId: "jezo", name: "정재호" },
-  { userId: "sangjun", name: "이상준" },
-  { userId: "twinklehigh", name: "최준혁" },
-];
-
-interface IParticipant {
-  userId: string;
-  name: string;
-}
+import useScheduleStore from "@store/useScheduleStore";
 
 interface props {
-  participants: IParticipant[];
-  setParticipants: React.Dispatch<React.SetStateAction<IParticipant[]>>;
+  groupMemberList: IGetGroupMemberListResponseBodyType | undefined;
 }
 
-const ParticipantsPicker: React.FC<props> = ({ participants, setParticipants }) => {
-  const handleAddParticipants = (member: IParticipant) => {
-    if (participants.some((p) => p.userId === member.userId)) {
-      setParticipants(participants.filter((p) => p.userId !== member.userId));
+const ParticipantsPicker: React.FC<props> = ({ groupMemberList }: props) => {
+  const { participants, setParticipants } = useScheduleStore();
+
+  const handleAddParticipants = (member: IGroupMemberItemType) => {
+    if (participants.some((p) => p.username === member.username)) {
+      setParticipants(participants.filter((p) => p.username !== member.username));
     } else {
       setParticipants([...participants, member]);
     }
   };
+
   return (
     <div className={styles.Container}>
-      {members.map((member, index) => {
-        const isSelected = participants.some((p) => p.userId === member.userId);
+      {groupMemberList?.members.map((member, index) => {
+        const isSelected = participants.some((m) => m.username === member.username);
         return (
           <div key={index} className={styles.ItemBox}>
             <div className={styles.Checkbox} onClick={() => handleAddParticipants(member)}>

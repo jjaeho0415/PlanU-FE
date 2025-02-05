@@ -3,7 +3,6 @@ import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
 import CreateGroupPage from "@pages/CreateGroupPage/page";
-import CreateMySchedulePage from "@pages/CreateMySchedulePage/page";
 import EditProfilePage from "@pages/EditProfilePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
 import FindPage from "@pages/FindPage/page";
@@ -31,8 +30,8 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import CreateGroupSchedulePage from "@pages/CreateGroupSchedulePage/page";
-import EditSchedulePage from "@pages/EditMySchedulePage/page";
+import EditSchedulePage from "@pages/EditSchedulePage/page";
+import CreateSchedulePage from "@pages/CreateSchedulePage/page";
 
 function App() {
   return (
@@ -59,11 +58,7 @@ function App() {
             <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
             <Route path="/myPage/modifyMyAccount" element={<ModifyMyAccountPage />} />
-            <Route path="/createMySchedule" element={<CreateMySchedulePage />} />
-            <Route
-              path="/group/:groupId/calendar/createSchedule"
-              element={<CreateGroupSchedulePage />}
-            />
+            <Route path="/createSchedule/:groupId" element={<CreateSchedulePage />} />
             <Route path="/selectLocation" element={<SelectLocationPage />} />
             <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />
             <Route path="/editSchedule/:scheduleId" element={<EditSchedulePage />} />

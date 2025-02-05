@@ -61,7 +61,7 @@ const GroupPage = () => {
   };
 
   const handleCreateSchedule = () => {
-    navigate(`/group/${groupId}/calendar/createSchedule`);
+    navigate(`/createSchedule/${groupId}`);
   };
 
   const handleCalendarClick = () => {
