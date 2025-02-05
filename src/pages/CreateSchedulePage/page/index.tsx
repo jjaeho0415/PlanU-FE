@@ -28,13 +28,7 @@ const CreateSchedulePage: React.FC = () => {
     note,
     isAllDay,
   } = useScheduleStore();
-  const {
-    lat,
-    lng,
-    name: locationName,
-    location: locationAddress,
-    setLocationInfo,
-  } = useLocationInfoStore();
+  const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
   const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
   const { groupId } = useParams<{ groupId: string }>();
   const id = groupId === "my" ? "my" : Number(groupId);
@@ -44,7 +38,7 @@ const CreateSchedulePage: React.FC = () => {
 
   useEffect(() => {
     const filteredMemberId: string[] = participants.map(
-      (member: IGetMemberType) => member.userName,
+      (member: IGroupMemberItemType) => member.username,
     );
     setPostParticipantsData(filteredMemberId);
   }, [participants]);
@@ -70,8 +64,6 @@ const CreateSchedulePage: React.FC = () => {
       console.log("group");
       createGroupSchedule(data);
     }
-    navigate(-1);
-    setLocationInfo("", 0, 0, "");
   };
 
   return (
@@ -88,7 +80,7 @@ const CreateSchedulePage: React.FC = () => {
         <ColorBox />
         <TimeBox />
         <LocationBox />
-        <MemberBox />
+        <MemberBox groupId={groupId} />
         <NoteBox />
       </div>
       <div className={styles.ButtonBox}>

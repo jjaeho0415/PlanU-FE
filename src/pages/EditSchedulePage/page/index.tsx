@@ -9,26 +9,9 @@ import TitleBox from "@components/createSchedule/TitleBox";
 import LocationBox from "@components/createSchedule/LocationBox";
 import useScheduleStore from "@store/useScheduleStore";
 
-const members = [
-  { userName: "shuding", name: "이수현", profileImage: "" },
-  { userName: "danii", name: "이다은", profileImage: "" },
-  { userName: "ehgk", name: "김도하", profileImage: "" },
-  { userName: "jezo", name: "정재호", profileImage: "" },
-  { userName: "sangjun", name: "이상준", profileImage: "" },
-  { userName: "twinklehigh", name: "최준혁", profileImage: "" },
-];
-
 const EditSchedulePage: React.FC = () => {
-  const {
-    setTitle,
-    setColor,
-    setStartDate,
-    setEndDate,
-    setIsAllDay,
-    setParticipants,
-    setNote,
-    setLocationName,
-  } = useScheduleStore();
+  const { setTitle, setColor, setStartDate, setEndDate, setIsAllDay, setParticipants, setNote } =
+    useScheduleStore();
 
   useEffect(() => {
     setTitle("수현이 생일파티");
@@ -36,9 +19,8 @@ const EditSchedulePage: React.FC = () => {
     setStartDate(new Date());
     setEndDate(new Date());
     setIsAllDay(false);
-    setParticipants(members);
+    setParticipants([]);
     setNote("모두 참석바랍니다~!");
-    setLocationName("홍대 2번출구 앞");
   }, []);
 
   return (
