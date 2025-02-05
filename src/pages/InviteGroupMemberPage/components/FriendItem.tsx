@@ -18,8 +18,10 @@ const FriendItem: React.FC<Props> = ({
         <div className={styles.profileSection}>
           <img src={friendInfo.profileImage} width={42.43} height={40} alt="profile" />
         </div>
-        <div>{friendInfo.name}</div>
-        {/* username도 보여줘야함 */}
+        <div className={styles.friendInfoSection}>
+          <div>{friendInfo.name}</div>
+          <div className={styles.friendId}>@{friendInfo.username}</div>
+        </div>
       </div>
       <div className={styles.rightSection}>
         {friendInfo.status === "NONE" ? (
