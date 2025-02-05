@@ -14,19 +14,22 @@ import { usePostCreateGroupSchedule } from "@api/schedule/postCreateGroupSchedul
 import { format } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import { useNavigate, useParams } from "react-router-dom";
+import useScheduleStore from "@store/useScheduleStore";
 
 const CreateSchedulePage: React.FC = () => {
   const navigate = useNavigate();
-  const [title, setTitle] = useState<string>("");
-  const [color, setColor] = useState<string>("#3556d7e");
-  const [isAllDay, setIsAllDay] = useState<boolean>(false);
-  const [startDate, setStartDate] = useState<Date>(new Date());
-  const [endDate, setEndDate] = useState<Date>(new Date());
+  const {
+    title,
+    color,
+    startDate,
+    endDate,
+    participants,
+    unregisteredParticipants,
+    note,
+    isAllDay,
+  } = useScheduleStore();
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
-  const [participants, setParticipants] = useState<IGetMemberType[]>([]);
-  const [unregisteredParticipants, setUnregisteredParticipants] = useState<string[]>([]);
   const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
-  const [memo, setMemo] = useState<string>("");
   const { groupId } = useParams<{ groupId: string }>();
   const id = groupId === "my" ? "my" : Number(groupId);
   const { accessToken } = useAuthStore();
@@ -44,21 +47,23 @@ const CreateSchedulePage: React.FC = () => {
     const data = {
       title: title,
       color: color,
-      startDateTime: format(startDate, "YYYY-MM-DDTHH:MM"),
-      endDateTime: format(endDate, "YYYY-MM-DDTHH:MM"),
+      startDateTime: format(startDate, "yyyy-MM-dd'T'HH:mm"),
+      endDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'HH:mm")
+        : format(endDate, "yyyy-MM-dd'T'HH:mm"),
       location: locationName ?? locationAddress,
       latitude: lat,
       longitude: lng,
       participants: postParticipantsData,
-      memo: memo,
+      memo: note,
     };
 
     if (id === "my") {
       createMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
     } else {
+      console.log("group");
       createGroupSchedule(data);
     }
-
     navigate(-1);
   };
 
@@ -72,24 +77,12 @@ const CreateSchedulePage: React.FC = () => {
         }}
       />
       <div className={styles.ContentContainer}>
-        <TitleBox title={title} setTitle={setTitle} />
-        <ColorBox color={color} setColor={setColor} />
-        <TimeBox
-          isAllDay={isAllDay}
-          setIsAllDay={setIsAllDay}
-          startDate={startDate}
-          setStartDate={setStartDate}
-          endDate={endDate}
-          setEndDate={setEndDate}
-        />
+        <TitleBox />
+        <ColorBox />
+        <TimeBox />
         <LocationBox />
-        <MemberBox
-          participants={participants}
-          setParticipants={setParticipants}
-          unregisteredParticipnats={unregisteredParticipants}
-          setUnregisteredParticipants={setUnregisteredParticipants}
-        />
-        <NoteBox memo={memo} setMemo={setMemo} />
+        <MemberBox />
+        <NoteBox />
       </div>
       <div className={styles.ButtonBox}>
         <DefaultButton buttonText="완료" onClick={handleButtonClick} />

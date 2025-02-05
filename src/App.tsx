@@ -30,7 +30,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import EditSchedulePage from "@pages/EditMySchedulePage/page";
+import EditSchedulePage from "@pages/EditSchedulePage/page";
 import CreateSchedulePage from "@pages/CreateSchedulePage/page";
 
 function App() {

@@ -1,13 +1,10 @@
 import React, { useRef } from "react";
 import styles from "./Inputs.module.scss";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface props {
-  memo: string;
-  setMemo: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const NoteBox: React.FC<props> = ({ memo, setMemo }) => {
+const NoteBox: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const { note, setNote } = useScheduleStore();
 
   const resizeHeight = () => {
     if (!textareaRef.current) return;
@@ -27,7 +24,7 @@ const NoteBox: React.FC<props> = ({ memo, setMemo }) => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setMemo(event.target.value);
+    setNote(event.target.value);
     resizeHeight();
   };
 
@@ -37,7 +34,7 @@ const NoteBox: React.FC<props> = ({ memo, setMemo }) => {
       ref={textareaRef}
       onChange={handleChange}
       placeholder="노트"
-      value={memo}
+      value={note}
     ></textarea>
   );
 };

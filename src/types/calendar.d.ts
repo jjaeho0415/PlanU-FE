@@ -3,7 +3,7 @@ type IPostCreateGroupScheduleType = {
   title: string;
   color: string;
   startDateTime: string;
-  endDateTime: string;
+  endDateTime: string | null;
   location: string;
   latitude: number;
   longitude: number;
@@ -21,7 +21,7 @@ type IPostCreateMyScheduleType = {
   title: string;
   color: string;
   startDateTime: string;
-  endDateTime: string;
+  endDateTime: string | null;
   location: string;
   latitude: number;
   longitude: number;

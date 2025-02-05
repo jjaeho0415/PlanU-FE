@@ -1,14 +1,13 @@
 import React from "react";
 import styles from "./Inputs.module.scss";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface props {
-  title: string;
-  setTitle: React.Dispatch<React.SetStateAction<string>>;
-}
-
-const TitleBox: React.FC<props> = ({ title, setTitle }) => {
+const TitleBox: React.FC = () => {
+  const { title, setTitle } = useScheduleStore();
   const onInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    if (setTitle) {
+      setTitle(e.target.value);
+    }
   };
 
   return (

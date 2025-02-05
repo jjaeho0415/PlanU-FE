@@ -7,7 +7,7 @@ const postCreateGroupSchedule = async (
   groupId: number,
   authorization: string,
 ) => {
-  const endpoint = `${apiRoutes.group}/${groupId}`;
+  const endpoint = `${apiRoutes.group}/${groupId}/schedules`;
   const response = await api.post({
     endpoint,
     body,

@@ -3,8 +3,8 @@ import styles from "./Inputs.module.scss";
 import Icon_arrow from "@assets/Icons/arrow/RightArrow.svg?react";
 
 interface props {
-  color: string;
-  setColor: React.Dispatch<React.SetStateAction<string>>;
+  color?: string;
+  setColor?: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const ColorBox: React.FC<props> = () => {

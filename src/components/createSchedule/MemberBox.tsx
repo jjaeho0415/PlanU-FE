@@ -1,21 +1,11 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Inputs.module.scss";
 import ParticipantsPicker from "./ParticipantsPicker";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface props {
-  participants: IGetMemberType[];
-  setParticipants: React.Dispatch<React.SetStateAction<IGetMemberType[]>>;
-  unregisteredParticipnats?: string[];
-  setUnregisteredParticipants?: React.Dispatch<React.SetStateAction<string[]>>;
-}
-
-const MemberBox: React.FC<props> = ({
-  participants,
-  setParticipants,
-  unregisteredParticipnats,
-  setUnregisteredParticipants,
-}) => {
+const MemberBox: React.FC = ({}) => {
   const [isSelecting, setIsSelecting] = useState<boolean>(false);
+  const { participants, setParticipants } = useScheduleStore();
 
   useEffect(() => {
     if (participants.length !== 0) {
@@ -35,7 +25,7 @@ const MemberBox: React.FC<props> = ({
       ></input>
       {isSelecting && (
         <>
-          <ParticipantsPicker participants={participants} setParticipants={setParticipants} />
+          <ParticipantsPicker />
           <div className={styles.Done} onClick={() => setIsSelecting(false)}>
             확인
           </div>

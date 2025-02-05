@@ -7,7 +7,7 @@ import useLocationInfoStore from "@store/useLocationInfoStore";
 
 const LocationBox: React.FC = () => {
   const navigate = useNavigate();
-  const { lat, lng, name, location } = useLocationInfoStore();
+  const { lat, lng, name, location } = useLocationInfoStore.getState();
   const [locationName, setLocatonName] = useState<string>("");
 
   useEffect(() => {
@@ -18,9 +18,9 @@ const LocationBox: React.FC = () => {
     <div className={styles.LocationContainer} onClick={() => navigate("/selectLocation")}>
       <div className={styles.Box}>
         {locationName ? (
-          <p className={styles.Title}>장소를 검색하세요.</p>
-        ) : (
           <p className={styles.LocationName}>{locationName}</p>
+        ) : (
+          <p className={styles.Title}>장소를 검색하세요.</p>
         )}
         <Icon_search />
       </div>
