@@ -7,6 +7,7 @@ import FriendList from "../components/FriendList";
 import useAuthStore from "@store/useAuthStore";
 import { useGetGroupMemberInviteList } from "@api/group/getGroupMemberInviteList";
 import { usePostInviteGroupMember } from "@api/group/postInviteGroupMember";
+import { useDeleteInviteGroupMember } from "@api/group/deleteInviteGroupMember";
 
 const InviteGroupMemberPage = () => {
   const navigate = useNavigate();
@@ -22,6 +23,7 @@ const InviteGroupMemberPage = () => {
     refetch: refetchInviteGroupMember,
   } = useGetGroupMemberInviteList(groupId!, accessToken, inputValue);
   const { mutate: inviteGroupMember } = usePostInviteGroupMember(groupId!, accessToken);
+  const { mutate: cancelInviteGroupMember } = useDeleteInviteGroupMember(groupId!, accessToken);
   const initialGetGroupMemberInviteList = useRef(groupMemberInviteList);
 
   useEffect(() => {
@@ -36,9 +38,8 @@ const InviteGroupMemberPage = () => {
   const handleInviteGroupMemberClick = (username: string) => {
     inviteGroupMember(username);
   };
-  const handleCancelInviteClick = () => {
-    // 그룹 초대 취소 api 연동
-    return;
+  const handleCancelInviteClick = (username: string) => {
+    cancelInviteGroupMember(username);
   };
   const handleSearchIconClick = () => {
     if (!inputValue) {
@@ -48,7 +49,7 @@ const InviteGroupMemberPage = () => {
       return;
     }
     refetchInviteGroupMember();
-    prevInputValueRef.current = inputValue
+    prevInputValueRef.current = inputValue;
   };
 
   return (

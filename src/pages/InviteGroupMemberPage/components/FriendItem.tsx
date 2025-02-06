@@ -3,8 +3,8 @@ import styles from "./friendItem.module.scss";
 
 interface Props {
   friendInfo: IGetNonGroupFriendType;
-  handleInviteGroupMemberClick: (username:string) => void;
-  handleCancelInviteClick: () => void;
+  handleInviteGroupMemberClick: (username: string) => void;
+  handleCancelInviteClick: (username: string) => void;
 }
 
 const FriendItem: React.FC<Props> = ({
@@ -34,7 +34,11 @@ const FriendItem: React.FC<Props> = ({
         ) : (
           <>
             <MiniButton buttonText="요청중..." color="white" />
-            <MiniButton buttonText="요청취소" color="red" onClick={handleCancelInviteClick} />
+            <MiniButton
+              buttonText="요청취소"
+              color="red"
+              onClick={() => handleCancelInviteClick(friendInfo.username)}
+            />
           </>
         )}
       </div>

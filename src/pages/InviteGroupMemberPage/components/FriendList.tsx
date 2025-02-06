@@ -4,7 +4,7 @@ import styles from "./friendList.module.scss";
 interface Props {
   friendList: IGetNonGroupFriendType[];
   handleInviteGroupMemberClick: (username: string) => void;
-  handleCancelInviteClick: () => void;
+  handleCancelInviteClick: (username: string) => void;
 }
 
 const FriendList: React.FC<Props> = ({
