@@ -72,11 +72,12 @@ type IGroupSchedulesType = {
 };
 
 // 그룹 정보 조회 api
-type IGetGroupInfoResponseBodyType = {
+type IGetGroupDetailsResponseBodyType = {
   groupInfo: IGroupInfoType;
 };
 
 type IGroupInfoType = {
   groupName: string;
+  groupImage: string;
   isPin: boolean;
 };
