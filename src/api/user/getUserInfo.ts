@@ -11,7 +11,7 @@ const getUserInfo = async (accessToken: string): Promise<IGetUserInfoResponseBod
 
 export const useGetUserInfo = (accessToken: string) => {
   return useQuery({
-    queryKey: ["UserProfile"],
+    queryKey: ["USER_INFO"],
     queryFn: () => getUserInfo(accessToken),
     enabled: accessToken !== "",
   });

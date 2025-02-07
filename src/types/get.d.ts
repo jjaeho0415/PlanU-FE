@@ -9,7 +9,7 @@ type IGetFriendMemberType = {
   name: string;
   username: string;
   status: "PROGRESS" | "NONE";
-};
+}
 
 type IGetScheduleType = {
   date: string;

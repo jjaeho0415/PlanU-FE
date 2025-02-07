@@ -8,7 +8,7 @@ const getCheckIdDuplication = async (username: string): Promise<IResponseType> =
 
 export const useGetCheckIdDuplication = (username: string, enabled?: boolean) => {
   return useQuery({
-    queryKey: ["getCheckIdDuplication", username],
+    queryKey: ["GET_CHECK_ID_DUPLICATION", username],
     queryFn: () => getCheckIdDuplication(username),
     enabled: enabled,
   });
