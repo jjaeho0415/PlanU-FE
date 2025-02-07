@@ -28,11 +28,11 @@ const InviteGroupMemberPage = () => {
   const initialGetGroupMemberInviteList = useRef(groupMemberInviteList);
 
   useEffect(() => {
-    if (!inputValue && groupMemberInviteList) {
+    if (!inputValue && groupMemberInviteList && initialGetGroupMemberInviteList.current) {
       if (
         isEqual(
-          groupMemberInviteList?.nonGroupFriends,
-          initialGetGroupMemberInviteList.current?.nonGroupFriends,
+          groupMemberInviteList.nonGroupFriends,
+          initialGetGroupMemberInviteList.current.nonGroupFriends,
         )
       ) {
         return;
