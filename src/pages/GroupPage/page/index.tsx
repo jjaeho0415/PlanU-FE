@@ -38,7 +38,7 @@ const GroupPage = () => {
 
   useEffect(() => {
     if (groupDetails) {
-      setOptimisticGroupDetails(groupDetails);
+      setOptimisticGroupDetails(groupDetails.groupInfo);
     }
   }, [groupDetails]);
 
