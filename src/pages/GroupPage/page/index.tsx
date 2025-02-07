@@ -1,5 +1,5 @@
 import styles from "./groupPage.module.scss";
-import { useOptimistic } from "react";
+import { useEffect, useState } from "react";
 import GroupOptions from "../components/GroupOptions";
 import { useNavigate, useParams } from "react-router-dom";
 import TodayScheduleList from "../components/TodayScheduleList";
@@ -11,6 +11,7 @@ import { endOfMonth, endOfWeek, startOfMonth, startOfWeek, format } from "date-f
 import { useGetGroupCalendarSchedules } from "@api/group/getGroupCalendarSchedules";
 import { usePatchGroupPin } from "@api/group/patchGroupPin";
 import { useQueryClient } from "@tanstack/react-query";
+import { useGetGroupDetails } from "@api/group/getGroupDetail";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 
@@ -21,12 +22,9 @@ const GroupPage = () => {
   const monthEnd = endOfMonth(currentDate); // 현재 달의 마지막 날짜 (요일 포함)
   const startDate = startOfWeek(monthStart); // 달력에 표시될 현재 달의 시작 날짜가 포함된 주의 시작 날짜
   const endDate = endOfWeek(monthEnd); // 달력에 표시될 현재 달의 마지막 날짜가 포함된 주의 끝 날짜
-  const groupInfo: IGroupInfoType = {
-    groupName: "춘천팟",
-    isPin: true,
-  };
   const { accessToken } = useAuthStore.getState();
   const { groupId } = useParams<{ groupId: string }>();
+  const { data: groupDetails } = useGetGroupDetails(groupId!, accessToken);
   const { data: groupTodaySchedules } = useGetGroupTodaySchedules(groupId!, accessToken);
   const { data: groupCalendarSchedules } = useGetGroupCalendarSchedules(
     groupId!,
@@ -34,25 +32,34 @@ const GroupPage = () => {
     format(startDate, "yyyy-MM-dd"),
     format(endDate, "yyyy-MM-dd"),
   );
-  const [optimisticGroupInfo, setOptimisticGroupInfo] = useOptimistic(groupInfo);
+  const [optimisticGroupDetails, setOptimisticGroupDetails] = useState<IGroupInfoType>();
   const { mutate: patchGroupPin } = usePatchGroupPin(accessToken);
+  const queryClient = useQueryClient();
+
+  useEffect(() => {
+    if (groupDetails) {
+      setOptimisticGroupDetails(groupDetails);
+    }
+  }, [groupDetails]);
 
   const handlePinClick = () => {
-    const queryClient = useQueryClient();
-    const previousIsPin = optimisticGroupInfo?.isPin;
-    setOptimisticGroupInfo((prev) => ({
-      ...prev,
-      isPin: !prev.isPin,
+    if (!optimisticGroupDetails) {
+      return;
+    }
+    const previousIsPin = optimisticGroupDetails.isPin;
+    setOptimisticGroupDetails((prev) => ({
+      ...prev!,
+      isPin: !prev?.isPin,
     }));
     patchGroupPin(groupId!, {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: ["GROUP_INFO"],
+          queryKey: ["GROUP_DETAILS"],
         });
       },
       onError: (error) => {
-        setOptimisticGroupInfo((prev) => ({
-          ...prev,
+        setOptimisticGroupDetails((prev) => ({
+          ...prev!,
           isPin: previousIsPin,
         }));
         alert(error.message);
@@ -70,40 +77,46 @@ const GroupPage = () => {
 
   return (
     <div className={styles.mainContainer}>
-      <HasTwoIconHeader
-        backgroundColor="purple"
-        title={groupInfo.groupName}
-        rightType="star"
-        isPin={groupInfo.isPin}
-        groupId={Number(groupId!)}
-        handleLeftClick={() => navigate(-1)}
-        handleRightClick={handlePinClick}
-      />
-      <div className={styles.contentContainer}>
-        <div className={styles.iconSection}>
-          {iconOptionsTitle.map((title) => (
-            <GroupOptions title={title} groupId={groupId!} key={title} />
-          ))}
-        </div>
-        <div className={styles.buttonSection} onClick={handleCreateSchedule}>
-          일정 생성하기
-        </div>
-        <div className={styles.todayScheduleList}>
-          <TodayScheduleList
-            todayScheduleList={groupTodaySchedules?.todaySchedules}
+      {!optimisticGroupDetails ? (
+        <div className={styles.loading}>로딩중...</div>
+      ) : (
+        <>
+          <HasTwoIconHeader
+            backgroundColor="purple"
+            title={optimisticGroupDetails?.groupName}
+            rightType="star"
+            isPin={optimisticGroupDetails?.isPin}
             groupId={Number(groupId!)}
+            handleLeftClick={() => navigate(-1)}
+            handleRightClick={handlePinClick}
           />
-        </div>
-        <div className={styles.groupCalendar}>
-          <GroupScheduleCalendar
-            groupSchedules={groupCalendarSchedules?.groupSchedules}
-            onClick={handleCalendarClick}
-            currentDate={currentDate}
-            startDate={startDate}
-            endDate={endDate}
-          />
-        </div>
-      </div>
+          <div className={styles.contentContainer}>
+            <div className={styles.iconSection}>
+              {iconOptionsTitle.map((title) => (
+                <GroupOptions title={title} groupId={groupId!} key={title} />
+              ))}
+            </div>
+            <div className={styles.buttonSection} onClick={handleCreateSchedule}>
+              일정 생성하기
+            </div>
+            <div className={styles.todayScheduleList}>
+              <TodayScheduleList
+                todayScheduleList={groupTodaySchedules?.todaySchedules}
+                groupId={Number(groupId!)}
+              />
+            </div>
+            <div className={styles.groupCalendar}>
+              <GroupScheduleCalendar
+                groupSchedules={groupCalendarSchedules?.groupSchedules}
+                onClick={handleCalendarClick}
+                currentDate={currentDate}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };
