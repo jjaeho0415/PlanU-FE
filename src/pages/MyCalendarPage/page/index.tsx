@@ -30,7 +30,6 @@ const MyCalendarPage: React.FC = () => {
 
   useEffect(() => {
     // selectedDate의 값이 변할때마다 해당 날짜 일정 조회하는 api 호출
-    console.log(selectedDate);
   }, [selectedDate]);
 
   return (

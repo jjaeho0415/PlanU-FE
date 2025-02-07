@@ -33,7 +33,7 @@ const GroupPage = () => {
     format(endDate, "yyyy-MM-dd"),
   );
   const [optimisticGroupDetails, setOptimisticGroupDetails] = useState<IGroupInfoType>();
-  const { mutate: patchGroupPin } = usePatchGroupPin(accessToken);
+  const { mutate: patchGroupPin } = usePatchGroupPin(groupId!,accessToken);
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -51,7 +51,7 @@ const GroupPage = () => {
       ...prev!,
       isPin: !prev?.isPin,
     }));
-    patchGroupPin(groupId!, {
+    patchGroupPin(undefined, {
       onSuccess: () => {
         queryClient.invalidateQueries({
           queryKey: ["GROUP_DETAILS"],
