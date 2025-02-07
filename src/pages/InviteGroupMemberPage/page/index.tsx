@@ -8,6 +8,7 @@ import useAuthStore from "@store/useAuthStore";
 import { useGetGroupMemberInviteList } from "@api/group/getGroupMemberInviteList";
 import { usePostInviteGroupMember } from "@api/group/postInviteGroupMember";
 import { useDeleteInviteGroupMember } from "@api/group/deleteInviteGroupMember";
+import { isEqual } from "lodash";
 
 const InviteGroupMemberPage = () => {
   const navigate = useNavigate();
@@ -27,8 +28,13 @@ const InviteGroupMemberPage = () => {
   const initialGetGroupMemberInviteList = useRef(groupMemberInviteList);
 
   useEffect(() => {
-    if (!inputValue) {
-      if (groupMemberInviteList === initialGetGroupMemberInviteList.current) {
+    if (!inputValue && groupMemberInviteList) {
+      if (
+        isEqual(
+          groupMemberInviteList?.nonGroupFriends,
+          initialGetGroupMemberInviteList.current?.nonGroupFriends,
+        )
+      ) {
         return;
       }
       refetchInviteGroupMember();

@@ -16,6 +16,7 @@ const FriendList: React.FC<Props> = ({
     <div className={styles.friendList}>
       {friendList.map((friend) => (
         <FriendItem
+          key={friend.username}
           friendInfo={friend}
           handleCancelInviteClick={handleCancelInviteClick}
           handleInviteGroupMemberClick={handleInviteGroupMemberClick}
