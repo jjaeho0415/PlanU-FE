@@ -252,7 +252,6 @@ function Headers() {
             title="춘천팟"
             rightType="star"
             handleClick={handleClick}
-            isBookmark={isBookMark}
           />
           <HasOnlyRightIconHeader
             title="새로운 일정"

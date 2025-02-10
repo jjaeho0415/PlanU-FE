@@ -2,9 +2,9 @@ import MiniButton from "@components/buttons/MiniButton";
 import styles from "./friendItem.module.scss";
 
 interface Props {
-  friendInfo: IGetFriendMemberType;
-  handleInviteGroupMemberClick: () => void;
-  handleCancelInviteClick: () => void;
+  friendInfo: IGetNonGroupFriendType;
+  handleInviteGroupMemberClick: (username: string) => void;
+  handleCancelInviteClick: (username: string) => void;
 }
 
 const FriendItem: React.FC<Props> = ({
@@ -18,7 +18,10 @@ const FriendItem: React.FC<Props> = ({
         <div className={styles.profileSection}>
           <img src={friendInfo.profileImage} width={42.43} height={40} alt="profile" />
         </div>
-        <div>{friendInfo.name}</div>
+        <div className={styles.friendInfoSection}>
+          <div>{friendInfo.name}</div>
+          <div className={styles.friendId}>@{friendInfo.username}</div>
+        </div>
       </div>
       <div className={styles.rightSection}>
         {friendInfo.status === "NONE" ? (
@@ -26,12 +29,16 @@ const FriendItem: React.FC<Props> = ({
             buttonText="친구 초대"
             color="purple_light"
             isAddFriend={true}
-            onClick={handleInviteGroupMemberClick}
+            onClick={() => handleInviteGroupMemberClick(friendInfo.username)}
           />
         ) : (
           <>
             <MiniButton buttonText="요청중..." color="white" />
-            <MiniButton buttonText="요청취소" color="red" onClick={handleCancelInviteClick} />
+            <MiniButton
+              buttonText="요청취소"
+              color="red"
+              onClick={() => handleCancelInviteClick(friendInfo.username)}
+            />
           </>
         )}
       </div>

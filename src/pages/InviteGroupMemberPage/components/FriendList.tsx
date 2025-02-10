@@ -2,9 +2,9 @@ import FriendItem from "./FriendItem";
 import styles from "./friendList.module.scss";
 
 interface Props {
-  friendList: IGetFriendMemberType[];
-  handleInviteGroupMemberClick: () => void;
-  handleCancelInviteClick: () => void;
+  friendList: IGetNonGroupFriendType[];
+  handleInviteGroupMemberClick: (username: string) => void;
+  handleCancelInviteClick: (username: string) => void;
 }
 
 const FriendList: React.FC<Props> = ({
@@ -16,6 +16,7 @@ const FriendList: React.FC<Props> = ({
     <div className={styles.friendList}>
       {friendList.map((friend) => (
         <FriendItem
+          key={friend.username}
           friendInfo={friend}
           handleCancelInviteClick={handleCancelInviteClick}
           handleInviteGroupMemberClick={handleInviteGroupMemberClick}

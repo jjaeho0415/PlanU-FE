@@ -43,3 +43,23 @@ type IPostCreateGroupResponseBodyType = {
   leaderUserName: string;
   groupImageUrl: string;
 };
+
+// 그룹 상대 초대 목록 조회 api(그룹원이 아닌 친구 목록)
+type IGetGroupMemberInviteListResponseBodyType = {
+  nonGroupFriends: IGetNonGroupFriendType[];
+};
+
+type IGetNonGroupFriendType = {
+  profileImage: string;
+  name: string;
+  username: string;
+  status: "PROGRESS" | "NONE";
+};
+
+// 그룹 멤버 초대 api
+type IPostInviteGroupMemberResponseType = {
+    invitedUsername: string;
+    groupId: number;
+    groupName: string;
+    groupImageUrl: string;
+}

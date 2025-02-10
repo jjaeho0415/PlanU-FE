@@ -3,7 +3,6 @@ import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
 import CreateGroupPage from "@pages/CreateGroupPage/page";
-import EditProfilePage from "@pages/EditProfilePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
 import FindPage from "@pages/FindPage/page";
 import FriendManagementPage from "@pages/FriendManagementPage/page";
@@ -16,7 +15,6 @@ import GroupScheduleDetailPage from "@pages/GroupScheduleDetailPage/page";
 import InviteGroupMemberPage from "@pages/InviteGroupMemberPage/page";
 import LocationSharingPage from "@pages/LocationSharingPage/page";
 import LoginPage from "@pages/LoginPage/page";
-import ModifyMyAccountPage from "@pages/ModifyMyAccountPage/page";
 import MyCalendarPage from "@pages/MyCalendarPage/page";
 import MyCalendarPossiblePage from "@pages/MyCalendarPossiblePage/page";
 import MyPage from "@pages/MyPage/page";
@@ -30,6 +28,7 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
+import EditProfilePage from "@pages/EditProfilePage/page";
 import EditSchedulePage from "@pages/EditSchedulePage/page";
 import CreateSchedulePage from "@pages/CreateSchedulePage/page";
 
@@ -55,9 +54,8 @@ function App() {
             <Route path="/chatList/search" element={<ChatListSearchPage />} />
             <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
             <Route path="/myPage" element={<MyPage />} />
-            <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
-            <Route path="/myPage/modifyMyAccount" element={<ModifyMyAccountPage />} />
+            <Route path="/myPage/editProfile" element={<EditProfilePage />} />
             <Route path="/createSchedule/:groupId" element={<CreateSchedulePage />} />
             <Route path="/selectLocation" element={<SelectLocationPage />} />
             <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />

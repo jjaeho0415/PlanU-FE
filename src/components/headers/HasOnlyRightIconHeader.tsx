@@ -11,8 +11,6 @@ interface Props {
   rightType: "alert" | "star" | "x" | "calendar" | "button";
   handleClick: () => void;
   isExistNoReadAlarms?: boolean;
-  isBookmark?: boolean;
-  groupId?: number;
 }
 
 const HasOnlyRightIconHeader: React.FC<Props> = ({
@@ -20,8 +18,6 @@ const HasOnlyRightIconHeader: React.FC<Props> = ({
   rightType,
   handleClick,
   isExistNoReadAlarms,
-  isBookmark,
-  groupId,
 }) => {
   return (
     <div className={styles.mainContainer}>
