@@ -79,7 +79,7 @@ const CreateSchedulePage: React.FC = () => {
         <TitleBox />
         <ColorBox />
         <TimeBox />
-        <LocationBox />
+        <LocationBox lat={lat} lng={lng} location={locationAddress} name={locationName} />
         <MemberBox groupId={groupId} />
         <NoteBox />
       </div>

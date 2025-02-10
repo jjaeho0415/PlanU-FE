@@ -3,15 +3,21 @@ import styles from "./Inputs.module.scss";
 import Icon_search from "@assets/Icons/Icon_search.svg?react";
 import Map from "@components/map/Map";
 import { useNavigate } from "react-router-dom";
-import useLocationInfoStore from "@store/useLocationInfoStore";
 
-const LocationBox: React.FC = () => {
+interface Props{
+  lat: number;
+  lng: number;
+  location: string;
+  name: string;
+}
+
+const LocationBox: React.FC<Props> = ({lat, lng, location, name}) => {
   const navigate = useNavigate();
-  const { lat, lng, name, location } = useLocationInfoStore.getState();
-  const [locationName, setLocatonName] = useState<string>("");
+  
+  const [locationName, setLocationName] = useState<string>("");
 
   useEffect(() => {
-    setLocatonName(name ?? location);
+    setLocationName(name ?? location);
   }, [name, location]);
 
   return (
@@ -31,4 +37,4 @@ const LocationBox: React.FC = () => {
   );
 };
 
-export default LocationBox;
+export default React.memo(LocationBox);
