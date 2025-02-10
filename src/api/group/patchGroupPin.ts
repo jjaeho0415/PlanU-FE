@@ -10,8 +10,8 @@ const patchGroupPin = async (groupId: string, authorization: string) => {
   return response;
 };
 
-export const usePatchGroupPin = (groupId: string, authorization: string) => {
+export const usePatchGroupPin = ( authorization: string) => {
   return useMutation({
-    mutationFn: () => patchGroupPin(groupId, authorization),
+    mutationFn: (groupId: string) => patchGroupPin(groupId, authorization),
   });
 };
