@@ -12,7 +12,7 @@ import {
 import { DAY_LIST, HOLIDAYS } from "../../../constants/holidays";
 
 interface Props {
-  groupSchedules: IGroupSchedulesType[] | undefined;
+  groupSchedules: IGroupSchedulesType[];
   onClick: () => void;
   currentDate: Date;
   startDate: Date;
@@ -39,12 +39,14 @@ const GroupScheduleCalendar: React.FC<Props> = ({
   const monthArray = currentMonthData();
 
   const getSchedulesForDate = (date: Date) => {
-    return groupSchedules?.filter((schedule) =>
-      isWithinInterval(date, {
-        start: parseISO(schedule.startDateTime),
-        end: parseISO(schedule.endDateTime),
-      }),
-    );
+    const formattedDate = format(date, "yyyy-MM-dd");
+
+    return groupSchedules.filter((schedule) => {
+      const scheduleStart = format(parseISO(schedule.startDateTime), "yyyy-MM-dd");
+      const scheduleEnd = format(parseISO(schedule.endDateTime), "yyyy-MM-dd");
+
+      return formattedDate >= scheduleStart && formattedDate <= scheduleEnd;
+    });
   };
 
   const isHoliday = (date: Date): boolean => {
@@ -65,6 +67,7 @@ const GroupScheduleCalendar: React.FC<Props> = ({
       <div className={styles.calendarGrid}>
         {monthArray.map((date, index) => {
           const schedules = getSchedulesForDate(date);
+
           const dayOfWeek = getDay(date);
           const dateNumberStyle = isHoliday(date)
             ? { color: "#ff0000" }
@@ -86,7 +89,7 @@ const GroupScheduleCalendar: React.FC<Props> = ({
                 {format(date, "d")}
               </span>
               <div className={styles.scheduleContainer}>
-                {schedules?.map((schedule) => (
+                {schedules.map((schedule) => (
                   <div
                     key={schedule.id}
                     className={styles.schedule}

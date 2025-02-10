@@ -27,7 +27,7 @@ const apiRoutes = {
   showReceiveFriendList: "/users/friends/receive",
   showRequestFriendList: "/users/friends/request",
   //스케줄 관련
-  shedules: "/schedules",
+  schedules: "/schedules",
 };
 
 export default apiRoutes;

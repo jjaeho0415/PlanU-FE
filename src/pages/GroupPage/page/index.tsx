@@ -107,7 +107,7 @@ const GroupPage = () => {
             </div>
             <div className={styles.groupCalendar}>
               <GroupScheduleCalendar
-                groupSchedules={groupCalendarSchedules?.groupSchedules}
+                groupSchedules={groupCalendarSchedules ? groupCalendarSchedules.groupSchedules : []}
                 onClick={handleCalendarClick}
                 currentDate={currentDate}
                 startDate={startDate}
