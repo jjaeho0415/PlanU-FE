@@ -37,7 +37,7 @@ const HasTwoIconHeader: React.FC<Props> = ({
         ) : rightType === "checkIcon" ? (
           <Check_Icon width={24} height={24} />
         ) : rightType === "star" ? (
-          <StarIcon isPin={isPin} id={groupId} handleClick={handleRightClick} />
+          <StarIcon isPin={isPin} id={groupId} />
         ): (
           <MiniButton
             buttonText="완료"
