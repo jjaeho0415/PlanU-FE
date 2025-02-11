@@ -21,37 +21,7 @@ const SelectLocationPage = () => {
   const [marker, setMarker] = useState<google.maps.marker.AdvancedMarkerElement | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
 
-  useEffect(() => {
-    if (inputValue === "") {
-      setSearchResults([]);
-      setSelectedLocationInfo(null);
-      if (userLatLng && mapRef.current) {
-        const initMap = async () => {
-          try {
-            const newMap = await initializeMap(
-              mapRef.current!,
-              userLatLng,
-              import.meta.env.VITE_GOOGLE_MAP_ID,
-            );
-            const pin = await createCustomPin();
-            const initialMarker = await createMarker(newMap, userLatLng, pin.element);
-            setMap(newMap);
-            setMarker(initialMarker);
-          } catch (error) {
-            console.error("Error initializing map: ", error);
-          }
-        };
-        initMap();
-      }
-    }
-  }, [inputValue, mapRef.current, userLatLng]);
-
-  useEffect(() => {
-    if (map) {
-      google.maps.event.trigger(map, "resize");
-    }
-  }, [map]);
-
+  // 사용자 현재 위치 가져오기
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -66,11 +36,11 @@ const SelectLocationPage = () => {
     );
   }, []);
 
+  // 지도 초기화 (한 번만 실행됨)
   useEffect(() => {
     const initMap = async () => {
-      if (!userLatLng || !mapRef.current) {
-        return;
-      }
+      if (!userLatLng || !mapRef.current || map) return;
+
       try {
         const newMap = await initializeMap(
           mapRef.current,
@@ -79,6 +49,7 @@ const SelectLocationPage = () => {
         );
         const pin = await createCustomPin();
         const initialMarker = await createMarker(newMap, userLatLng, pin.element);
+
         setMap(newMap);
         setMarker(initialMarker);
       } catch (error) {
@@ -87,34 +58,37 @@ const SelectLocationPage = () => {
     };
 
     initMap();
-  }, [userLatLng, mapRef.current]);
+  }, [userLatLng]);
 
-  const handleSearchIconClick = async () => {
-    if (!inputValue || !userLatLng || !mapRef.current) {
-      return;
-    }
+  // inputValue 변경 시 자동 처리
+  useEffect(() => {
+    if (inputValue === "") {
+      setSearchResults([]); // 검색 결과 초기화
 
-    if (!map) {
-      try {
-        const newMap = await initializeMap(
-          mapRef.current,
-          userLatLng,
-          import.meta.env.VITE_GOOGLE_MAP_ID,
-        );
-        const pin = await createCustomPin();
-        const initialMarker = await createMarker(newMap, userLatLng, pin.element);
-        setMap(newMap);
-        setMarker(initialMarker);
-      } catch (error) {
-        console.error("Error initializing map: ", error);
+      if (userLatLng && map) {
+        map.setCenter(userLatLng); // 지도 중심을 현재 위치로 이동
+
+        if (marker) {
+          marker.map = null; // 기존 마커 삭제
+        }
+
+        createCustomPin().then((pin) => {
+          createMarker(map, userLatLng, pin.element).then((userMarker) => {
+            setMarker(userMarker); // 새로운 마커 설정
+          });
+        });
       }
     }
+  }, [inputValue]);
+
+  // 검색 기능
+  const handleSearchIconClick = async () => {
+    if (!inputValue || !userLatLng || !map) return;
 
     const { PlacesService } = (await google.maps.importLibrary(
       "places",
     )) as google.maps.PlacesLibrary;
-
-    const service = new PlacesService(mapRef.current as HTMLDivElement);
+    const service = new PlacesService(map);
 
     const request: google.maps.places.TextSearchRequest = {
       query: inputValue,
@@ -143,31 +117,28 @@ const SelectLocationPage = () => {
     });
   };
 
+  // 검색결과 클릭 시 기존 map을 활용하여 이동
   const handleResultClick = async (location: SearchLocationResultType) => {
-    if (!mapRef.current || !userLatLng) {
-      return;
-    }
+    if (!map || !marker) return;
 
-    const selectedMap = await initializeMap(
-      mapRef.current,
-      { lat: location.lat, lng: location.lng },
-      import.meta.env.VITE_GOOGLE_MAP_ID,
-    );
+    map.setCenter({ lat: location.lat, lng: location.lng }); // 기존 지도 중심 이동
+
+    // 기존 마커 삭제
+    marker.map = null;
+
+    // 새 마커 추가
     const pin = await createCustomPin();
     const selectedMarker = await createMarker(
-      selectedMap,
+      map,
       { lat: location.lat, lng: location.lng },
       pin.element,
     );
 
     setSelectedLocationInfo(location);
-    if (marker) {
-      marker.map = null;
-    }
-    setMap(selectedMap);
     setMarker(selectedMarker);
   };
 
+  // 선택된 장소 저장
   const handleSave = () => {
     if (selectedLocationInfo) {
       setLocationInfo(
@@ -185,9 +156,7 @@ const SelectLocationPage = () => {
       <HasTwoIconHeader
         title="검색"
         rightType="checkIcon"
-        handleLeftClick={() => {
-          navigate(-1);
-        }}
+        handleLeftClick={() => navigate(-1)}
         handleRightClick={handleSave}
         backgroundColor="white"
       />
@@ -200,15 +169,11 @@ const SelectLocationPage = () => {
           />
         </div>
         <div
-          className={`${styles.mapContainer} ${
-            searchResults.length === 0 ? styles.fullHeight : ""
-          }`}
+          className={`${styles.mapContainer} ${searchResults.length === 0 ? styles.fullHeight : ""}`}
           ref={mapRef}
         />
         <div
-          className={`${styles.searchResultsContainer} ${
-            searchResults.length === 0 ? styles.hidden : ""
-          }`}
+          className={`${styles.searchResultsContainer} ${searchResults.length === 0 ? styles.hidden : ""}`}
         >
           {userLatLng && (
             <SearchResultList
