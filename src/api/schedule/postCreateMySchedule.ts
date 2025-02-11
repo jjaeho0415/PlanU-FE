@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const postCreateMySchedule = async (body: IPostCreateMyScheduleType, authorization: string) => {
-  const endpoint = `${apiRoutes.shedules}`;
+  const endpoint = `${apiRoutes.schedules}`;
   const response = await api.post({
     endpoint,
     body,
@@ -16,7 +16,7 @@ const postCreateMySchedule = async (body: IPostCreateMyScheduleType, authorizati
   return response;
 };
 
-export const usePostCreateMyShcedule = (authorization: string) => {
+export const usePostCreateMySchedule = (authorization: string) => {
   const navigate = useNavigate();
   const { setLocationInfo } = useLocationInfoStore();
   const scheduleStore = useScheduleStore.getState();

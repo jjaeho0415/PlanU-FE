@@ -9,7 +9,7 @@ import MemberBox from "@components/createSchedule/MemberBox";
 import NoteBox from "@components/createSchedule/NoteBox";
 import DefaultButton from "@components/buttons/DefaultButton";
 import useAuthStore from "@store/useAuthStore";
-import { usePostCreateMyShcedule } from "@api/schedule/postCreateMySchedule";
+import { usePostCreateMySchedule } from "@api/schedule/postCreateMySchedule";
 import { usePostCreateGroupSchedule } from "@api/schedule/postCreateGroupSchedule";
 import { format } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
@@ -33,7 +33,7 @@ const CreateSchedulePage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const id = groupId === "my" ? "my" : Number(groupId);
   const { accessToken } = useAuthStore();
-  const { mutate: createMySchedule } = usePostCreateMyShcedule(accessToken);
+  const { mutate: createMySchedule } = usePostCreateMySchedule(accessToken);
   const { mutate: createGroupSchedule } = usePostCreateGroupSchedule(accessToken, Number(groupId));
 
   useEffect(() => {
@@ -79,7 +79,7 @@ const CreateSchedulePage: React.FC = () => {
         <TitleBox />
         <ColorBox />
         <TimeBox />
-        <LocationBox />
+        <LocationBox lat={lat} lng={lng} location={locationAddress} name={locationName} />
         <MemberBox groupId={groupId} />
         <NoteBox />
       </div>

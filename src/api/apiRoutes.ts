@@ -17,6 +17,7 @@ const apiRoutes = {
   showGroupInvitationList: "/groups/inviteList",
   leaveGroup: "/groups/leave",
   deleteGroup: "/groups/delete",
+  pin: "/groups/pin",
   // 친구 관련
   requestFriend: "/users/friends/request",
   acceptFriendRequest: "/users/friends/request-accept",
@@ -26,7 +27,7 @@ const apiRoutes = {
   showReceiveFriendList: "/users/friends/receive",
   showRequestFriendList: "/users/friends/request",
   //스케줄 관련
-  shedules: "/schedules",
+  schedules: "/schedules",
 };
 
 export default apiRoutes;

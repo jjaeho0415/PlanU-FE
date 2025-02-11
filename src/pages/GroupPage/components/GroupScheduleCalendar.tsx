@@ -3,30 +3,29 @@ import styles from "./groupScheduleCalendar.module.scss";
 import {
   addDays,
   differenceInCalendarDays,
-  endOfMonth,
-  endOfWeek,
-  startOfMonth,
-  startOfWeek,
   isSameMonth,
   format,
   isWithinInterval,
   parseISO,
   getDay,
 } from "date-fns";
-import {DAY_LIST, HOLIDAYS} from "../../../constants/holidays";
+import { DAY_LIST, HOLIDAYS } from "../../../constants/holidays";
 
 interface Props {
   groupSchedules: IGroupSchedulesType[];
   onClick: () => void;
+  currentDate: Date;
+  startDate: Date;
+  endDate: Date;
 }
 
-const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => {
-  const currentDate = new Date();
-  const monthStart = startOfMonth(currentDate); // 현재 달의 시작 날짜 (요일 포함)
-  const monthEnd = endOfMonth(currentDate); // 현재 달의 마지막 날짜 (요일 포함)
-  const startDate = startOfWeek(monthStart); // 달력에 표시될 현재 달의 시작 날짜가 포함된 주의 시작 날짜
-  const endDate = endOfWeek(monthEnd); // 달력에 표시될 현재 달의 마지막 날짜가 포함된 주의 끝 날짜
-
+const GroupScheduleCalendar: React.FC<Props> = ({
+  groupSchedules,
+  onClick,
+  currentDate,
+  startDate,
+  endDate,
+}) => {
   const currentMonthData = () => {
     const monthArray = [];
     let day = startDate;
@@ -40,12 +39,14 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
   const monthArray = currentMonthData();
 
   const getSchedulesForDate = (date: Date) => {
-    return groupSchedules.filter((schedule) =>
-      isWithinInterval(date, {
-        start: parseISO(schedule.startDateTime),
-        end: parseISO(schedule.endDateTime),
-      }),
-    );
+    const formattedDate = format(date, "yyyy-MM-dd");
+
+    return groupSchedules.filter((schedule) => {
+      const scheduleStart = format(parseISO(schedule.startDateTime), "yyyy-MM-dd");
+      const scheduleEnd = format(parseISO(schedule.endDateTime), "yyyy-MM-dd");
+
+      return formattedDate >= scheduleStart && formattedDate <= scheduleEnd;
+    });
   };
 
   const isHoliday = (date: Date): boolean => {
@@ -66,6 +67,7 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
       <div className={styles.calendarGrid}>
         {monthArray.map((date, index) => {
           const schedules = getSchedulesForDate(date);
+
           const dayOfWeek = getDay(date);
           const dateNumberStyle = isHoliday(date)
             ? { color: "#ff0000" }
@@ -80,7 +82,7 @@ const GroupScheduleCalendar: React.FC<Props> = ({ groupSchedules, onClick }) => 
               key={index}
               className={`${styles.dateCell} ${isSameMonth(date, currentDate) ? "" : styles.grayText}`}
               style={{
-                opacity: isSameMonth(date, currentDate) ? "1" : "0.5", 
+                opacity: isSameMonth(date, currentDate) ? "1" : "0.5",
               }}
             >
               <span className={styles.dateNumber} style={dateNumberStyle}>

@@ -22,7 +22,7 @@ interface IScheduleInfo {
 const useScheduleStore = create<IScheduleInfo>((set) => {
   const initialState = {
     title: "",
-    color: "",
+    color: "#C9ACE7",
     isAllDay: false,
     startDate: new Date(),
     endDate: new Date(),
