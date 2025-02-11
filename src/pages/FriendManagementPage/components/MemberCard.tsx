@@ -1,35 +1,24 @@
 import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFriend";
+import { useDeleteDeleteFriends } from "@api/friend/deleteDeleteFriends";
 import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
 import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
-import { usePostRequestFriend } from "@api/friend/postRequestFriend";
-import DefaultProfile from "@assets/Icons/groupPage/smallCircleProfile.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
 import useAuthStore from "@store/useAuthStore";
 import styles from "./memberCard.module.scss";
 
 interface Props {
-  memberInfo: {
-    name: string;
-    username: string;
-    profileImageUrl?: string;
-  };
+  memberInfo: IFriendItemType;
   activeTab: "친구목록" | "받은요청" | "보낸요청";
   isEditing?: boolean;
 }
 
 const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false }) => {
   const { accessToken } = useAuthStore.getState();
-
-  const { mutate: requestFriend } = usePostRequestFriend(accessToken);
   const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
   const { mutate: acceptRequestFriend } = usePostAcceptRequestFriend(accessToken);
   const { mutate: rejectRequestFriend } = useDeleteRejectRequestFriend(accessToken);
-
+  const { mutate: deleteFriend } = useDeleteDeleteFriends(accessToken);
   const handleShowFriendCalendar = () => {};
-
-  const handleRequestFriend = () => {
-    requestFriend(memberInfo.username);
-  };
 
   const handleCancelRequestFriend = () => {
     cancelRequestFriend(memberInfo.username);
@@ -39,8 +28,12 @@ const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false 
     rejectRequestFriend(memberInfo.username);
   };
 
-  const handleDeleteMember = () => {
+  const handleAcceptRequestFriend = () => {
     acceptRequestFriend(memberInfo.username);
+  };
+
+  const handleDeleteMember = () => {
+    deleteFriend(memberInfo.username);
   };
 
   const renderButtons = () => {
@@ -65,7 +58,7 @@ const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false 
               buttonText="수락"
               color="purple"
               isAddFriend
-              onClick={handleRequestFriend}
+              onClick={handleAcceptRequestFriend}
             />
             <MiniButton buttonText="거절" color="gray" onClick={handleRejectFriendRequest} />
           </>
@@ -86,11 +79,7 @@ const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false 
     <div className={styles.memberCardContainer}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          {memberInfo.profileImageUrl ? (
-            <img src={memberInfo.profileImageUrl} width={38} height={37} alt="profile" />
-          ) : (
-            <DefaultProfile width={38} height={37} className={styles.profileImage} />
-          )}
+          <img src={memberInfo.profileImageUrl} width={38} height={37} alt="profile" />
         </div>
 
         <div className={styles.textSection}>
