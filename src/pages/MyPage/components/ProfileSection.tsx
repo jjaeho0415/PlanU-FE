@@ -1,7 +1,7 @@
-import DefaultProfileImage from "@assets/Icons/Default Profile/default_profile.svg?react";
 import EditIcon from "@assets/Icons/Default Profile/edit.svg?react";
 import React from "react";
 
+import { useNavigate } from "react-router-dom";
 import styles from "./profileSection.module.scss";
 
 interface ProfileProps {
@@ -9,7 +9,7 @@ interface ProfileProps {
   username: string;
   email: string;
   birthDate: string;
-  profileImage?: string;
+  profileImage: string;
 }
 
 const ProfileSection: React.FC<ProfileProps> = ({
@@ -19,14 +19,11 @@ const ProfileSection: React.FC<ProfileProps> = ({
   birthDate,
   profileImage,
 }) => {
+  const navigate = useNavigate();
   return (
     <div className={styles.profileSection}>
       <div className={styles.profileImageWrapper}>
-        {profileImage ? (
-          <img src={profileImage} alt={`${name}의 프로필`} className={styles.profileImage} />
-        ) : (
-          <DefaultProfileImage className={styles.defaultProfileImage} />
-        )}
+        <img src={profileImage} alt={`${name}의 프로필`} className={styles.profileImage} />
       </div>
       <div className={styles.profileInfo}>
         <div className={styles.nameWrapper}>
@@ -37,7 +34,7 @@ const ProfileSection: React.FC<ProfileProps> = ({
         <div className={styles.birthDate}>{birthDate}</div>
       </div>
       <button className={styles.editButton}>
-        <EditIcon className={styles.editIcon} />
+        <EditIcon className={styles.editIcon} onClick={() => navigate("/myPage/editProfile")} />
       </button>
     </div>
   );

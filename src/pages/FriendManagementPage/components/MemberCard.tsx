@@ -1,5 +1,10 @@
+import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFriend";
+import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
+import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
+import { usePostRequestFriend } from "@api/friend/postRequestFriend";
 import DefaultProfile from "@assets/Icons/groupPage/smallCircleProfile.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
+import useAuthStore from "@store/useAuthStore";
 import styles from "./memberCard.module.scss";
 
 interface Props {
@@ -13,15 +18,30 @@ interface Props {
 }
 
 const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false }) => {
+  const { accessToken } = useAuthStore.getState();
+
+  const { mutate: requestFriend } = usePostRequestFriend(accessToken);
+  const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
+  const { mutate: acceptRequestFriend } = usePostAcceptRequestFriend(accessToken);
+  const { mutate: rejectRequestFriend } = useDeleteRejectRequestFriend(accessToken);
+
   const handleShowFriendCalendar = () => {};
 
-  const handleRequestFriend = () => {};
+  const handleRequestFriend = () => {
+    requestFriend(memberInfo.username);
+  };
 
-  const handleCancelRequestFriend = () => {};
+  const handleCancelRequestFriend = () => {
+    cancelRequestFriend(memberInfo.username);
+  };
 
-  const handleRejectFriendRequest = () => {};
+  const handleRejectFriendRequest = () => {
+    rejectRequestFriend(memberInfo.username);
+  };
 
-  const handleDeleteMember = () => {};
+  const handleDeleteMember = () => {
+    acceptRequestFriend(memberInfo.username);
+  };
 
   const renderButtons = () => {
     if (isEditing && activeTab === "친구목록") {

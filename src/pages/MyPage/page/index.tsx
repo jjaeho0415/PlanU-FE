@@ -1,3 +1,5 @@
+import { useGetUserInfo } from "@api/user/getUserInfo";
+import useAuthStore from "@store/useAuthStore";
 import Header from "../../../components/headers/OnlyTextHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import ButtonSection from "../components/ButtonSection";
@@ -6,6 +8,8 @@ import ProfileSection from "../components/ProfileSection";
 import styles from "./myPage.module.scss";
 
 const MyPage = () => {
+  const { accessToken } = useAuthStore();
+  const { data: userInfo } = useGetUserInfo(accessToken);
   const menuData = [
     {
       title: "앱 설정",
@@ -23,24 +27,31 @@ const MyPage = () => {
 
   return (
     <div className={styles.myPageContainer}>
-      <Header title="마이페이지" backgroundColor="white" />
-      <div className={styles.whiteBackground}>
-        <div className={styles.profileSection}>
-          <ProfileSection
-            name="이수현"
-            username="su_velyy_."
-            email="suhyun2116@gmail.com"
-            birthDate="2003.02.19"
-          />
-        </div>
-        <div className={styles.buttonSection}>
-          <ButtonSection />
-        </div>
-      </div>
-      <div className={styles.contentWrapper}>
-        <MenuSection menuItems={menuData} />
-      </div>
-      <Footer />
+      {userInfo ? (
+        <>
+          <Header title="마이페이지" backgroundColor="white" />
+          <div className={styles.whiteBackground}>
+            <div className={styles.profileSection}>
+              <ProfileSection
+                name={userInfo.name}
+                username={userInfo.username}
+                email={userInfo.email}
+                birthDate={userInfo.birthday}
+                profileImage={userInfo.profileImage}
+              />
+            </div>
+            <div className={styles.buttonSection}>
+              <ButtonSection />
+            </div>
+          </div>
+          <div className={styles.contentWrapper}>
+            <MenuSection menuItems={menuData} />
+          </div>
+          <Footer />
+        </>
+      ) : (
+        <div>사용자 정보를 찾을 수 없습니다.</div>
+      )}
     </div>
   );
 };
