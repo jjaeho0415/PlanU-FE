@@ -18,6 +18,9 @@ export const useDeleteCancelRequestFriend = (authorization: string) => {
       queryClient.invalidateQueries({
         queryKey: ["GROUP_MEMBER_LIST"],
       });
+      queryClient.invalidateQueries({
+        queryKey: ["REQUEST_FRIEND_LIST"],
+      });
     },
     onError: (error) => alert(error.message),
   });
