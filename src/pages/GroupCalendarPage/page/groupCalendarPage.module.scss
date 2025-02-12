@@ -26,6 +26,7 @@
 
   .scheduleSection {
     padding: 20px;
+    flex: 1;
 
     .scheduleHeaderContainer {
       display: flex;
@@ -42,6 +43,11 @@
       position: absolute;
       right: 5px;
       top: 9px;
+    }
+
+    .cardSection {
+      flex: 1;
+      overflow-y: auto;
     }
   }
 }

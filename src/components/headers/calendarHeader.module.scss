@@ -8,11 +8,12 @@
   box-sizing: border-box;
   z-index: 50;
   position: sticky;
+  justify-content: space-between;
   top: 0;
-  .leftSection {
-    cursor: pointer;
-    justify-content: start;
-    width: 100%;
+  .leftSection {    
+    .backArrow {
+      cursor: pointer;
+    }
   }
   .titleSection {
     font-size: 20px;
@@ -23,17 +24,7 @@
     transform: translateX(-50%);
   }
   .rightSection {
-    display: flex;
-    width: 100%;
-    justify-content: end;
-    align-items: center;
-    flex-direction: row;
-    gap: 5px;
-    cursor: pointer;
     .miniCalendarIconSection {
-      cursor: pointer;
-    }
-    .moreIconSection {
       cursor: pointer;
     }
   }

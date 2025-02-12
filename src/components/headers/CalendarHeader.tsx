@@ -19,8 +19,8 @@ const CalenderHeader: React.FC<Props> = ({
   return (
     <div className={styles.mainContainer}>
       {type === "group" && (
-        <div className={styles.leftSection} onClick={handleBackArrowClick}>
-          <BackArrow2_Icon width={9} height={18} />
+        <div className={styles.leftSection}>
+          <BackArrow2_Icon width={9} height={18} onClick={handleBackArrowClick} className={styles.backArrow} />
         </div>
       )}
 
@@ -30,7 +30,7 @@ const CalenderHeader: React.FC<Props> = ({
           width={27}
           height={26}
           onClick={handleMiniCalendarClick}
-          className={styles.miniCalenderIconSection}
+          className={styles.miniCalendarIconSection}
         />
       </div>
     </div>
