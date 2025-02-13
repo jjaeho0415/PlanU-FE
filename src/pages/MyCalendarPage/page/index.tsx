@@ -59,12 +59,7 @@ const scheduleList: IGetScheduleListResponseBodyType = {
       color: "#33FF57",
     },
   ],
-  birthdayPerson: [
-    {
-      date: "09-11",
-      names: ["최준혁", "김도하"],
-    },
-  ],
+  birthdayPerson: ["최준혁", "김도하"],
 };
 
 const MyCalendarPage: React.FC = () => {
@@ -80,7 +75,7 @@ const MyCalendarPage: React.FC = () => {
   }, [selectedDate]);
 
   return (
-    <div className={styles.page}>
+    <div className={styles.Container}>
       <CalendarHeader
         title="나의 달력"
         type="my"
@@ -102,9 +97,11 @@ const MyCalendarPage: React.FC = () => {
             />
           </div>
           <div className={styles.subText}>나의 스케줄</div>
-          {scheduleList.schedules.map((scheduleItem) => (
-            <EventCard scheduleItem={scheduleItem} />
-          ))}
+          <div className={styles.cardSection}>
+            {scheduleList.schedules.map((scheduleItem) => (
+              <EventCard scheduleItem={scheduleItem} />
+            ))}
+          </div>
         </div>
       </div>
       <Footer />

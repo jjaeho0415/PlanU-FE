@@ -58,12 +58,7 @@ interface IGetScheduleType {
         color: "#33FF57",
       },
     ],
-    birthdayPerson: [
-      {
-        date: "09-11",
-        names: ["최준혁", "김도하"],
-      },
-    ],
+    birthdayPerson: ["최준혁", "김도하"],
   };
 
 const GroupCalendarPage: React.FC = () => {
@@ -89,10 +84,10 @@ const GroupCalendarPage: React.FC = () => {
         handleBackArrowClick={handleBackArrowClick}
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
+      <div className={styles.calendarSection}>
+        <Calendar type="view" scheduleData={scheduleData} />
+      </div>
       <div className={styles.content}>
-        <div className={styles.calendarSection}>
-          <Calendar type="view" scheduleData={scheduleData} />
-        </div>
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
             <h1 className={styles.scheduleHeader}>1월 16일 (목)</h1>

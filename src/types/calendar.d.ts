@@ -33,7 +33,7 @@ type IPostCreateMyScheduleType = {
 // 하나의 날짜에 대한 일정, 생일 정보 api - 그룹,나의 달력 페이지
 type IGetScheduleListResponseBodyType = {
   schedules: IGroupScheduleItemType[];
-  birthdayPerson: IBirthdayInfoType[];
+  birthdayPerson: string[];
 }
 
 type IScheduleItemType = {
@@ -44,9 +44,4 @@ type IScheduleItemType = {
   groupId: string;
   id: number;
   color: string;
-}
-
-type IBirthdayInfoType = {
-  date: string;
-  names: string[];
 }
