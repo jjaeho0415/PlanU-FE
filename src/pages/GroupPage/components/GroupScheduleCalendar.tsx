@@ -41,8 +41,8 @@ const GroupScheduleCalendar: React.FC<Props> = ({
     const formattedDate = format(date, "yyyy-MM-dd");
 
     return groupSchedules.filter((schedule) => {
-      const scheduleStart = format(parseISO(schedule.startDateTime), "yyyy-MM-dd");
-      const scheduleEnd = format(parseISO(schedule.endDateTime), "yyyy-MM-dd");
+      const scheduleStart = format(parseISO(schedule.startTime), "yyyy-MM-dd");
+      const scheduleEnd = format(parseISO(schedule.endTime), "yyyy-MM-dd");
 
       return formattedDate >= scheduleStart && formattedDate <= scheduleEnd;
     });
