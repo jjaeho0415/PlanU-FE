@@ -3,7 +3,7 @@ import api from "@api/fetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const deleteForcedWithdrawalFromGroup = async (authorization: string, groupId: number, username: string) => {
-  const response = await api.put<IResponseType>({
+  const response = await api.delete<IResponseType>({
     endpoint: `${apiRoutes.group}/${groupId}/members/${username}`,
     authorization,
   });

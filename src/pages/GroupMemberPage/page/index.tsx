@@ -17,7 +17,7 @@ const GroupMemberPage = () => {
       <HasOnlyBackArrowHeader title="멤버" handleClick={() => navigate(-1)} />
       <div className={styles.contentContainer}>
         <div className={styles.searchContainer}>
-          <SearchBox type="onlyClick" />
+          <SearchBox type="onlyClick" groupId={groupId} />
         </div>
         <div className={styles.memberListContainer}>
           <div className={styles.textBox}>멤버목록</div>

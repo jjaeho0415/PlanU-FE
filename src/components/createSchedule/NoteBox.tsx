@@ -1,12 +1,10 @@
 import React, { useRef } from "react";
 import styles from "./Inputs.module.scss";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface props {
-  value?: string;
-}
-
-const NoteBox: React.FC<props> = ({ value = "" }) => {
+const NoteBox: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
+  const { note, setNote } = useScheduleStore();
 
   const resizeHeight = () => {
     if (!textareaRef.current) return;
@@ -25,14 +23,18 @@ const NoteBox: React.FC<props> = ({ value = "" }) => {
     textarea.style.overflowY = scrollHeight > maxHeight ? "auto" : "hidden";
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    setNote(event.target.value);
+    resizeHeight();
+  };
+
   return (
     <textarea
       className={styles.TextArea}
       ref={textareaRef}
-      onInput={resizeHeight}
-      onKeyDown={resizeHeight}
+      onChange={handleChange}
       placeholder="노트"
-      defaultValue={value ?? null}
+      value={note}
     ></textarea>
   );
 };

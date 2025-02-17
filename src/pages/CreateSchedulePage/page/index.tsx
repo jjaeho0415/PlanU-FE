@@ -1,0 +1,93 @@
+import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
+import styles from "./createSchedule.module.scss";
+import { useEffect, useState } from "react";
+import TitleBox from "@components/createSchedule/TitleBox";
+import ColorBox from "@components/createSchedule/ColorBox";
+import TimeBox from "@components/createSchedule/TimeBox";
+import LocationBox from "@components/createSchedule/LocationBox";
+import MemberBox from "@components/createSchedule/MemberBox";
+import NoteBox from "@components/createSchedule/NoteBox";
+import DefaultButton from "@components/buttons/DefaultButton";
+import useAuthStore from "@store/useAuthStore";
+import { usePostCreateMySchedule } from "@api/schedule/postCreateMySchedule";
+import { usePostCreateGroupSchedule } from "@api/schedule/postCreateGroupSchedule";
+import { format } from "date-fns";
+import useLocationInfoStore from "@store/useLocationInfoStore";
+import { useNavigate, useParams } from "react-router-dom";
+import useScheduleStore from "@store/useScheduleStore";
+
+const CreateSchedulePage: React.FC = () => {
+  const navigate = useNavigate();
+  const {
+    title,
+    color,
+    startDate,
+    endDate,
+    participants,
+    unregisteredParticipants,
+    note,
+    isAllDay,
+  } = useScheduleStore();
+  const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
+  const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
+  const { groupId } = useParams<{ groupId: string }>();
+  const id = groupId === "my" ? "my" : Number(groupId);
+  const { accessToken } = useAuthStore();
+  const { mutate: createMySchedule } = usePostCreateMySchedule(accessToken);
+  const { mutate: createGroupSchedule } = usePostCreateGroupSchedule(accessToken, Number(groupId));
+
+  useEffect(() => {
+    const filteredMemberId: string[] = participants.map(
+      (member: IGroupMemberItemType) => member.username,
+    );
+    setPostParticipantsData(filteredMemberId);
+  }, [participants]);
+
+  const handleButtonClick = () => {
+    const data = {
+      title: title,
+      color: color,
+      startDateTime: format(startDate, "yyyy-MM-dd'T'HH:mm"),
+      endDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'HH:mm")
+        : format(endDate, "yyyy-MM-dd'T'HH:mm"),
+      location: locationName ?? locationAddress,
+      latitude: lat,
+      longitude: lng,
+      participants: postParticipantsData,
+      memo: note,
+    };
+
+    if (id === "my") {
+      createMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
+    } else {
+      console.log("group");
+      createGroupSchedule(data);
+    }
+  };
+
+  return (
+    <div className={styles.Container}>
+      <HasOnlyRightIconHeader
+        title="새로운 일정"
+        rightType="x"
+        handleClick={() => {
+          navigate(-1);
+        }}
+      />
+      <div className={styles.ContentContainer}>
+        <TitleBox />
+        <ColorBox />
+        <TimeBox />
+        <LocationBox lat={lat} lng={lng} location={locationAddress} name={locationName} />
+        <MemberBox groupId={groupId} />
+        <NoteBox />
+      </div>
+      <div className={styles.ButtonBox}>
+        <DefaultButton buttonText="완료" onClick={handleButtonClick} />
+      </div>
+    </div>
+  );
+};
+
+export default CreateSchedulePage;

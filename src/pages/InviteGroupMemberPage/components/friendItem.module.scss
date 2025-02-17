@@ -17,6 +17,16 @@
       align-items: center;
       justify-content: center;
     }
+    .friendInfoSection {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 2px;
+      .friendId {
+        font-size: 11px;
+        color: #767676;
+      }
+    }
   }
   .rightSection {
     display: flex;

@@ -1,118 +1,122 @@
-import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./groupPage.module.scss";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GroupOptions from "../components/GroupOptions";
 import { useNavigate, useParams } from "react-router-dom";
 import TodayScheduleList from "../components/TodayScheduleList";
-import BottomNavBar from "@components/nav-bar/BottomNavBar";
 import GroupScheduleCalendar from "../components/GroupScheduleCalendar";
+import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
+import { useGetGroupTodaySchedules } from "@api/group/getGroupTodaySchedules";
+import useAuthStore from "@store/useAuthStore";
+import { endOfMonth, endOfWeek, startOfMonth, startOfWeek, format } from "date-fns";
+import { useGetGroupCalendarSchedules } from "@api/group/getGroupCalendarSchedules";
+import { usePatchGroupPin } from "@api/group/patchGroupPin";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetGroupDetails } from "@api/group/getGroupDetail";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 
-const todayScheduleList: ITodaySchedulesType[] = [
-  {
-    id: 1,
-    title: "수현이 생일파티",
-    startDateTime: "오후 7시",
-    location: "홍대입구역 2번 출구",
-  },
-  {
-    id: 2,
-    title: "수현이 생일파티",
-    startDateTime: "오후 8시",
-    location: "강원대 후문",
-  },
-];
-
-const groupSchedules: IGroupSchedulesType[] = [
-  {
-    id: 5,
-    title: "술약",
-    startDateTime: "2025-01-20",
-    endDateTime: "2025-01-23",
-    color: "#ec8ae3",
-  },
-  {
-    id: 8,
-    title: "01박 2일 제주도 여행",
-    startDateTime: "2025-01-201",
-    endDateTime: "2025-01-22",
-    color: "#55FFFF",
-  },
-  {
-    id: 3,
-    title: "수현이 생일파티 겸 노는 날",
-    startDateTime: "2025-01-22",
-    endDateTime: "2025-01-25",
-    color: "#56e246",
-  },
-  {
-    id: 4,
-    title: "보드",
-    startDateTime: "2025-01-26",
-    endDateTime: "2025-01-29",
-    color: "#f8a283dd",
-  },
-  {
-    id: 5,
-    title: "동해갑니다",
-    startDateTime: "2025-01-03",
-    endDateTime: "2025-01-06",
-    color: "#6d9ceeee",
-  },
-];
-
 const GroupPage = () => {
   const navigate = useNavigate();
-  const [groupInfo, setGroupInfo] = useState({
-    name: "춘천팟",
-    id: 1,
-    isBookMark: true,
-  });
+  const currentDate = new Date();
+  const monthStart = startOfMonth(currentDate); // 현재 달의 시작 날짜 (요일 포함)
+  const monthEnd = endOfMonth(currentDate); // 현재 달의 마지막 날짜 (요일 포함)
+  const startDate = startOfWeek(monthStart); // 달력에 표시될 현재 달의 시작 날짜가 포함된 주의 시작 날짜
+  const endDate = endOfWeek(monthEnd); // 달력에 표시될 현재 달의 마지막 날짜가 포함된 주의 끝 날짜
+  const { accessToken } = useAuthStore.getState();
   const { groupId } = useParams<{ groupId: string }>();
+  const { data: groupDetails } = useGetGroupDetails(groupId!, accessToken);
+  const { data: groupTodaySchedules } = useGetGroupTodaySchedules(groupId!, accessToken);
+  const { data: groupCalendarSchedules } = useGetGroupCalendarSchedules(
+    groupId!,
+    accessToken,
+    format(startDate, "yyyy-MM-dd"),
+    format(endDate, "yyyy-MM-dd"),
+  );
+  const [optimisticGroupDetails, setOptimisticGroupDetails] = useState<IGroupInfoType>();
+  const { mutate: patchGroupPin } = usePatchGroupPin(accessToken);
+  const queryClient = useQueryClient();
 
-  const handleBookMarkClick = () => {
-    // api 연동 로직 작성해야함
-    setGroupInfo((prevGroupInfo) => ({
-      ...prevGroupInfo,
-      isBookMark: !prevGroupInfo.isBookMark,
+  useEffect(() => {
+    if (groupDetails) {
+      setOptimisticGroupDetails(groupDetails.groupInfo);
+    }
+  }, [groupDetails]);
+
+  const handlePinClick = () => {
+    if (!optimisticGroupDetails) {
+      return;
+    }
+    const previousIsPin = optimisticGroupDetails.isPin;
+    setOptimisticGroupDetails((prev) => ({
+      ...prev!,
+      isPin: !prev?.isPin,
     }));
+    patchGroupPin(groupId!, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: ["GROUP_DETAILS"],
+        });
+      },
+      onError: (error) => {
+        setOptimisticGroupDetails((prev) => ({
+          ...prev!,
+          isPin: previousIsPin,
+        }));
+        alert(error.message);
+      },
+    });
   };
 
   const handleCreateSchedule = () => {
-    navigate(`/group/${groupInfo.id}/calendar/createSchedule`);
+    navigate(`/createSchedule/${groupId}`);
   };
 
   const handleCalendarClick = () => {
-    navigate(`/group/${groupInfo.id}/groupCalendar`);
-  }
+    navigate(`/group/${groupId}/groupCalendar`);
+  };
 
   return (
     <div className={styles.mainContainer}>
-      <HasOnlyRightIconHeader
-        title={groupInfo.name}
-        rightType="star"
-        isBookmark={groupInfo.isBookMark}
-        groupId={groupInfo.id}
-        handleClick={handleBookMarkClick}
-      />
-      <div className={styles.contentContainer}>
-        <div className={styles.iconSection}>
-          {iconOptionsTitle.map((title) => (
-            <GroupOptions title={title} groupId={groupId!} key={title} />
-          ))}
-        </div>
-        <div className={styles.buttonSection} onClick={handleCreateSchedule}>
-          일정 생성하기
-        </div>
-        <div className={styles.todayScheduleList}>
-          <TodayScheduleList todayScheduleList={todayScheduleList} groupId={groupInfo.id} />
-        </div>
-        <div className={styles.groupCalendar}>
-          <GroupScheduleCalendar groupSchedules={groupSchedules} onClick={handleCalendarClick} />
-        </div>
-      </div>
-      <BottomNavBar />
+      {!optimisticGroupDetails ? (
+        <div className={styles.loading}>로딩중...</div>
+      ) : (
+        <>
+          <HasTwoIconHeader
+            backgroundColor="purple"
+            title={optimisticGroupDetails?.groupName}
+            rightType="star"
+            isPin={optimisticGroupDetails?.isPin}
+            groupId={Number(groupId!)}
+            handleLeftClick={() => navigate(-1)}
+            handleRightClick={handlePinClick}
+          />
+          <div className={styles.contentContainer}>
+            <div className={styles.iconSection}>
+              {iconOptionsTitle.map((title) => (
+                <GroupOptions title={title} groupId={groupId!} key={title} />
+              ))}
+            </div>
+            <div className={styles.buttonSection} onClick={handleCreateSchedule}>
+              일정 생성하기
+            </div>
+            <div className={styles.todayScheduleList}>
+              <TodayScheduleList
+                todayScheduleList={groupTodaySchedules?.todaySchedules}
+                groupId={Number(groupId!)}
+              />
+            </div>
+            <div className={styles.groupCalendar}>
+              <GroupScheduleCalendar
+                groupSchedules={groupCalendarSchedules ? groupCalendarSchedules.groupSchedules : []}
+                onClick={handleCalendarClick}
+                currentDate={currentDate}
+                startDate={startDate}
+                endDate={endDate}
+              />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 };

@@ -1,47 +1,47 @@
+import { useGetFriendList } from "@api/friend/getFriendList";
+import { useGetReceiveFriendList } from "@api/friend/getReceiveFriendList";
+import { useGetRequestFriendList } from "@api/friend/getRequestFriendList";
+import { useGetUserInfo } from "@api/user/getUserInfo";
+import DefaultButton from "@components/buttons/DefaultButton";
+import useAuthStore from "@store/useAuthStore";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import FriendsTab from "../components/FriendsTab";
 import IDInput from "../components/IDInput";
 import MemberCard from "../components/MemberCard";
 import styles from "./friendManagementPage.module.scss";
-import DefaultButton from "@components/buttons/DefaultButton";
 
 const FriendManagementPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"친구목록" | "받은요청" | "보낸요청">("친구목록");
   const [isEditing, setIsEditing] = useState(false);
 
-  const friendsList = [
-    { name: "이수현", username: "shuding0307" },
-    { name: "최준혁", username: "_twinkle_high" },
-    { name: "이상준", username: "sang__00" },
-    { name: "이다은", username: "Euniii0713" },
-  ];
+  const { accessToken } = useAuthStore();
+  const { data: friendList } = useGetFriendList(accessToken, activeTab);
+  const { data: receivedFriendList } = useGetReceiveFriendList(accessToken, activeTab);
+  const { data: requestFriendList } = useGetRequestFriendList(accessToken, activeTab);
+  const { data: userInfo } = useGetUserInfo(accessToken);
 
-  const receivedFriendsList = [
-    { name: "이다은", username: "Euniii0713" },
-    { name: "김도하", username: "ehgk4245" },
-  ];
-
-  const sentFriendsList = [
-    { name: "정재호", username: "purify_0kcal" },
-    { name: "이수현", username: "shuding0307" },
-  ];
-
+  const navigate = useNavigate();
   const handleEditToggle = () => {
     setIsEditing((prev) => !prev);
   };
-
   return (
     <div className={styles.friendManagementPage}>
-      <HasOnlyBackArrowHeader title="친구 관리" handleClick={() => {}} />
+      <HasOnlyBackArrowHeader
+        title="친구 관리"
+        handleClick={() => {
+          navigate(-1);
+        }}
+      />
 
       <div className={styles.idInput}>
-        <IDInput />
+        <IDInput setActiveTab={setActiveTab} />
       </div>
 
       <div className={styles.myIdInfo}>
         <span>내 아이디</span>
-        <span>Euniii0713</span>
+        <span>{userInfo?.username}</span>
       </div>
 
       <FriendsTab activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -49,7 +49,7 @@ const FriendManagementPage: React.FC = () => {
       <div className={styles.tabContent}>
         {activeTab === "친구목록" && (
           <div className={styles.friendList}>
-            {friendsList.map((friend, index) => (
+            {friendList?.friends.map((friend, index) => (
               <MemberCard
                 key={index}
                 memberInfo={friend}
@@ -61,14 +61,14 @@ const FriendManagementPage: React.FC = () => {
         )}
         {activeTab === "받은요청" && (
           <div className={styles.friendList}>
-            {receivedFriendsList.map((friend, index) => (
+            {receivedFriendList?.friends.map((friend, index) => (
               <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
             ))}
           </div>
         )}
         {activeTab === "보낸요청" && (
           <div className={styles.friendList}>
-            {sentFriendsList.map((friend, index) => (
+            {requestFriendList?.friends.map((friend, index) => (
               <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
             ))}
           </div>

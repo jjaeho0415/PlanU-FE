@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 const deleteGroup = async (authorization: string, groupId: number) => {
-  const response = await api.put<IResponseType>({
+  const response = await api.delete<IResponseType>({
     endpoint: `${apiRoutes.deleteGroup}/${groupId}`,
     authorization,
   });

@@ -24,8 +24,13 @@
   }
 
   .InfoBox {
-    .GroupName {
-      font-size: 17px;
+    .groupNameSection {
+      display: flex;
+      gap: 5px;
+      align-items: center;
+      .GroupName {
+        font-size: 17px;
+      }
     }
 
     .MembersNum {

@@ -30,7 +30,6 @@ const MyCalendarPage: React.FC = () => {
 
   useEffect(() => {
     // selectedDate의 값이 변할때마다 해당 날짜 일정 조회하는 api 호출
-    console.log(selectedDate);
   }, [selectedDate]);
 
   return (
@@ -48,7 +47,12 @@ const MyCalendarPage: React.FC = () => {
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
             <h1 className={styles.scheduleHeader}>1월 16일 (목)</h1>
-            <EditIcon className={styles.editIcon} />
+            <EditIcon
+              className={styles.editIcon}
+              onClick={() => {
+                navigate("/createSchedule/my");
+              }}
+            />
           </div>
           <div className={styles.subText}>나의 스케줄</div>
           <EventCard

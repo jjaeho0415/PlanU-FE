@@ -13,11 +13,11 @@ import cat from "@assets/images/cat.jpg";
 import OnlyTextHeader from "./OnlyTextHeader";
 
 function Headers() {
-  const [isBookMark, setIsBookmark] = useState<boolean>(false);
+  const [isPin, setisPin] = useState<boolean>(false);
   const [searchText, setSearchText] = useState<string>("");
 
   const handleClick = () => {
-    setIsBookmark(!isBookMark);
+    setisPin(!isPin);
   };
   return (
     <div className={styles.mainContainer}>
@@ -248,12 +248,7 @@ function Headers() {
               return;
             }}
           />
-          <HasOnlyRightIconHeader
-            title="춘천팟"
-            rightType="star"
-            handleClick={handleClick}
-            isBookmark={isBookMark}
-          />
+          <HasOnlyRightIconHeader title="춘천팟" rightType="star" handleClick={handleClick} />
           <HasOnlyRightIconHeader
             title="새로운 일정"
             rightType="x"
