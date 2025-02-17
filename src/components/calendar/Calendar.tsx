@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { JSX, useState } from "react";
 import {
   addMonths,
   subMonths,
@@ -23,9 +23,11 @@ interface Props {
   type: "view" | "myPossible" | "groupPossible";
   availableDates?: string[];
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
-  scheduleData: IGetScheduleType[];
+  scheduleData: IGroupScheduleType[] | undefined;
   groupAvailableDates?: IGetGroupPossibleScheduleType[];
   setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
+  currentMonth: Date;
+  setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
 }
 
 const Calendar: React.FC<Props> = ({
@@ -35,8 +37,9 @@ const Calendar: React.FC<Props> = ({
   scheduleData,
   groupAvailableDates,
   setSelectedDate,
+  currentMonth,
+  setCurrentMonth
 }) => {
-  const [currentMonth, setCurrentMonth] = useState(new Date());
 
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => subMonths(prev, 1));
@@ -93,7 +96,7 @@ const Calendar: React.FC<Props> = ({
         const isToday = isSameDay(day, new Date());
         const isNotCurrentMonth = !isSameMonth(day, currentMonth);
         const formattedDate = format(day, "yyyy-MM-dd");
-        const schedule = scheduleData.find((item) => item.date === formattedDate);
+        const schedule = scheduleData?.find((item) => item.date === formattedDate);
         const isAvailable = availableDates?.includes(formattedDate);
         const groupAvailableDate = groupAvailableDates?.find((item) => item.date === formattedDate);
 

@@ -45,3 +45,14 @@ type IScheduleItemType = {
   id: number;
   color: string;
 }
+
+// 그룹 달력 일정 유무 조회 api - 그룹 달력 페이지
+type IGetGroupCalendarCheckEventsResponseBodyType = {
+  groupScheduleData: IGroupScheduleType[]
+}
+
+type IGroupScheduleType = {
+  date: string;
+  isSchedule: boolean;
+  isBirthday: boolean;
+};
