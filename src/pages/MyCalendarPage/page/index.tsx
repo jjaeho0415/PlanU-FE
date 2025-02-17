@@ -65,6 +65,7 @@ const scheduleList: IGetScheduleListResponseBodyType = {
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState<string>("");
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date())
 
   const handleMiniCalendarClick = () => {
     navigate("/myCalendarPossible");
@@ -84,7 +85,7 @@ const MyCalendarPage: React.FC = () => {
 
       <div className={styles.content}>
         <div className={styles.calendarSection}>
-          <Calendar type="view" scheduleData={scheduleData} setSelectedDate={setSelectedDate} />
+          <Calendar type="view" scheduleData={scheduleData} setSelectedDate={setSelectedDate} currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} />
         </div>
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>

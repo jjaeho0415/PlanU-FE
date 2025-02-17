@@ -1,8 +1,4 @@
-type IGetScheduleType = {
-  date: string;
-  isSchedule: boolean;
-  isBirthday: boolean;
-};
+
 
 type IGetGroupPossibleScheduleType = {
   date: string;
