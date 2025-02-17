@@ -25,6 +25,13 @@ const apiRoutes = {
   friend: "/users/friends",
   showReceiveFriendList: "/users/friends/receive",
   showRequestFriendList: "/users/friends/request",
+<<<<<<< Updated upstream
+=======
+  //스케줄 관련
+  shedules: "/schedules",
+  //채팅 관련
+  chatRoomsList: "/chats",
+>>>>>>> Stashed changes
 };
 
 export default apiRoutes;
