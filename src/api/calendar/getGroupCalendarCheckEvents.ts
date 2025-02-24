@@ -22,6 +22,6 @@ export const useGetGroupCalendarCheckEvents = (
   return useQuery({
     queryKey: ["GROUP_CHECK_EVENTS", groupId, yearMonth],
     queryFn: () => getGroupCalendarCheckEvents(groupId, yearMonth, authorization),
-    enabled: groupId !== undefined && authorization !== null,
+    enabled: groupId !== undefined && authorization !== "",
   });
 };

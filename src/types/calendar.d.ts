@@ -34,7 +34,7 @@ type IPostCreateMyScheduleType = {
 type IGetScheduleListResponseBodyType = {
   schedules: IGroupScheduleItemType[];
   birthdayPerson: string[];
-}
+};
 
 type IScheduleItemType = {
   title: string;
@@ -44,12 +44,12 @@ type IScheduleItemType = {
   groupId: string;
   id: number;
   color: string;
-}
+};
 
 // 그룹 달력 일정 유무 조회 api - 그룹 달력 페이지
 type IGetGroupCalendarCheckEventsResponseBodyType = {
-  groupScheduleData: IGroupScheduleType[]
-}
+  groupScheduleData: IGroupScheduleType[];
+};
 
 type IGroupScheduleType = {
   date: string;
@@ -57,12 +57,48 @@ type IGroupScheduleType = {
   isBirthday: boolean;
 };
 
-// 그룹 달력 - 가능한 날짜 조회 Api
-type IGetGroupPossibleScheduleResponseBodyType = {
-  availableDateRatios: IGroupPossibleScheduleItemType[]
+// 그룹 달력 - 가능한 날짜 조회 api
+type IGetGroupAvailableDatesCalendarResponseBodyType = {
+  availableDateRatios: IGroupPossibleScheduleItemType[];
 };
 
-type IGroupPossibleScheduleItemType = {
+type IGroupAvailableDatesCalendarItemType = {
   date: string;
   ratio: number;
-}
+};
+
+// 그룹 달력 - 가능한 날짜(해당 날짜 가능한 멤버 리스트) api
+type IGetGroupAvailableDatesMemberListResponseBodyType = {
+  availableMembers: string[];
+};
+
+// 그룹 달력 - 가능한 날짜(멤버별) api
+type IGetGroupAvailableDatesMemberInfosResponseBodyType = {
+  availableMemberInfos: IGroupAvailableDatesMemberInfoItemType[];
+};
+
+type IGroupAvailableDatesMemberInfoItemType = {
+  memberName: string;
+  profileImage: string;
+  availableDates: string[];
+};
+
+// 그룹 달력 - 가능한 날짜(날짜별) api
+type IGetGroupAvailableDatesDateInfoResponseBodyType = {
+  availableDateInfos: IGroupAvailableDatesDateInfoItemType[];
+};
+
+type IGroupAvailableDatesDateInfoItemType = {
+  availableDate: string;
+  memberNames: string[];
+};
+
+// 그룹 달력 - 가능한 날짜(순위) api
+type IGetGroupAvailableDatesRanksResponseBodyType = {
+  availableDateRanks: IGroupAvailableDatesRankItemType[];
+};
+
+type IGroupAvailableDatesRankItemType = {
+  ranks: number;
+  date: string;
+};

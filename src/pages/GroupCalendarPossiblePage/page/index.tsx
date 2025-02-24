@@ -10,7 +10,7 @@ import { useGetGroupCalendarCheckEvents } from "@api/calendar/getGroupCalendarCh
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
 
-const GroupAvailableData: IGetGroupPossibleScheduleResponseBodyType = {
+const GroupAvailableData: IGetGroupAvailableDatesCalendarResponseBodyType = {
   availableDateRatios: [
     { date: "2025-02-01", ratio: 15.3333 },
     {
@@ -34,7 +34,7 @@ const GroupCalendarPossiblePage: React.FC = () => {
   const { accessToken } = useAuthStore();
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
-   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
+  const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
 
   const { data: groupCheckEvents } = useGetGroupCalendarCheckEvents(
     groupId!,
@@ -44,7 +44,7 @@ const GroupCalendarPossiblePage: React.FC = () => {
 
   useEffect(() => {
     console.log(selectedDate);
-  }, [selectedDate])
+  }, [selectedDate]);
 
   return (
     <div className={styles.Container}>

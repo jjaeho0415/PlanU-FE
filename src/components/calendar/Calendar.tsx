@@ -24,7 +24,7 @@ interface Props {
   availableDates?: string[];
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
   scheduleData: IGroupScheduleType[] | undefined;
-  groupAvailableDates?: IGroupPossibleScheduleItemType[];
+  groupAvailableDates?: IGroupAvailableDatesCalendarItemType[];
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   currentMonth: Date;
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
