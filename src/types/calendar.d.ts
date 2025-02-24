@@ -56,3 +56,13 @@ type IGroupScheduleType = {
   isSchedule: boolean;
   isBirthday: boolean;
 };
+
+// 그룹 달력 - 가능한 날짜 조회 Api
+type IGetGroupPossibleScheduleResponseBodyType = {
+  availableDateRatios: IGroupPossibleScheduleItemType[]
+};
+
+type IGroupPossibleScheduleItemType = {
+  date: string;
+  ratio: number;
+}
