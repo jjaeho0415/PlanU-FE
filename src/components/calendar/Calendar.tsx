@@ -1,4 +1,4 @@
-import React, { JSX, useState } from "react";
+import React, { JSX } from "react";
 import {
   addMonths,
   subMonths,
@@ -24,8 +24,8 @@ interface Props {
   availableDates?: string[];
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
   scheduleData: IGroupScheduleType[] | undefined;
-  groupAvailableDates?: IGetGroupPossibleScheduleType[];
-  setSelectedDate?: React.Dispatch<React.SetStateAction<string>>;
+  groupAvailableDates?: IGroupPossibleScheduleItemType[];
+  setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   currentMonth: Date;
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
 }
@@ -38,9 +38,8 @@ const Calendar: React.FC<Props> = ({
   groupAvailableDates,
   setSelectedDate,
   currentMonth,
-  setCurrentMonth
+  setCurrentMonth,
 }) => {
-
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => subMonths(prev, 1));
   };
@@ -78,7 +77,7 @@ const Calendar: React.FC<Props> = ({
     const handleDateClick = (date: string) => {
       const today = startOfDay(new Date());
       const selectedDate = startOfDay(new Date(date));
-      type === "view" && setSelectedDate!(date);
+      setSelectedDate(date);
 
       if (type === "myPossible" && !isAfter(today, selectedDate)) {
         setAvailableDates!((prev) => {
@@ -104,14 +103,14 @@ const Calendar: React.FC<Props> = ({
         if (type === "myPossible" && isAvailable) {
           backgroundColor = "#C9ACE7";
         } else if (type === "groupPossible" && groupAvailableDate) {
-          const possibleRatio = groupAvailableDate.possibleRatio;
-          if (possibleRatio >= 0 && possibleRatio <= 25) {
+          const possibleRatio = groupAvailableDate.ratio;
+          if (possibleRatio > 0 && possibleRatio <= 25) {
             backgroundColor = "var(--people-50)";
-          } else if (possibleRatio >= 26 && possibleRatio <= 50) {
+          } else if (possibleRatio > 25 && possibleRatio <= 50) {
             backgroundColor = "var(--people-100)";
-          } else if (possibleRatio >= 51 && possibleRatio <= 75) {
+          } else if (possibleRatio > 50 && possibleRatio <= 75) {
             backgroundColor = "var(--people-200)";
-          } else if (possibleRatio >= 76 && possibleRatio <= 100) {
+          } else if (possibleRatio > 75 && possibleRatio <= 100) {
             backgroundColor = "var(--people-300)";
           }
         } else if (isToday) {
@@ -122,6 +121,7 @@ const Calendar: React.FC<Props> = ({
         const isSunday = format(day, "i") === "7";
         const isClickable =
           type === "myPossible" && !isAfter(startOfDay(new Date()), startOfDay(day));
+        const isGroupClickable = type === "groupPossible";
 
         days.push(
           <div
@@ -129,7 +129,7 @@ const Calendar: React.FC<Props> = ({
             className={styles.dateCell}
             onClick={() => handleDateClick(formattedDate)}
             style={{
-              cursor: isClickable ? "pointer" : "default",
+              cursor: isClickable || isGroupClickable ? "pointer" : "default",
               color: isNotCurrentMonth ? "#767676" : isSunday || isHoliday ? "#FF0101" : "#111111",
               backgroundColor,
               borderRadius: isToday || isAvailable || groupAvailableDate ? "50%" : "0",
