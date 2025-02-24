@@ -1,16 +1,3 @@
-type IGetResponseGroupDetailType = {
-  groupName: string;
-  todaySchedules: ITodaySchedulesType[];
-  groupSchedules: IGroupSchedulesType[];
-};
-
-type IGetFriendMemberType = {
-  profileImage: string;
-  name: string;
-  username: string;
-  status: "PROGRESS" | "NONE";
-}
-
 type IGetScheduleType = {
   date: string;
   isSchedule: boolean;

@@ -13,16 +13,58 @@ interface IGetScheduleType {
   isBirthday: boolean;
 }
 
+const scheduleData: IGetScheduleType[] = [
+  { date: "2025-01-04", isSchedule: true, isBirthday: false },
+  { date: "2025-01-13", isSchedule: false, isBirthday: true },
+  { date: "2025-01-16", isSchedule: true, isBirthday: true },
+  { date: "2025-01-26", isSchedule: true, isBirthday: false },
+];
+
+const scheduleList: IGetScheduleListResponseBodyType = {
+  schedules: [
+    {
+      id: 1,
+      groupId: 1,
+      title: "Weekly Meeting",
+      location: "Library Room A",
+      startTime: "10:00",
+      endTime: "12:00",
+      color: "#FF5733",
+    },
+    {
+      id: 1,
+      groupId: null,
+      title: "회의 일정",
+      location: "강원 춘천시 백령로 51",
+      startTime: "10:00",
+      endTime: "12:59",
+      color: "#FFA500",
+    },
+    {
+      id: 2,
+      groupId: null,
+      title: "프로젝트 회의",
+      location: "강원 춘천시 백령로 51",
+      startTime: "13:00",
+      endTime: "15:59",
+      color: "#FFA500",
+    },
+    {
+      id: 2,
+      groupId: 1,
+      title: "Project Discussion",
+      location: "Conference Room B",
+      startTime: "14:00",
+      endTime: "15:30",
+      color: "#33FF57",
+    },
+  ],
+  birthdayPerson: ["최준혁", "김도하"],
+};
+
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
   const [selectedDate, setSelectedDate] = useState<string>("");
-
-  const scheduleData: IGetScheduleType[] = [
-    { date: "2025-01-04", isSchedule: true, isBirthday: false },
-    { date: "2025-01-13", isSchedule: false, isBirthday: true },
-    { date: "2025-01-16", isSchedule: true, isBirthday: true },
-    { date: "2025-01-26", isSchedule: true, isBirthday: false },
-  ];
 
   const handleMiniCalendarClick = () => {
     navigate("/myCalendarPossible");
@@ -33,7 +75,7 @@ const MyCalendarPage: React.FC = () => {
   }, [selectedDate]);
 
   return (
-    <div className={styles.page}>
+    <div className={styles.Container}>
       <CalendarHeader
         title="나의 달력"
         type="my"
@@ -55,11 +97,11 @@ const MyCalendarPage: React.FC = () => {
             />
           </div>
           <div className={styles.subText}>나의 스케줄</div>
-          <EventCard
-            time="19:00 ~ 20:00"
-            title="수현이의 생일파티"
-            location="홍대입구역 2번 출구 앞"
-          />
+          <div className={styles.cardSection}>
+            {scheduleList.schedules.map((scheduleItem) => (
+              <EventCard scheduleItem={scheduleItem} />
+            ))}
+          </div>
         </div>
       </div>
       <Footer />

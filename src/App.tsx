@@ -47,9 +47,9 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/registerAccount" element={<RegisterAccountPage />} />
             <Route path="/myCalendar" element={<MyCalendarPage />} />
-            <Route path="/myCalendarPossible" element={<MyCalendarPossiblePage />} />
+            <Route path="/myCalendar/possible" element={<MyCalendarPossiblePage />} />
             <Route path="/group/:groupId/groupCalendar" element={<GroupCalendarPage />} />
-            <Route path="/groupCalendarPossible" element={<GroupCalendarPossiblePage />} />
+            <Route path="/group/:groupId/groupCalendar/possible" element={<GroupCalendarPossiblePage />} />
             <Route path="/chatList" element={<ChatListPage />} />
             <Route path="/chatList/search" element={<ChatListSearchPage />} />
             <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
