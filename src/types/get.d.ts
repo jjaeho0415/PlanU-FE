@@ -1,10 +1,3 @@
-
-
-type IGetGroupPossibleScheduleType = {
-  date: string;
-  possibleRatio: number;
-};
-
 //가능한 날짜
 type IGetAvailableMemberInfoType = {
   memberName: string;
