@@ -20,8 +20,8 @@ export const useGetGroupCalendarSchedules = (
   yearMonth: string,
 ) => {
   return useQuery({
-    queryKey: ["GROUP_CALENDAR_SCHEDULES"],
+    queryKey: ["GROUP_CALENDAR_SCHEDULES", groupId],
     queryFn: () => getGroupCalendarSchedules(groupId, authorization, yearMonth),
-    enabled: authorization !== null,
+    enabled: groupId !== undefined && authorization !== "",
   });
 };
