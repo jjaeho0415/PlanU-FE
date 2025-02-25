@@ -4,7 +4,7 @@ import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import styles from "./groupCalendarPossible.module.scss";
 import TabComponent from "../components/TabComponent";
 import PossibleMember from "../components/PossibleMember";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useAuthStore from "@store/useAuthStore";
 import { useGetGroupCalendarCheckEvents } from "@api/calendar/getGroupCalendarCheckEvents";
 import { format } from "date-fns";
@@ -35,6 +35,7 @@ const GroupCalendarPossiblePage: React.FC = () => {
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
+  const navigate = useNavigate();
 
   const { data: groupCheckEvents } = useGetGroupCalendarCheckEvents(
     groupId!,
@@ -51,7 +52,7 @@ const GroupCalendarPossiblePage: React.FC = () => {
       <CalendarHeader
         title="가능한 날짜 보기"
         handleClick={() => {
-          return;
+          navigate(-1)
         }}
       />
       <div className={styles.ContentContainer}>

@@ -10,6 +10,7 @@ import { useGetGroupCalendarCheckEvents } from "@api/calendar/getGroupCalendarCh
 import { format } from "date-fns";
 import { useGetGroupScheduleList } from "@api/calendar/getGroupScheduleList";
 import { ko } from "date-fns/locale";
+import BirthdayCard from "@components/calendarPage/BirthdayCard";
 
 const GroupCalendarPage: React.FC = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const GroupCalendarPage: React.FC = () => {
     accessToken,
   );
 
-  const { data: groupScheduleList } = useGetGroupScheduleList(groupId!, accessToken, selectedDate)
+  const { data: groupScheduleList } = useGetGroupScheduleList(groupId!, accessToken, selectedDate);
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
 
   const handleBackArrowClick = () => {
@@ -48,7 +49,13 @@ const GroupCalendarPage: React.FC = () => {
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
       <div className={styles.calendarSection}>
-        <Calendar type="view" scheduleData={groupCheckEvents?.groupScheduleData} currentMonth={currentMonth} setCurrentMonth={setCurrentMonth} setSelectedDate={setSelectedDate} />
+        <Calendar
+          type="view"
+          scheduleData={groupCheckEvents?.groupScheduleData}
+          currentMonth={currentMonth}
+          setCurrentMonth={setCurrentMonth}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
       <div className={styles.content}>
         <div className={styles.scheduleSection}>
@@ -57,9 +64,25 @@ const GroupCalendarPage: React.FC = () => {
             <EditIcon className={styles.editIcon} onClick={handleGoCreateGroupSchedule} />
           </div>
           <div className={styles.cardSection}>
-            {groupScheduleList?.schedules.map((scheduleItem) => (
-              <EventCard scheduleItem={scheduleItem} />
-            ))}
+            {groupScheduleList?.schedules.length === 0 &&
+            groupScheduleList?.birthdayPerson.length === 0 ? (
+              <div className={styles.noEventCardSection}>일정이 없습니다.</div>
+            ) : (
+              groupScheduleList && (
+                <>
+                  {groupScheduleList.birthdayPerson.map((birthdayName) => (
+                    <BirthdayCard birthdayName={birthdayName} key={birthdayName} />
+                  ))}
+                  {groupScheduleList.schedules.map((scheduleItem) => (
+                    <EventCard
+                      scheduleItem={scheduleItem}
+                      key={scheduleItem.id}
+                      groupId={groupId}
+                    />
+                  ))}
+                </>
+              )
+            )}
           </div>
         </div>
       </div>
