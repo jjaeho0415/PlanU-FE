@@ -23,7 +23,7 @@ const ReverseGeocoding = (userLatLng: UserLatLngType): Promise<string> => {
 // 지오코딩 : 주소를 이용해 위도 경도로 변환
 const Geocoding = (address: string): Promise<{ userLat: number; userLng: number }> => {
   return new Promise(async (resolve, reject) => {
-     await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
+    
     const geocoder = new google.maps.Geocoder();
     geocoder.geocode({ address: address }, (results: google.maps.GeocoderResult[] | null) => {
       if (results !== null) {
