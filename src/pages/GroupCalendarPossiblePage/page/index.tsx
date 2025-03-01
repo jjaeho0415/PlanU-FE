@@ -52,7 +52,7 @@ const GroupCalendarPossiblePage: React.FC = () => {
       <CalendarHeader
         title="가능한 날짜 보기"
         handleClick={() => {
-          navigate(-1)
+          navigate(-1);
         }}
       />
       <div className={styles.ContentContainer}>
@@ -67,7 +67,16 @@ const GroupCalendarPossiblePage: React.FC = () => {
         <div className={styles.InfoBox}>
           <p className={styles.Date}>{formattedDate}</p>
           <PossibleMember
-            possibleMembers={["이수현", "이다은", "정재호", "최준혁", "이상준", "김도하"]}
+            possibleMembers={[
+              "이수현",
+              "이다은",
+              "정재호",
+              "최준준혁",
+              "정재호",
+              "최준혁",
+              "정재호",
+              "최준혁",
+            ]}
           />
         </div>
         <div className={styles.TabBox}>

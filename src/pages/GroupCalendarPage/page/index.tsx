@@ -70,8 +70,8 @@ const GroupCalendarPage: React.FC = () => {
             ) : (
               groupScheduleList && (
                 <>
-                  {groupScheduleList.birthdayPerson.map((birthdayName) => (
-                    <BirthdayCard birthdayName={birthdayName} key={birthdayName} />
+                  {groupScheduleList.birthdayPerson.map((birthdayName, index) => (
+                    <BirthdayCard birthdayName={birthdayName} key={birthdayName + index} />
                   ))}
                   {groupScheduleList.schedules.map((scheduleItem) => (
                     <EventCard

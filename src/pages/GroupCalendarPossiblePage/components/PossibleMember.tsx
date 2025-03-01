@@ -8,7 +8,10 @@ interface props {
 const PossibleMember: React.FC<props> = ({ possibleMembers }) => {
   return (
     <div className={styles.Container}>
-      <div className={styles.TitleBox}>가능한 멤버</div>
+      <div className={styles.TitleBox}>
+        가능한 멤버
+      </div>
+      <div className={styles.line}/>
       <div className={styles.MemberBox}>
         {possibleMembers.map((member, index) => (
           <p key={index} className={styles.TextMembers}>
