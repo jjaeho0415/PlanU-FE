@@ -12,7 +12,8 @@ const getGroupDetails = async (groupId: string, authorization: string) => {
 
 export const useGetGroupDetails = (groupId: string, authorization: string) => {
   return useQuery({
-    queryKey: ["GROUP_DETAILS"],
+    queryKey: ["GROUP_DETAILS", groupId],
     queryFn: () => getGroupDetails(groupId, authorization),
+    enabled: groupId !== undefined && authorization !== "",
   });
 };

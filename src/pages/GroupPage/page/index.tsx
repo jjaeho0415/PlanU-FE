@@ -86,7 +86,7 @@ const GroupPage = () => {
             rightType="star"
             isPin={optimisticGroupDetails?.isPin}
             groupId={Number(groupId!)}
-            handleLeftClick={() => navigate(-1)}
+            handleLeftClick={() => navigate("/groupList")}
             handleRightClick={handlePinClick}
           />
           <div className={styles.contentContainer}>
