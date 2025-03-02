@@ -12,8 +12,8 @@ const getGroupTodaySchedules = async (groupId: string, authorization: string) =>
 
 export const useGetGroupTodaySchedules = (groupId: string, authorization: string) => {
   return useQuery({
-    queryKey: ["GROUP_TODAY_SCHEDULES"],
+    queryKey: ["GROUP_TODAY_SCHEDULES", groupId],
     queryFn: () => getGroupTodaySchedules(groupId, authorization),
-    enabled: authorization !== null,
+    enabled: groupId !== undefined && authorization !== "",
   });
 };

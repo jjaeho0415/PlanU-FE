@@ -25,6 +25,6 @@ export const useGetGroupMemberInviteList = (
   return useQuery({
     queryKey: ["GROUP_MEMBER_INVITE_LIST"],
     queryFn: () => getGroupMemberInviteList(groupId, authorization, searchInput),
-    enabled: authorization !== null,
+    enabled: groupId !== undefined && authorization !== "",
   });
 };

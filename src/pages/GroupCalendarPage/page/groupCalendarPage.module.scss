@@ -2,17 +2,9 @@
   display: flex;
   flex-direction: column;
   height: 100vh;
-  overflow: hidden;
   background: var(--background-50);
-
-  .content {
-    flex: 1;
-    padding-bottom: 90px;
-    overflow-y: auto;
-  }
-  .content::-webkit-scrollbar {
-    display: none;
-  }
+  overflow: auto;
+  scrollbar-width: none;
 
   .calendarSection {
     display: flex;
@@ -22,26 +14,40 @@
     padding-bottom: 20px;
     border-radius: 0 0 30px 30px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 56px;
+    z-index: 10;
   }
+  .content {
+    flex: 1;
+    
+    .scheduleSection {
+      padding: 20px;
+      flex: 1;
 
-  .scheduleSection {
-    padding: 20px;
+      .scheduleHeaderContainer {
+        display: flex;
+        position: relative;
+        .scheduleHeader {
+          font-size: 18px;
+          font-weight: bold;
+        }
+        .editIcon {
+          width: 28px;
+          height: 28px;
+          cursor: pointer;
+          position: absolute;
+          right: 5px;
+          top: 9px;
+        }
+      }
 
-    .scheduleHeaderContainer {
-      display: flex;
-      position: relative;
-    }
-    .scheduleHeader {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .editIcon {
-      width: 28px;
-      height: 28px;
-      cursor: pointer;
-      position: absolute;
-      right: 5px;
-      top: 9px;
+      .cardSection {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+      }
     }
   }
 }
