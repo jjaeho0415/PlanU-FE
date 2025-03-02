@@ -3,7 +3,7 @@ import api from "@api/fetcher";
 import { useQuery } from "@tanstack/react-query";
 
 const getChatRoomList = async (authorization: string) => {
-  const response = await api.get<IGetGroupListResponseBodyType>({
+  const response = await api.get<IGetChatListType>({
     endpoint: apiRoutes.chatRoomsList,
     authorization,
   });

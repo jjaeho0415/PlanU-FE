@@ -1,5 +1,7 @@
 //채팅방 목록
-type chatRoomResponseDTO = {
+type IGetChatListType = { data: IChatRoomResponseType[] };
+
+type IChatRoomResponseType = {
   groupId: number;
   groupName: string;
   groupImageUrl: string;
