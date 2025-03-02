@@ -78,7 +78,7 @@ type IGetGroupAvailableDatesMemberInfosResponseBodyType = {
 };
 
 type IGroupAvailableDatesMemberInfoItemType = {
-  memberName: string;
+  name: string;
   profileImage: string;
   availableDates: string[];
 };
@@ -101,4 +101,5 @@ type IGetGroupAvailableDatesRanksResponseBodyType = {
 type IGroupAvailableDatesRankItemType = {
   ranks: number;
   date: string;
+  possibleMembersNum: number;
 };

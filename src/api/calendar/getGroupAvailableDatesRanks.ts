@@ -14,14 +14,15 @@ const getGroupAvailableDatesRanks = async (
   return response;
 };
 
-export const useGetGroupAvailableDatesMemberInfo = (
+export const useGetGroupAvailableDatesRanks = (
   groupId: string,
   authorization: string,
   yearMonth: string,
+  activeTab: "멤버별" | "날짜별" | "순위",
 ) => {
   return useQuery({
     queryKey: ["GROUP_AVAILABLE_DATES_RANKS", groupId, yearMonth],
     queryFn: () => getGroupAvailableDatesRanks(groupId, authorization, yearMonth),
-    enabled: groupId !== undefined && authorization !== "",
+    enabled: groupId !== undefined && authorization !== "" && activeTab === "순위",
   });
 };

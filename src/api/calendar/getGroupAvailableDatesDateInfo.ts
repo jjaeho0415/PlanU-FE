@@ -8,7 +8,7 @@ const getGroupAvailableDatesDateInfo = async (
   yearMonth: string,
 ) => {
   const response: IGetGroupAvailableDatesDateInfoResponseBodyType = await api.get({
-    endpoint: `${apiRoutes.group}/${groupId}/available-date/date-info?yearMonth=${yearMonth}`,
+    endpoint: `${apiRoutes.group}/${groupId}/available-dates/date-info?yearMonth=${yearMonth}`,
     authorization,
   });
   return response;
@@ -18,10 +18,11 @@ export const useGetGroupAvailableDatesDateInfo = (
   groupId: string,
   authorization: string,
   yearMonth: string,
+  activeTab: "멤버별" | "날짜별" | "순위",
 ) => {
   return useQuery({
     queryKey: ["GROUP_AVAILABLE_DATES_DATE_INFO", groupId, yearMonth],
     queryFn: () => getGroupAvailableDatesDateInfo(groupId, authorization, yearMonth),
-    enabled: groupId !== undefined && authorization !== "",
+    enabled: groupId !== undefined && authorization !== "" && activeTab === "날짜별"
   });
 };
