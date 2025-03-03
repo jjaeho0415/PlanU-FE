@@ -101,5 +101,5 @@ type IGetGroupAvailableDatesRanksResponseBodyType = {
 type IGroupAvailableDatesRankItemType = {
   ranks: number;
   date: string;
-  possibleMembersNum: number;
+  countOfAvailableMembers: number;
 };
