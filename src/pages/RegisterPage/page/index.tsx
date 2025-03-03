@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
 import { useGetCheckIdDuplication } from "@api/user/getCheckIdDuplication";
-import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode";
 import { usePostRegister } from "@api/user/posRegister";
 import {
   EMAIL_VALIDATION,
@@ -70,13 +70,12 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleSendCode = (email: string) => {
-    
     if (!email) {
       alert("이메일을 입력하세요");
       return;
     }
     sendCode(
-      { email, purpose: "register" },
+      { email, purpose: "REGISTER" },
       {
         onSuccess: () => {
           setIsSendedEmailCode(true);
@@ -186,7 +185,7 @@ const RegisterPage: React.FC = () => {
         handleConfirmCode({
           email: watch("email"),
           verificationCode: watch("code"),
-          purpose: "register",
+          purpose: "REGISTER",
         }),
     });
   }
