@@ -31,7 +31,7 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import EditProfilePage from "@pages/EditProfilePage/page";
 import EditSchedulePage from "@pages/EditSchedulePage/page";
 import CreateSchedulePage from "@pages/CreateSchedulePage/page";
-import AlertPage from "@pages/AlertPage/page";
+import NotificationPage from "@pages/NotificationPage/page";
 
 function App() {
   return (
@@ -47,7 +47,7 @@ function App() {
           </Route>
           <Route element={<ProtectedRoute />}>
             <Route path="/registerAccount" element={<RegisterAccountPage />} />
-            <Route path="/alert" element={<AlertPage />} />
+            <Route path="/notificationList" element={<NotificationPage />} />
             <Route path="/myCalendar" element={<MyCalendarPage />} />
             <Route path="/myCalendar/possible" element={<MyCalendarPossiblePage />} />
             <Route path="/group/:groupId/groupCalendar" element={<GroupCalendarPage />} />

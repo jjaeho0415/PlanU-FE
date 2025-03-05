@@ -70,7 +70,7 @@ const ChatListPage: React.FC = () => {
     navigate("/chatList/search");
   };
   const handleAlertClick = () => {
-    navigate("/alert");
+    navigate("/notificationList");
   };
 
   return (

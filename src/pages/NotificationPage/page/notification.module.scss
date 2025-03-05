@@ -2,4 +2,7 @@
     width: 100%;
     height: 100vh;
     background-color: var(--background-50);
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
