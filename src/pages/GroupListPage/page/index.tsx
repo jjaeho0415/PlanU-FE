@@ -39,7 +39,7 @@ const GroupListPage: React.FC = () => {
         title="planU"
         rightType="alert"
         handleClick={() => {
-          return;
+          navigate("/alert");
         }}
       />
       {groupInviteList && groupInviteList.data.length !== 0 && (
