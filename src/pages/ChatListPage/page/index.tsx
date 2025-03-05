@@ -4,6 +4,7 @@ import FooterBar from "../../../components/nav-bar/BottomNavBar";
 import ChatItem from "../components/ChatItem";
 import ChatListHeader from "../components/ChatListHeader";
 import styles from "./messagesPage.module.scss";
+import { useNavigate } from "react-router-dom";
 
 const chatData = [
   {
@@ -63,8 +64,14 @@ const chatData = [
 ];
 
 const ChatListPage: React.FC = () => {
-  const handleSearchClick = () => {};
-  const handleAlertClick = () => {};
+  const navigate = useNavigate();
+
+  const handleSearchClick = () => {
+    navigate("/chatList/search");
+  };
+  const handleAlertClick = () => {
+    navigate("/alert");
+  };
 
   return (
     <div className={styles.messagesPage}>
