@@ -1,14 +1,14 @@
+import { useDeleteInviteGroupMember } from "@api/schedule/group/deleteInviteGroupMember";
+import { useGetGroupMemberInviteList } from "@api/schedule/group/getGroupMemberInviteList";
+import { usePostInviteGroupMember } from "@api/schedule/group/postInviteGroupMember";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
-import styles from "./inviteGroupMember.module.scss";
-import { useNavigate, useParams } from "react-router-dom";
-import SearchBox from "../components/SearchBox";
-import { useEffect, useRef, useState } from "react";
-import FriendList from "../components/FriendList";
 import useAuthStore from "@store/useAuthStore";
-import { useGetGroupMemberInviteList } from "@api/group/getGroupMemberInviteList";
-import { usePostInviteGroupMember } from "@api/group/postInviteGroupMember";
-import { useDeleteInviteGroupMember } from "@api/group/deleteInviteGroupMember";
 import { isEqual } from "lodash";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import FriendList from "../components/FriendList";
+import SearchBox from "../components/SearchBox";
+import styles from "./inviteGroupMember.module.scss";
 
 const InviteGroupMemberPage = () => {
   const navigate = useNavigate();

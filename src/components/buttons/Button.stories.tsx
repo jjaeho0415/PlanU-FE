@@ -1,13 +1,13 @@
 import { Meta, StoryObj } from "@storybook/react";
-import { GoLogin } from "./GoLogin";
-import LoginButton from "./LoginButton";
-import SmallButton from "./SmallButton";
 import { MemoryRouter } from "react-router-dom";
 import styles from "./buttonStory.module.scss";
 import CheckButton from "./CheckButton";
-import MiniButton from "./MiniButton";
-import FindButton from "./FindButton";
 import DefaultButton from "./DefaultButton";
+import FindButton from "./FindButton";
+import { GoLogin } from "./GoLogin";
+import LoginButton from "./LoginButton";
+import MiniButton from "./MiniButton";
+import SmallButton from "./SmallButton";
 
 function Button() {
   return (
@@ -151,6 +151,13 @@ function Button() {
       <MiniButton
         buttonText="요청취소"
         color="red"
+        onClick={() => {
+          return;
+        }}
+      />
+      <MiniButton
+        color="purple"
+        isFriendRequest={true}
         onClick={() => {
           return;
         }}

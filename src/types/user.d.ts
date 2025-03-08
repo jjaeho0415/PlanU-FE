@@ -15,17 +15,17 @@ type IPostRegisterRequestBodyType = {
   email: string;
 };
 
-// 이메일 인증코드 검증 api 
+// 이메일 인증코드 검증 api
 type IPostConfirmEmailCodeRequestBodyType = {
   email: string;
   verificationCode: string;
-  purpose: "register" | "findUsername" | "findPassword";
+  purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL";
 };
 
 // 이메일 인증코드 전송 api
 type IPostSendEmailCodeRequestBodyType = {
   email: string;
-  purpose: "register" | "findUsername" | "findPassword";
+  purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL";
 };
 
 // 로그인 api

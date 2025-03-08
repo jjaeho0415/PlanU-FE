@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import FooterButtons from "../../../components/buttons/SmallButton";
 import HeaderBar from "../../../components/headers/HasOnlyBackArrowHeader";
 import ProfileImageEdit from "../../CreateGroupPage/components/ImageUploader";
@@ -82,10 +83,16 @@ const EditProfilePage: React.FC = () => {
   const handleBirthDateConfirm = () => {
     setIsBirthDateModalOpen(false);
   };
+  const navigate = useNavigate();
 
   return (
     <div className={styles.container}>
-      <HeaderBar title="프로필 수정" handleClick={() => console.log("뒤로가기 클릭됨")} />
+      <HeaderBar
+        title="프로필 수정"
+        handleClick={() => {
+          navigate(-1);
+        }}
+      />
       <div
         style={{
           width: "120px",
