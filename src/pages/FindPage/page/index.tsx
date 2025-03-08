@@ -6,7 +6,7 @@ import FindTypeTab from "../components/FindTypeTab";
 import { usePostFindId } from "@api/user/postFindId";
 import { usePostFindPw } from "@api/user/postFindPw";
 import { usePostEmailVerification } from "@api/user/postEmailVerification";
-import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode copy 2";
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode";
 import { useForm } from "react-hook-form";
 import InputItem from "../components/InputItem";
 import { getIdInputList, getPwInputList } from "../../../types/inputLists";
@@ -83,7 +83,10 @@ const FindPage: React.FC = () => {
     setIsCheckedPw(false);
   }, [selectedTab]);
 
-  const handleSendCode = (email: string, purpose: "register" | "findUsername" | "findPassword") => {
+  const handleSendCode = (
+    email: string,
+    purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL",
+  ) => {
     if (!email) {
       alert("이메일을 입력하세요");
       return;

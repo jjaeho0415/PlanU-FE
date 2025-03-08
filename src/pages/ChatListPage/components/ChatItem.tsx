@@ -4,43 +4,33 @@ import React from "react";
 import styles from "./chatItem.module.scss";
 
 interface ChatItemProps {
-  profileImage: string;
-  groupName: string;
-  lastMessage: string;
-  time: string;
-  unreadCount?: number;
-  isPinned?: boolean;
-  showNotification?: boolean;
+  chatRoom: IChatRoomResponseType;
 }
 
-const ChatItem: React.FC<ChatItemProps> = ({
-  profileImage,
-  groupName,
-  lastMessage,
-  time,
-  unreadCount,
-  isPinned = false,
-  showNotification = false,
-}) => {
+const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
   return (
     <div className={styles.chatItem}>
-      <img src={profileImage} alt={`${groupName} 프로필`} className={styles.profileImage} />
+      <img
+        src={chatRoom.groupImageUrl}
+        alt={`${chatRoom.groupName} 프로필`}
+        className={styles.profileImage}
+      />
 
       <div className={styles.chatContentWrapper}>
         <div className={styles.chatContent}>
           <div className={styles.groupName}>
-            {groupName}
-            {isPinned && <PinnedIcon className={styles.pinnedIcon} />}
+            {chatRoom.groupName}
+            {chatRoom.isPin && <PinnedIcon className={styles.pinnedIcon} />}
           </div>
-          <div className={styles.lastMessage}>{lastMessage}</div>
+          <div className={styles.lastMessage}>{chatRoom.lastChat}</div>
         </div>
 
         <div className={styles.timeInfo}>
-          <span className={styles.time}>{time}</span>
+          <span className={styles.time}>{chatRoom.lastChatTime}</span>
           <ArrowIcon className={styles.arrowIcon} />
 
-          {showNotification && unreadCount && unreadCount > 0 && (
-            <div className={styles.notification}>{unreadCount}</div>
+          {chatRoom.unreadChats && chatRoom.unreadChats > 0 && (
+            <div className={styles.notification}>{chatRoom.unreadChats}</div>
           )}
         </div>
       </div>
