@@ -1,21 +1,28 @@
 import React from "react";
 import styles from "./card.module.scss";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
 
 interface props {
-  data: IGetAvailableMemberInfoType;
+  availableDatesMemberInfo: IGroupAvailableDatesMemberInfoItemType;
 }
-const MemberCard: React.FC<props> = ({ data }) => {
+const MemberCard: React.FC<props> = ({ availableDatesMemberInfo }) => {
   return (
     <div className={styles.CardContainer}>
       <div className={styles.LeftBox}>
-        <div className={styles.Profile}></div>
+        <img src={availableDatesMemberInfo.profileImage} className={styles.profileImage} />
       </div>
+      <div className={styles.line} />
       <div className={styles.RightBox}>
-        <p className={styles.RightTopP}>{data.memberName}</p>
+        <div className={styles.RightTopP}>{availableDatesMemberInfo.name}</div>
         <div className={styles.RightContentBox}>
-          {data.availableDates.map((date) => (
-            <p key={date}>• {date}</p>
-          ))}
+          {availableDatesMemberInfo.availableDates.length > 0 ? (
+            availableDatesMemberInfo.availableDates.map((availableDate) => (
+              <p key={availableDate}>• {format(new Date(availableDate), "M월 d일 (E요일)", { locale: ko })}</p>
+            ))
+          ) : (
+            <div>가능한 날짜가 없습니다.</div>
+          )}
         </div>
       </div>
     </div>
