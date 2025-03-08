@@ -3,6 +3,13 @@ import styles from "./alert.module.scss"
 import { useNavigate } from "react-router-dom"
 import AlertList from "../components/NotificationList";
 
+// const notificationList: INotificationItemType[] = {
+//   [
+//     id: 1,
+  
+//   ]
+// }
+
 const NotificationPage = () => {
 
     const navigate = useNavigate();
