@@ -29,8 +29,7 @@ const GroupPage = () => {
   const { data: groupCalendarSchedules } = useGetGroupCalendarSchedules(
     groupId!,
     accessToken,
-    format(startDate, "yyyy-MM-dd"),
-    format(endDate, "yyyy-MM-dd"),
+    format(currentDate, "yyyy-MM"),
   );
   const [optimisticGroupDetails, setOptimisticGroupDetails] = useState<IGroupInfoType>();
   const { mutate: patchGroupPin } = usePatchGroupPin(accessToken);
@@ -87,7 +86,7 @@ const GroupPage = () => {
             rightType="star"
             isPin={optimisticGroupDetails?.isPin}
             groupId={Number(groupId!)}
-            handleLeftClick={() => navigate(-1)}
+            handleLeftClick={() => navigate("/groupList")}
             handleRightClick={handlePinClick}
           />
           <div className={styles.contentContainer}>

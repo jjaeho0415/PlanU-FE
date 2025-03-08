@@ -66,8 +66,8 @@ type IGetGroupCalendarSchedulesResponseBodyType = {
 type IGroupSchedulesType = {
   id: number;
   title: string;
-  startDateTime: string;
-  endDateTime: string;
+  startTime: string;
+  endTime: string;
   color: string;
 };
 

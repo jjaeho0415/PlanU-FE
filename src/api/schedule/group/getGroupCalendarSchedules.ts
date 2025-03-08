@@ -5,11 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 const getGroupCalendarSchedules = async (
   groupId: string,
   authorization: string,
-  startDate: string,
-  endDate: string,
+  yearMonth: string,
 ) => {
   const response = await api.get<IGetGroupCalendarSchedulesResponseBodyType>({
-    endpoint: `${apiRoutes.group}/${groupId}/calendar?startDate=${startDate}&endDate=${endDate}`,
+    endpoint: `${apiRoutes.group}/${groupId}/calendar?yearMonth=${yearMonth}`,
     authorization,
   });
   return response;
@@ -18,12 +17,11 @@ const getGroupCalendarSchedules = async (
 export const useGetGroupCalendarSchedules = (
   groupId: string,
   authorization: string,
-  startDate: string,
-  endDate: string,
+  yearMonth: string,
 ) => {
   return useQuery({
-    queryKey: ["GROUP_CALENDAR_SCHEDULES"],
-    queryFn: () => getGroupCalendarSchedules(groupId, authorization, startDate, endDate),
-    enabled: authorization !== null,
+    queryKey: ["GROUP_CALENDAR_SCHEDULES", groupId],
+    queryFn: () => getGroupCalendarSchedules(groupId, authorization, yearMonth),
+    enabled: groupId !== undefined && authorization !== "",
   });
 };

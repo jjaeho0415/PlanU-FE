@@ -33,6 +33,7 @@ type IPostLoginRequestBodyType = {
   username: string;
   password: string;
 };
+
 // 회원 정보 등록 api
 type IPostUserInformationRequestBodyType = {
   UserProfileRequest: {

@@ -1,13 +1,13 @@
 .eventCard {
   display: flex;
   flex-direction: column;
-  margin-bottom: 15px;
   align-items: flex-start;
   padding: 17px;
   border-radius: 30px;
   background: var(--white);
   box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
   position: relative;
+  width: 100%;
 
   .detailButton {
     position: absolute;
@@ -29,6 +29,7 @@
     font-size: 14px;
     text-align: center;
     margin-bottom: 8px;
+    color: var(--white);
   }
 
   .info {

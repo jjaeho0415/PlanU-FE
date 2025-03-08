@@ -1,25 +1,23 @@
 import React from "react";
 import styles from "./card.module.scss";
 import Icon_crown from "@assets/Icons/calendar/Icon_crown_white.svg?react";
+import { ko } from "date-fns/locale";
+import { format } from "date-fns";
 
-interface rankProps {
-  rank: number;
-  date: string;
-  possibleMembers: number;
-}
 interface props {
-  item: rankProps;
+  availableDateRank: IGroupAvailableDatesRankItemType;
+  groupTotalNumber: number;
 }
-const RankCard: React.FC<props> = ({ item }) => {
+const RankCard: React.FC<props> = ({ availableDateRank, groupTotalNumber }) => {
   return (
     <div className={styles.Container}>
-      {item.rank === 1 && <Icon_crown className={styles.Crown} />}
-      <div className={styles.RankContainer}>{item.rank}위</div>
+      {availableDateRank.ranks === 1 && <Icon_crown className={styles.Crown} />}
+      <div className={styles.RankContainer}>{availableDateRank.ranks}위</div>
       <div className={styles.InfoContainer}>
-        <p className={styles.Date}>{item.date}</p>
+        <div className={styles.Date}>{format(new Date(availableDateRank.date), "M월 d일 (E요일)", { locale: ko })}</div>
         <div className={styles.MembersBox}>
-          <p className={styles.Possible}>{item.possibleMembers}</p>
-          <p className={styles.MembersNum}>/8</p>
+          <div className={styles.Possible}>{availableDateRank.possibleMembersNum}</div>
+          <div className={styles.MembersNum}>/ {groupTotalNumber}</div>
         </div>
       </div>
     </div>

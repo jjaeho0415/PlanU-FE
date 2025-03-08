@@ -1,0 +1,27 @@
+.mainContainer {
+  display: flex;
+  gap: 15px;
+  width: 100%;
+  height: 59px;
+  border-radius: 30px;
+  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
+  align-items: center;
+  padding: 17px;
+  background-color: var(--white);
+
+  .birthdayIconSection {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    background-color: var(--violet-50);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .birthdayText {
+    color: #111111;
+    font-weight: bold;
+    font-size: 18px;
+  }
+}
