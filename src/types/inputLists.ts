@@ -1,11 +1,14 @@
 // inputLists.ts
 
 export const getIdInputList = (
-  handleSendCode: (email: string, purpose: "register" | "findUsername" | "findPassword") => void,
+  handleSendCode: (
+    email: string,
+    purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL",
+  ) => void,
   handleConfirmCode: (data: {
     email: string;
     verificationCode: string;
-    purpose: "register" | "findUsername" | "findPassword";
+    purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL";
   }) => void,
   idWatch: (name: string) => string,
 ): IInputItem[] => [
@@ -15,7 +18,7 @@ export const getIdInputList = (
     buttonText: "인증번호 전송",
     rules: { required: "이메일을 입력하세요." },
     onClick: () => {
-      handleSendCode(idWatch("email"), "findUsername");
+      handleSendCode(idWatch("email"), "FIND_USERNAME");
     },
   },
   {
@@ -27,18 +30,21 @@ export const getIdInputList = (
       handleConfirmCode({
         email: idWatch("email"),
         verificationCode: idWatch("code"),
-        purpose: "findUsername",
+        purpose: "FIND_USERNAME",
       });
     },
   },
 ];
 
 export const getPwInputList = (
-  handleSendCode: (email: string, purpose: "register" | "findUsername" | "findPassword") => void,
+  handleSendCode: (
+    email: string,
+    purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL",
+  ) => void,
   handleConfirmCode: (data: {
     email: string;
     verificationCode: string;
-    purpose: "register" | "findUsername" | "findPassword";
+    purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL";
   }) => void,
   handleCheckPasswordMatch: (password: string, confirmPassword: string) => void,
   pwWatch: (name: string) => string,
@@ -54,7 +60,7 @@ export const getPwInputList = (
     buttonText: "인증번호 전송",
     rules: { required: "이메일을 입력하세요." },
     onClick: () => {
-      handleSendCode(pwWatch("email"), "findPassword");
+      handleSendCode(pwWatch("email"), "FIND_PASSWORD");
     },
   },
   {
@@ -66,7 +72,7 @@ export const getPwInputList = (
       handleConfirmCode({
         email: pwWatch("email"),
         verificationCode: pwWatch("code"),
-        purpose: "findPassword",
+        purpose: "FIND_PASSWORD",
       });
     },
   },
