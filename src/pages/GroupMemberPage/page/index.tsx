@@ -1,10 +1,10 @@
+import { useGetGroupMemberList } from "@api/schedule/group/getGroupMemberList";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
-import { useNavigate, useParams } from "react-router-dom";
-import styles from "./groupMember.module.scss";
 import SearchBox from "@pages/InviteGroupMemberPage/components/SearchBox";
-import MemberList from "../components/MemberList";
-import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
 import useAuthStore from "@store/useAuthStore";
+import { useNavigate, useParams } from "react-router-dom";
+import MemberList from "../components/MemberList";
+import styles from "./groupMember.module.scss";
 
 const GroupMemberPage = () => {
   const navigate = useNavigate();

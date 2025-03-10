@@ -1,19 +1,19 @@
-import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
-import BottomNavBar from "@components/nav-bar/BottomNavBar";
-import styles from "./groupList.module.scss";
-import GroupItem from "../components/GroupItem";
-import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
-import { useNavigate } from "react-router-dom";
-import InviteItem from "../components/InviteItem";
-import useAuthStore from "@store/useAuthStore";
-import { useGetGroupList } from "@api/group/getGroupList";
-import { useGetGroupInviteList } from "@api/group/getGroupInviteList";
-import { useState } from "react";
-import InviteModal from "@components/modals/InviteModal";
+import { useGetGroupInviteList } from "@api/schedule/group/getGroupInviteList";
+import { useGetGroupList } from "@api/schedule/group/getGroupList";
 import {
   useDeleteGroupInvite,
   usePutGroupInviteAccept,
-} from "@api/group/putGroupInviteAcceptOrReject";
+} from "@api/schedule/group/putGroupInviteAcceptOrReject";
+import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
+import InviteModal from "@components/modals/InviteModal";
+import BottomNavBar from "@components/nav-bar/BottomNavBar";
+import useAuthStore from "@store/useAuthStore";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
+import GroupItem from "../components/GroupItem";
+import InviteItem from "../components/InviteItem";
+import styles from "./groupList.module.scss";
 
 const GroupListPage: React.FC = () => {
   const navigate = useNavigate();
