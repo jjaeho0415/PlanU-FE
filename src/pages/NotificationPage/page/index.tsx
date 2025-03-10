@@ -70,8 +70,8 @@ const notificationList: INotificationItemType[] = [
   {
     id: 10,
     eventType: "GROUP_SCHEDULE_CREATE",
-    contents: "그룹 일정 '프로젝트 회의'이(가) 생성되었습니다",
-    read: true,
+    contents: "그룹 일정 '프로젝트 회의하고 술먹기'이(가) 생성되었습니다",
+    read: false,
     relatedUrl: "/group/1/calendar/schedule/4",
   },
   {

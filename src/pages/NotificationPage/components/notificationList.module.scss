@@ -1,7 +1,52 @@
-.alertListContainer{
+.notificationListContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  overflow: auto;
+  flex-direction: column;
+  position: relative;
+  padding-bottom: 30px;
+  .noNotificationListSection {
     width: 100%;
     height: 100%;
     display: flex;
-    overflow: auto;
-    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: var(--gray-200);
+    font-size: 20px;
+  }
+  .bottomSection {
+    width: 430px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--gray-200);
+    font-size: 15px;
+    background-color: var(--background-50);
+    z-index: 100;
+    .bottomText{
+        z-index: 101;
+        padding: 1px 8px;
+        background-color: var(--background-50);
+    }
+    .bottomLine {
+    position: fixed;
+    width: 360px;
+    z-index: 100;
+    bottom: 15px;
+    margin: 0;
+    color: var(--gray-200);
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  }
+  
 }
