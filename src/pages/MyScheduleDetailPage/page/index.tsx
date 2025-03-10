@@ -8,27 +8,34 @@ import MemoBox from "../components/MemoBox";
 import Icon_comment from "../../../assets/Icons/scheduleDetail/Icon_comment.svg?react";
 import { useState } from "react";
 import CommentModal from "../components/CommentModal";
+import { useNavigate, useParams } from "react-router-dom";
+import useAuthStore from "@store/useAuthStore";
+import { useGetMyScheduleDetail } from "@api/schedule/getMyScheduleDetail";
 
 const MyScheduleDetailPage: React.FC = () => {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const { accessToken } = useAuthStore();
+  const { scheduleId } = useParams<{ scheduleId: string }>();
+  const { data } = useGetMyScheduleDetail(accessToken, scheduleId ?? "");
 
   return (
     <div className={styles.Container}>
       <HasTwoIconHeader
-        title="2024.02.19 (화)"
+        title={data!.title}
         rightType="moreIcon"
         backgroundColor="purple"
         handleLeftClick={() => {
-          return;
+          navigate(-1);
         }}
         handleRightClick={() => {
           return;
         }}
       />
       <div className={styles.ContentContainer}>
-        <TitleBox />
-        <TimeBox />
-        <LocationBox />
+        <TitleBox title={data!.title} />
+        <TimeBox startDate={data!.startDate} endDate={data!.endDate} />
+        <LocationBox name={data!.location} lat={data!.latitude} lng={data!.longitude} />
         <ParticipantsBox />
         <MemoBox />
       </div>
