@@ -7,6 +7,7 @@ import SearchInput from "../components/SearchInput";
 import SearchResultList from "../components/SearchResultList";
 import { calculateDistance } from "../../../utils/calculateDistance";
 import { initializeMap, createCustomPin, createMarker } from "../../../utils/drawMap";
+import { ReverseGeocoding } from "@utils/geocoding";
 
 const SelectLocationPage = () => {
   const mapRef = useRef<HTMLDivElement | null>(null);
@@ -25,6 +26,7 @@ const SelectLocationPage = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
+        console.log(position);
         setUserLatLng({
           lat: position.coords.latitude,
           lng: position.coords.longitude,
@@ -40,6 +42,19 @@ const SelectLocationPage = () => {
   useEffect(() => {
     const initMap = async () => {
       if (!userLatLng || !mapRef.current || map) return;
+
+      if (userLatLng) {
+        ReverseGeocoding(userLatLng)
+          .then((result) =>
+            setSelectedLocationInfo({
+              lat: userLatLng.lat,
+              lng: userLatLng.lng,
+              formatted_address: result,
+              name: result,
+            }),
+          )
+          .catch((error) => console.error("Error getting address :", error));
+      }
 
       try {
         const newMap = await initializeMap(

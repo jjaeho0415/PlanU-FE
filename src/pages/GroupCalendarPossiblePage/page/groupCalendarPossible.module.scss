@@ -9,18 +9,29 @@
     flex-direction: column;
     align-items: center;
     gap: 30px;
+    height: calc(100% - 56px);
 
     .InfoBox {
       display: flex;
       flex-direction: column;
       gap: 10px;
-      .Date {
-        font-size: 20px;
+      .possibleInfo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 15px;
+        .Date {
+          font-size: 20px;
+        }
+        .possible{
+          color: var(--violet-450)
+        }
       }
     }
 
     .TabBox {
       width: 100%;
+      flex: 1;
     }
   }
 }

@@ -24,7 +24,7 @@ interface Props {
   availableDates?: string[];
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
   scheduleData: IGroupScheduleType[] | undefined;
-  groupAvailableDates?: IGroupPossibleScheduleItemType[];
+  groupAvailableDates?: IGroupAvailableDatesCalendarItemType[];
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   currentMonth: Date;
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
@@ -129,7 +129,7 @@ const Calendar: React.FC<Props> = ({
             className={styles.dateCell}
             onClick={() => handleDateClick(formattedDate)}
             style={{
-              cursor: isClickable || isGroupClickable ? "pointer" : "default",
+              cursor: isClickable || isGroupClickable || type === "view" ? "pointer" : "default",
               color: isNotCurrentMonth ? "#767676" : isSunday || isHoliday ? "#FF0101" : "#111111",
               backgroundColor,
               borderRadius: isToday || isAvailable || groupAvailableDate ? "50%" : "0",

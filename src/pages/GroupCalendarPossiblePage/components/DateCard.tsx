@@ -1,22 +1,26 @@
 import React from "react";
 import styles from "./card.module.scss";
+import { ko } from "date-fns/locale";
+import { format } from "date-fns";
 
 interface props {
-  data: IGetAvailableDateInfo;
+  availableDateInfo: IGroupAvailableDatesDateInfoItemType;
+  groupTotalNumber: number |undefined;
 }
 
-const DateCard: React.FC<props> = ({ data }) => {
+const DateCard: React.FC<props> = ({ availableDateInfo, groupTotalNumber }) => {
   return (
     <div className={styles.CardContainer}>
       <div className={styles.LeftBox}>
-        <p className={styles.Possible}>{data.memberNames.length}</p>
-        <p className={styles.MembersNum}>/8</p>
+        <p className={styles.Possible}>{availableDateInfo.memberNames.length}</p>
+        <p className={styles.MembersNum}>/ {groupTotalNumber}</p>
       </div>
+      <div className={styles.line} />
       <div className={styles.RightBox}>
-        <p className={styles.RightTopP}>{data.availableDate}</p>
+        <p className={styles.RightTopP}>{format(new Date(availableDateInfo.availableDate), "M월 d일 (E요일)", { locale: ko })}</p>
         <div className={styles.RightContentBox}>
-          {data.memberNames.map((member) => (
-            <p key={member}>• {member}</p>
+          {availableDateInfo.memberNames.map((name) => (
+            <p key={name}>• {name}</p>
           ))}
         </div>
       </div>

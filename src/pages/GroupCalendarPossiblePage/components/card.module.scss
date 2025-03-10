@@ -1,10 +1,9 @@
 .CardContainer {
   width: 350px;
-  height: fit-content;
+  align-items: stretch;
   background-color: var(--white);
   border-radius: 32px;
   display: flex;
-  align-items: center;
   padding: 10px;
   gap: 15px;
 
@@ -13,32 +12,34 @@
     align-items: center;
     justify-content: center;
   }
+
+  .line {
+    border-right: 1px solid var(--gray-100);
+  }
+
   .RightBox {
-    border-left: 1px solid var(--gray-200);
-    height: fit-content;
     display: flex;
+    flex: 1;
     flex-direction: column;
     gap: 10px;
-    padding-left: 15px;
 
     .RightTopP {
-      font-size: 17px;
+      font-size: 14px;
       color: var(--gray-800);
     }
 
     .RightContentBox {
-      font-size: 15px;
+      font-size: 10px;
       color: var(--gray-200);
     }
   }
 }
 
 //MemberCard
-.Profile {
-  width: 40px;
-  height: 40px;
+.profileImage {
+  width: 38px;
+  height: 37px;
   border-radius: 100%;
-  background-color: gray;
 }
 
 //DateCard
