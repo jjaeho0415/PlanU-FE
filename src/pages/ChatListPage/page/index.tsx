@@ -19,12 +19,14 @@ const ChatListPage: React.FC = () => {
     navigate("/notificationList");
   };
 
+  const isExistUnReadNotification = true;
+
   return (
     <div className={styles.messagesPage}>
       <ChatListHeader
         handleSearchClick={handleSearchClick}
         handleAlertClick={handleAlertClick}
-        isExistNoReadAlarms={true}
+        isExistNoReadAlarms={isExistUnReadNotification}
       />
       <div className={styles.chatList}>
         {chatList?.data.map((chatRoom, index) => <ChatItem key={index} chatRoom={chatRoom} />)}

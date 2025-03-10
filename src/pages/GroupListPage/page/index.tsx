@@ -33,11 +33,14 @@ const GroupListPage: React.FC = () => {
     rejectInvite(groupId);
   };
 
+  const isExistUnReadNotification = true;
+
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
         title="planU"
         rightType="alert"
+        isExistNoReadAlarms={isExistUnReadNotification}
         handleClick={() => {
           navigate("/notificationList");
         }}
