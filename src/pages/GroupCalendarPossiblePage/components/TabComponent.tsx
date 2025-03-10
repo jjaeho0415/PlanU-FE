@@ -9,7 +9,7 @@ interface Props {
   availableMemberInfos: IGroupAvailableDatesMemberInfoItemType[] | undefined;
   availableDateInfos: IGroupAvailableDatesDateInfoItemType[] | undefined;
   availableDateRanks: IGroupAvailableDatesRankItemType[] | undefined;
-  groupTotalNumber: number;
+  groupTotalNumber: number | undefined;
 }
 
 const TabComponent: React.FC<Props> = ({ activeTab, tabs, availableMemberInfos, availableDateInfos, availableDateRanks, groupTotalNumber }) => {

@@ -6,7 +6,7 @@ import { format } from "date-fns";
 
 interface props {
   availableDateRank: IGroupAvailableDatesRankItemType;
-  groupTotalNumber: number;
+  groupTotalNumber: number | undefined;
 }
 const RankCard: React.FC<props> = ({ availableDateRank, groupTotalNumber }) => {
   return (
@@ -16,7 +16,7 @@ const RankCard: React.FC<props> = ({ availableDateRank, groupTotalNumber }) => {
       <div className={styles.InfoContainer}>
         <div className={styles.Date}>{format(new Date(availableDateRank.date), "M월 d일 (E요일)", { locale: ko })}</div>
         <div className={styles.MembersBox}>
-          <div className={styles.Possible}>{availableDateRank.possibleMembersNum}</div>
+          <div className={styles.Possible}>{availableDateRank.countOfAvailableMembers}</div>
           <div className={styles.MembersNum}>/ {groupTotalNumber}</div>
         </div>
       </div>

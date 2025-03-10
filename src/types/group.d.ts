@@ -100,3 +100,8 @@ type IPostInviteGroupMemberResponseType = {
     groupName: string;
     groupImageUrl: string;
 }
+
+// 그룹 총 인원 수 조회 api
+type IGetGroupTotalMemberCountResponseBodyType = {
+  countOfMembers: number;
+}
