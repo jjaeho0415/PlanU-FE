@@ -1,12 +1,12 @@
-import { usePostCreateGroup } from "@api/schedule/group/postCreateGroup";
-import DefaultButton from "@components/buttons/DefaultButton";
-import useAuthStore from "@store/useAuthStore";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import HasOnlyBackArrowHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import GroupNameInput from "../components/GroupNameInput";
 import ImageUploader from "../components/ImageUploader";
 import styles from "./createGroup.module.scss";
+import { useNavigate } from "react-router-dom";
+import DefaultButton from "@components/buttons/DefaultButton";
+import { usePostCreateGroup } from "@api/group/postCreateGroup";
+import useAuthStore from "@store/useAuthStore";
 
 const CreateGroupPage = () => {
   const [groupName, setGroupName] = useState("");

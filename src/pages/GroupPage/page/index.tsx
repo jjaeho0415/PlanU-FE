@@ -1,17 +1,17 @@
-import { useGetGroupCalendarSchedules } from "@api/schedule/group/getGroupCalendarSchedules";
-import { useGetGroupDetails } from "@api/schedule/group/getGroupDetail";
-import { useGetGroupTodaySchedules } from "@api/schedule/group/getGroupTodaySchedules";
-import { usePatchGroupPin } from "@api/schedule/group/patchGroupPin";
-import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
-import useAuthStore from "@store/useAuthStore";
-import { useQueryClient } from "@tanstack/react-query";
-import { endOfMonth, endOfWeek, format, startOfMonth, startOfWeek } from "date-fns";
-import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import GroupOptions from "../components/GroupOptions";
-import GroupScheduleCalendar from "../components/GroupScheduleCalendar";
-import TodayScheduleList from "../components/TodayScheduleList";
 import styles from "./groupPage.module.scss";
+import { useEffect, useState } from "react";
+import GroupOptions from "../components/GroupOptions";
+import { useNavigate, useParams } from "react-router-dom";
+import TodayScheduleList from "../components/TodayScheduleList";
+import GroupScheduleCalendar from "../components/GroupScheduleCalendar";
+import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
+import { useGetGroupTodaySchedules } from "@api/group/getGroupTodaySchedules";
+import useAuthStore from "@store/useAuthStore";
+import { endOfMonth, endOfWeek, startOfMonth, startOfWeek, format } from "date-fns";
+import { useGetGroupCalendarSchedules } from "@api/group/getGroupCalendarSchedules";
+import { usePatchGroupPin } from "@api/group/patchGroupPin";
+import { useQueryClient } from "@tanstack/react-query";
+import { useGetGroupDetails } from "@api/group/getGroupDetail";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 

@@ -1,15 +1,15 @@
-import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFriend";
-import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
-import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
-import { usePostRequestFriend } from "@api/friend/postRequestFriend";
-import { useDeleteForcedWithdrawalFromGroup } from "@api/schedule/group/deleteForcedWithdrawalFromGroup";
-import { useDeleteGroup } from "@api/schedule/group/deleteGroup";
-import { useDeleteLeaveGroup } from "@api/schedule/group/deleteLeaveGroup";
+import styles from "./memberItem.module.scss";
 import CrownIcon from "@assets/Icons/groupPage/crownIcon.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
+import { usePostRequestFriend } from "@api/friend/postRequestFriend";
 import useAuthStore from "@store/useAuthStore";
+import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFriend";
+import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
+import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
+import { useDeleteGroup } from "@api/group/deleteGroup";
 import { useParams } from "react-router-dom";
-import styles from "./memberItem.module.scss";
+import { useDeleteLeaveGroup } from "@api/group/deleteLeaveGroup";
+import { useDeleteForcedWithdrawalFromGroup } from "@api/group/deleteForcedWithdrawalFromGroup";
 
 interface Props {
   memberInfo: IGroupMemberItemType;
@@ -199,13 +199,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
     <div className={styles.memberItemContainer}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          <img
-            src={memberInfo.profileImage}
-            width={38}
-            height={37}
-            alt="profile"
-            className={styles.profile}
-          />
+          <img src={memberInfo.profileImage} width={38} height={37} alt="profile" className={styles.profile} />
           {memberInfo.groupRole === "LEADER" && (
             <CrownIcon width={29} height={25} className={styles.crownIcon} />
           )}

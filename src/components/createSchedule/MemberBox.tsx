@@ -1,9 +1,9 @@
-import { useGetGroupMemberList } from "@api/schedule/group/getGroupMemberList";
-import useAuthStore from "@store/useAuthStore";
-import useScheduleStore from "@store/useScheduleStore";
 import React, { useEffect, useState } from "react";
 import styles from "./Inputs.module.scss";
 import ParticipantsPicker from "./ParticipantsPicker";
+import useScheduleStore from "@store/useScheduleStore";
+import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
+import useAuthStore from "@store/useAuthStore";
 
 interface props {
   groupId?: string;
