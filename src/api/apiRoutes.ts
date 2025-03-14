@@ -7,6 +7,8 @@ const apiRoutes = {
   userFindId: "/users/find-username",
   userFindPw: "/users/find-password",
   reissue: "/users/token/reissue",
+  userVerifyPassword: "/users/verify-password",
+  userChangePassword: "/users/validate-new-password",
   // 그룹 관련
   group: "/groups",
   createGroup: "/groups/create",
