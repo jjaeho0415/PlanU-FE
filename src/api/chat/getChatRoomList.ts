@@ -15,5 +15,6 @@ export const useGetChatRoomList = (authorization: string) => {
     queryKey: ["CHATROOM_LIST"],
     queryFn: () => getChatRoomList(authorization),
     enabled: authorization !== "",
+    refetchInterval: 5000,
   });
 };

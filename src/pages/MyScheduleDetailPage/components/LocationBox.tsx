@@ -4,13 +4,19 @@ import Icon_location from "../../../assets/Icons/scheduleDetail/Icon_location.sv
 import Icon_arrow from "@assets/Icons/arrow/Icon_Arrow_upRight.svg?react";
 import Map from "@components/map/Map";
 
-const LocationBox: React.FC = () => {
+interface Props {
+  name: string;
+  lat: number;
+  lng: number;
+}
+
+const LocationBox: React.FC<Props> = ({ name, lat, lng }) => {
   return (
     <div className={styles.LocationBox}>
       <div className={styles.LocationNameBox}>
         <div className={styles.LocationContainer}>
           <Icon_location />
-          <p>홍대입구역 2번 출구 앞</p>
+          <p>{name}</p>
         </div>
         <div className={styles.FindRoadContainer}>
           <Icon_arrow />
@@ -18,7 +24,7 @@ const LocationBox: React.FC = () => {
         </div>
       </div>
       <div className={styles.MapBox}>
-        <Map latLng={{ lat: 0, lng: 0 }} />
+        <Map latLng={{ lat: lat, lng: lng }} />
       </div>
     </div>
   );
