@@ -17,7 +17,9 @@ const NotificationItem: React.FC<Props> = ({ notificationItem }) => {
   const { mutate: readNotification } = usePostReadNotification(accessToken);
 
   const handleNotificationClick = () => {
-    readNotification(notificationItem.id);
+    if (!notificationItem.read) {
+      readNotification(notificationItem.id);
+    }
     navigate(`${notificationItem.relatedUrl}`);
   };
 

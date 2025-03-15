@@ -23,7 +23,7 @@ export const getRelativeTime = (createdDate: string) => {
   }
 
   const diffInMonths = Math.floor(diffInDays / 30);
-  if (diffInDays < 7) {
+  if (diffInMonths < 7) {
     return `${diffInMonths}개월 전`;
   }
 };

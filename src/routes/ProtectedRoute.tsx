@@ -57,7 +57,6 @@ const ProtectedRoute = () => {
   if (!accessToken) {
     return <Navigate to="/" replace />;
   }
-
   return <Outlet context={{notifications, isLoading, error}}/>;
 };
 
