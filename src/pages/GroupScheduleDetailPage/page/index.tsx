@@ -23,7 +23,7 @@ const GroupScheduleDetail: React.FC = () => {
   return (
     <div className={styles.Container}>
       <HasTwoIconHeader
-        title={data!.title}
+        title={data?.title ?? ""}
         rightType="moreIcon"
         backgroundColor="purple"
         handleLeftClick={() => {
@@ -34,11 +34,15 @@ const GroupScheduleDetail: React.FC = () => {
         }}
       />
       <div className={styles.ContentContainer}>
-        <TitleBox title={data!.title} />
-        <TimeBox startDate={data!.startDate} endDate={data!.endDate} />
-        <LocationBox name={data!.location} lat={data!.latitude} lng={data!.longitude} />
-        <ParticipantsBox />
-        <MemoBox />
+        <TitleBox title={data?.title ?? ""} />
+        <TimeBox startDate={data?.startDate ?? ""} endDate={data?.endDate ?? ""} />
+        <LocationBox
+          name={data?.location ?? ""}
+          lat={data?.latitude ?? 0}
+          lng={data?.longitude ?? 0}
+        />
+        <ParticipantsBox participants={data?.participants ?? null} />
+        <MemoBox memo={data?.memo ?? ""} />
       </div>
       <div className={styles.CommentIconBox}>
         <Icon_comment onClick={() => setIsOpenCommentModal(true)} />

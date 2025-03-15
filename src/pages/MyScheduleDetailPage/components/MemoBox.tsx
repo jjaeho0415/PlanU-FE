@@ -1,11 +1,15 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
 
-const MemoBox: React.FC = () => {
+interface Props {
+  memo: string;
+}
+
+const MemoBox: React.FC<Props> = ({ memo }) => {
   return (
     <div className={styles.MemoContainer}>
       <p>메모</p>
-      <p className={styles.MemoContent}>모두 참석바랍니다~!</p>
+      <p className={styles.MemoContent}>{memo}</p>
     </div>
   );
 };
