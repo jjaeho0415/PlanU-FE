@@ -36,9 +36,10 @@ const GroupListPage: React.FC = () => {
     rejectInvite(groupId);
   };
 
-  const isExistUnReadNotification = notifications.notificationList.some(
-    (notification) => !notification.read,
-  );
+  const isExistUnReadNotification =
+    notifications && notifications.notificationList.length > 0
+      ? notifications.notificationList.some((notification) => !notification.read)
+      : false;
 
   return (
     <div className={styles.Container}>
@@ -56,10 +57,9 @@ const GroupListPage: React.FC = () => {
           <div className={styles.ContentBox}>
             <p className={styles.TitleP}>Invitation Request</p>
             {groupInviteList.data.map((groupInviteItem) => (
-              <>
+              <div key={groupInviteItem.groupId}>
                 <InviteItem
                   groupInviteItem={groupInviteItem}
-                  key={groupInviteItem.groupId + groupInviteItem.groupName}
                   setIsInviteModalOpen={setIsInviteModalOpen}
                 />
                 {isInviteModalOpen && (
@@ -72,7 +72,7 @@ const GroupListPage: React.FC = () => {
                     handleRejectClick={() => handleRejectClick(groupInviteItem.groupId)}
                   />
                 )}
-              </>
+              </div>
             ))}
           </div>
         </>

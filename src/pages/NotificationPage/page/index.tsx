@@ -12,7 +12,6 @@ const NotificationPage = () => {
   const navigate = useNavigate();
 
   const sortedNotificationList = notifications.notificationList.sort((a, b) => {
-    console.log(notifications.notificationList)
     return new Date(b.createdDate).getTime() - new Date(a.createdDate).getTime();
     })
 

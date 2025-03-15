@@ -22,7 +22,10 @@ const ChatListPage: React.FC = () => {
     navigate("/notificationList");
   };
 
-  const isExistUnReadNotification = notifications.notificationList.some(notification => !notification.read)
+  const isExistUnReadNotification =
+    notifications && notifications.notificationList.length > 0
+      ? notifications.notificationList.some((notification) => !notification.read)
+      : false;
 
   return (
     <div className={styles.messagesPage}>
