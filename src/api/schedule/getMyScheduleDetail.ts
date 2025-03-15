@@ -3,7 +3,7 @@ import api from "@api/fetcher";
 import { useQuery } from "@tanstack/react-query";
 
 const getMyScheduleDetail = async (authorization: string, scheduleId: string) => {
-  const response = api.get<IGetGroupScheduleDetailType>({
+  const response = api.get<IGetMyScheduleDetailType>({
     endpoint: `${apiRoutes.schedules}/${scheduleId}`,
     authorization,
   });

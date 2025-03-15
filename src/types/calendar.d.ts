@@ -123,3 +123,16 @@ type IGetGroupScheduleDetailType = {
   participants: IParticipants[];
   memo: string;
 };
+
+type IGetMyScheduleDetailType = {
+  id: number;
+  title: string;
+  color: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  participants: IParticipants[];
+  memo: string;
+};
