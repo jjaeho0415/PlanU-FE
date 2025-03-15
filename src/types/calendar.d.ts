@@ -136,3 +136,21 @@ type IGetMyScheduleDetailType = {
   participants: IParticipants[];
   memo: string;
 };
+
+//댓글
+type ICommentItem = {
+  id: number;
+  username: string;
+  name: string;
+  timestamp: string;
+  message: string;
+};
+
+type IGetCommentList = {
+  countOfComment: number;
+  comments: ICommentItem[];
+};
+
+type IPostComment = {
+  message: string;
+};
