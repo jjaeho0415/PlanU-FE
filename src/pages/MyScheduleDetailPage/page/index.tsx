@@ -8,9 +8,12 @@ import LocationBox from "@components/scheduleDetail/LocationBox";
 import ParticipantsBox from "@components/scheduleDetail/ParticipantsBox";
 import MemoBox from "@components/scheduleDetail/MemoBox";
 import { useGetMyScheduleDetail } from "@api/schedule/getMyScheduleDetail";
+import { useState } from "react";
+import MoreModal from "@components/scheduleDetail/MoreModal";
 
 const MyScheduleDetailPage: React.FC = () => {
   const navigate = useNavigate();
+  const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
   const { accessToken } = useAuthStore();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { data } = useGetMyScheduleDetail(accessToken, scheduleId ?? "");
@@ -25,7 +28,7 @@ const MyScheduleDetailPage: React.FC = () => {
           navigate(-1);
         }}
         handleRightClick={() => {
-          return;
+          setIsOpenMoreModal(!isOpenMoreModal);
         }}
       />
       <div className={styles.ContentContainer}>
@@ -39,6 +42,7 @@ const MyScheduleDetailPage: React.FC = () => {
         <ParticipantsBox participants={data?.participants ?? null} />
         <MemoBox memo={data?.memo ?? ""} />
       </div>
+      {isOpenMoreModal && <MoreModal scheduleId={scheduleId ?? ""} />}
     </div>
   );
 };
