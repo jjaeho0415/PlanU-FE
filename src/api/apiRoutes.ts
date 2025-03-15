@@ -30,6 +30,8 @@ const apiRoutes = {
   schedules: "/schedules",
   //채팅 관련
   chatRoomsList: "/chats",
+  // 알림 관련
+  readNotification: "/notifications/read"
 };
 
 export default apiRoutes;

@@ -10,14 +10,21 @@ interface Props {
   memberInfo: IFriendItemType;
   activeTab: "친구목록" | "받은요청" | "보낸요청";
   isEditing?: boolean;
+  hasSentRequest?: boolean;
 }
 
-const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false }) => {
+const MemberCard: React.FC<Props> = ({
+  memberInfo,
+  activeTab,
+  isEditing = false,
+  hasSentRequest,
+}) => {
   const { accessToken } = useAuthStore.getState();
   const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
   const { mutate: acceptRequestFriend } = usePostAcceptRequestFriend(accessToken);
   const { mutate: rejectRequestFriend } = useDeleteRejectRequestFriend(accessToken);
   const { mutate: deleteFriend } = useDeleteDeleteFriends(accessToken);
+
   const handleShowFriendCalendar = () => {};
 
   const handleCancelRequestFriend = () => {
@@ -35,6 +42,7 @@ const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false 
   const handleDeleteMember = () => {
     deleteFriend(memberInfo.username);
   };
+  const handleSendFriendRequest = () => {};
 
   const renderButtons = () => {
     if (isEditing && activeTab === "친구목록") {
@@ -64,11 +72,13 @@ const MemberCard: React.FC<Props> = ({ memberInfo, activeTab, isEditing = false 
           </>
         );
       case "보낸요청":
-        return (
+        return hasSentRequest ? (
           <>
             <MiniButton buttonText="요청중.." color="white" />
             <MiniButton buttonText="요청취소" color="red" onClick={handleCancelRequestFriend} />
           </>
+        ) : (
+          <MiniButton color="purple" isFriendRequest={true} onClick={handleSendFriendRequest} />
         );
       default:
         return null;
