@@ -11,9 +11,11 @@ import LocationBox from "@components/scheduleDetail/LocationBox";
 import ParticipantsBox from "@components/scheduleDetail/ParticipantsBox";
 import MemoBox from "@components/scheduleDetail/MemoBox";
 import CommentModal from "@components/scheduleDetail/CommentModal";
+import MoreModal from "@components/scheduleDetail/MoreModal";
 
 const GroupScheduleDetail: React.FC = () => {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
+  const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
   const navigate = useNavigate();
   const { accessToken } = useAuthStore();
   const { groupId } = useParams<{ groupId: string }>();
@@ -30,7 +32,7 @@ const GroupScheduleDetail: React.FC = () => {
           navigate(-1);
         }}
         handleRightClick={() => {
-          return;
+          setIsOpenMoreModal(!isOpenMoreModal);
         }}
       />
       <div className={styles.ContentContainer}>
@@ -49,6 +51,7 @@ const GroupScheduleDetail: React.FC = () => {
         <p>17</p>
       </div>
       {isOpenCommentModal && <CommentModal setIsOpenCommentModal={setIsOpenCommentModal} />}
+      {isOpenMoreModal && <MoreModal groupId={groupId ?? ""} scheduleId={scheduleId ?? ""} />}
     </div>
   );
 };
