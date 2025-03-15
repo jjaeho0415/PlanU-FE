@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
-import Icon_checkbox from "../../../assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
+import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
 
 interface Props {
   participants: IParticipants[] | null;

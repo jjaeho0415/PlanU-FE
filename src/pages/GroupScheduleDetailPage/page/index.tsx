@@ -2,15 +2,15 @@ import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
 import styles from "./groupSchedule.module.scss";
 import Icon_comment from "../../../assets/Icons/scheduleDetail/Icon_comment.svg?react";
 import { useState } from "react";
-import CommentModal from "@pages/MyScheduleDetailPage/components/CommentModal";
-import TimeBox from "@pages/MyScheduleDetailPage/components/TimeBox";
-import MemoBox from "@pages/MyScheduleDetailPage/components/MemoBox";
-import ParticipantsBox from "@pages/MyScheduleDetailPage/components/ParticipantsBox";
-import LocationBox from "@pages/MyScheduleDetailPage/components/LocationBox";
-import TitleBox from "@pages/MyScheduleDetailPage/components/TitleBox";
 import { useGetGroupScheduleDetail } from "@api/schedule/getGroupScheduleDetail";
 import useAuthStore from "@store/useAuthStore";
 import { useNavigate, useParams } from "react-router-dom";
+import TitleBox from "@components/scheduleDetail/TitleBox";
+import TimeBox from "@components/scheduleDetail/TimeBox";
+import LocationBox from "@components/scheduleDetail/LocationBox";
+import ParticipantsBox from "@components/scheduleDetail/ParticipantsBox";
+import MemoBox from "@components/scheduleDetail/MemoBox";
+import CommentModal from "@components/scheduleDetail/CommentModal";
 
 const GroupScheduleDetail: React.FC = () => {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
