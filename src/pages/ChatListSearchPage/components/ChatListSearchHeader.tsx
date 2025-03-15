@@ -1,6 +1,7 @@
 import React from "react";
 import styles from "./chatListSearchHeader.module.scss";
 import Search_Icon from "@assets/Icons/headers/searchIcon.svg?react";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   searchText: string;
@@ -8,6 +9,7 @@ interface Props {
 }
 
 const ChatListSearchHeader: React.FC<Props> = ({ searchText, setSearchText }) => {
+  const navigate = useNavigate();
   const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -22,8 +24,10 @@ const ChatListSearchHeader: React.FC<Props> = ({ searchText, setSearchText }) =>
           placeholder="검색"
           className={styles.inputSection}
         />
-          </div>
-          <div className={styles.textSection}>취소</div>
+      </div>
+      <div className={styles.textSection} onClick={() => navigate(-1)}>
+        취소
+      </div>
     </div>
   );
 };

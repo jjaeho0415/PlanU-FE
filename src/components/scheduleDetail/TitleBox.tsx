@@ -1,11 +1,15 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
 
-const TitleBox: React.FC = () => {
+interface Props {
+  title: string;
+}
+
+const TitleBox: React.FC<Props> = ({ title }) => {
   return (
     <div className={styles.BoxContainer}>
       <div className={styles.Color} />
-      <p>수현이 생일파티</p>
+      <p>{title}</p>
     </div>
   );
 };
