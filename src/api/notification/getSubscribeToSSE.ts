@@ -27,71 +27,78 @@ export const getSubscribeToSSE = async (accessToken: string, queryClient: QueryC
         break;
       }
       const chunk = decoder.decode(value, { stream: true });
-      if (chunk.startsWith("data:")) {
-        const jsonString = chunk.slice(5).trim();
-        try {
-          const parsedData = JSON.parse(jsonString);
-          console.log("parsedData: ", parsedData);
+      if (chunk.includes("eventType")) {
+        const match = chunk.match(/data:(\{.*\})/);
+        if (match && match[1]) {
+          try {
+            const parsedData = JSON.parse(match[1]);
 
-          if (parsedData.eventType === "FRIEND_REQUEST") {
-            queryClient.invalidateQueries({
-              queryKey: ["RECEIVE_FRIEND_LIST"],
-            });
-          }
-
-          if (parsedData.eventType === "FRIEND_ACCEPT") {
-            ["FRIEND_LIST", "REQUEST_FRIEND_LIST"].forEach((key) =>
+            if (parsedData.eventType === "FRIEND_REQUEST") {
               queryClient.invalidateQueries({
-                queryKey: [key],
-              }),
-            );
-          }
+                queryKey: ["RECEIVE_FRIEND_LIST"],
+              });
+            }
 
-          if (["GROUP_EXPEL", "GROUP_DELETE"].includes(parsedData.eventType)) {
-            queryClient.invalidateQueries({
-              queryKey: ["GROUP_LIST"],
-            });
-          }
-
-          if (parsedData.eventType === "GROUP_ACCEPT") {
-            ["GROUP_LIST", "GROUP_INVITE_LIST"].forEach((key) =>
-              queryClient.invalidateQueries({
-                queryKey: [key],
-              }),
-            );
-          }
-
-          if (parsedData.eventType === "GROUP_INVITE") {
-            queryClient.invalidateQueries({
-              queryKey: ["GROUP_INVITE_LIST"],
-            });
-          }
-
-          if (["GROUP_SCHEDULE_CREATE", "GROUP_SCHEDULE_DELETE"].includes(parsedData.eventType)) {
-            ["GROUP_CALENDAR_SCHEDULES", "GROUP_CHECK_EVENTS", "GROUP_SCHEDULE_LIST"].forEach(
-              (key) =>
+            if (parsedData.eventType === "FRIEND_ACCEPT") {
+              ["FRIEND_LIST", "REQUEST_FRIEND_LIST"].forEach((key) =>
                 queryClient.invalidateQueries({
                   queryKey: [key],
                 }),
-            );
-          }
+              );
+            }
 
-          if (parsedData.eventType === "COMMENT") {
+            if (["GROUP_EXPEL", "GROUP_DELETE"].includes(parsedData.eventType)) {
+              queryClient.invalidateQueries({
+                queryKey: ["GROUP_LIST"],
+              });
+            }
+
+            if (parsedData.eventType === "GROUP_ACCEPT") {
+              [
+                "GROUP_LIST",
+                "GROUP_INVITE_LIST",
+                "GROUP_MEMBER_LIST",
+                "FRIEND_LIST",
+                "GROUP_MEMBER_INVITE_LIST",
+              ].forEach((key) =>
+                queryClient.invalidateQueries({
+                  queryKey: [key],
+                }),
+              );
+            }
+
+            if (parsedData.eventType === "GROUP_INVITE") {
+              queryClient.invalidateQueries({
+                queryKey: ["GROUP_INVITE_LIST"],
+              });
+            }
+
+            if (["GROUP_SCHEDULE_CREATE", "GROUP_SCHEDULE_DELETE"].includes(parsedData.eventType)) {
+              ["GROUP_CALENDAR_SCHEDULES", "GROUP_CHECK_EVENTS", "GROUP_SCHEDULE_LIST"].forEach(
+                (key) =>
+                  queryClient.invalidateQueries({
+                    queryKey: [key],
+                  }),
+              );
+            }
+
+            if (parsedData.eventType === "COMMENT") {
+              queryClient.invalidateQueries({
+                queryKey: ["COMMENT_LIST"],
+              });
+            }
+
             queryClient.invalidateQueries({
-              queryKey: ["COMMENT_LIST"],
+              queryKey: ["NOTIFICATION_LIST"],
             });
+          } catch (error) {
+            console.error("JSON 파싱 오류: ", error);
           }
-
-          queryClient.invalidateQueries({
-            queryKey: ["NOTIFICATION_LIST"],
-          });
-        } catch (error) {
-          console.error("JSON 파싱 오류: ", error);
         }
       }
     }
   } catch (error) {
-      console.log("SSE 연결실패")
+    console.log("SSE 연결실패");
     console.error("SSE 오류: ", error);
   }
 };
