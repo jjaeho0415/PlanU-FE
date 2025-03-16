@@ -10,7 +10,7 @@ const NotificationList: React.FC<Props> = ({ notificationList }) => {
     <div className={styles.notificationListContainer}>
       {notificationList.length > 0 ? (
         notificationList.map((notificationItem) => (
-          <NotificationItem notificationItem={notificationItem} />
+          <NotificationItem notificationItem={notificationItem} key={notificationItem.id} />
         ))
       ) : (
         <div className={styles.noNotificationListSection}>알림 내역이 없습니다.</div>

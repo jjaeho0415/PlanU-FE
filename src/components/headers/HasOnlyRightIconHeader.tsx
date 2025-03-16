@@ -10,14 +10,14 @@ interface Props {
   title: "PlanU" | string;
   rightType: "alert" | "star" | "x" | "calendar" | "button";
   handleClick: () => void;
-  isExistNoReadAlarms?: boolean;
+  isExistUnReadAlarms?: boolean;
 }
 
 const HasOnlyRightIconHeader: React.FC<Props> = ({
   title,
   rightType,
   handleClick,
-  isExistNoReadAlarms,
+  isExistUnReadAlarms,
 }) => {
   return (
     <div className={styles.mainContainer}>
@@ -26,7 +26,7 @@ const HasOnlyRightIconHeader: React.FC<Props> = ({
         {rightType === "alert" ? (
           <div>
             <Alert_Icon width={24} height={24} className={styles.alertIcon} onClick={handleClick} />
-            {isExistNoReadAlarms && <RedDot_Icon className={styles.redDotIcon} />}
+            {isExistUnReadAlarms && <RedDot_Icon className={styles.redDotIcon} />}
           </div>
         ) : rightType === "x" ? (
           <X_Icon width={24} height={24} onClick={handleClick} />
