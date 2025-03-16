@@ -1,42 +1,48 @@
 import HasTwoIconHeader from "@components/headers/HasTwoIconHeader";
 import styles from "./mySchedule.module.scss";
-import TitleBox from "../components/TitleBox";
-import TimeBox from "../components/TimeBox";
-import LocationBox from "../components/LocationBox";
-import ParticipantsBox from "../components/ParticipantsBox";
-import MemoBox from "../components/MemoBox";
-import Icon_comment from "../../../assets/Icons/scheduleDetail/Icon_comment.svg?react";
+import useAuthStore from "@store/useAuthStore";
+import { useNavigate, useParams } from "react-router-dom";
+import TitleBox from "@components/scheduleDetail/TitleBox";
+import TimeBox from "@components/scheduleDetail/TimeBox";
+import LocationBox from "@components/scheduleDetail/LocationBox";
+import ParticipantsBox from "@components/scheduleDetail/ParticipantsBox";
+import MemoBox from "@components/scheduleDetail/MemoBox";
+import { useGetMyScheduleDetail } from "@api/schedule/getMyScheduleDetail";
 import { useState } from "react";
-import CommentModal from "../components/CommentModal";
+import MoreModal from "@components/scheduleDetail/MoreModal";
 
 const MyScheduleDetailPage: React.FC = () => {
-  const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
+  const navigate = useNavigate();
+  const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
+  const { accessToken } = useAuthStore();
+  const { scheduleId } = useParams<{ scheduleId: string }>();
+  const { data } = useGetMyScheduleDetail(accessToken, scheduleId ?? "");
 
   return (
     <div className={styles.Container}>
       <HasTwoIconHeader
-        title="2024.02.19 (화)"
+        title={data?.title ?? ""}
         rightType="moreIcon"
         backgroundColor="purple"
         handleLeftClick={() => {
-          return;
+          navigate(-1);
         }}
         handleRightClick={() => {
-          return;
+          setIsOpenMoreModal(!isOpenMoreModal);
         }}
       />
       <div className={styles.ContentContainer}>
-        <TitleBox />
-        <TimeBox />
-        <LocationBox />
-        <ParticipantsBox />
-        <MemoBox />
+        <TitleBox title={data?.title ?? ""} />
+        <TimeBox startDate={data?.startDate ?? ""} endDate={data?.endDate ?? ""} />
+        <LocationBox
+          name={data?.location ?? ""}
+          lat={data?.latitude ?? 0}
+          lng={data?.longitude ?? 0}
+        />
+        <ParticipantsBox participants={data?.participants ?? null} />
+        <MemoBox memo={data?.memo ?? ""} />
       </div>
-      <div className={styles.CommentIconBox}>
-        <Icon_comment onClick={() => setIsOpenCommentModal(true)} />
-        <p>17</p>
-      </div>
-      {isOpenCommentModal && <CommentModal setIsOpenCommentModal={setIsOpenCommentModal} />}
+      {isOpenMoreModal && <MoreModal scheduleId={scheduleId ?? ""} />}
     </div>
   );
 };
