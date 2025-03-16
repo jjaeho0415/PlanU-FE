@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 interface props {
   availableDateInfo: IGroupAvailableDatesDateInfoItemType;
-  groupTotalNumber: number;
+  groupTotalNumber: number |undefined;
 }
 
 const DateCard: React.FC<props> = ({ availableDateInfo, groupTotalNumber }) => {

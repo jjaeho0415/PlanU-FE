@@ -2,13 +2,19 @@ import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
 
-const verifyPassword = async (body: IVerifyPasswordRequest): Promise<IResponseType> => {
-  const endpoint = `${apiRoutes.userVerifyPassword}`;
-  return await api.post({ endpoint, body });
+const verifyPassword = async (
+  accessToken: string,
+  body: IVerifyPasswordRequest,
+): Promise<IResponseType> => {
+  return await api.post({
+    endpoint: `${apiRoutes.userVerifyPassword}`,
+    authorization: accessToken,
+    body,
+  });
 };
 
-export const useVerifyPassword = () => {
+export const useVerifyPassword = (accessToken: string) => {
   return useMutation({
-    mutationFn: (data: IVerifyPasswordRequest) => verifyPassword(data),
+    mutationFn: (data: IVerifyPasswordRequest) => verifyPassword(accessToken, data),
   });
 };

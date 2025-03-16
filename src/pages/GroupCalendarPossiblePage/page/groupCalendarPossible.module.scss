@@ -15,8 +15,17 @@
       display: flex;
       flex-direction: column;
       gap: 10px;
-      .Date {
-        font-size: 20px;
+      .possibleInfo {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 15px;
+        .Date {
+          font-size: 20px;
+        }
+        .possible{
+          color: var(--violet-450)
+        }
       }
     }
 

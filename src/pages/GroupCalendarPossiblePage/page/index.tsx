@@ -14,6 +14,7 @@ import { useGetGroupAvailableDatesMemberList } from "@api/calendar/getGroupAvail
 import { useGetGroupAvailableDatesMemberInfos } from "@api/calendar/getGroupAvailableDatesMemberInfos";
 import { useGetGroupAvailableDatesDateInfo } from "@api/calendar/getGroupAvailableDatesDateInfo";
 import { useGetGroupAvailableDatesRanks } from "@api/calendar/getGroupAvailableDatesRanks";
+import { useGetGroupTotalMemberCount } from "@api/group/getGroupTotalMemberCount";
 
 const GroupCalendarPossiblePage: React.FC = () => {
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
@@ -77,7 +78,8 @@ const GroupCalendarPossiblePage: React.FC = () => {
   );
 
   // 그룹 총 인원 수
-  const groupTotalNumber = 8;
+
+  const { data: groupTotalNumber } = useGetGroupTotalMemberCount(groupId!, accessToken);
 
   return (
     <div className={styles.Container}>
@@ -97,7 +99,13 @@ const GroupCalendarPossiblePage: React.FC = () => {
           setSelectedDate={setSelectedDate}
         />
         <div className={styles.InfoBox}>
-          <p className={styles.Date}>{formattedDate}</p>
+          <div className={styles.possibleInfo}>
+            <div className={styles.Date}>{formattedDate}</div>
+            <div>
+              <span className={styles.possible}>{groupAvailableDatesMemberList?.availableMembers.length}명</span> /{" "}
+              {groupTotalNumber?.countOfMembers}명
+            </div>
+          </div>
           <PossibleMember possibleMemberList={groupAvailableDatesMemberList} />
         </div>
         <div className={styles.TabBox}>
@@ -107,7 +115,7 @@ const GroupCalendarPossiblePage: React.FC = () => {
             availableDateInfos={groupAvailableDatesDateInfo?.availableDateInfos}
             availableDateRanks={groupAvailableDatesRanks?.availableDateRanks}
             availableMemberInfos={groupAvailableDatesMemberInfos?.availableMemberInfos}
-            groupTotalNumber={groupTotalNumber}
+            groupTotalNumber={groupTotalNumber?.countOfMembers}
           />
         </div>
       </div>

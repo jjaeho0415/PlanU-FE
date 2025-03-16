@@ -14,12 +14,12 @@ const putUserInfo = async ({
 
   formData.append("name", body.name ?? "null");
   formData.append("email", body.email ?? "null");
-  formData.append("password", body.password ?? "null");
+  if (body.password) formData.append("password", body.password);
   formData.append("birthDate", body.birthDate ?? "null");
 
   formData.append("profileImage", body.profileImage ?? "null");
 
-  const response = await api.post<FormData, IResponseType>({
+  const response = await api.put<FormData, IResponseType>({
     endpoint: apiRoutes.userInformation,
     authorization: token,
     body: formData,

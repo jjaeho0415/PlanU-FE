@@ -27,7 +27,7 @@ const GroupCalendarPage: React.FC = () => {
   );
 
   const { data: groupScheduleList } = useGetGroupScheduleList(groupId!, accessToken, selectedDate);
-  const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
+  const formattedDate = format(new Date(selectedDate), "M월 d일 (E요일)", { locale: ko });
 
   const handleBackArrowClick = () => {
     navigate(-1);
