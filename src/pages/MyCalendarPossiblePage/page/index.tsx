@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import EditButton from "../../../components/buttons/DefaultButton";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPossible.module.scss";
 import EventCard from "@components/calendarPage/EventCard";
+import useAuthStore from "@store/useAuthStore";
+import { postReissue } from "@api/user/postReissue";
 
 interface IGetScheduleType {
   date: string;
@@ -15,6 +17,21 @@ interface IGetScheduleType {
 const MyCalendarPossiblePage: React.FC = () => {
   const [availableDates, setAvailableDates] = useState<string[]>([]);
   const [isEditing, setIsEditing] = useState(false);
+  const { accessToken } = useAuthStore.getState();
+  useEffect(() => {
+    const reissueToken = async () => {
+      if (!accessToken) {
+        const newAccessToken = await postReissue();
+        if (newAccessToken) {
+          useAuthStore.setState({
+            isLogin: true,
+            accessToken: newAccessToken,
+          });
+        }
+      }
+    };
+    reissueToken();
+  }, [accessToken]);
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
