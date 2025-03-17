@@ -3,7 +3,9 @@ import React from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatHeader from "../components/ChattingHeader";
 import styles from "./ChatPage.module.scss";
+import { useNavigate } from "react-router-dom";
 const ChattingPage: React.FC = () => {
+  const navigate = useNavigate();
   const messages = [
     {
       id: 1,
@@ -29,7 +31,9 @@ const ChattingPage: React.FC = () => {
     },
     { id: 5, text: "정말 감사합니다. 행복하세요", time: "오후 1:25", isSentByMe: true },
   ];
-  const handleLeftClick = () => {};
+  const handleLeftClick = () => {
+    navigate(-1);
+  };
   const handleRightClick = () => {};
 
   return (
