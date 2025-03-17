@@ -7,13 +7,13 @@ import RedDot_Icon from "@assets/Icons/headers/redDot.svg?react";
 interface Props {
   handleSearchClick: () => void;
   handleAlertClick: () => void;
-  isExistNoReadAlarms: boolean;
+  isExistUnReadAlarms: boolean;
 }
 
 const ChatListHeader: React.FC<Props> = ({
   handleAlertClick,
   handleSearchClick,
-  isExistNoReadAlarms,
+  isExistUnReadAlarms,
 }) => {
   return (
     <div className={styles.mainContainer}>
@@ -32,7 +32,7 @@ const ChatListHeader: React.FC<Props> = ({
             onClick={handleAlertClick}
             className={styles.alertIcon}
           />
-          {isExistNoReadAlarms && <RedDot_Icon className={styles.redDotIcon} />}
+          {isExistUnReadAlarms && <RedDot_Icon className={styles.redDotIcon} />}
         </div>
       </div>
     </div>

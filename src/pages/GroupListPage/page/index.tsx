@@ -3,7 +3,7 @@ import BottomNavBar from "@components/nav-bar/BottomNavBar";
 import styles from "./groupList.module.scss";
 import GroupItem from "../components/GroupItem";
 import Icon_add from "../../../assets/Icons/Icon_add_circle.svg?react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useOutletContext } from "react-router-dom";
 import InviteItem from "../components/InviteItem";
 import useAuthStore from "@store/useAuthStore";
 import { useGetGroupList } from "@api/group/getGroupList";
@@ -21,6 +21,9 @@ const GroupListPage: React.FC = () => {
   const { data: groupList } = useGetGroupList(accessToken);
   const { data: groupInviteList } = useGetGroupInviteList(accessToken);
   const [isInviteModalOpen, setIsInviteModalOpen] = useState<boolean>(false);
+  const { notifications } = useOutletContext<{
+    notifications: IGetNotificationListResponseBodyType;
+  }>();
 
   const { mutate: acceptInvite } = usePutGroupInviteAccept(accessToken, setIsInviteModalOpen);
   const { mutate: rejectInvite } = useDeleteGroupInvite(accessToken, setIsInviteModalOpen);
@@ -33,14 +36,17 @@ const GroupListPage: React.FC = () => {
     rejectInvite(groupId);
   };
 
-  const isExistUnReadNotification = true;
+  const isExistUnReadNotification =
+    notifications && notifications.notificationList.length > 0
+      ? notifications.notificationList.some((notification) => !notification.read)
+      : false;
 
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
         title="planU"
         rightType="alert"
-        isExistNoReadAlarms={isExistUnReadNotification}
+        isExistUnReadAlarms={isExistUnReadNotification}
         handleClick={() => {
           navigate("/notificationList");
         }}
@@ -51,10 +57,9 @@ const GroupListPage: React.FC = () => {
           <div className={styles.ContentBox}>
             <p className={styles.TitleP}>Invitation Request</p>
             {groupInviteList.data.map((groupInviteItem) => (
-              <>
+              <div key={groupInviteItem.groupId}>
                 <InviteItem
                   groupInviteItem={groupInviteItem}
-                  key={groupInviteItem.groupId}
                   setIsInviteModalOpen={setIsInviteModalOpen}
                 />
                 {isInviteModalOpen && (
@@ -67,7 +72,7 @@ const GroupListPage: React.FC = () => {
                     handleRejectClick={() => handleRejectClick(groupInviteItem.groupId)}
                   />
                 )}
-              </>
+              </div>
             ))}
           </div>
         </>
@@ -78,7 +83,7 @@ const GroupListPage: React.FC = () => {
         <p className={styles.TitleP}>MyGroup</p>
         {groupList &&
           groupList.data.map((groupItem) => (
-            <GroupItem groupItem={groupItem} key={groupItem.groupId} />
+            <GroupItem groupItem={groupItem} key={groupItem.groupId + groupItem.groupName} />
           ))}
       </div>
       <div className={styles.Border} />

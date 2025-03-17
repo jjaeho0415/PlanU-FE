@@ -1,6 +1,6 @@
 import apiRoutes from "@api/apiRoutes"
 import api from "@api/fetcher"
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 const postReadNotification = async (authorization: string, notificationId: number) => {
     const response = api.post<IResponseType>({
@@ -11,7 +11,11 @@ const postReadNotification = async (authorization: string, notificationId: numbe
 }
 
 export const usePostReadNotification = (authorization: string) => {
+    const queryClient = useQueryClient();
     return useMutation({
         mutationFn: (notificationId: number) => postReadNotification(authorization, notificationId),
+        onSuccess: () => queryClient.invalidateQueries({
+            queryKey: ["NOTIFICATION_LIST"]
+        })
     })
 }

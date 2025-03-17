@@ -103,3 +103,36 @@ type IGroupAvailableDatesRankItemType = {
   date: string;
   countOfAvailableMembers: number;
 };
+
+//그룹 일정 상세 조회
+type IParticipants = {
+  profileImage: string;
+  name: string;
+  username: string;
+};
+
+type IGetGroupScheduleDetailType = {
+  groupScheduleId: number;
+  title: string;
+  color: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  participants: IParticipants[];
+  memo: string;
+};
+
+type IGetMyScheduleDetailType = {
+  id: number;
+  title: string;
+  color: string;
+  startDate: string;
+  endDate: string;
+  location: string;
+  latitude: number;
+  longitude: number;
+  participants: IParticipants[];
+  memo: string;
+};

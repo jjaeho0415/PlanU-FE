@@ -10,7 +10,7 @@ interface Props {
 }
 
 // 생일자 카드도 만들어야함 조건문 사용해서
-const EventCard: React.FC<Props> = ({ scheduleItem, groupId }) => {
+const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "-1" }) => {
   const navigate = useNavigate();
 
   const handleShowScheduleDetail = () => {
