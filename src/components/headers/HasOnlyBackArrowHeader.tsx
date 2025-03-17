@@ -28,7 +28,7 @@ const HasOnlyBackArrowHeader: React.FC<Props> = ({
       </div>
       <div className={styles.titleSection}>{title}</div>
       {title === "알림" && (
-        <MiniButton buttonText="모두 읽음" color="purple_light" onClick={handleReadAllClick} />
+        <MiniButton buttonText="모두 읽기" color="purple_light" onClick={handleReadAllClick} />
       )}
     </div>
   );
