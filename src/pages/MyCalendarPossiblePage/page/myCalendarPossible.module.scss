@@ -25,6 +25,9 @@
 
 .scheduleSection {
   padding: 0 20px;
+  display:flex;
+  flex-direction: column;
+  gap: 20px;
 
   .scheduleHeader {
     font-size: 19px;
@@ -40,4 +43,5 @@
   display: flex;
   justify-content: center;
   padding: 10px 0;
+  margin-top: 10px;
 }
