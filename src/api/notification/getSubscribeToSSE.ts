@@ -58,7 +58,6 @@ export const getSubscribeToSSE = async (accessToken: string, queryClient: QueryC
                 "GROUP_LIST",
                 "GROUP_INVITE_LIST",
                 "GROUP_MEMBER_LIST",
-                "FRIEND_LIST",
                 "GROUP_MEMBER_INVITE_LIST",
               ].forEach((key) =>
                 queryClient.invalidateQueries({
@@ -86,6 +85,20 @@ export const getSubscribeToSSE = async (accessToken: string, queryClient: QueryC
               queryClient.invalidateQueries({
                 queryKey: ["COMMENT_LIST"],
               });
+            }
+
+            if (parsedData.eventType === "GROUP_INVITATION_CANCELLED") {
+              queryClient.invalidateQueries({
+                queryKey: ["GROUP_INVITE_LIST"],
+              });
+            }
+
+            if (parsedData.eventType === "GROUP_MEMBER_LEFT") {
+              ["GROUP_MEMBER_INVITE_LIST", "GROUP_MEMBER_LIST"].forEach((key) =>
+                queryClient.invalidateQueries({
+                  queryKey: [key],
+                }),
+              );
             }
 
             queryClient.invalidateQueries({

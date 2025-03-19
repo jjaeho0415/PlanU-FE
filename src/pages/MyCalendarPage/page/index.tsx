@@ -73,7 +73,7 @@ const MyCalendarPage: React.FC = () => {
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
 
   const handleMiniCalendarClick = () => {
-    navigate("/myCalendarPossible");
+    navigate("/myCalendar/possible");
   };
 
   return (

@@ -32,7 +32,8 @@ const apiRoutes = {
   chatRoomsList: "/chats",
   // 알림 관련
   readNotification: "/notification/read",
-  notificationList: "/notification/list"
+  notificationList: "/notification/list",
+  readAllNotifications: "/notification/read-all",
 };
 
 export default apiRoutes;

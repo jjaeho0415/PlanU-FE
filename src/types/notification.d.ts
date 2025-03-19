@@ -16,7 +16,9 @@ type INotificationItemType = {
     | "GROUP_EXPEL"
     | "GROUP_SCHEDULE_DELETE"
     | "GROUP_SCHEDULE_CREATE"
-    | "COMMENT";
+    | "COMMENT"
+    | "GROUP_INVITATION_CANCELLED"
+    | "GROUP_MEMBER_LEFT";
   contents: string;
   read: boolean;
   relatedUrl: string;
