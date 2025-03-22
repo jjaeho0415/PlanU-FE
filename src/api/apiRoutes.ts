@@ -33,7 +33,9 @@ const apiRoutes = {
   //채팅 관련
   chatMessages: "/chats/messages",
   // 알림 관련
-  readNotification: "/notifications/read",
+  readNotification: "/notification/read",
+  notificationList: "/notification/list",
+  readAllNotifications: "/notification/read-all",
 };
 
 export default apiRoutes;
