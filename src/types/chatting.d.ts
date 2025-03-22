@@ -12,3 +12,18 @@ type IChatRoomResponseType = {
   lastChatTime: string;
   unreadChats: number;
 };
+
+type IChatItem = {
+  type: number;
+  messageId: number;
+  message: string;
+  sender: string;
+  unReadCount: number;
+  chatDate: string;
+  chatTime: string;
+  profileImageURL: string;
+};
+
+type IChatMessageResponse = {
+  data: IChatItem[];
+};

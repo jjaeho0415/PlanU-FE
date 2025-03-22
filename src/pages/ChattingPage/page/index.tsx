@@ -1,34 +1,75 @@
 import { default as Logo, default as ProfileEditPage } from "@assets/images/chat.jpg";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatHeader from "../components/ChattingHeader";
 import styles from "./ChatPage.module.scss";
+import { Client } from "@stomp/stompjs";
+import SockJS from "sockjs-client";
+import { useGetChatMessages } from "@api/chat/getChatMessages";
+import useAuthStore from "@store/useAuthStore";
+import { useParams } from "react-router-dom";
+import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
+
 const ChattingPage: React.FC = () => {
-  const messages = [
-    {
-      id: 1,
-      text: "안녕하세요. Plan U에 가입하신 것을 환영합니다.",
-      time: "오전 11:28",
-      isSentByMe: false,
-      userImage: ProfileEditPage,
-    },
-    {
-      id: 2,
-      text: "소중한 사람들과 소중한 약속을 계획해보세요",
-      time: "오전 11:29",
-      isSentByMe: false,
-      userImage: ProfileEditPage,
-    },
-    { id: 3, text: "Plan U에서는 위치 공유도 가능합니다.", time: "오후 12:09", isSentByMe: true },
-    {
-      id: 4,
-      text: "오늘도 좋은 하루 되세요!",
-      time: "오후 12:11",
-      isSentByMe: false,
-      userImage: ProfileEditPage,
-    },
-    { id: 5, text: "정말 감사합니다. 행복하세요", time: "오후 1:25", isSentByMe: true },
-  ];
+  const { accessToken } = useAuthStore();
+  const { groupId } = useParams<{ groupId: string }>();
+  const [client, setClient] = useState<Client | null>(null);
+  const [connected, setConnected] = useState<boolean>(false);
+  const [messages, setMessages] = useState<IChatMessageResponse[]>([]);
+  const [messageInput, setMessageInput] = useState<string>("");
+  const { data: chatMessagesData } = useGetChatMessages(accessToken);
+
+  useEffect(() => {
+    const stompClient = new Client({
+      webSocketFactory: () => new SockJS(import.meta.env.VITE_STOMP_URL), // WebSocket 서버 주소
+      debug: (str) => console.log(str),
+      onConnect: () => {
+        setConnected(true);
+        console.log("Connected to WebSocket");
+
+        // 메시지 구독 (예: "/topic/chat" 구독)
+        stompClient.subscribe(`/sub/chat/group/${groupId}`, (message) => {
+          setMessages((prevMessages) => [...prevMessages, JSON.parse(message.body)]);
+        });
+      },
+      onDisconnect: () => {
+        setConnected(false);
+        console.log("Disconnected");
+      },
+      onStompError: (frame) => {
+        console.error("STOMP Error:", frame);
+      },
+    });
+
+    stompClient.activate();
+    setClient(stompClient);
+
+    return () => {
+      stompClient.deactivate();
+    };
+  }, []);
+
+  const setMessageValue = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setMessageInput(e.target.value);
+  };
+
+  const sendMessage = () => {
+    if (client && connected && messageInput.trim() !== "") {
+      const chatMessage = {
+        groupId: groupId,
+        sender: "사용자 이름", // 실제 사용자 정보 적용
+        message: messageInput,
+      };
+
+      client.publish({
+        destination: `/pub/chat/send`, // 서버의 메시지 전송 경로
+        body: JSON.stringify(chatMessage),
+      });
+
+      setMessageInput(""); // 입력창 초기화
+    }
+  };
+
   const handleLeftClick = () => {};
   const handleRightClick = () => {};
 
@@ -42,17 +83,20 @@ const ChattingPage: React.FC = () => {
           handleRightClick={handleRightClick}
         />
       </div>
-
       <div className={styles.chatContainer}>
-        {messages.map((message) => (
+        {chatMessagesData?.data.map((message) => (
           <ChatBubble
-            key={message.id}
-            text={message.text}
-            time={message.time}
-            isSentByMe={message.isSentByMe}
-            userImage={message.userImage}
+            key={message.messageId}
+            text={message.message}
+            time={message.chatTime}
+            isSentByMe={false}
+            userImage={message.profileImageURL}
           />
         ))}
+      </div>
+      <div>
+        <input className={styles.Input} onChange={setMessageValue} value={messageInput} />
+        <Icon_sendMessage onClick={sendMessage} />
       </div>
     </div>
   );

@@ -45,6 +45,14 @@ export default defineConfig(({ mode }) => {
         },
       ],
     },
+    css: {
+      preprocessorOptions: {
+        scss: {
+          javascriptEnabled: true,
+        },
+      },
+    },
+
     server: {
       proxy: {
         "/api": {

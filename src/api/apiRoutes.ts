@@ -28,10 +28,12 @@ const apiRoutes = {
   showRequestFriendList: "/users/friends/request",
   //스케줄 관련
   schedules: "/schedules",
-  //채팅 관련
+  //채팅방 관련
   chatRoomsList: "/chats",
+  //채팅 관련
+  chatMessages: "/chats/messages",
   // 알림 관련
-  readNotification: "/notifications/read"
+  readNotification: "/notifications/read",
 };
 
 export default apiRoutes;
