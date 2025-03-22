@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styles from "./Comment.module.scss";
 import Icon_x from "@assets/Icons/Close/Icon_close.svg?react";
 import Icon_send from "@assets/Icons/scheduleDetail/Icon_send.svg?react";
+import Icon_delete from "@assets/Icons/scheduleDetail/Icon_trashcan.svg?react";
 import { usePostCreateComment } from "@api/schedule/postComment";
 import useAuthStore from "@store/useAuthStore";
 
@@ -19,8 +20,13 @@ const CommentModal: React.FC<props> = ({
   scheduleId,
 }) => {
   const { accessToken } = useAuthStore();
-  const { mutate: createComment } = usePostCreateComment(accessToken, groupId, scheduleId);
   const [message, setMessage] = useState<string>("");
+  const { mutate: createComment } = usePostCreateComment(
+    accessToken,
+    groupId,
+    scheduleId,
+    setMessage,
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -48,6 +54,7 @@ const CommentModal: React.FC<props> = ({
               </div>
               <p className={styles.ContentBox}>{comment.message}</p>
             </div>
+            {<Icon_delete className={styles.DeleteIcon} />}
           </div>
         ))}
       </div>

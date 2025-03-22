@@ -21,6 +21,7 @@ export const usePostCreateComment = (
   authorization: string,
   groupId: string,
   scheduleId: string,
+  setMessage: React.Dispatch<React.SetStateAction<string>>,
 ) => {
   const queryClient = useQueryClient();
 
@@ -30,6 +31,7 @@ export const usePostCreateComment = (
       queryClient.invalidateQueries({
         queryKey: ["GROUP_SCHEDULE_COMMENTS", groupId, scheduleId],
       });
+      setMessage("");
     },
     onError: (error) => {
       alert(error.message);
