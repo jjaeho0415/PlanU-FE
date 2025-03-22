@@ -1,33 +1,45 @@
 import { default as Logo, default as ProfileEditPage } from "@assets/images/chat.jpg";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatHeader from "../components/ChattingHeader";
 import styles from "./ChatPage.module.scss";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
+import { Stomp } from "@stomp/stompjs";
 import { useGetChatMessages } from "@api/chat/getChatMessages";
 import useAuthStore from "@store/useAuthStore";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
 
 const ChattingPage: React.FC = () => {
   const { accessToken } = useAuthStore();
+  const navigate = useNavigate();
   const { groupId } = useParams<{ groupId: string }>();
   const [client, setClient] = useState<Client | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const [messages, setMessages] = useState<IChatMessageResponse[]>([]);
+  const [messages, setMessages] = useState<IChatItem[]>([]);
   const [messageInput, setMessageInput] = useState<string>("");
-  const { data: chatMessagesData } = useGetChatMessages(accessToken);
+  //const { data: chatMessagesData } = useGetChatMessages(accessToken);
+
+  // useEffect(() => {
+  //   if (chatMessagesData) {
+  //     setMessages(chatMessagesData.data);
+  //   }
+  // }, [chatMessagesData]);
 
   useEffect(() => {
+    if (!groupId) return;
+
     const stompClient = new Client({
       webSocketFactory: () => new SockJS(import.meta.env.VITE_STOMP_URL), // WebSocket 서버 주소
       debug: (str) => console.log(str),
+      connectHeaders: {
+        Authorization: `Bearer ${accessToken}`,
+      },
       onConnect: () => {
         setConnected(true);
         console.log("Connected to WebSocket");
 
-        // 메시지 구독 (예: "/topic/chat" 구독)
         stompClient.subscribe(`/sub/chat/group/${groupId}`, (message) => {
           setMessages((prevMessages) => [...prevMessages, JSON.parse(message.body)]);
         });
@@ -47,7 +59,7 @@ const ChattingPage: React.FC = () => {
     return () => {
       stompClient.deactivate();
     };
-  }, []);
+  }, [groupId]);
 
   const setMessageValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessageInput(e.target.value);
@@ -62,7 +74,7 @@ const ChattingPage: React.FC = () => {
       };
 
       client.publish({
-        destination: `/pub/chat/send`, // 서버의 메시지 전송 경로
+        destination: `/pub/chat/group/${groupId}`,
         body: JSON.stringify(chatMessage),
       });
 
@@ -70,7 +82,9 @@ const ChattingPage: React.FC = () => {
     }
   };
 
-  const handleLeftClick = () => {};
+  const handleLeftClick = () => {
+    navigate(-1);
+  };
   const handleRightClick = () => {};
 
   return (
@@ -84,7 +98,7 @@ const ChattingPage: React.FC = () => {
         />
       </div>
       <div className={styles.chatContainer}>
-        {chatMessagesData?.data.map((message) => (
+        {messages.map((message) => (
           <ChatBubble
             key={message.messageId}
             text={message.message}

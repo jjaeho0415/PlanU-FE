@@ -2,12 +2,19 @@ import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
 import PinnedIcon from "@assets/Icons/chatt/pinned.svg?react";
 import React from "react";
 import styles from "./chatItem.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface ChatItemProps {
   chatRoom: IChatRoomResponseType;
 }
 
 const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
+  const navigate = useNavigate();
+
+  const handleChatRoomClick = () => {
+    navigate(`/group/${chatRoom.groupId}/chatting`);
+  };
+
   return (
     <div className={styles.chatItem}>
       <img
@@ -27,8 +34,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
 
         <div className={styles.timeInfo}>
           <span className={styles.time}>{chatRoom.lastChatTime}</span>
-          <ArrowIcon className={styles.arrowIcon} />
-
+          <ArrowIcon className={styles.arrowIcon} onClick={handleChatRoomClick} />
           {chatRoom.unreadChats && chatRoom.unreadChats > 0 && (
             <div className={styles.notification}>{chatRoom.unreadChats}</div>
           )}

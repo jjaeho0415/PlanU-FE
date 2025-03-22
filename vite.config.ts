@@ -9,6 +9,9 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
     plugins: [react(), svgr()],
+    define: {
+      global: "window",
+    },
     resolve: {
       alias: [
         {
@@ -52,7 +55,6 @@ export default defineConfig(({ mode }) => {
         },
       },
     },
-
     server: {
       proxy: {
         "/api": {
