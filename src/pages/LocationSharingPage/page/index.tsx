@@ -7,6 +7,7 @@ import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import ArrivalPin from "@assets/images/arrivalPin.png";
 import { ReverseGeocoding } from "@utils/geocoding";
+import { useNavigate } from "react-router-dom";
 
 const arrivalLocationInfo: ILocationInfoType = {
   location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
@@ -18,44 +19,44 @@ const groupMemberList: IGetGroupMemberLocationResponseType[] = [
   {
     name: "최준혁",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
-    lat: 37.5568905,
-    lng: 126.9273886,
+    username: "chlwnsgur",
+    latitude: 37.5568905,
+    longitude: 126.9273886,
   },
   {
     name: "이수현",
+    username: "dltngus",
     profileImage: "https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg",
-    location: "서울특별시 마포구 홍익로",
-    lat: 37.55372,
-    lng: 126.9229984,
+    latitude: 37.55372,
+    longitude: 126.9229984,
   },
   {
     name: "정재호",
+    username: "wjdwogh",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    location: "서울특별시 마포구 홍익로",
-    lat: 37.553,
-    lng: 126.9229984,
+    latitude: 37.553,
+    longitude: 126.9229984,
   },
   {
     name: "김도하",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    location: "서울특별시 마포구 공덕동 445-16",
-    lat: 37.5443027,
-    lng: 126.9497249,
+    latitude: 37.5443027,
+    longitude: 126.9497249,
+    username: "rlaehgk",
   },
   {
     name: "이다은",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    location: "서울특별시 마포구 효창목길",
-    lat: 37.5475011,
-    lng: 126.9598507,
+    username: "dlekdms",
+    latitude: 37.5475011,
+    longitude: 126.9598507,
   },
   {
     name: "이상준",
     profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    location: "경기도 파주시 파주읍 봉서리 361-1",
-    lat: 37.8496353,
-    lng: 126.7894564,
+    latitude: 37.8496353,
+    longitude: 126.7894564,
+    username: "dltkdwns",
   },
 ];
 
@@ -67,20 +68,84 @@ const LocationSharingPage = () => {
   const [userCurrentLatLng, setUserCurrentLatLng] = useState<UserLatLngType>();
   const [userCurrentLocationInfo, setUserCurrentLocationInfo] = useState<ILocationInfoType>();
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
+  const navigate = useNavigate();
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
+  const bottomSheetRef = useRef<HTMLDivElement | null>(null);
+  const startY = useRef<number>(0);
 
+  // PC/데스크탑 버전
+  const handleMouseMove = (e: MouseEvent) => {
+    const deltaY = e.clientY - startY.current;
 
-  const handleGroupMemberClick = (lat: number, lng: number) => {
+    if (deltaY > 50) {
+      setIsBottomSheetOpen(false);
+    } else if (deltaY < -50) {
+      setIsBottomSheetOpen(true);
+    }
+  };
+
+  const handleMouseUp = () => {
+    document.removeEventListener("mousemove", handleMouseMove);
+    document.removeEventListener("mouseup", handleMouseUp);
+  };
+
+  const handleMouseDown = (e: React.MouseEvent) => {
+    startY.current = e.clientY;
+    document.addEventListener("mousemove", handleMouseMove);
+    document.addEventListener("mouseup", handleMouseUp);
+  };
+
+  // 모바일 버전
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startY.current = e.touches[0].clientY;
+  };
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    const deltaY = e.touches[0].clientY - startY.current;
+    if (deltaY > 50) {
+      setIsBottomSheetOpen(false);
+    } else if (deltaY < -50) {
+      setIsBottomSheetOpen(true);
+    }
+  };
+
+  const handleGroupMemberClick = (clickedMember: IGetGroupMemberLocationResponseType) => {
     if (map) {
-      map.panTo(new google.maps.LatLng(lat, lng));
+      map.panTo(new google.maps.LatLng(clickedMember.latitude, clickedMember.longitude));
 
-      markersRef.current.forEach((marker) => {
-        if (marker.position?.lat === lat && marker.position.lng === lng) {
+      markersRef.current.forEach(async (marker) => {
+        const isClickedMarker =
+          marker.position?.lat === clickedMember.latitude &&
+          marker.position.lng === clickedMember.longitude;
+
+        // 클릭된 마커만 스타일 변경
+        if (isClickedMarker) {
+          marker.content = await (
+            await createCustomPin({
+              scale: 2.0,
+              glyph: clickedMember.profileImage,
+              type: "sharing",
+              isClicked: true,
+            })
+          ).element;
+          marker.position = marker.position;
           marker.zIndex = 10;
+        } else {
+          const imgElement =
+            marker.content instanceof HTMLElement ? marker.content.querySelector("img") : null;
+
+          if (imgElement) {
+            const originalPin = await createCustomPin({
+              scale: 2.0,
+              glyph: imgElement.getAttribute("src") || "",
+              type: "sharing",
+              isClicked: false,
+            });
+            marker.content = originalPin.element;
+            marker.zIndex = 1;
+          }
         }
-        else {
-          marker.zIndex = 1;
-        }
-      })
+      });
     }
   };
 
@@ -142,7 +207,7 @@ const LocationSharingPage = () => {
       try {
         const newMap = await initializeMap(
           mapRef.current,
-          { lat: userLocation.lat, lng: userLocation.lng },
+          { lat: userLocation.latitude, lng: userLocation.longitude },
           import.meta.env.VITE_GOOGLE_MAP_ID,
           15,
         );
@@ -152,7 +217,11 @@ const LocationSharingPage = () => {
           glyph: userInfo?.profileImage,
           type: "sharing",
         });
-        await createMarker(newMap, { lat: userLocation.lat, lng: userLocation.lng }, pin.element);
+        await createMarker(
+          newMap,
+          { lat: userLocation.latitude, lng: userLocation.longitude },
+          pin.element,
+        );
 
         setMap(newMap);
 
@@ -162,7 +231,11 @@ const LocationSharingPage = () => {
             glyph: member.profileImage,
             type: "sharing",
           });
-          const memberMarker = await createMarker(newMap, { lat: member.lat, lng: member.lng }, memberPin.element);
+          const memberMarker = await createMarker(
+            newMap,
+            { lat: member.latitude, lng: member.longitude },
+            memberPin.element,
+          );
           markersRef.current.push(memberMarker);
           memberMarker.zIndex = 1;
         });
@@ -172,7 +245,7 @@ const LocationSharingPage = () => {
           glyph: ArrivalPin,
           type: "arrivalPin",
         });
-        
+
         const arrivalMarker = await createMarker(
           newMap,
           {
@@ -191,10 +264,23 @@ const LocationSharingPage = () => {
   }, [userInfo, mapRef.current]);
 
   return (
-    <div className={styles.mainContainer}>
-      <BackArrow_Icon width={30} height={40} className={styles.arrowIcon} />
-      <div className={styles.mapContainer} ref={mapRef} />
-      <div className={styles.bottomSheetContainer}>
+    <>
+      <div className={styles.mainContainer}>
+        <BackArrow_Icon
+          width={30}
+          height={40}
+          className={styles.arrowIcon}
+          onClick={() => navigate(-1)}
+        />
+        <div className={styles.mapContainer} ref={mapRef} />
+      </div>
+      <div
+        className={`${styles.bottomSheetContainer} ${isBottomSheetOpen ? styles.open : ""}`}
+        ref={bottomSheetRef}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onMouseDown={handleMouseDown}
+      >
         <div className={styles.line} />
         <div className={styles.text}>친구</div>
         <div className={styles.groupMemberListContainer}>
@@ -202,14 +288,12 @@ const LocationSharingPage = () => {
             <GroupMemberItem
               key={groupMemberInfo.name}
               groupMemberItem={groupMemberInfo}
-              handleGroupMemberClick={() =>
-                handleGroupMemberClick(groupMemberInfo.lat, groupMemberInfo.lng)
-              }
+              handleGroupMemberClick={() => handleGroupMemberClick(groupMemberInfo)}
             />
           ))}
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
