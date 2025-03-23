@@ -7,9 +7,9 @@ interface ISmallButton {
   onClick: () => void;
 }
 
-const SmallButton: React.FC<ISmallButton> = ({ buttonText, color }) => {
+const SmallButton: React.FC<ISmallButton> = ({ buttonText, color, onClick }) => {
   return (
-    <div className={`${styles.Container} ${styles[color]}`}>
+    <div className={`${styles.Container} ${styles[color]}`} onClick={onClick}>
       <p>{buttonText}</p>
     </div>
   );

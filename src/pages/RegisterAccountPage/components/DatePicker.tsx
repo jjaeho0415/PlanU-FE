@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import styles from "./datePicker.module.scss";
 
 interface Props {
-  userBirth: string;
-  setUserBirth: React.Dispatch<React.SetStateAction<string>>;
+  userBirth: string | null;
+  setUserBirth: React.Dispatch<React.SetStateAction<string | null>>;
   setIsBirthError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

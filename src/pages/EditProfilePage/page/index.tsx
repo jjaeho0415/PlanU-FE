@@ -1,4 +1,11 @@
-import React, { useState } from "react";
+import { useGetUserInfo } from "@api/user/getUserInfo";
+import { useChangePassword } from "@api/user/postChangePassword";
+import { usePostConfirmEmailCode } from "@api/user/postConfirmEmailCode";
+import { usePostEmailVerification } from "@api/user/postEmailVerification";
+import { useVerifyPassword } from "@api/user/postVerifyPassword";
+import { usePutUserInfo } from "@api/user/putUserInfo";
+import useAuthStore from "@store/useAuthStore";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FooterButtons from "../../../components/buttons/SmallButton";
 import HeaderBar from "../../../components/headers/HasOnlyBackArrowHeader";
@@ -11,79 +18,210 @@ import ModalEditableProfileItem from "../components/ModalEditableProfileItem";
 import styles from "./profileEditPage.module.scss";
 
 const EditProfilePage: React.FC = () => {
-  const [isEmailModalOpen, setIsEmailModalOpen] = useState(false);
-  const [email, setEmail] = useState("daeunlee0713@naver.com");
-  const [authCode, setAuthCode] = useState("");
+  const navigate = useNavigate();
+  const { accessToken } = useAuthStore.getState();
+  const { data: userInfo } = useGetUserInfo(accessToken);
 
-  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
-  const [password, setPassword] = useState("");
-  const newPassword = "********";
-  const passwordConfirm = "ehgkjko0630";
-  const [isPasswordConfirmed, setIsPasswordConfirmed] = useState(false);
+  const putUserInfoMutation = usePutUserInfo(accessToken);
+  const postEmailVerificationMutation = usePostEmailVerification();
+  const postConfirmEmailCodeMutation = usePostConfirmEmailCode();
+  const postVerifyPasswordMutation = useVerifyPassword(accessToken);
+  const postChangePasswordMutation = useChangePassword(accessToken);
 
-  const [isBirthDateModalOpen, setIsBirthDateModalOpen] = useState(false);
-  const [userBirth, setUserBirth] = useState("2002-07-13");
-  const [initialBirth, setInitialBirth] = useState(userBirth);
+  const [birthDate, setBirthDate] = useState<string | null>(userInfo?.birthday ?? null);
+  const [authCode, setAuthCode] = useState<string>("");
 
-  // 이메일 모달 열고 닫기
-  const handleEmailModalOpen = () => {
-    setIsEmailModalOpen(true);
-  };
-  const handleEmailModalClose = () => {
-    setIsEmailModalOpen(false);
-  };
+  const [requestUserNoBirthInfo, setRequestUserNoBirthInfo] =
+    useState<IUpdateNoBirthDateProfileRequest>({
+      name: null,
+      email: null,
+      password: null,
+      profileImage: null,
+    });
 
-  // 이메일 인증
-  const handleSendAuthCode = () => {
-    alert("인증번호가 발송되었습니다.");
-  };
+  const [requestUserInfo, setRequestUserInfo] = useState<IUpdateUserProfileRequest>({
+    name: null,
+    email: null,
+    password: null,
+    profileImage: null,
+    birthDate: null,
+  });
 
-  const handleConfirmAuthCode = () => {
-    alert("인증번호가 확인되었습니다.");
-  };
+  useEffect(() => {
+    if (userInfo) {
+      setRequestUserNoBirthInfo({
+        ...requestUserNoBirthInfo,
+        name: userInfo.name,
+        email: userInfo.email,
+      });
+    }
+  }, [userInfo]);
 
-  // 비밀번호 모달 열고 닫기
-  const handlePasswordOpen = () => {
-    setPassword("");
-    setIsPasswordConfirmed(false);
-    setIsPasswordModalOpen(true);
-  };
+  useEffect(() => {
+    setRequestUserInfo({
+      name: requestUserNoBirthInfo.name,
+      email: requestUserNoBirthInfo.email,
+      password: requestUserNoBirthInfo.password,
+      profileImage: requestUserNoBirthInfo.profileImage,
+      birthDate: birthDate,
+    });
+  }, [birthDate, requestUserNoBirthInfo]);
+
+  const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false);
+  const [isBirthDateModalOpen, setIsBirthDateModalOpen] = useState<boolean>(false);
+
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [passwordConfirm, setPasswordConfirm] = useState<string>("");
+  const [isPasswordConfirmed, setIsPasswordConfirmed] = useState<boolean>(false);
 
   const handlePasswordClose = () => {
     setIsPasswordModalOpen(false);
-    setPassword("");
     setIsPasswordConfirmed(false);
   };
 
-  // 기존 비밀번호 검증
-  const handlePasswordVerification = () => {
-    if (password === "123456") {
-      setIsPasswordConfirmed(true);
-      setPassword("");
-    } else {
-      alert("비밀번호가 일치하지 않습니다.");
-    }
-  };
-
-  const handlePasswordConfirm = () => {
-    setIsPasswordModalOpen(false);
-  };
-
-  // 생일 모달 열고 닫기
-  const handleBirthDateOpen = () => {
-    setInitialBirth(userBirth);
-    setIsBirthDateModalOpen(true);
-  };
-
   const handleBirthDateClose = () => {
-    setUserBirth(initialBirth);
     setIsBirthDateModalOpen(false);
   };
 
   const handleBirthDateConfirm = () => {
     setIsBirthDateModalOpen(false);
   };
-  const navigate = useNavigate();
+
+  const handleVerifyPassword = () => {
+    if (!requestUserInfo.password) {
+      alert("기존 비밀번호를 입력해주세요.");
+      return;
+    }
+
+    postVerifyPasswordMutation.mutate(
+      { password: requestUserInfo.password },
+      {
+        onSuccess: () => {
+          setIsPasswordConfirmed(true);
+          alert("비밀번호가 확인되었습니다.");
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
+      },
+    );
+  };
+  const handleUpdateUserInfo = () => {
+    putUserInfoMutation.mutate({
+      ...requestUserInfo,
+      birthDate: birthDate,
+    });
+  };
+
+  const handleCancelChanges = () => {
+    setRequestUserInfo({
+      name: userInfo?.name ?? null,
+      email: userInfo?.email ?? null,
+      password: requestUserInfo.password,
+      profileImage: null,
+      birthDate: userInfo?.birthday ?? null,
+    });
+
+    setBirthDate(userInfo?.birthday ?? null);
+
+    setNewPassword("");
+    setPasswordConfirm("");
+
+    navigate(-1);
+  };
+
+  const handleChangePassword = () => {
+    postChangePasswordMutation.mutate(
+      { newPassword, confirmPassword: passwordConfirm },
+      {
+        onSuccess: () => {
+          alert("비밀번호가 성공적으로 변경되었습니다.");
+
+          setRequestUserInfo((prev) => ({
+            ...prev,
+            password: newPassword,
+          }));
+
+          setIsPasswordModalOpen(false);
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
+      },
+    );
+  };
+  const handleOpenEmailModal = () => {
+    setRequestUserInfo((prev) => ({
+      ...prev,
+      email: "",
+    }));
+    setIsEmailModalOpen(true);
+  };
+
+  const handleCloseEmailModal = () => {
+    setRequestUserInfo((prev) => ({
+      ...prev,
+      email: userInfo?.email ?? "",
+    }));
+    setIsEmailModalOpen(false);
+  };
+
+  const handleSendAuthCode = () => {
+    if (!requestUserInfo.email) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+
+    postEmailVerificationMutation.mutate(
+      {
+        email: requestUserInfo.email,
+        purpose: "CHANGE_EMAIL",
+      },
+      {
+        onSuccess: () => {
+          alert("인증번호가 발송되었습니다.");
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
+      },
+    );
+  };
+
+  const handleAuthCodeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setAuthCode(e.target.value);
+  };
+
+  const handleConfirmAuthCode = () => {
+    if (!authCode) {
+      alert("인증번호를 입력해주세요.");
+      return;
+    }
+
+    const email = requestUserInfo.email ?? "";
+    if (!email) {
+      alert("이메일을 입력해주세요.");
+      return;
+    }
+
+    postConfirmEmailCodeMutation.mutate(
+      {
+        email,
+        verificationCode: authCode,
+        purpose: "CHANGE_EMAIL",
+      },
+      {
+        onSuccess: () => {
+          alert("이메일 인증이 완료되었습니다.");
+          setIsEmailModalOpen(false);
+        },
+        onError: (error) => {
+          alert(error.message);
+        },
+      },
+    );
+  };
 
   return (
     <div className={styles.container}>
@@ -103,51 +241,67 @@ const EditProfilePage: React.FC = () => {
           display: "flex",
         }}
       >
-        <ProfileImageEdit iconType="edit" image={null} setImage={() => {}} />
+        <ProfileImageEdit
+          iconType="edit"
+          image={userInfo?.profileImage || null}
+          setImage={() => {}}
+        />
       </div>
-      <div className={styles.profileItems}>
-        <InlineEditableProfileItem label="이름" value="이다은" onChange={() => {}} />
-        <InlineEditableProfileItem label="아이디" value="Eunii0713" onChange={() => {}} />
 
+      <div className={styles.profileItems}>
+        <InlineEditableProfileItem
+          label="이름"
+          value={requestUserInfo.name}
+          setRequestUserInfo={setRequestUserInfo}
+          requestUserInfo={requestUserInfo}
+        />
+        <InlineEditableProfileItem
+          label="아이디"
+          value={userInfo?.username || ""}
+          setRequestUserInfo={() => {}}
+          requestUserInfo={requestUserInfo}
+          isDisabled={true}
+        />
         <ModalEditableProfileItem
           label="이메일"
-          value="daeunlee0713@naver.com"
-          onArrowClick={handleEmailModalOpen}
+          value={requestUserInfo.email}
+          onArrowClick={handleOpenEmailModal}
         />
         <ModalEditableProfileItem
           label="비밀번호"
-          value="********"
-          onArrowClick={handlePasswordOpen}
+          value="**********"
+          onArrowClick={() => setIsPasswordModalOpen(true)}
         />
         <ModalEditableProfileItem
           label="생일"
-          value={userBirth}
-          onArrowClick={handleBirthDateOpen}
+          value={birthDate ?? userInfo?.birthday ?? ""}
+          onArrowClick={() => setIsBirthDateModalOpen(true)}
         />
       </div>
       <div className={styles.footerButtons}>
-        <FooterButtons buttonText="다음에" color="light" onClick={() => {}} />
-        <FooterButtons buttonText="완료" color="default" onClick={() => {}} />
+        <FooterButtons buttonText="취소" color="light" onClick={handleCancelChanges} />
+        <FooterButtons buttonText="완료" color="default" onClick={handleUpdateUserInfo} />
       </div>
 
       {/*이메일 모달*/}
       <BottomSheetModal
         isOpen={isEmailModalOpen}
-        onClose={handleEmailModalClose}
-        onConfirm={handleEmailModalClose}
+        onClose={handleCloseEmailModal}
+        onConfirm={() => setIsEmailModalOpen(false)}
         isPasswordModal={true}
       >
         <InlineEditableProfileItemWithButton
           label="이메일"
-          value={email}
-          onChange={setEmail}
+          value={requestUserInfo.email}
+          setRequestUserInfo={setRequestUserInfo}
+          requestUserInfo={requestUserInfo}
           buttonLabel="인증번호 발송"
           onButtonClick={handleSendAuthCode}
         />
         <InlineEditableProfileItemWithButton
           label="인증번호"
           value={authCode}
-          onChange={setAuthCode}
+          onChange={handleAuthCodeChange}
           buttonLabel="인증 확인"
           onButtonClick={handleConfirmAuthCode}
         />
@@ -159,24 +313,23 @@ const EditProfilePage: React.FC = () => {
         onClose={handleBirthDateClose}
         onConfirm={handleBirthDateConfirm}
       >
-        <DatePicker userBirth={userBirth} setUserBirth={setUserBirth} setIsBirthError={() => {}} />
+        <DatePicker userBirth={birthDate} setUserBirth={setBirthDate} setIsBirthError={() => {}} />
       </BottomSheetModal>
 
-      {/*비밀번호 변경*/}
       <BottomSheetModal
         isOpen={isPasswordModalOpen}
         onClose={handlePasswordClose}
-        onConfirm={handlePasswordConfirm}
+        onConfirm={handleChangePassword}
         isPasswordModal={true}
       >
-        {/*기존 비밀번호 입력*/}
         {!isPasswordConfirmed ? (
           <InlineEditableProfileItemWithButton
             label="기존 비밀번호"
-            value={password}
-            onChange={setPassword}
+            value={requestUserInfo.password}
+            setRequestUserInfo={setRequestUserInfo}
+            requestUserInfo={requestUserInfo}
             buttonLabel="확인"
-            onButtonClick={handlePasswordVerification}
+            onButtonClick={handleVerifyPassword}
           />
         ) : (
           <>
@@ -184,14 +337,14 @@ const EditProfilePage: React.FC = () => {
             <InlineEditableProfileItemWithButton
               label="새로운 비밀번호"
               value={newPassword}
-              onChange={() => {}}
+              onChange={(e) => setNewPassword(e.target.value)}
             />
 
             {/*비밀번호 확인*/}
             <InlineEditableProfileItemWithButton
               label="비밀번호 확인"
               value={passwordConfirm}
-              onChange={() => {}}
+              onChange={(e) => setPasswordConfirm(e.target.value)}
             />
           </>
         )}
