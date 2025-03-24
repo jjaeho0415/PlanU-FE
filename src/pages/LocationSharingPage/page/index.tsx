@@ -9,10 +9,10 @@ import ArrivalPin from "@assets/images/arrivalPin.png";
 import { ReverseGeocoding } from "@utils/geocoding";
 import { useNavigate } from "react-router-dom";
 
-const arrivalLocationInfo: ILocationInfoType = {
+const arrivalLocationInfo: IArrivalLocationInfo = {
   location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
-  lat: 37.5568905,
-  lng: 126.9273886,
+  latitude: 37.5568905,
+  longitude: 126.9273886,
 };
 
 const groupMemberList: IGetGroupMemberLocationResponseType[] = [
@@ -66,12 +66,13 @@ const LocationSharingPage = () => {
   const { accessToken } = useAuthStore.getState();
   const { data: userInfo } = useGetUserInfo(accessToken);
   const [userCurrentLatLng, setUserCurrentLatLng] = useState<UserLatLngType>();
-  const [userCurrentLocationInfo, setUserCurrentLocationInfo] = useState<ILocationInfoType>();
+  const [userCurrentLocationInfo, setUserCurrentLocationInfo] = useState<UserLatLngType>();
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
   const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const bottomSheetRef = useRef<HTMLDivElement | null>(null);
   const startY = useRef<number>(0);
+  const [selectedName, setSelectedName] = useState<string | null>(null);
 
   // PC/데스크탑 버전
   const handleMouseMove = (e: MouseEvent) => {
@@ -130,6 +131,7 @@ const LocationSharingPage = () => {
           ).element;
           marker.position = marker.position;
           marker.zIndex = 10;
+          setSelectedName(clickedMember.name)
         } else {
           const imgElement =
             marker.content instanceof HTMLElement ? marker.content.querySelector("img") : null;
@@ -154,14 +156,14 @@ const LocationSharingPage = () => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         if (
-          userCurrentLatLng?.lat === position.coords.latitude &&
-          userCurrentLatLng?.lng === position.coords.longitude
+          userCurrentLatLng?.latitude === position.coords.latitude &&
+          userCurrentLatLng?.longitude === position.coords.longitude
         ) {
           return;
         }
         setUserCurrentLatLng({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
         });
       },
       (error) => {
@@ -174,11 +176,9 @@ const LocationSharingPage = () => {
   useEffect(() => {
     const reverseGeocoding = async () => {
       if (userCurrentLatLng) {
-        const formatted_address = await ReverseGeocoding(userCurrentLatLng);
         setUserCurrentLocationInfo({
-          lat: userCurrentLatLng.lat,
-          lng: userCurrentLatLng.lng,
-          location: formatted_address,
+          latitude: userCurrentLatLng.latitude,
+          longitude: userCurrentLatLng.longitude,
         });
       }
     };
@@ -249,8 +249,8 @@ const LocationSharingPage = () => {
         const arrivalMarker = await createMarker(
           newMap,
           {
-            lat: arrivalLocationInfo.lat,
-            lng: arrivalLocationInfo.lng,
+            lat: arrivalLocationInfo.latitude,
+            lng: arrivalLocationInfo.longitude,
           },
           arrivalPin.element,
         );
@@ -289,6 +289,8 @@ const LocationSharingPage = () => {
               key={groupMemberInfo.name}
               groupMemberItem={groupMemberInfo}
               handleGroupMemberClick={() => handleGroupMemberClick(groupMemberInfo)}
+              arrivalLocationInfo={arrivalLocationInfo}
+              selectedName={selectedName}
             />
           ))}
         </div>
