@@ -19,13 +19,13 @@ const ChattingPage: React.FC = () => {
   const [connected, setConnected] = useState<boolean>(false);
   const [messages, setMessages] = useState<IChatItem[]>([]);
   const [messageInput, setMessageInput] = useState<string>("");
-  //const { data: chatMessagesData } = useGetChatMessages(accessToken);
+  const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
 
-  // useEffect(() => {
-  //   if (chatMessagesData) {
-  //     setMessages(chatMessagesData.data);
-  //   }
-  // }, [chatMessagesData]);
+  useEffect(() => {
+    if (chatMessagesData) {
+      setMessages(chatMessagesData.data);
+    }
+  }, []);
 
   useEffect(() => {
     if (!groupId) return;
@@ -68,8 +68,7 @@ const ChattingPage: React.FC = () => {
   const sendMessage = () => {
     if (client && connected && messageInput.trim() !== "") {
       const chatMessage = {
-        groupId: groupId,
-        sender: "사용자 이름", // 실제 사용자 정보 적용
+        type: 1,
         message: messageInput,
       };
 
@@ -78,7 +77,13 @@ const ChattingPage: React.FC = () => {
         body: JSON.stringify(chatMessage),
       });
 
-      setMessageInput(""); // 입력창 초기화
+      setMessageInput("");
+    }
+  };
+
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
+      sendMessage();
     }
   };
 
@@ -108,9 +113,14 @@ const ChattingPage: React.FC = () => {
           />
         ))}
       </div>
-      <div>
-        <input className={styles.Input} onChange={setMessageValue} value={messageInput} />
-        <Icon_sendMessage onClick={sendMessage} />
+      <div className={styles.InputContainer}>
+        <input
+          className={styles.Input}
+          value={messageInput}
+          onChange={setMessageValue}
+          onKeyDown={onKeyDown}
+        />
+        <Icon_sendMessage onClick={sendMessage} className={styles.SendIcon} />
       </div>
     </div>
   );

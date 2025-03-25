@@ -16,7 +16,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
   };
 
   return (
-    <div className={styles.chatItem}>
+    <div className={styles.chatItem} onClick={handleChatRoomClick}>
       <img
         src={chatRoom.groupImageUrl}
         alt={`${chatRoom.groupName} 프로필`}
@@ -34,7 +34,7 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
 
         <div className={styles.timeInfo}>
           <span className={styles.time}>{chatRoom.lastChatTime}</span>
-          <ArrowIcon className={styles.arrowIcon} onClick={handleChatRoomClick} />
+          <ArrowIcon className={styles.arrowIcon} />
           {chatRoom.unreadChats && chatRoom.unreadChats > 0 && (
             <div className={styles.notification}>{chatRoom.unreadChats}</div>
           )}
