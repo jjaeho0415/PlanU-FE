@@ -136,3 +136,15 @@ type IGetMyScheduleDetailType = {
   participants: IParticipants[];
   memo: string;
 };
+
+// 나의 달력 일정 유무 조회 api - 나의 달력 페이지
+type IGetMyCalendarCheckEventsResponseBodyType = {
+  myScheduleData: IMyScheduleType[];
+};
+
+type IMyScheduleType = {
+  date: string;
+  isSchedule: boolean;
+  isGroupSchedule: boolean;
+  isBirthday: boolean;
+};
