@@ -111,7 +111,6 @@ export const getSubscribeToSSE = async (accessToken: string, queryClient: QueryC
       }
     }
   } catch (error) {
-    console.log("SSE 연결실패");
     console.error("SSE 오류: ", error);
   }
 };

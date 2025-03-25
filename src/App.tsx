@@ -32,57 +32,60 @@ import EditProfilePage from "@pages/EditProfilePage/page";
 import EditSchedulePage from "@pages/EditSchedulePage/page";
 import CreateSchedulePage from "@pages/CreateSchedulePage/page";
 import NotificationPage from "@pages/NotificationPage/page";
+import { WebSocketProvider } from "@store/webSocketProvider";
 
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route element={<CommonRoute />}>
-            <Route path="/" element={<StartPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-            <Route path="/registerSuccess" element={<RegisterSuccessPage />} />
-            <Route path="/find" element={<FindPage />} />
+    <WebSocketProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route element={<CommonRoute />}>
+              <Route path="/" element={<StartPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/registerSuccess" element={<RegisterSuccessPage />} />
+              <Route path="/find" element={<FindPage />} />
+            </Route>
+            <Route element={<ProtectedRoute />}>
+              <Route path="/registerAccount" element={<RegisterAccountPage />} />
+              <Route path="/notificationList" element={<NotificationPage />} />
+              <Route path="/myCalendar" element={<MyCalendarPage />} />
+              <Route path="/myCalendar/possible" element={<MyCalendarPossiblePage />} />
+              <Route path="/group/:groupId/groupCalendar" element={<GroupCalendarPage />} />
+              <Route
+                path="/group/:groupId/groupCalendar/possible"
+                element={<GroupCalendarPossiblePage />}
+              />
+              <Route path="/chatList" element={<ChatListPage />} />
+              <Route path="/chatList/search" element={<ChatListSearchPage />} />
+              <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
+              <Route path="/myPage" element={<MyPage />} />
+              <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
+              <Route path="/myPage/editProfile" element={<EditProfilePage />} />
+              <Route path="/createSchedule/:groupId" element={<CreateSchedulePage />} />
+              <Route path="/selectLocation" element={<SelectLocationPage />} />
+              <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />
+              <Route path="/editSchedule/:scheduleId" element={<EditSchedulePage />} />
+              <Route
+                path="/group/:groupId/calendar/schedule/:scheduleId"
+                element={<GroupScheduleDetailPage />}
+              />
+              <Route
+                path="/group/:groupId/calendar/schedule/:scheduleId/locationSharing"
+                element={<LocationSharingPage />}
+              />
+              <Route path="/createGroup" element={<CreateGroupPage />} />
+              <Route path="/groupList" element={<GroupListPage />} />
+              <Route path="/group/:groupId" element={<GroupPage />} />
+              <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
+              <Route path="/group/:groupId/inviteMembers" element={<InviteGroupMemberPage />} />
+            </Route>
+            <Route path="*" element={<ErrorPage />} />
           </Route>
-          <Route element={<ProtectedRoute />}>
-            <Route path="/registerAccount" element={<RegisterAccountPage />} />
-            <Route path="/notificationList" element={<NotificationPage />} />
-            <Route path="/myCalendar" element={<MyCalendarPage />} />
-            <Route path="/myCalendar/possible" element={<MyCalendarPossiblePage />} />
-            <Route path="/group/:groupId/groupCalendar" element={<GroupCalendarPage />} />
-            <Route
-              path="/group/:groupId/groupCalendar/possible"
-              element={<GroupCalendarPossiblePage />}
-            />
-            <Route path="/chatList" element={<ChatListPage />} />
-            <Route path="/chatList/search" element={<ChatListSearchPage />} />
-            <Route path="/group/:groupId/chatting" element={<ChattingPage />} />
-            <Route path="/myPage" element={<MyPage />} />
-            <Route path="/myPage/friendsManagement" element={<FriendManagementPage />} />
-            <Route path="/myPage/editProfile" element={<EditProfilePage />} />
-            <Route path="/createSchedule/:groupId" element={<CreateSchedulePage />} />
-            <Route path="/selectLocation" element={<SelectLocationPage />} />
-            <Route path="/mySchedule/:scheduleId" element={<MyScheduleDetailPage />} />
-            <Route path="/editSchedule/:scheduleId" element={<EditSchedulePage />} />
-            <Route
-              path="/group/:groupId/calendar/schedule/:scheduleId"
-              element={<GroupScheduleDetailPage />}
-            />
-            <Route
-              path="/group/:groupId/calendar/schedule/:scheduleId/locationSharing"
-              element={<LocationSharingPage />}
-            />
-            <Route path="/createGroup" element={<CreateGroupPage />} />
-            <Route path="/groupList" element={<GroupListPage />} />
-            <Route path="/group/:groupId" element={<GroupPage />} />
-            <Route path="/group/:groupId/members" element={<GroupMemberPage />} />
-            <Route path="/group/:groupId/inviteMembers" element={<InviteGroupMemberPage />} />
-          </Route>
-          <Route path="*" element={<ErrorPage />} />
-        </Route>
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </WebSocketProvider>
   );
 }
 

@@ -2,6 +2,7 @@ type IArrivalLocationInfo = {
   location?: string;
   latitude: number;
   longitude: number;
+  startTime: string;
 }
 
 type UserLatLngType = {

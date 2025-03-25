@@ -6,11 +6,13 @@ import GroupMemberItem from "../components/GroupMemberItem";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import ArrivalPin from "@assets/images/arrivalPin.png";
-import { ReverseGeocoding } from "@utils/geocoding";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useWebSocket } from "@store/webSocketProvider";
+import { LocationSharingRedirect } from "../LocationSharingRedirect";
 
 const arrivalLocationInfo: IArrivalLocationInfo = {
   location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
+  startTime: "16:59",
   latitude: 37.5568905,
   longitude: 126.9273886,
 };
@@ -61,6 +63,7 @@ const groupMemberList: IGetGroupMemberLocationResponseType[] = [
 ];
 
 const LocationSharingPage = () => {
+  const { groupId, scheduleId } = useParams<{ groupId: string; scheduleId: string }>();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const { accessToken } = useAuthStore.getState();
@@ -73,6 +76,34 @@ const LocationSharingPage = () => {
   const bottomSheetRef = useRef<HTMLDivElement | null>(null);
   const startY = useRef<number>(0);
   const [selectedName, setSelectedName] = useState<string | null>(null);
+  const { stompClient, connectWebSocket } = useWebSocket();
+  // const [groupMemberList, setGroupMemberList] = useState<IGetGroupMemberLocationResponseType[]>([])
+
+  useEffect(() => {
+    if (!arrivalLocationInfo.startTime) {
+      return;
+    }
+
+    connectWebSocket(arrivalLocationInfo.startTime, accessToken);
+
+    if (!stompClient || !groupId) {
+      return;
+    }
+
+    // const subscription = stompClient.subscribe(`/sub/location/groups/${groupId}`, (message) => {
+    //   const updatedLocation: IGetGroupMemberLocationResponseType = JSON.parse(message.body);
+
+    //   // 기존에 동일한 username이 있으면 업데이트, 없으면 새로운 멤버 추가
+    //   setGroupMemberList((prev) => {
+    //     const exists = prev.some((member) => member.username === updatedLocation.username);
+    //     return exists
+    //       ? prev.map((member) =>
+    //           member.username === updatedLocation.username ? updatedLocation : member,
+    //         )
+    //       : [...prev, updatedLocation];
+    //   });
+    // });
+  }, [accessToken, groupId, scheduleId, arrivalLocationInfo, stompClient]);
 
   // PC/데스크탑 버전
   const handleMouseMove = (e: MouseEvent) => {
@@ -131,7 +162,7 @@ const LocationSharingPage = () => {
           ).element;
           marker.position = marker.position;
           marker.zIndex = 10;
-          setSelectedName(clickedMember.name)
+          setSelectedName(clickedMember.name);
         } else {
           const imgElement =
             marker.content instanceof HTMLElement ? marker.content.querySelector("img") : null;
@@ -265,6 +296,7 @@ const LocationSharingPage = () => {
 
   return (
     <>
+      <LocationSharingRedirect/>
       <div className={styles.mainContainer}>
         <BackArrow_Icon
           width={30}

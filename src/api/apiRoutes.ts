@@ -37,7 +37,7 @@ const apiRoutes = {
   notificationList: "/notification/list",
   readAllNotifications: "/notification/read-all",
   //실시간 위치 공유 소켓 연결
-  wsLocation: "/ws-location"
+  locationGroups: "/location/groups"
 };
 
 export default apiRoutes;
