@@ -15,9 +15,9 @@ type SearchLocationResultType = {
 };
 
 type IGetGroupMemberLocationResponseType = {
-  location: string;
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   name: string;
+  username: string;
   profileImage: string;
 };

@@ -3,6 +3,9 @@ import ChatListPage from "@pages/ChatListPage/page";
 import ChatListSearchPage from "@pages/ChatListSearchPage/page";
 import ChattingPage from "@pages/ChattingPage/page";
 import CreateGroupPage from "@pages/CreateGroupPage/page";
+import CreateSchedulePage from "@pages/CreateSchedulePage/page";
+import EditProfilePage from "@pages/EditProfilePage/page";
+import EditSchedulePage from "@pages/EditSchedulePage/page";
 import ErrorPage from "@pages/ErrorPage/page";
 import FindPage from "@pages/FindPage/page";
 import FriendManagementPage from "@pages/FriendManagementPage/page";
@@ -19,6 +22,7 @@ import MyCalendarPage from "@pages/MyCalendarPage/page";
 import MyCalendarPossiblePage from "@pages/MyCalendarPossiblePage/page";
 import MyPage from "@pages/MyPage/page";
 import MyScheduleDetailPage from "@pages/MyScheduleDetailPage/page";
+import NotificationPage from "@pages/NotificationPage/page";
 import RegisterAccountPage from "@pages/RegisterAccountPage/page";
 import RegisterPage from "@pages/RegisterPage/page";
 import RegisterSuccessPage from "@pages/RegisterSuccessPage/page";
@@ -28,10 +32,6 @@ import { Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import "./App.module.css";
 import CommonRoute from "./routes/CommonRoute";
 import ProtectedRoute from "./routes/ProtectedRoute";
-import EditProfilePage from "@pages/EditProfilePage/page";
-import EditSchedulePage from "@pages/EditSchedulePage/page";
-import CreateSchedulePage from "@pages/CreateSchedulePage/page";
-import NotificationPage from "@pages/NotificationPage/page";
 
 function App() {
   return (
