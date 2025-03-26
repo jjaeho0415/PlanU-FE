@@ -9,7 +9,7 @@
 
 .profileImage {
   width: 53px;
-  height: 51px;
+  height: 53px;
   border-radius: 50%;
   margin-right: 7px;
   margin-bottom: 10px;
@@ -52,38 +52,34 @@
 
 .timeInfo {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-end;
   white-space: nowrap;
-  gap: 5px;
-  padding: 10px 0;
-  position: relative;
-  transform: translateY(-30%);
-}
-
-.time {
-  font-size: 13px;
-  color: var(--gray-200);
-}
-
-.arrowIcon {
-  width: 16px;
-  height: 16px;
-  color: var(--gray-200);
-}
-
-.notification {
-  width: 20px;
-  height: 20px;
-  background-color: var(--violet-100);
-  color: var(--white);
-  border-radius: 50%;
-  font-size: 10px;
-  font-weight: bold;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  bottom: -20px;
-  right: 25px;
+  min-width: 58px;
+  gap: 20px;
+  .topBox {
+    display: flex;
+    gap: 4px;
+    .time {
+      font-size: 13px;
+      color: var(--gray-200);
+    }
+    .arrowIcon {
+      width: 16px;
+      height: 16px;
+      color: var(--gray-200);
+    }
+  }
+  .unreadChats {
+    width: 25px;
+    height: 25px;
+    background-color: var(--violet-100);
+    color: var(--white);
+    border-radius: 50%;
+    font-size: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 }

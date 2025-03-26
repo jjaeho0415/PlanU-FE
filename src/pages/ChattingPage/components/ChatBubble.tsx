@@ -2,21 +2,25 @@ import React from "react";
 import styles from "./chatBubble.module.scss";
 
 interface Props {
-  text: string;
-  time: string;
-  isSentByMe: boolean;
-  userImage?: string;
+  message: IChatItem;
+  isSentByMe?: boolean;
 }
 
-const ChatBubble: React.FC<Props> = ({ text, time, isSentByMe, userImage }) => {
+const ChatBubble: React.FC<Props> = ({ message, isSentByMe = false }) => {
   return (
     <div className={`${styles.bubbleContainer} ${isSentByMe ? styles.sent : styles.received}`}>
-      {!isSentByMe && userImage && <img src={userImage} alt="" className={styles.avatar} />}
+      {/* {!isSentByMe && message.profileImageURL && ( */}
+      <img
+        src={message.profileImageURL}
+        alt={`${message.sender}의 프로필이미지`}
+        className={styles.profileImage}
+      />
+      {/* )} */}
       <div className={styles.bubble}>
         <p className={`${styles.text} ${isSentByMe ? styles.sentText : styles.receivedText}`}>
-          {text}
+          {message.message}
         </p>
-        <span className={styles.time}>{time}</span>
+        <span className={styles.time}>{message.chatTime}</span>
       </div>
     </div>
   );

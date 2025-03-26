@@ -24,6 +24,11 @@ type IChatItem = {
   profileImageURL: string;
 };
 
+type IGroupedChatMessages = {
+  chatDate: string;
+  messages: IChatItem[];
+};
+
 type IChatMessageResponse = {
-  data: IChatItem[];
+  data: IGroupedChatMessages[];
 };

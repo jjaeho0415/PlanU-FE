@@ -22,7 +22,6 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
         alt={`${chatRoom.groupName} 프로필`}
         className={styles.profileImage}
       />
-
       <div className={styles.chatContentWrapper}>
         <div className={styles.chatContent}>
           <div className={styles.groupName}>
@@ -31,13 +30,14 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
           </div>
           <div className={styles.lastMessage}>{chatRoom.lastChat}</div>
         </div>
-
         <div className={styles.timeInfo}>
-          <span className={styles.time}>{chatRoom.lastChatTime}</span>
-          <ArrowIcon className={styles.arrowIcon} />
-          {chatRoom.unreadChats && chatRoom.unreadChats > 0 && (
-            <div className={styles.notification}>{chatRoom.unreadChats}</div>
-          )}
+          <div className={styles.topBox}>
+            <span className={styles.time}>{chatRoom.lastChatTime}</span>
+            <ArrowIcon className={styles.arrowIcon} />
+          </div>
+          {/* {chatRoom.unreadChats && chatRoom.unreadChats >= 0 && ( */}
+          <div className={styles.unreadChats}>{chatRoom.unreadChats}</div>
+          {/* )} */}
         </div>
       </div>
     </div>

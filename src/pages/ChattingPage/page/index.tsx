@@ -17,7 +17,8 @@ const ChattingPage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const [client, setClient] = useState<Client | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
-  const [messages, setMessages] = useState<IChatItem[]>([]);
+  const [messages, setMessages] = useState<IGroupedChatMessages[]>([]);
+  // const [lastMessageId, setLastMessageId] = useState<string>("");
   const [messageInput, setMessageInput] = useState<string>("");
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
 
@@ -104,13 +105,12 @@ const ChattingPage: React.FC = () => {
       </div>
       <div className={styles.chatContainer}>
         {messages.map((message) => (
-          <ChatBubble
-            key={message.messageId}
-            text={message.message}
-            time={message.chatTime}
-            isSentByMe={false}
-            userImage={message.profileImageURL}
-          />
+          <>
+            <div>{message.chatDate}</div>
+            {message.messages.map((chat) => (
+              <ChatBubble key={chat.messageId} message={chat} />
+            ))}
+          </>
         ))}
       </div>
       <div className={styles.InputContainer}>
