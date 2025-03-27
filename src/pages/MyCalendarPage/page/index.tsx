@@ -6,12 +6,13 @@ import EventCard from "@components/calendarPage/EventCard";
 import useAuthStore from "@store/useAuthStore";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 
 /*const scheduleList: IGetScheduleListResponseBodyType = {
   schedules: [
@@ -60,18 +61,23 @@ const MyCalendarPage: React.FC = () => {
   const { username } = useParams<{ username: string }>();
   const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
-
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
-
+  const { data: userData } = useGetUserInfo(accessToken);
   const { data: myCheckEvents } = useGetMyCalendarCheckEvents(
     username!,
     format(currentMonth, "yyyy-MM"),
     accessToken,
   );
-
   const { data: myScheduleList } = useGetMyScheduleList(username!, accessToken, selectedDate);
+
+  useEffect(() => {
+    if (userData) {
+      useAuthStore.getState().setUsername(userData.username);
+    }
+  }, [userData]);
+
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
   };

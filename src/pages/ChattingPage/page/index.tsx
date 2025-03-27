@@ -5,20 +5,20 @@ import ChatHeader from "../components/ChattingHeader";
 import styles from "./ChatPage.module.scss";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { Stomp } from "@stomp/stompjs";
 import { useGetChatMessages } from "@api/chat/getChatMessages";
 import useAuthStore from "@store/useAuthStore";
 import { useNavigate, useParams } from "react-router-dom";
 import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
 
 const ChattingPage: React.FC = () => {
-  const { accessToken } = useAuthStore();
+  const { accessToken, username } = useAuthStore();
   const navigate = useNavigate();
   const { groupId } = useParams<{ groupId: string }>();
   const [client, setClient] = useState<Client | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const [messages, setMessages] = useState<IGroupedChatMessages[]>([]);
   // const [lastMessageId, setLastMessageId] = useState<string>("");
+  const chatRef = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const [messageInput, setMessageInput] = useState<string>("");
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
 
@@ -27,6 +27,17 @@ const ChattingPage: React.FC = () => {
       setMessages(chatMessagesData.data);
     }
   }, []);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      const lastMessage = messages[messages.length - 1];
+      const lastChatItem = lastMessage.messages[lastMessage.messages.length - 1];
+
+      if (lastChatItem) {
+        handleChatScroll(lastChatItem.messageId);
+      }
+    }
+  }, [messages]);
 
   useEffect(() => {
     if (!groupId) return;
@@ -42,7 +53,29 @@ const ChattingPage: React.FC = () => {
         console.log("Connected to WebSocket");
 
         stompClient.subscribe(`/sub/chat/group/${groupId}`, (message) => {
-          setMessages((prevMessages) => [...prevMessages, JSON.parse(message.body)]);
+          setMessages((prevMessages) => {
+            try {
+              const newMessage: IChatItem = JSON.parse(message.body);
+              const messageDate = newMessage.chatDate;
+
+              const existingDateIndex = prevMessages.findIndex(
+                (group) => group.chatDate === messageDate,
+              );
+              if (existingDateIndex !== -1) {
+                const updatedMessages = [...prevMessages];
+                updatedMessages[existingDateIndex] = {
+                  ...updatedMessages[existingDateIndex],
+                  messages: [...updatedMessages[existingDateIndex].messages, newMessage],
+                };
+                return updatedMessages;
+              } else {
+                return [...prevMessages, { chatDate: messageDate, messages: [newMessage] }];
+              }
+            } catch (error) {
+              console.error("Invalid message format:", error);
+              return prevMessages;
+            }
+          });
         });
       },
       onDisconnect: () => {
@@ -88,6 +121,12 @@ const ChattingPage: React.FC = () => {
     }
   };
 
+  const handleChatScroll = (id: number) => {
+    if (chatRef.current[id]) {
+      chatRef.current[id]?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
   const handleLeftClick = () => {
     navigate(-1);
   };
@@ -105,12 +144,19 @@ const ChattingPage: React.FC = () => {
       </div>
       <div className={styles.chatContainer}>
         {messages.map((message) => (
-          <>
-            <div>{message.chatDate}</div>
+          <div className={styles.ChatItemContainer}>
+            <div className={styles.Date}>{message.chatDate}</div>
             {message.messages.map((chat) => (
-              <ChatBubble key={chat.messageId} message={chat} />
+              <div
+                className={`${username === chat.sender && styles.SentByMe}`}
+                ref={(el) => {
+                  chatRef.current[chat.messageId] = el;
+                }}
+              >
+                <ChatBubble key={chat.messageId} message={chat} />
+              </div>
             ))}
-          </>
+          </div>
         ))}
       </div>
       <div className={styles.InputContainer}>

@@ -35,9 +35,11 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
             <span className={styles.time}>{chatRoom.lastChatTime}</span>
             <ArrowIcon className={styles.arrowIcon} />
           </div>
-          {/* {chatRoom.unreadChats && chatRoom.unreadChats >= 0 && ( */}
-          <div className={styles.unreadChats}>{chatRoom.unreadChats}</div>
-          {/* )} */}
+          {chatRoom.unreadChats > 0 ? (
+            <div className={styles.unreadChats}>{chatRoom.unreadChats}</div>
+          ) : (
+            <div></div>
+          )}
         </div>
       </div>
     </div>

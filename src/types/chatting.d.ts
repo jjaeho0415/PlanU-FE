@@ -21,7 +21,7 @@ type IChatItem = {
   unReadCount: number;
   chatDate: string;
   chatTime: string;
-  profileImageURL: string;
+  profileImageUrl: string;
 };
 
 type IGroupedChatMessages = {
