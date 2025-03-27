@@ -1,29 +1,20 @@
+import { useGetMyCalendarCheckEvents } from "@api/calendar/getMyCalendarCheckEvents";
+import { useGetMyScheduleList } from "@api/calendar/getMyScheduleList";
 import EditIcon from "@assets/Icons/myCalendar/EditIcon.svg?react";
-import React, { useState } from "react";
+import BirthdayCard from "@components/calendarPage/BirthdayCard";
+import EventCard from "@components/calendarPage/EventCard";
+import useAuthStore from "@store/useAuthStore";
+import { format } from "date-fns";
+import { ko } from "date-fns/locale";
+import React, { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
-import EventCard from "@components/calendarPage/EventCard";
-import { useNavigate } from "react-router-dom";
-import { ko } from "date-fns/locale";
-import { format } from "date-fns";
-import BirthdayCard from "@components/calendarPage/BirthdayCard";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 
-interface IGetScheduleType {
-  date: string;
-  isSchedule: boolean;
-  isBirthday: boolean;
-}
-
-const scheduleData: IGetScheduleType[] = [
-  { date: "2025-03-04", isSchedule: true, isBirthday: false },
-  { date: "2025-03-13", isSchedule: false, isBirthday: true },
-  { date: "2025-03-16", isSchedule: true, isBirthday: true },
-  { date: "2025-03-26", isSchedule: true, isBirthday: false },
-];
-
-const scheduleList: IGetScheduleListResponseBodyType = {
+/*const scheduleList: IGetScheduleListResponseBodyType = {
   schedules: [
     {
       id: 1,
@@ -63,19 +54,36 @@ const scheduleList: IGetScheduleListResponseBodyType = {
     },
   ],
   birthdayPerson: ["최준혁", "김도하"],
-};
+};*/
 
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
+  const { username } = useParams<{ username: string }>();
+  const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
-  const [currentMonth, setCurrentMonth] = useState<Date>(new Date())
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
+  const { data: userData } = useGetUserInfo(accessToken);
+  const { data: myCheckEvents } = useGetMyCalendarCheckEvents(
+    username!,
+    format(currentMonth, "yyyy-MM"),
+    accessToken,
+  );
+  const { data: myScheduleList } = useGetMyScheduleList(username!, accessToken, selectedDate);
+
+  useEffect(() => {
+    if (userData) {
+      useAuthStore.getState().setUsername(userData.username);
+    }
+  }, [userData]);
 
   const handleMiniCalendarClick = () => {
-    navigate("/myCalendarPossible");
+    navigate("/myCalendar/possible");
   };
-
+  const handleGoCreateSchedule = () => {
+    navigate("/createSchedule/my");
+  };
   return (
     <div className={styles.Container}>
       <CalendarHeader
@@ -88,7 +96,7 @@ const MyCalendarPage: React.FC = () => {
         <div className={styles.calendarSection}>
           <Calendar
             type="view"
-            scheduleData={scheduleData}
+            scheduleData={myCheckEvents?.myScheduleData}
             setSelectedDate={setSelectedDate}
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
@@ -97,25 +105,21 @@ const MyCalendarPage: React.FC = () => {
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
             <h1 className={styles.scheduleHeader}>{formattedDate}</h1>
-            <EditIcon
-              className={styles.editIcon}
-              onClick={() => {
-                navigate("/createSchedule/my");
-              }}
-            />
+            <EditIcon className={styles.editIcon} onClick={handleGoCreateSchedule} />
           </div>
           <div className={styles.subText}>나의 스케줄</div>
           <div className={styles.cardSection}>
-            {scheduleList?.schedules.length === 0 && scheduleList?.birthdayPerson.length === 0 ? (
+            {myScheduleList?.schedules.length === 0 &&
+            myScheduleList?.birthdayPerson.length === 0 ? (
               <div className={styles.noEventCardSection}>일정이 없습니다.</div>
             ) : (
-              scheduleList && (
+              myScheduleList && (
                 <>
-                  {scheduleList.birthdayPerson.map((birthdayName,index) => (
+                  {myScheduleList.birthdayPerson.map((birthdayName, index) => (
                     <BirthdayCard birthdayName={birthdayName} key={birthdayName + index} />
                   ))}
-                  {scheduleList.schedules.map((scheduleItem) => (
-                    <EventCard scheduleItem={scheduleItem} key={scheduleItem.id}/>
+                  {myScheduleList.schedules.map((scheduleItem) => (
+                    <EventCard scheduleItem={scheduleItem} key={scheduleItem.id} />
                   ))}
                 </>
               )

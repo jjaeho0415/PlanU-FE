@@ -8,6 +8,10 @@ import styles from "./startPage.module.scss";
 const StartPage: React.FC = () => {
   const navigate = useNavigate();
 
+  const handleKakaoLoginClick = () => {
+    window.location.href = `${import.meta.env.VITE_KAKAO_LOGIN_URL}`;
+  };
+
   return (
     <div className={styles.Container}>
       <div className={styles.LogoBox}></div>
@@ -16,9 +20,7 @@ const StartPage: React.FC = () => {
       <div className={styles.ButtonBox}>
         <LoginButton
           buttonType="login_kakao"
-          onClick={() => {
-            return;
-          }}
+          onClick={handleKakaoLoginClick}
         />
         <LoginButton
           buttonType="login_other"

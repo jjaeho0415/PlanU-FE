@@ -22,7 +22,13 @@ export const createCustomPin = async ({
   scale = 1.2,
   glyph,
   type = "default",
-}: { scale?: number; glyph?: string; type?: "default" | "sharing" | "arrivalPin" } = {}) => {
+  isClicked,
+}: {
+  scale?: number;
+  glyph?: string;
+  type?: "default" | "sharing" | "arrivalPin";
+  isClicked?: boolean;
+} = {}) => {
   if (type === "default") {
     const { PinElement } = (await google.maps.importLibrary("marker")) as google.maps.MarkerLibrary;
     return new PinElement({
@@ -44,6 +50,9 @@ export const createCustomPin = async ({
     pinElement.style.display = "flex";
     pinElement.style.alignItems = "center";
     pinElement.style.justifyContent = "center";
+    pinElement.style.border = isClicked ? "3px solid #5217FA" : "#fff";
+    pinElement.style.width = isClicked ? "60px" : "46px";
+    pinElement.style.height = isClicked ? "60px" : "45px";
   }
 
   if (glyph) {
@@ -54,7 +63,6 @@ export const createCustomPin = async ({
     img.style.height = "100%";
     if (type === "sharing") {
       img.style.borderRadius = "50%";
-      img.style.border = "1px solid white";
       img.style.objectFit = "cover";
     }
 

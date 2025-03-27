@@ -4,23 +4,61 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
-}
 
-.header {
-  margin-bottom: 10px;
-  box-shadow: 0 4px rgba(188, 114, 198, 0.04);
-}
+  .header {
+    margin-bottom: 10px;
+    box-shadow: 0 4px rgba(188, 114, 198, 0.04);
+  }
 
-.chatContainer {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  padding: 10px;
-  overflow-y: auto;
+  .chatContainer {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px;
+    overflow-y: auto;
 
-  &::-webkit-scrollbar {
-    width: 0;
-    height: 0;
+    &::-webkit-scrollbar {
+      width: 0;
+      height: 0;
+    }
+
+    .ChatItemContainer {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+
+      .SentByMe {
+        align-self: flex-end;
+      }
+
+      .Date {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        color: var(--gray-800);
+      }
+    }
+  }
+
+  .InputContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .Input {
+      width: 270px;
+      height: 35px;
+      border-radius: 30px;
+      border: 1.5px solid var(--violet-100);
+      font-size: 15px;
+      padding: 0 10px;
+    }
+    .SendIcon {
+      position: absolute;
+      right: 87px;
+      cursor: pointer;
+    }
   }
 }

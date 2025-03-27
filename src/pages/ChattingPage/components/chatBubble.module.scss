@@ -1,28 +1,23 @@
 .bubbleContainer {
   display: flex;
   align-items: flex-end;
-  margin-bottom: 10px;
   max-width: 100%;
 }
 
-.avatar {
-  width: 40px;
-  height: 40px;
+.profileImage {
+  border: 1px solid black;
+  width: 30px;
+  height: 30px;
   border-radius: 50%;
-  margin-right: 10px;
 }
 
 .bubble {
-  padding: 20px;
+  padding: 6px 12px;
   border-radius: 20px;
-  position: relative;
-  gap: 5px;
-  max-width: 70%;
 }
 
 .sent {
   justify-content: flex-end;
-  position: relative;
 
   .bubble {
     background-color: var(--violet-50);
@@ -30,12 +25,9 @@
     align-items: flex-end;
   }
   .text {
-    color: var(--violet-50);
+    color: black;
   }
   .time {
-    position: absolute;
-    left: -59px;
-    bottom: 0;
     font-size: 11px;
     color: var(--gray-200);
   }
@@ -43,7 +35,6 @@
 
 .received {
   justify-content: flex-start;
-  position: relative;
 
   .bubble {
     background-color: var(--violet);
@@ -51,13 +42,10 @@
     align-items: flex-end;
   }
   .text {
-    color: var(--violet);
+    color: black;
   }
-  .time {
-    font-size: 11px;
-    position: absolute;
-    right: -59px;
-    bottom: 0;
-    color: var(--gray-200);
-  }
+}
+.time {
+  font-size: 11px;
+  color: var(--gray-200);
 }
