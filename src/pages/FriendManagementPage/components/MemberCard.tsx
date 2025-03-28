@@ -5,6 +5,7 @@ import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend"
 import MiniButton from "@components/buttons/MiniButton";
 import useAuthStore from "@store/useAuthStore";
 import styles from "./memberCard.module.scss";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   memberInfo: IFriendItemType;
@@ -24,8 +25,11 @@ const MemberCard: React.FC<Props> = ({
   const { mutate: acceptRequestFriend } = usePostAcceptRequestFriend(accessToken);
   const { mutate: rejectRequestFriend } = useDeleteRejectRequestFriend(accessToken);
   const { mutate: deleteFriend } = useDeleteDeleteFriends(accessToken);
+  const navigate = useNavigate();
 
-  const handleShowFriendCalendar = () => {};
+  const handleShowFriendCalendar = () => {
+    navigate(`/myCalendar/${memberInfo.username}`)
+  };
 
   const handleCancelRequestFriend = () => {
     cancelRequestFriend(memberInfo.username);
