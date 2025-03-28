@@ -51,10 +51,11 @@ type IGetGroupCalendarCheckEventsResponseBodyType = {
   groupScheduleData: IGroupScheduleType[];
 };
 
-type IGroupScheduleType = {
+type IScheduleType = {
   date: string;
   isSchedule: boolean;
   isBirthday: boolean;
+  isGroupSchedule?: boolean;
 };
 
 // 그룹 달력 - 가능한 날짜 조회 api
@@ -139,12 +140,5 @@ type IGetMyScheduleDetailType = {
 
 // 나의 달력 일정 유무 조회 api - 나의 달력 페이지
 type IGetMyCalendarCheckEventsResponseBodyType = {
-  myScheduleData: IMyScheduleType[];
-};
-
-type IMyScheduleType = {
-  date: string;
-  isSchedule: boolean;
-  isGroupSchedule: boolean;
-  isBirthday: boolean;
+  myScheduleData: IScheduleType[];
 };

@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 // 개인 달력 일정 조회 API
 const getMyScheduleList = async (username: string, authorization: string, selectedDate: string) => {
   const response = api.get<IGetScheduleListResponseBodyType>({
-    endpoint: `${apiRoutes.schedules}/${username}/list?startDate=${selectedDate}&endDate=${selectedDate}`,
+    endpoint: `${apiRoutes.schedules}/list/${username}?startDate=${selectedDate}&endDate=${selectedDate}`,
     authorization,
   });
   return response;
