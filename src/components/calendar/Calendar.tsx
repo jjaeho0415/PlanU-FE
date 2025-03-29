@@ -23,7 +23,7 @@ interface Props {
   type: "view" | "myPossible" | "groupPossible";
   availableDates?: string[];
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
-  scheduleData: IGroupScheduleType[] | undefined;
+  scheduleData: IScheduleType[] | undefined;
   groupAvailableDates?: IGroupAvailableDatesCalendarItemType[];
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   currentMonth: Date;
@@ -138,7 +138,9 @@ const Calendar: React.FC<Props> = ({
           >
             {format(day, "d")}
             <div className={styles.icons}>
-              {schedule?.isSchedule && <IsScheduleIcon width={6} height={6} />}
+              {(schedule?.isSchedule || schedule?.isGroupSchedule) && (
+                <IsScheduleIcon width={6} height={6} />
+              )}
               {schedule?.isBirthday && <IsBirthdayIcon width={6} height={6} />}
             </div>
           </div>,
