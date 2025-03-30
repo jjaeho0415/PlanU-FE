@@ -2,7 +2,7 @@
   width: 100%;
   height: 100dvh;
   background-color: var(--white);
-  position: relative;
+  overflow: visible;
   .arrowIcon {
     position: absolute;
     top: 12px;
@@ -14,14 +14,16 @@
     width: 100%;
     height: 100%;
   }
-  .bottomSheetContainer {
+  
+}
+.bottomSheetContainer {
     width: 350px;
     height: 342px;
     border-top-left-radius: 30px;
     border-top-right-radius: 30px;
-    position: absolute;
-    bottom: 0;
+    position: fixed;
     left: 50%;
+    bottom: -312px;
     transform: translateX(-50%);
     z-index: 10;
     background-color: var(--white);
@@ -30,12 +32,14 @@
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+    transition: bottom 0.3s ease-in-out;
     .line {
       width: 70px;
       height: 5px;
       background-color: #d9d9d9;
       border-radius: 30px;
       display: flex;
+      cursor: grab;
     }
     .text {
       font-weight: bold;
@@ -58,4 +62,6 @@
       gap: 5px;
     }
   }
-}
+  .bottomSheetContainer.open{
+    bottom: 0;
+  }

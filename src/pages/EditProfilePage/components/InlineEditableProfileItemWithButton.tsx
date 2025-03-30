@@ -5,20 +5,52 @@ import styles from "./inlineEditableProfileItem.module.scss";
 
 interface Props {
   label: string;
-  value: string;
-  onChange: (newValue: string) => void;
+  value: string | null;
+  setRequestUserInfo?: React.Dispatch<React.SetStateAction<IUpdateUserProfileRequest>>;
+  requestUserInfo?: IUpdateUserProfileRequest;
   buttonLabel?: string;
   onButtonClick?: () => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 const InlineEditableProfileItemWithButton: React.FC<Props> = ({
   label,
   value,
-  onChange,
+  setRequestUserInfo,
+  requestUserInfo,
   buttonLabel,
   onButtonClick,
+  onChange,
 }) => {
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e);
+    } else if (setRequestUserInfo && requestUserInfo) {
+      if (label === "이메일") {
+        setRequestUserInfo({
+          ...requestUserInfo,
+          email: e.target.value,
+        });
+      } else if (label === "기존 비밀번호") {
+        setRequestUserInfo({
+          ...requestUserInfo,
+          password: e.target.value,
+        });
+      } else if (label === "새로운 비밀번호") {
+        setRequestUserInfo({
+          ...requestUserInfo,
+          password: e.target.value,
+        });
+      } else if (label === "비밀번호 확인") {
+        setRequestUserInfo({
+          ...requestUserInfo,
+          password: e.target.value,
+        });
+      }
+    }
+  };
 
   const togglePasswordVisibility = () => {
     setIsPasswordVisible((prev) => !prev);
@@ -30,14 +62,16 @@ const InlineEditableProfileItemWithButton: React.FC<Props> = ({
       <div className={styles.inputWrapper}>
         <input
           className={styles.input}
-          type={isPasswordVisible ? "text" : "password"}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
+          type={label.includes("비밀번호") ? (isPasswordVisible ? "text" : "password") : "text"}
+          value={value ?? ""}
+          onChange={handleInputChange}
         />
 
-        <button type="button" className={styles.iconButton} onClick={togglePasswordVisibility}>
-          {isPasswordVisible ? <EyeOpenIcon /> : <EyeClosedIcon />}
-        </button>
+        {label.includes("비밀번호") && (
+          <button type="button" className={styles.iconButton} onClick={togglePasswordVisibility}>
+            {isPasswordVisible ? <EyeOpenIcon /> : <EyeClosedIcon />}
+          </button>
+        )}
 
         {buttonLabel && onButtonClick && (
           <button className={styles.button} onClick={onButtonClick}>

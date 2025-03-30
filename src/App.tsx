@@ -48,6 +48,7 @@ function App() {
           <Route element={<ProtectedRoute />}>
             <Route path="/registerAccount" element={<RegisterAccountPage />} />
             <Route path="/notificationList" element={<NotificationPage />} />
+            <Route path="/myCalendar/:username" element={<MyCalendarPage />} />
             <Route path="/myCalendar" element={<MyCalendarPage />} />
             <Route path="/myCalendar/possible" element={<MyCalendarPossiblePage />} />
             <Route path="/group/:groupId/groupCalendar" element={<GroupCalendarPage />} />

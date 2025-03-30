@@ -1,24 +1,38 @@
-import React, { useState } from "react";
+import React from "react";
 import styles from "./inlineEditableProfileItem.module.scss";
 
 interface Props {
   label: string;
-  value: string;
-  onChange: (value: string) => void;
+  value: string | null;
+  setRequestUserInfo: React.Dispatch<React.SetStateAction<IUpdateUserProfileRequest>>;
+  requestUserInfo: IUpdateUserProfileRequest;
+  isDisabled?: boolean;
 }
 
-const InlineEditableProfileItem: React.FC<Props> = ({ label, value, onChange }) => {
-  const [inputValue, setInputValue] = useState(value);
-
+const InlineEditableProfileItem: React.FC<Props> = ({
+  label,
+  value,
+  setRequestUserInfo,
+  requestUserInfo,
+  isDisabled = false,
+}) => {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-    onChange(e.target.value);
+    setRequestUserInfo({
+      ...requestUserInfo,
+      name: e.target.value,
+    });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.label}>{label}</div>
-      <input type="text" value={inputValue} onChange={handleInputChange} className={styles.input} />
+      <input
+        type="text"
+        value={value ?? ""}
+        onChange={handleInputChange}
+        className={styles.input}
+        disabled={isDisabled}
+      />
     </div>
   );
 };
