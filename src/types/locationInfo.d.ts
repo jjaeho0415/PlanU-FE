@@ -1,10 +1,12 @@
-type ILocationInfoType  =  UserLatLngType & {
-  location: string;
-};
+type IArrivalLocationInfo = {
+  location?: string;
+  latitude: number;
+  longitude: number;
+}
 
 type UserLatLngType = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
 };
 
 type SearchLocationResultType = {
