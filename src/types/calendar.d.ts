@@ -148,3 +148,9 @@ type IMyScheduleType = {
   isGroupSchedule: boolean;
   isBirthday: boolean;
 };
+
+// 나의 달력 - 가능한 날짜 조회
+interface AvailableDatesParams {
+  startDate: string; 
+  endDate: string;   
+}

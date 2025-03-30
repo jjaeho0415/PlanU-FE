@@ -1,23 +1,23 @@
-import React, { JSX } from "react";
+import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
+import IsBirthdayIcon from "@assets/Icons/calendar/isBirthdayIcon.svg?react";
+import IsScheduleIcon from "@assets/Icons/calendar/isScheduleIcon.svg?react";
 import {
+  addDays,
   addMonths,
-  subMonths,
-  startOfMonth,
   endOfMonth,
-  startOfWeek,
   endOfWeek,
   format,
-  addDays,
-  isSameMonth,
-  isSameDay,
-  startOfDay,
   isAfter,
+  isSameDay,
+  isSameMonth,
+  startOfDay,
+  startOfMonth,
+  startOfWeek,
+  subMonths,
 } from "date-fns";
-import styles from "./Calendar.module.scss";
-import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
-import IsScheduleIcon from "@assets/Icons/calendar/isScheduleIcon.svg?react";
-import IsBirthdayIcon from "@assets/Icons/calendar/isBirthdayIcon.svg?react";
+import React, { JSX } from "react";
 import { DAY_LIST, HOLIDAYS } from "../../constants/holidays";
+import styles from "./Calendar.module.scss";
 
 interface Props {
   type: "view" | "myPossible" | "groupPossible";
@@ -28,6 +28,8 @@ interface Props {
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   currentMonth: Date;
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
+   isEditing?: boolean;
+
 }
 
 const Calendar: React.FC<Props> = ({
@@ -39,6 +41,7 @@ const Calendar: React.FC<Props> = ({
   setSelectedDate,
   currentMonth,
   setCurrentMonth,
+  isEditing, 
 }) => {
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => subMonths(prev, 1));
@@ -79,7 +82,7 @@ const Calendar: React.FC<Props> = ({
       const selectedDate = startOfDay(new Date(date));
       setSelectedDate(date);
 
-      if (type === "myPossible" && !isAfter(today, selectedDate)) {
+      if (type === "myPossible" && isEditing && !isAfter(today, selectedDate)) {
         setAvailableDates!((prev) => {
           if (prev.includes(date)) {
             return prev.filter((d) => d !== date);

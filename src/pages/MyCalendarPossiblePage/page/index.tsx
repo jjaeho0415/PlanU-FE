@@ -1,12 +1,15 @@
-import React, { useEffect, useState } from "react";
-import EditButton from "../../../components/buttons/DefaultButton";
-import Calendar from "../../../components/calendar/Calendar";
-import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";
-import Footer from "../../../components/nav-bar/BottomNavBar";
-import styles from "./myCalendarPossible.module.scss";
+import { useGetMyAvailableDates } from "@api/calendar/getMyAvailableDates";
+import { postMyAvailableDates } from "@api/calendar/postMyAvailableDates";
+import EditButton from "@components/buttons/DefaultButton";
+import Calendar from "@components/calendar/Calendar";
 import EventCard from "@components/calendarPage/EventCard";
-import { format } from "date-fns";
+import CalendarHeader from "@components/headers/HasOnlyBackArrowHeader";
+import Footer from "@components/nav-bar/BottomNavBar";
+import { useQueryClient } from "@tanstack/react-query";
+import { endOfMonth, format, startOfMonth } from "date-fns";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import styles from "./myCalendarPossible.module.scss";
 
 interface IGetScheduleType {
   date: string;
@@ -15,12 +18,46 @@ interface IGetScheduleType {
 }
 
 const MyCalendarPossiblePage: React.FC = () => {
-  const [availableDates, setAvailableDates] = useState<string[]>([]);
   const navigate = useNavigate();
   const [isEditing, setIsEditing] = useState(false);
+
   const currentDate = new Date();
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
-  const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
+  const [, setSelectedDate] = useState<string>(
+    format(currentDate, "yyyy-MM-dd")
+  );
+  
+  const [availableDates, setAvailableDates] = useState<string[]>([]);
+
+  const startDate = format(startOfMonth(currentMonth), "yyyy-MM-dd");
+  const endDate = format(endOfMonth(currentMonth), "yyyy-MM-dd");
+
+  const raw = localStorage.getItem("auth-storage");
+  const token = raw ? JSON.parse(raw).state.accessToken : "";
+
+  const { data: fetchedAvailableDates = [] } = useGetMyAvailableDates(token, {
+    startDate,
+    endDate,
+  });
+
+  useEffect(() => {
+    if (!isEditing && fetchedAvailableDates.length > 0) {
+      setAvailableDates(fetchedAvailableDates);
+    }
+  }, [fetchedAvailableDates, isEditing]);
+
+  const queryClient = useQueryClient();
+
+  const handleSaveAvailableDates = async () => {
+    try {
+      await postMyAvailableDates(token, availableDates);
+      setIsEditing(false);
+      queryClient.invalidateQueries({
+        queryKey: ['MY_AVAILABLE_DATES'],
+      });
+    } catch (error) {
+    }
+  };
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },
@@ -28,9 +65,11 @@ const MyCalendarPossiblePage: React.FC = () => {
     { date: "2025-01-16", isSchedule: true, isBirthday: true },
     { date: "2025-01-26", isSchedule: true, isBirthday: false },
   ];
+
   const handleEditClick = () => {
     setIsEditing((prev) => !prev);
   };
+
   return (
     <div className={styles.page}>
       <CalendarHeader
@@ -48,11 +87,12 @@ const MyCalendarPossiblePage: React.FC = () => {
             setAvailableDates={setAvailableDates}
             scheduleData={scheduleData}
             setSelectedDate={setSelectedDate}
-            currentMonth={currentDate}
+            currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
+            isEditing={isEditing}
           />
         </div>
-        <div className={styles.scheduleSection}>
+       <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeader}>1월 12일 (일)</div>
           <div className={styles.subText}>오늘 나의 스케줄</div>
           <EventCard
@@ -79,7 +119,10 @@ const MyCalendarPossiblePage: React.FC = () => {
           />
         </div>
         <div className={styles.editButton}>
-          <EditButton buttonText={isEditing ? "완료" : "수정하기"} onClick={handleEditClick} />
+          <EditButton
+            buttonText={isEditing ? "완료" : "수정하기"}
+            onClick={isEditing ? handleSaveAvailableDates : handleEditClick}
+          />
         </div>
       </div>
 
