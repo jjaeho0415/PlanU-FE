@@ -1,3 +1,7 @@
+type IGetArrivalLocationInfoResponseBodyType = {
+  groupScheduleLocation: IArrivalLocationInfo;
+}
+
 type IArrivalLocationInfo = {
   location?: string;
   latitude: number;
