@@ -9,7 +9,7 @@ interface Props {
   groupId?: string;
 }
 
-const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "-1" }) => {
+const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "" }) => {
   const navigate = useNavigate();
 
   const handleShowScheduleDetail = () => {

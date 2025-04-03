@@ -129,8 +129,8 @@ type IGetMyScheduleDetailType = {
   id: number;
   title: string;
   color: string;
-  startDate: string;
-  endDate: string;
+  startDateTime: string;
+  endDateTime: string;
   location: string;
   latitude: number;
   longitude: number;
