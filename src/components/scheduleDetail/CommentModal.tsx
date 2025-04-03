@@ -5,6 +5,8 @@ import Icon_send from "@assets/Icons/scheduleDetail/Icon_send.svg?react";
 import Icon_delete from "@assets/Icons/scheduleDetail/Icon_trashcan.svg?react";
 import { usePostCreateComment } from "@api/schedule/postComment";
 import useAuthStore from "@store/useAuthStore";
+import { useDeleteComment } from "@api/schedule/deleteComment";
+import AlertModal from "@components/modals/AlertModal";
 
 interface props {
   setIsOpenCommentModal: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,12 +23,15 @@ const CommentModal: React.FC<props> = ({
 }) => {
   const { accessToken } = useAuthStore();
   const [message, setMessage] = useState<string>("");
+  const [commentId, setCommentId] = useState<number>(-1);
+  const [isOpenAlertModal, setIsOpenAlertModal] = useState<boolean>(false);
   const { mutate: createComment } = usePostCreateComment(
     accessToken,
     groupId,
     scheduleId,
     setMessage,
   );
+  const { mutate: deleteComment } = useDeleteComment(accessToken, groupId, scheduleId, commentId);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessage(e.target.value);
@@ -34,9 +39,21 @@ const CommentModal: React.FC<props> = ({
 
   const handleCreateComment = () => {
     if (message.trim() === "") return;
-
     createComment({ message: message });
   };
+
+  const handleDeleteComment = (comment: ICommentItem) => {
+    setCommentId(comment.id);
+    if (commentId !== -1 && comment.isMyComment) {
+      setIsOpenAlertModal(true);
+    }
+  };
+
+  const handleDeleteConfirm = () => {
+    deleteComment();
+    setIsOpenAlertModal(false);
+  };
+
   return (
     <div className={styles.Container}>
       <div className={styles.TopBox}>
@@ -54,7 +71,12 @@ const CommentModal: React.FC<props> = ({
               </div>
               <p className={styles.ContentBox}>{comment.message}</p>
             </div>
-            {<Icon_delete className={styles.DeleteIcon} />}
+            {comment.isMyComment && (
+              <Icon_delete
+                className={styles.DeleteIcon}
+                onClick={() => handleDeleteComment(comment)}
+              />
+            )}
           </div>
         ))}
       </div>
@@ -64,10 +86,19 @@ const CommentModal: React.FC<props> = ({
           placeholder="댓글 추가..."
           value={message}
           onChange={handleInputChange}
-          onKeyDown={(e) => e.key === "Enter" && handleCreateComment()}
+          onKeyDown={(e) =>
+            e.key === "Enter" && !e.nativeEvent.isComposing && handleCreateComment()
+          }
         />
         <Icon_send className={styles.Icon} onClick={handleCreateComment} />
       </div>
+      {isOpenAlertModal && (
+        <AlertModal
+          type="댓글삭제"
+          onClick={handleDeleteConfirm}
+          setIsOpenAlertModal={setIsOpenAlertModal}
+        />
+      )}
     </div>
   );
 };

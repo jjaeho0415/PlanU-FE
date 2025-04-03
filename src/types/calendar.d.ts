@@ -144,6 +144,7 @@ type ICommentItem = {
   name: string;
   timestamp: string;
   message: string;
+  isMyComment: boolean;
 };
 
 type IGetCommentList = {
