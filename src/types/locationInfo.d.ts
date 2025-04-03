@@ -22,7 +22,7 @@ type SearchLocationResultType = {
 };
 
 type IGetGroupMemberLocationResponseType = {
-  membersLocation: IMemberLocationType[]
+  groupMemberLocations: IMemberLocationType[];
 };
 
 type IMemberLocationType = {

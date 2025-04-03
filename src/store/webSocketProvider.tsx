@@ -6,16 +6,20 @@ const WebSocketContext = createContext<{
   stompClient: Stomp.Client | null;
   connectWebSocket: (startTime: string, accessToken: string) => void;
   isDisconnected: boolean;
+  isConnected: boolean;
 }>({
   stompClient: null,
-  connectWebSocket: () => { },
-  isDisconnected: false
+  connectWebSocket: () => {},
+  isDisconnected: false,
+  isConnected: false,
 });
 
 export const WebSocketProvider = ({ children }: { children: React.ReactNode }) => {
   const stompClientRef = useRef<Client | null>(null);
   const timeoutRef = useRef<number | null>(null);
-  const [isWebSocketDisconnected, setIsWebSocketDisconnected] = useState(false);
+  const [isWebSocketDisconnected, setIsWebSocketDisconnected] = useState<boolean>(false);
+  const [stompClient, setStompClient] = useState<Client | null>(null);
+  const [isWebSocketConnected, setIsWebSocketConnected] = useState<boolean>(false);
 
   const connectWebSocket = (startTime: string, accessToken: string) => {
     if (!accessToken || !startTime || stompClientRef.current) return;
@@ -24,6 +28,7 @@ export const WebSocketProvider = ({ children }: { children: React.ReactNode }) =
       webSocketFactory: () => socket,
       connectHeaders: { Authorization: `Bearer ${accessToken}` },
       onConnect: () => {
+        setIsWebSocketConnected(true)
         // startTime + 1시간 뒤 자동 해제
         const now = new Date();
         const [hours, minutes] = startTime.split(":").map(Number);
@@ -41,24 +46,29 @@ export const WebSocketProvider = ({ children }: { children: React.ReactNode }) =
         console.error("WebSocket 오류: ", frame);
       },
     });
-      stompClientRef.current = client;
-      stompClientRef.current.activate();
+    stompClientRef.current = client;
+    setStompClient(client);
+    stompClientRef.current.activate();
   };
 
   const disconnectWebSocket = () => {
     if (stompClientRef.current) {
       stompClientRef.current.deactivate();
       stompClientRef.current = null;
+      setStompClient(null);
     }
     if (timeoutRef.current) {
       clearTimeout(timeoutRef.current);
       timeoutRef.current = null;
     }
-    setIsWebSocketDisconnected(true)
+    setIsWebSocketConnected(false);
+    setIsWebSocketDisconnected(true);
   };
 
   return (
-    <WebSocketContext.Provider value={{ stompClient: stompClientRef.current, connectWebSocket, isDisconnected:isWebSocketDisconnected }}>
+    <WebSocketContext.Provider
+      value={{ stompClient, connectWebSocket, isDisconnected: isWebSocketDisconnected, isConnected: isWebSocketConnected }}
+    >
       {children}
     </WebSocketContext.Provider>
   );

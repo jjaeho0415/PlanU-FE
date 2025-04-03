@@ -6,23 +6,25 @@ import EventCard from "@components/calendarPage/EventCard";
 import useAuthStore from "@store/useAuthStore";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
 import { useGetUserInfo } from "@api/user/getUserInfo";
+import useUserLocation from "@store/useUserLocation";
 
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
   const { username } = useParams<{ username?: string }>();
   const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
-
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
+
+  const userCurrentLatLng = useUserLocation();
 
   const { data: userInfo } = useGetUserInfo(accessToken);
   const usernameToUse = username || userInfo?.username
@@ -33,6 +35,14 @@ const MyCalendarPage: React.FC = () => {
   );
 
   const { data: myScheduleList } = useGetMyScheduleList(usernameToUse!, accessToken, selectedDate);
+
+  useEffect(() => {
+    if (!userCurrentLatLng) {
+      return;
+    }
+    // rest api로 사용자 현재 위치 정보 보내는 api 호출 로직 추가해야함
+
+  }, [userCurrentLatLng])
 
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
