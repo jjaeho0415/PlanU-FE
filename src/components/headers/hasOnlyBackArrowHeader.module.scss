@@ -6,7 +6,7 @@
   display: flex;
   position: relative;
   box-sizing: border-box;
-  padding-left: 12px;
+  padding: 0 12px;
   z-index: 50;
   position: sticky;
   top: 0;
@@ -23,5 +23,16 @@
     font-size: 20px;
     font-weight: bold;
     color: var(--black);
+  }
+  .notificationTitleSection{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--black);
+    position: absolute;
+    transform: translateX(30px);
+  }
+  .readAllButton{
+    font-size: 12px;
+    color: var(--gray-800);
   }
 }

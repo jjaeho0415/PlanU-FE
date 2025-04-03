@@ -6,16 +6,15 @@ import { useNavigate } from "react-router-dom";
 
 interface Props {
   scheduleItem: IScheduleItemType;
-  groupId?: string;
 }
 
 // 생일자 카드도 만들어야함 조건문 사용해서
-const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "-1" }) => {
+const EventCard: React.FC<Props> = ({ scheduleItem }) => {
   const navigate = useNavigate();
 
   const handleShowScheduleDetail = () => {
-    groupId
-      ? navigate(`/group/${groupId}/calendar/schedule/${scheduleItem.id}`)
+    scheduleItem.groupId
+      ? navigate(`/group/${scheduleItem.groupId}/calendar/schedule/${scheduleItem.id}`)
       : navigate(`/mySchedule/${scheduleItem.id}`);
   };
 

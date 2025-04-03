@@ -22,9 +22,13 @@ type SearchLocationResultType = {
 };
 
 type IGetGroupMemberLocationResponseType = {
+  membersLocation: IMemberLocationType[]
+};
+
+type IMemberLocationType = {
   latitude: number;
   longitude: number;
   name: string;
   username: string;
   profileImage: string;
-};
+}

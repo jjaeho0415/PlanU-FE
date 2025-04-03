@@ -26,9 +26,11 @@ const HasOnlyBackArrowHeader: React.FC<Props> = ({
           <BackArrow2_Icon width={9} height={18} />
         )}
       </div>
-      <div className={styles.titleSection}>{title}</div>
+      <div className={title !== "알림" ? styles.titleSection : styles.notificationTitleSection}>{title}</div>
       {title === "알림" && (
-        <MiniButton buttonText="모두 읽기" color="purple_light" onClick={handleReadAllClick} />
+        <div className={styles.readAllButton} onClick={handleReadAllClick}>
+          모두 읽음
+        </div>
       )}
     </div>
   );

@@ -2,7 +2,7 @@ import { calculateDistance } from "@utils/calculateDistance";
 import styles from "./groupMemberItem.module.scss";
 
 interface Props {
-  groupMemberItem: IGetGroupMemberLocationResponseType;
+  groupMemberItem: IMemberLocationType;
   handleGroupMemberClick: () => void;
   arrivalLocationInfo: IArrivalLocationInfo;
   selectedName: string | null;
