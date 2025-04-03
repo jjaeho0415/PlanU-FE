@@ -14,6 +14,7 @@ import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import useUserLocation from "@store/useUserLocation";
+import { usePostUserLocationUpdate } from "@api/user/postUserLocationUpdate";
 
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
@@ -26,8 +27,16 @@ const MyCalendarPage: React.FC = () => {
 
   const userCurrentLatLng = useUserLocation();
 
+  const { mutate: updateUserLocationInfo } = usePostUserLocationUpdate(accessToken);
+
+  // useEffect(() => {
+  //   if (userCurrentLatLng) {
+  //     updateUserLocationInfo(userCurrentLatLng);
+  //   }
+  // }, [userCurrentLatLng]);
+
   const { data: userInfo } = useGetUserInfo(accessToken);
-  const usernameToUse = username || userInfo?.username
+  const usernameToUse = username || userInfo?.username;
   const { data: myCheckEvents } = useGetMyCalendarCheckEvents(
     usernameToUse!,
     format(currentMonth, "yyyy-MM"),
@@ -41,8 +50,7 @@ const MyCalendarPage: React.FC = () => {
       return;
     }
     // rest api로 사용자 현재 위치 정보 보내는 api 호출 로직 추가해야함
-
-  }, [userCurrentLatLng])
+  }, [userCurrentLatLng]);
 
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
@@ -53,7 +61,7 @@ const MyCalendarPage: React.FC = () => {
   return (
     <div className={styles.Container}>
       <CalendarHeader
-        title={username ? `${username}님의 달력` : "나의 달력" }
+        title={username ? `${username}님의 달력` : "나의 달력"}
         type="my"
         handleMiniCalendarClick={handleMiniCalendarClick}
       />

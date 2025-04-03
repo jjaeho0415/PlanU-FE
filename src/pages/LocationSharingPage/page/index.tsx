@@ -10,6 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useWebSocket } from "@store/webSocketProvider";
 import { LocationSharingRedirect } from "../LocationSharingRedirect";
 import useUserLocation from "@store/useUserLocation";
+import { useGetGroupMembersLocationInfo } from "@api/location/getGroupMembersLocationInfo";
 
 const arrivalLocationInfo: IArrivalLocationInfo = {
   location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
@@ -33,6 +34,17 @@ const LocationSharingPage = () => {
   const [groupMemberList, setGroupMemberList] = useState<IMemberLocationType[]>([]);
   const userCurrentLatLng = useUserLocation();
   const [selectedUserName, setSelectedUserName] = useState<string>("");
+  // const { data: initialGroupMemberList } = useGetGroupMembersLocationInfo(
+  //   accessToken,
+  //   groupId!,
+  //   scheduleId!,
+  // );
+
+  // useEffect(() => {
+  //   if (initialGroupMemberList) {
+  //     setGroupMemberList(initialGroupMemberList);
+  //   }
+  // }, [initialGroupMemberList]);
 
   // 웹소켓 연결
   useEffect(() => {
@@ -194,7 +206,7 @@ const LocationSharingPage = () => {
         return;
       }
 
-      let userLocation = groupMemberList.find((member) => member.username === userInfo.username);
+      const userLocation = groupMemberList.find((member) => member.username === userInfo.username);
 
       // if (!userLocation && userCurrentLatLng) {
       //   console.warn("그룹 멤버 리스트에서 사용자 위치를 찾을 수 없어, 현재 위치를 사용합니다.");
