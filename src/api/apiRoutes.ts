@@ -7,6 +7,8 @@ const apiRoutes = {
   userFindId: "/users/find-username",
   userFindPw: "/users/find-password",
   reissue: "/users/token/reissue",
+  userVerifyPassword: "/users/verify-password",
+  userChangePassword: "/users/validate-new-password",
   // 그룹 관련
   group: "/groups",
   createGroup: "/groups/create",
@@ -31,7 +33,11 @@ const apiRoutes = {
   //채팅 관련
   chatRoomsList: "/chats",
   // 알림 관련
-  readNotification: "/notifications/read"
+  readNotification: "/notification/read",
+  notificationList: "/notification/list",
+  readAllNotifications: "/notification/read-all",
+  //실시간 위치 공유 소켓 연결
+  wsLocation: "/ws-location"
 };
 
 export default apiRoutes;

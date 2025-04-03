@@ -1,10 +1,12 @@
-type ILocationInfoType  =  UserLatLngType & {
-  location: string;
-};
+type IArrivalLocationInfo = {
+  location?: string;
+  latitude: number;
+  longitude: number;
+}
 
 type UserLatLngType = {
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
 };
 
 type SearchLocationResultType = {
@@ -15,9 +17,9 @@ type SearchLocationResultType = {
 };
 
 type IGetGroupMemberLocationResponseType = {
-  location: string;
-  lat: number;
-  lng: number;
+  latitude: number;
+  longitude: number;
   name: string;
+  username: string;
   profileImage: string;
 };

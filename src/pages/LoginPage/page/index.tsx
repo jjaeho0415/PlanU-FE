@@ -34,6 +34,10 @@ const LoginPage: React.FC = () => {
     },
   });
 
+  const handleKakaoLoginClick = () => {
+    window.location.href = `${import.meta.env.VITE_KAKAO_LOGIN_URL}`
+  }
+
   useEffect(() => {
     const savedId = localStorage.getItem("userStoredId");
     if (savedId) {
@@ -97,7 +101,7 @@ const LoginPage: React.FC = () => {
     } catch (error) {
       // 백엔드에서 에러처리 해주면 다시 에러핸들링 해야함
       console.error("로그인 실패:", error);
-      alert("ID와 Password를 다시 확인하세요");
+      alert(error);
     }
   };
 
@@ -135,9 +139,7 @@ const LoginPage: React.FC = () => {
         <LoginButton buttonType="login" onClick={handleSubmit(onSubmit)} />
         <LoginButton
           buttonType="login_kakao_white"
-          onClick={() => {
-            return;
-          }}
+          onClick={handleKakaoLoginClick}
         />
       </div>
       <GoLogin textType="register" textColor="gray" />
