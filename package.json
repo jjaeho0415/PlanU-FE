@@ -13,6 +13,7 @@
     "init-https": "cross-env-shell \"sh init-https.sh || init-https.sh\""
   },
   "dependencies": {
+    "@stomp/stompjs": "^7.1.0",
     "@storybook/addon-docs": "^8.4.4",
     "@tanstack/react-query": "^5.61.5",
     "@types/googlemaps": "^3.43.3",
