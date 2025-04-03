@@ -14,69 +14,24 @@ import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 
-/*const scheduleList: IGetScheduleListResponseBodyType = {
-  schedules: [
-    {
-      id: 1,
-      groupId: 1,
-      title: "Weekly Meeting",
-      location: "Library Room A",
-      startTime: "10:00",
-      endTime: "12:00",
-      color: "#FF5733",
-    },
-    {
-      id: 2,
-      groupId: null,
-      title: "회의 일정",
-      location: "강원 춘천시 백령로 51",
-      startTime: "10:00",
-      endTime: "12:59",
-      color: "#FFA500",
-    },
-    {
-      id: 3,
-      groupId: null,
-      title: "프로젝트 회의",
-      location: "강원 춘천시 백령로 51",
-      startTime: "13:00",
-      endTime: "15:59",
-      color: "#FFA500",
-    },
-    {
-      id: 4,
-      groupId: 1,
-      title: "Project Discussion",
-      location: "Conference Room B",
-      startTime: "14:00",
-      endTime: "15:30",
-      color: "#33FF57",
-    },
-  ],
-  birthdayPerson: ["최준혁", "김도하"],
-};*/
-
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
-  const { username } = useParams<{ username: string }>();
+  const { username } = useParams<{ username?: string }>();
   const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
-  const { data: userData } = useGetUserInfo(accessToken);
+
+  const { data: userInfo } = useGetUserInfo(accessToken);
+  const usernameToUse = username || userInfo?.username;
   const { data: myCheckEvents } = useGetMyCalendarCheckEvents(
-    username!,
+    usernameToUse!,
     format(currentMonth, "yyyy-MM"),
     accessToken,
   );
-  const { data: myScheduleList } = useGetMyScheduleList(username!, accessToken, selectedDate);
 
-  useEffect(() => {
-    if (userData) {
-      useAuthStore.getState().setUsername(userData.username);
-    }
-  }, [userData]);
+  const { data: myScheduleList } = useGetMyScheduleList(usernameToUse!, accessToken, selectedDate);
 
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
@@ -87,7 +42,7 @@ const MyCalendarPage: React.FC = () => {
   return (
     <div className={styles.Container}>
       <CalendarHeader
-        title="나의 달력"
+        title={username ? `${username}님의 달력` : "나의 달력"}
         type="my"
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
