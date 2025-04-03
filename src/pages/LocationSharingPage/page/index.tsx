@@ -13,7 +13,7 @@ import useUserLocation from "@store/useUserLocation";
 
 const arrivalLocationInfo: IArrivalLocationInfo = {
   location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
-  startTime: "16:51",
+  startDateTime: "16:51",
   latitude: 37.5568905,
   longitude: 126.9273886,
 };
@@ -32,15 +32,15 @@ const LocationSharingPage = () => {
   const { stompClient, connectWebSocket, isConnected } = useWebSocket();
   const [groupMemberList, setGroupMemberList] = useState<IMemberLocationType[]>([]);
   const userCurrentLatLng = useUserLocation();
-  const [selectedUserName, setSelectedUserName] = useState<string>("")
+  const [selectedUserName, setSelectedUserName] = useState<string>("");
 
   // 웹소켓 연결
   useEffect(() => {
-    if (!arrivalLocationInfo.startTime) {
+    if (!arrivalLocationInfo.startDateTime) {
       return;
     }
 
-    connectWebSocket(arrivalLocationInfo.startTime, accessToken);
+    connectWebSocket(arrivalLocationInfo.startDateTime, accessToken);
   }, [accessToken, arrivalLocationInfo]);
 
   // 실시간 위치 정보 구독
@@ -196,16 +196,16 @@ const LocationSharingPage = () => {
 
       let userLocation = groupMemberList.find((member) => member.username === userInfo.username);
 
-      if (!userLocation && userCurrentLatLng) {
-        console.warn("그룹 멤버 리스트에서 사용자 위치를 찾을 수 없어, 현재 위치를 사용합니다.");
-        userLocation = {
-          name: userInfo.name,
-          username: userInfo.username,
-          latitude: userCurrentLatLng.latitude,
-          longitude: userCurrentLatLng.longitude,
-          profileImage: userInfo.profileImage,
-        };
-      }
+      // if (!userLocation && userCurrentLatLng) {
+      //   console.warn("그룹 멤버 리스트에서 사용자 위치를 찾을 수 없어, 현재 위치를 사용합니다.");
+      //   userLocation = {
+      //     name: userInfo.name,
+      //     username: userInfo.username,
+      //     latitude: userCurrentLatLng.latitude,
+      //     longitude: userCurrentLatLng.longitude,
+      //     profileImage: userInfo.profileImage,
+      //   };
+      // }
 
       if (!userLocation) {
         console.error("User not found in group member list");
@@ -225,7 +225,7 @@ const LocationSharingPage = () => {
           glyph: userInfo?.profileImage,
           type: "sharing",
         });
-         
+
         const myPin = await createMarker(
           newMap,
           { lat: userLocation.latitude, lng: userLocation.longitude },
@@ -269,8 +269,9 @@ const LocationSharingPage = () => {
         console.error("Error initializing map: ", error);
       }
     };
-
-    initMap();
+    if (groupMemberList.length > 0) {
+      initMap();
+    }
   }, [userInfo, mapRef.current, groupMemberList]);
 
   return (
