@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 const getGroupMembersLocationInfo = async (authorization: string, groupId: string, scheduleId: string) => {
     const response:IGetGroupMemberLocationResponseType = await api.get({
-        endpoint: `${apiRoutes.group}/${groupId}/schedules/${scheduleId}/location`,
+        endpoint: `${apiRoutes.group}/${groupId}/schedules/${scheduleId}/member-location`,
         authorization
     })
     return response.groupMemberLocations;
