@@ -24,7 +24,7 @@ const userInformation: IPostUserInformationRequestBodyType = {
 };
 
 const RegisterAccountPage = () => {
-  const [userBirth, setUserBirth] = useState<string>("");
+  const [userBirth, setUserBirth] = useState<string|null>("");
   const [isBirthInputClick, setIsBirthInputClick] = useState<boolean>(false);
   const [isBirthError, setIsBirthError] = useState<boolean>(false);
   const [gender, setGender] = useState<string>("M");
@@ -41,7 +41,7 @@ const RegisterAccountPage = () => {
   useEffect(() => {
     setPostBody({
       UserProfileRequest: {
-        birthDate: userBirth,
+        birthDate: userBirth!,
         gender: gender,
         profileImage: typeof userImage === "string" ? null : userImage,
       },

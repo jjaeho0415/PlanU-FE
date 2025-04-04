@@ -6,9 +6,10 @@ interface MenuSectionProps {
     title: string;
     items: string[];
   }[];
+  handleMenuClick: (item: string) => void;
 }
 
-const MenuSection: React.FC<MenuSectionProps> = ({ menuItems }) => {
+const MenuSection: React.FC<MenuSectionProps> = ({ menuItems, handleMenuClick }) => {
   return (
     <div className={styles.menuContainer}>
       {menuItems.map((menu, index) => (
@@ -16,7 +17,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ menuItems }) => {
           <h3 className={styles.sectionTitle}>{menu.title}</h3>
           <ul className={styles.sectionList}>
             {menu.items.map((item, idx) => (
-              <li key={idx} className={styles.listItem}>
+              <li key={idx} className={styles.listItem} onClick={() => {handleMenuClick(item)}}>
                 {item}
               </li>
             ))}
