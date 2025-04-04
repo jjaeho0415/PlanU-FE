@@ -11,13 +11,7 @@ import { useWebSocket } from "@store/webSocketProvider";
 import { LocationSharingRedirect } from "../LocationSharingRedirect";
 import useUserLocation from "@store/useUserLocation";
 import { useGetGroupMembersLocationInfo } from "@api/location/getGroupMembersLocationInfo";
-
-const arrivalLocationInfo: IArrivalLocationInfo = {
-  location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
-  startDateTime: "16:51",
-  latitude: 37.5568905,
-  longitude: 126.9273886,
-};
+import { useGetArrivalLocationInfo } from "@api/group/getArrivalLocationInfo";
 
 const LocationSharingPage = () => {
   const { groupId, scheduleId } = useParams<{ groupId: string; scheduleId: string }>();
@@ -34,21 +28,25 @@ const LocationSharingPage = () => {
   const [groupMemberList, setGroupMemberList] = useState<IMemberLocationType[]>([]);
   const userCurrentLatLng = useUserLocation();
   const [selectedUserName, setSelectedUserName] = useState<string>("");
-  // const { data: initialGroupMemberList } = useGetGroupMembersLocationInfo(
-  //   accessToken,
-  //   groupId!,
-  //   scheduleId!,
-  // );
 
-  // useEffect(() => {
-  //   if (initialGroupMemberList) {
-  //     setGroupMemberList(initialGroupMemberList);
-  //   }
-  // }, [initialGroupMemberList]);
+  const { data: arrivalLocationInfo } = useGetArrivalLocationInfo(accessToken, groupId!, scheduleId!)
+
+  const { data: initialGroupMemberList } = useGetGroupMembersLocationInfo(
+    accessToken,
+    groupId!,
+    scheduleId!,
+  );
+
+  useEffect(() => {
+    if (initialGroupMemberList) {
+      console.log(initialGroupMemberList)
+      setGroupMemberList(initialGroupMemberList);
+    }
+  }, [initialGroupMemberList]);
 
   // 웹소켓 연결
   useEffect(() => {
-    if (!arrivalLocationInfo.startDateTime) {
+    if (!arrivalLocationInfo?.startDateTime) {
       return;
     }
 
@@ -202,7 +200,7 @@ const LocationSharingPage = () => {
   // 처음 맵의 중심은 자신의 현재 위치로 지정
   useEffect(() => {
     const initMap = async () => {
-      if (!userInfo || !mapRef.current) {
+      if (!userInfo || !mapRef.current || !arrivalLocationInfo) {
         return;
       }
 
@@ -234,7 +232,7 @@ const LocationSharingPage = () => {
 
         const pin = await createCustomPin({
           scale: 2,
-          glyph: userInfo?.profileImage,
+          glyph: userInfo.profileImage,
           type: "sharing",
         });
 
@@ -284,7 +282,7 @@ const LocationSharingPage = () => {
     if (groupMemberList.length > 0) {
       initMap();
     }
-  }, [userInfo, mapRef.current, groupMemberList]);
+  }, [userInfo, mapRef.current, groupMemberList, arrivalLocationInfo]);
 
   return (
     <>
@@ -308,7 +306,7 @@ const LocationSharingPage = () => {
         <div className={styles.line} />
         <div className={styles.text}>친구</div>
         <div className={styles.groupMemberListContainer}>
-          {groupMemberList.length !== 0 ? (
+          {groupMemberList.length !== 0 && arrivalLocationInfo ? (
             groupMemberList.map((groupMemberInfo) => (
               <GroupMemberItem
                 key={groupMemberInfo.username}
@@ -321,7 +319,7 @@ const LocationSharingPage = () => {
               />
             ))
           ) : (
-            <div className={styles.error}>Server Error: 그룹원 목록 불러오기 실패</div>
+            <div className={styles.error}>Server Error</div>
           )}
         </div>
       </div>

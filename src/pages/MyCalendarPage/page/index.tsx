@@ -29,11 +29,11 @@ const MyCalendarPage: React.FC = () => {
 
   const { mutate: updateUserLocationInfo } = usePostUserLocationUpdate(accessToken);
 
-  // useEffect(() => {
-  //   if (userCurrentLatLng) {
-  //     updateUserLocationInfo(userCurrentLatLng);
-  //   }
-  // }, [userCurrentLatLng]);
+  useEffect(() => {
+    if (userCurrentLatLng) {
+      updateUserLocationInfo(userCurrentLatLng);
+    }
+  }, [userCurrentLatLng]);
 
   const { data: userInfo } = useGetUserInfo(accessToken);
   const usernameToUse = username || userInfo?.username;
@@ -44,13 +44,6 @@ const MyCalendarPage: React.FC = () => {
   );
 
   const { data: myScheduleList } = useGetMyScheduleList(usernameToUse!, accessToken, selectedDate);
-
-  useEffect(() => {
-    if (!userCurrentLatLng) {
-      return;
-    }
-    // rest api로 사용자 현재 위치 정보 보내는 api 호출 로직 추가해야함
-  }, [userCurrentLatLng]);
 
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
@@ -93,7 +86,11 @@ const MyCalendarPage: React.FC = () => {
                     <BirthdayCard birthdayName={birthdayName} key={birthdayName + index} />
                   ))}
                   {myScheduleList.schedules.map((scheduleItem) => (
-                    <EventCard scheduleItem={scheduleItem} key={scheduleItem.id} />
+                    <EventCard
+                      scheduleItem={scheduleItem}
+                      key={scheduleItem.id}
+                      groupId={scheduleItem.groupId}
+                    />
                   ))}
                 </>
               )
