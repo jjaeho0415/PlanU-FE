@@ -34,8 +34,11 @@ const FindPage: React.FC = () => {
         break;
       case "pw":
         setButtonText("비밀번호 변경");
+        break;
+      default:
+        break;
     }
-  }, []);
+  }, [selectedTab]);
 
   const {
     register: idRegister,
