@@ -4,7 +4,6 @@ import useAuthStore from "@store/useAuthStore";
 import useBottomStore from "@store/useBottomStore";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
 
 const postLogout = async () => {
   const response: IResponseType = await api.post({
@@ -14,7 +13,6 @@ const postLogout = async () => {
 };
 
 export const usePostLogout = () => {
-  const navigate = useNavigate();
   const { clearAuth } = useAuthStore.getState();
   const { clearBottomState } = useBottomStore.getState();
   const { clearLocationInfo } = useLocationInfoStore.getState();
@@ -24,7 +22,7 @@ export const usePostLogout = () => {
       clearBottomState();
       clearLocationInfo();
       clearAuth();
-      navigate(0);
+      window.history.replaceState(null, "", window.location.origin);
     },
     onError: (error) => {
       alert(error.message);
