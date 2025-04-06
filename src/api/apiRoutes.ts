@@ -10,6 +10,7 @@ const apiRoutes = {
   userVerifyPassword: "/users/verify-password",
   userChangePassword: "/users/validate-new-password",
   updateUserLocation: "/users/location/update",
+  logout: "/users/logout",
   // 그룹 관련
   group: "/groups",
   createGroup: "/groups/create",

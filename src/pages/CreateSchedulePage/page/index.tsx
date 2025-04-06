@@ -47,9 +47,11 @@ const CreateSchedulePage: React.FC = () => {
     const data = {
       title: title,
       color: color,
-      startDateTime: format(startDate, "yyyy-MM-dd'T'HH:mm"),
+      startDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'00:00")
+        : format(startDate, "yyyy-MM-dd'T'HH:mm"),
       endDateTime: isAllDay
-        ? format(startDate, "yyyy-MM-dd'T'HH:mm")
+        ? format(endDate, "yyyy-MM-dd'T'23:59")
         : format(endDate, "yyyy-MM-dd'T'HH:mm"),
       location: locationName ?? locationAddress,
       latitude: lat,

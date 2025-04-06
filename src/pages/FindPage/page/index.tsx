@@ -164,7 +164,7 @@ const FindPage: React.FC = () => {
       {
         onSuccess: () => {
           alert("비밀번호가 변경되었습니다.");
-          navigate("login");
+          navigate("/login");
         },
         onError: (err) => {
           alert(err.message);

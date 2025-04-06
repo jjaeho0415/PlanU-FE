@@ -5,7 +5,7 @@ import styles from "./datePicker.module.scss";
 
 interface Props {
   userBirth: string | null;
-  setUserBirth: React.Dispatch<React.SetStateAction<string | null>>;
+  setUserBirth: React.Dispatch<React.SetStateAction<string|null>>;
   setIsBirthError: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

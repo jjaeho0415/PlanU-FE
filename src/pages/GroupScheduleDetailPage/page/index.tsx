@@ -11,6 +11,7 @@ import LocationBox from "@components/scheduleDetail/LocationBox";
 import ParticipantsBox from "@components/scheduleDetail/ParticipantsBox";
 import MemoBox from "@components/scheduleDetail/MemoBox";
 import CommentModal from "@components/scheduleDetail/CommentModal";
+import { useGetComments } from "@api/schedule/getComments";
 import MoreModal from "@components/scheduleDetail/MoreModal";
 
 const GroupScheduleDetail: React.FC = () => {
@@ -21,6 +22,7 @@ const GroupScheduleDetail: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { data } = useGetGroupScheduleDetail(accessToken, groupId ?? "", scheduleId ?? "");
+  const { data: commentData } = useGetComments(accessToken, groupId ?? "", scheduleId ?? "");
 
   return (
     <div className={styles.Container}>
@@ -48,9 +50,16 @@ const GroupScheduleDetail: React.FC = () => {
       </div>
       <div className={styles.CommentIconBox}>
         <Icon_comment onClick={() => setIsOpenCommentModal(true)} />
-        <p>17</p>
+        <p>{commentData?.countOfComment ?? 0}</p>
       </div>
-      {isOpenCommentModal && <CommentModal setIsOpenCommentModal={setIsOpenCommentModal} />}
+      {isOpenCommentModal && (
+        <CommentModal
+          setIsOpenCommentModal={setIsOpenCommentModal}
+          commentData={commentData ?? null}
+          groupId={groupId ?? ""}
+          scheduleId={scheduleId ?? ""}
+        />
+      )}
       {isOpenMoreModal && <MoreModal groupId={groupId ?? ""} scheduleId={scheduleId ?? ""} />}
     </div>
   );
