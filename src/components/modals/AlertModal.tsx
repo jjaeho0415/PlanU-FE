@@ -13,8 +13,10 @@ const AlertModal: React.FC<Props> = ({ type, onClick, setIsOpenAlertModal }) => 
   const [modalContent, setModalContent] = useState<string>("");
 
   useEffect(() => {
-    if (type === "삭제하기") {
-      setModalContent("삭제하시겠습니까?");
+    if (type === "일정삭제") {
+      setModalContent("일정을 삭제하시겠습니까?");
+    } else if (type === "댓글삭제") {
+      setModalContent("댓글을 삭제하시겠습니까?");
     }
   }, []);
 

@@ -129,13 +129,32 @@ type IGetMyScheduleDetailType = {
   id: number;
   title: string;
   color: string;
-  startDate: string;
-  endDate: string;
+  startDateTime: string;
+  endDateTime: string;
   location: string;
   latitude: number;
   longitude: number;
   participants: IParticipants[];
   memo: string;
+};
+
+//댓글
+type ICommentItem = {
+  id: number;
+  username: string;
+  name: string;
+  timestamp: string;
+  message: string;
+  isMyComment: boolean;
+};
+
+type IGetCommentList = {
+  countOfComment: number;
+  comments: ICommentItem[];
+};
+
+type IPostComment = {
+  message: string;
 };
 
 // 나의 달력 일정 유무 조회 api - 나의 달력 페이지

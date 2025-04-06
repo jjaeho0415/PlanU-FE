@@ -35,6 +35,7 @@
         background-color: var(--gray-800);
       }
       .CommentRightBox {
+        flex-grow: 1;
         .CommentTopBox {
           display: flex;
           align-items: center;
@@ -48,9 +49,12 @@
             color: var(--gray-200);
           }
         }
-        .ContentBox {
-          font-size: 13px;
-        }
+      }
+      .DeleteIcon {
+        cursor: pointer;
+      }
+      .ContentBox {
+        font-size: 13px;
       }
     }
   }
@@ -58,7 +62,7 @@
   .InputBox {
     display: flex;
     justify-content: space-between;
-    padding: 0 20px;
+    padding: 3px 20px;
     align-items: center;
 
     .Input {
