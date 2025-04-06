@@ -9,8 +9,7 @@ interface Props {
   groupId?: string;
 }
 
-// 생일자 카드도 만들어야함 조건문 사용해서
-const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "-1" }) => {
+const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "" }) => {
   const navigate = useNavigate();
 
   const handleShowScheduleDetail = () => {
@@ -29,10 +28,12 @@ const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "-1" }) => {
       </div>
       <div className={styles.info}>
         <div className={styles.title}>{scheduleItem.title}</div>
-        <div className={styles.location}>
-          <LocationIcon className={styles.icon} />
-          {scheduleItem.location}
-        </div>
+        {scheduleItem.location && (
+          <div className={styles.location}>
+            <LocationIcon className={styles.icon} />
+            {scheduleItem.location}
+          </div>
+        )}
       </div>
     </div>
   );
