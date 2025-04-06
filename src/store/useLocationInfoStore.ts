@@ -7,6 +7,7 @@ interface LocationInfoState {
   lng: number;
   name: string;
   setLocationInfo: (location: string, lat: number, lng: number, name: string) => void;
+  clearLocationInfo: () => void;
 }
 
 const useLocationInfoStore = create<LocationInfoState>(
@@ -17,8 +18,17 @@ const useLocationInfoStore = create<LocationInfoState>(
       lng: 0,
       name: "",
       setLocationInfo: (location, lat, lng, name) => set({ location, lat, lng, name }),
+      clearLocationInfo: () =>
+        set(() => {
+          return { location: "", lat: 0, lng: 0, name: "" };
+        }),
     }),
-    { name: "selectedLocationInfo-storage" },
+    {
+      name: "selectedLocationInfo-storage",
+      onRehydrateStorage: () => (state) => {
+        state?.clearLocationInfo && localStorage.removeItem("selectedLocationInfo-storage");
+      },
+    },
   ) as (set: (fn: (state: LocationInfoState) => LocationInfoState) => void) => LocationInfoState,
 );
 
