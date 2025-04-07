@@ -153,7 +153,7 @@ const SelectLocationPage = () => {
   const handleResultClick = async (location: SearchLocationResultType) => {
     if (!map || !marker) return;
 
-    map.setCenter({ lat: location.lat, lng: location.lng }); // 기존 지도 중심 이동
+    map.setCenter({ lat: location.lat, lng: location.lng }); 
 
     // 기존 마커 삭제
     marker.map = null;
