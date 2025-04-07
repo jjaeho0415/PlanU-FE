@@ -6,9 +6,10 @@ interface AuthState {
   accessToken: string;
   setIsLogin: (isLogin: boolean) => void;
   setAccessToken: (accessToken: string) => void;
+  clearAuth: () => void;
 }
 
-const useAuthStore = create<AuthState>(
+const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       isLogin: false,
@@ -16,9 +17,15 @@ const useAuthStore = create<AuthState>(
 
       setIsLogin: (isLogin) => set({ isLogin }),
       setAccessToken: (accessToken) => set({ accessToken }),
+      clearAuth: () => {
+        set({ isLogin: false, accessToken: "" });
+        localStorage.removeItem("auth-storage");
+      },
     }),
-    { name: "auth-storage" },
-  ) as (set: (fn: (state: AuthState) => AuthState) => void) => AuthState,
+    {
+      name: "auth-storage",
+    },
+  ),
 );
 
 export default useAuthStore;
