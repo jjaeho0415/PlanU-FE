@@ -15,7 +15,6 @@ export const useDeleteDeleteFriends = (authorization: string) => {
   return useMutation({
     mutationFn: (username: string) => deleteDeleteFriends(authorization, username),
     onSuccess: () => {
-      console.log("성공");
       queryClient.invalidateQueries({
         queryKey: ["FRIEND_LIST"],
       });

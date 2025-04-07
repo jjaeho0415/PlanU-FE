@@ -12,19 +12,15 @@ const useUpdateUserLocation = (groupId: string, scheduleId: string, stompClient:
     if (!userCurrentLatLng || !groupId || !scheduleId || !accessToken) {
       return;
     }
-    console.log("STOMP Client:", stompClient);
-    console.log("STOMP Connected:", stompClient?.connected);
 
     const sendLocationUpdate = () => {
-      
-      const publishResponse = stompClient?.publish({
+      stompClient?.publish({
         destination: `${import.meta.env.VITE_API_URL}${apiRoutes.pubLocation}/${groupId}/${scheduleId}`,
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(userCurrentLatLng),
       });
-      console.log("publishResponse: ",publishResponse)
     };
     if (stompClient && stompClient.connected) {
       sendLocationUpdate();

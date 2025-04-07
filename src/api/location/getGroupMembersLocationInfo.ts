@@ -7,7 +7,7 @@ const getGroupMembersLocationInfo = async (authorization: string, groupId: strin
         endpoint: `${apiRoutes.group}/${groupId}/schedules/${scheduleId}/member-location`,
         authorization
     })
-    return response.groupMemberLocations;
+    return response;
 }
 
 export const useGetGroupMembersLocationInfo = (authorization: string, groupId: string, scheduleId: string) => {

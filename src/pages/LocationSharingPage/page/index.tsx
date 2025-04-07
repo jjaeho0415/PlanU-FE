@@ -42,21 +42,18 @@ const LocationSharingPage = () => {
   );
 
   useEffect(() => {
-    if (!isConnected && initialGroupMemberList) {
-      console.log(initialGroupMemberList);
-      setGroupMemberList(initialGroupMemberList);
-    } else if (isConnected) {
-      console.log("isConnected: true!");
-    }
-  }, [initialGroupMemberList, isConnected]);
+    if (initialGroupMemberList) {
+      setGroupMemberList(initialGroupMemberList.groupMemberLocations);
+    } 
+  }, [initialGroupMemberList]);
 
   // 웹소켓 연결
   useEffect(() => {
-    if (!arrivalLocationInfo?.startDateTime) {
+    if (!arrivalLocationInfo?.groupScheduleLocation.startDateTime) {
       return;
     }
 
-    connectWebSocket(arrivalLocationInfo.startDateTime, accessToken);
+    connectWebSocket("16:40", accessToken);
   }, [accessToken, arrivalLocationInfo]);
 
   // 실시간 위치 정보 구독
@@ -120,10 +117,6 @@ const LocationSharingPage = () => {
       sendLocationUpdate();
     }
   }, [isConnected, userCurrentLatLng, stompClient, groupId, scheduleId, accessToken]);
-
-  useEffect(() => {
-    console.log("Updated groupMemberList:", groupMemberList);
-  }, [groupMemberList]);
 
   // PC/데스크탑 버전 바텀시트
   const handleMouseMove = (e: MouseEvent) => {
@@ -275,8 +268,8 @@ const LocationSharingPage = () => {
         const arrivalMarker = await createMarker(
           newMap,
           {
-            lat: arrivalLocationInfo.latitude,
-            lng: arrivalLocationInfo.longitude,
+            lat: arrivalLocationInfo.groupScheduleLocation.latitude,
+            lng: arrivalLocationInfo.groupScheduleLocation.longitude,
           },
           arrivalPin.element,
         );
@@ -320,7 +313,7 @@ const LocationSharingPage = () => {
                 handleGroupMemberClick={() => {
                   handleGroupMemberClick(groupMemberInfo);
                 }}
-                arrivalLocationInfo={arrivalLocationInfo}
+                arrivalLocationInfo={arrivalLocationInfo.groupScheduleLocation}
                 selectedUserName={selectedUserName}
               />
             ))

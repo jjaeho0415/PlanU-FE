@@ -26,10 +26,9 @@ const SelectLocationPage = () => {
   useEffect(() => {
     navigator.geolocation.getCurrentPosition(
       (position) => {
-        console.log(position);
         setUserLatLng({
-          lat: position.coords.latitude,
-          lng: position.coords.longitude,
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
         });
       },
       (error) => {
@@ -47,8 +46,8 @@ const SelectLocationPage = () => {
         ReverseGeocoding(userLatLng)
           .then((result) =>
             setSelectedLocationInfo({
-              lat: userLatLng.lat,
-              lng: userLatLng.lng,
+              lat: userLatLng.latitude,
+              lng: userLatLng.longitude,
               formatted_address: result,
               name: result,
             }),
@@ -59,11 +58,15 @@ const SelectLocationPage = () => {
       try {
         const newMap = await initializeMap(
           mapRef.current,
-          userLatLng,
+          { lat: userLatLng.latitude, lng: userLatLng.longitude },
           import.meta.env.VITE_GOOGLE_MAP_ID,
         );
         const pin = await createCustomPin();
-        const initialMarker = await createMarker(newMap, userLatLng, pin.element);
+        const initialMarker = await createMarker(
+          newMap,
+          { lat: userLatLng.latitude, lng: userLatLng.longitude },
+          pin.element,
+        );
 
         setMap(newMap);
         setMarker(initialMarker);
@@ -81,14 +84,18 @@ const SelectLocationPage = () => {
       setSearchResults([]); // 검색 결과 초기화
 
       if (userLatLng && map) {
-        map.setCenter(userLatLng); // 지도 중심을 현재 위치로 이동
+        map.setCenter({ lat: userLatLng.latitude, lng: userLatLng.longitude }); // 지도 중심을 현재 위치로 이동
 
         if (marker) {
           marker.map = null; // 기존 마커 삭제
         }
 
         createCustomPin().then((pin) => {
-          createMarker(map, userLatLng, pin.element).then((userMarker) => {
+          createMarker(
+            map,
+            { lat: userLatLng.latitude, lng: userLatLng.longitude },
+            pin.element,
+          ).then((userMarker) => {
             setMarker(userMarker); // 새로운 마커 설정
           });
         });
@@ -107,7 +114,7 @@ const SelectLocationPage = () => {
 
     const request: google.maps.places.TextSearchRequest = {
       query: inputValue,
-      location: userLatLng,
+      location: { lat: userLatLng.latitude, lng: userLatLng.longitude },
       radius: 10000,
     };
 
@@ -120,8 +127,18 @@ const SelectLocationPage = () => {
           lng: Number(place.geometry?.location?.lng()),
         }));
         const sortedResults = formattedResults.sort((a, b) => {
-          const distanceA = calculateDistance(userLatLng.lat, userLatLng.lng, a.lat, a.lng);
-          const distanceB = calculateDistance(userLatLng.lat, userLatLng.lng, b.lat, b.lng);
+          const distanceA = calculateDistance(
+            userLatLng.latitude,
+            userLatLng.longitude,
+            a.lat,
+            a.lng,
+          );
+          const distanceB = calculateDistance(
+            userLatLng.latitude,
+            userLatLng.longitude,
+            b.lat,
+            b.lng,
+          );
           return distanceA - distanceB;
         });
 
