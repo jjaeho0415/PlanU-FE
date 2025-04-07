@@ -2,7 +2,6 @@ import React from "react";
 import styles from "./hasOnlyBackArrowHeader.module.scss";
 import BackArrow1_Icon from "@assets/Icons/headers/backArrow1.svg?react";
 import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
-import MiniButton from "@components/buttons/MiniButton";
 
 interface Props {
   title: string;

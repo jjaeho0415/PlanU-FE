@@ -1,35 +1,35 @@
 import { Meta, StoryObj } from "@storybook/react";
 import { MemoryRouter } from "react-router-dom";
 import Calendar from "./Calendar";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { format } from "date-fns";
 
 function Calendar_Story() {
-  const myPossibleDates = ["2024-12-29", "2025-01-03","2025-01-04", "2025-02-01"];
+  const myPossibleDates = ["2024-12-29", "2025-01-03", "2025-01-04", "2025-02-01"];
   const [availableDates, setAvailableDates] = useState<string[]>(myPossibleDates);
-  const groupPossibleDates:IGetGroupPossibleScheduleType[] = [
+  const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
+  const [selectedDate, setSelectedDate] = useState<string>(format(new Date(), "M월 d일"));
+  console.log(selectedDate);
+  const groupPossibleDates: IGroupAvailableDatesCalendarItemType[] = [
     {
       date: "2024-12-31",
-      possibleRatio: 25,
+      ratio: 25,
     },
     {
       date: "2025-01-12",
-      possibleRatio: 50,
+      ratio: 50,
     },
     {
       date: "2025-01-14",
-      possibleRatio: 75,
+      ratio: 75,
     },
     {
       date: "2025-02-01",
-      possibleRatio: 100,
+      ratio: 100,
     },
+  ];
 
-  ]
-
-  useEffect(() => {
-    console.log("availableDates: ", availableDates)
-  },[availableDates])
-  const schedule: IGetScheduleType[] = [
+  const schedule: IScheduleType[] = [
     {
       date: "2024-12-31",
       isSchedule: true,
@@ -66,7 +66,13 @@ function Calendar_Story() {
     >
       <div>
         <div>개인/그룹/친구 달력</div>
-        <Calendar type="view" scheduleData={schedule} />
+        <Calendar
+          type="view"
+          scheduleData={schedule}
+          setCurrentMonth={setCurrentMonth}
+          currentMonth={currentMonth}
+          setSelectedDate={setSelectedDate}
+        />
       </div>
       <div>
         <div>나의 달력 - 가능한 날짜 선택</div>
@@ -75,6 +81,9 @@ function Calendar_Story() {
           availableDates={availableDates}
           setAvailableDates={setAvailableDates}
           scheduleData={schedule}
+          setCurrentMonth={setCurrentMonth}
+          currentMonth={currentMonth}
+          setSelectedDate={setSelectedDate}
         />
       </div>
       <div>
@@ -83,6 +92,9 @@ function Calendar_Story() {
           type="groupPossible"
           scheduleData={schedule}
           groupAvailableDates={groupPossibleDates}
+          setCurrentMonth={setCurrentMonth}
+          currentMonth={currentMonth}
+          setSelectedDate={setSelectedDate}
         />
       </div>
     </div>

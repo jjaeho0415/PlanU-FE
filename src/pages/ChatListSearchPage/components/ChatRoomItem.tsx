@@ -1,4 +1,3 @@
-import CloseIcon from "@assets/Icons/Close/Icon_close.svg?react";
 import React from "react";
 import styles from "./chatRoomItem.module.scss";
 
