@@ -29,7 +29,11 @@ const LocationSharingPage = () => {
   const userCurrentLatLng = useUserLocation();
   const [selectedUserName, setSelectedUserName] = useState<string>("");
 
-  const { data: arrivalLocationInfo } = useGetArrivalLocationInfo(accessToken, groupId!, scheduleId!)
+  const { data: arrivalLocationInfo } = useGetArrivalLocationInfo(
+    accessToken,
+    groupId!,
+    scheduleId!,
+  );
 
   const { data: initialGroupMemberList } = useGetGroupMembersLocationInfo(
     accessToken,
@@ -38,11 +42,13 @@ const LocationSharingPage = () => {
   );
 
   useEffect(() => {
-    if (initialGroupMemberList) {
-      console.log(initialGroupMemberList)
+    if (!isConnected && initialGroupMemberList) {
+      console.log(initialGroupMemberList);
       setGroupMemberList(initialGroupMemberList);
+    } else if (isConnected) {
+      console.log("isConnected: true!");
     }
-  }, [initialGroupMemberList]);
+  }, [initialGroupMemberList, isConnected]);
 
   // 웹소켓 연결
   useEffect(() => {
@@ -307,9 +313,9 @@ const LocationSharingPage = () => {
         <div className={styles.text}>친구</div>
         <div className={styles.groupMemberListContainer}>
           {groupMemberList.length !== 0 && arrivalLocationInfo ? (
-            groupMemberList.map((groupMemberInfo) => (
+            groupMemberList.map((groupMemberInfo, index) => (
               <GroupMemberItem
-                key={groupMemberInfo.username}
+                key={index+groupMemberInfo.username}
                 groupMemberItem={groupMemberInfo}
                 handleGroupMemberClick={() => {
                   handleGroupMemberClick(groupMemberInfo);
