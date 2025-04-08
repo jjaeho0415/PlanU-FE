@@ -5,7 +5,7 @@ import { usePostEmailVerification } from "@api/user/postEmailVerification";
 import { useVerifyPassword } from "@api/user/postVerifyPassword";
 import { usePutUserInfo } from "@api/user/putUserInfo";
 import useAuthStore from "@store/useAuthStore";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import FooterButtons from "../../../components/buttons/SmallButton";
 import HeaderBar from "../../../components/headers/HasOnlyBackArrowHeader";
@@ -16,6 +16,7 @@ import InlineEditableProfileItem from "../components/InlineEditableProfileItem";
 import InlineEditableProfileItemWithButton from "../components/InlineEditableProfileItemWithButton";
 import ModalEditableProfileItem from "../components/ModalEditableProfileItem";
 import styles from "./profileEditPage.module.scss";
+import toast from "react-hot-toast";
 
 const EditProfilePage: React.FC = () => {
   const navigate = useNavigate();
@@ -27,9 +28,9 @@ const EditProfilePage: React.FC = () => {
   const postConfirmEmailCodeMutation = usePostConfirmEmailCode();
   const postVerifyPasswordMutation = useVerifyPassword(accessToken);
   const postChangePasswordMutation = useChangePassword(accessToken);
-
   const [birthDate, setBirthDate] = useState<string | null>(userInfo?.birthday ?? null);
   const [authCode, setAuthCode] = useState<string>("");
+  const isSendingRef = useRef<boolean>(false);
 
   const [requestUserNoBirthInfo, setRequestUserNoBirthInfo] =
     useState<IUpdateNoBirthDateProfileRequest>({
@@ -93,16 +94,18 @@ const EditProfilePage: React.FC = () => {
       alert("기존 비밀번호를 입력해주세요.");
       return;
     }
-
+    const loadingToastId = toast.loading("비밀번호 확인중...");
     postVerifyPasswordMutation.mutate(
       { password: requestUserInfo.password },
       {
         onSuccess: () => {
           setIsPasswordConfirmed(true);
-          alert("비밀번호가 확인되었습니다.");
+          toast.dismiss(loadingToastId);
+          toast.success("비밀번호가 확인되었습니다.");
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
         },
       },
     );
@@ -132,11 +135,13 @@ const EditProfilePage: React.FC = () => {
   };
 
   const handleChangePassword = () => {
+    const loadingToastId = toast.loading("비밀번호 변경중...");
     postChangePasswordMutation.mutate(
       { newPassword, confirmPassword: passwordConfirm },
       {
         onSuccess: () => {
-          alert("비밀번호가 성공적으로 변경되었습니다.");
+          toast.dismiss(loadingToastId);
+          toast.success("비밀번호가 성공적으로 변경되었습니다.");
 
           setRequestUserInfo((prev) => ({
             ...prev,
@@ -146,7 +151,8 @@ const EditProfilePage: React.FC = () => {
           setIsPasswordModalOpen(false);
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
         },
       },
     );
@@ -168,11 +174,15 @@ const EditProfilePage: React.FC = () => {
   };
 
   const handleSendAuthCode = () => {
+    if (isSendingRef.current) {
+      return;
+    }
     if (!requestUserInfo.email) {
       alert("이메일을 입력해주세요.");
       return;
     }
-
+    isSendingRef.current = true;
+    const loadingToastId = toast.loading("인증번호 발송중...");
     postEmailVerificationMutation.mutate(
       {
         email: requestUserInfo.email,
@@ -180,10 +190,15 @@ const EditProfilePage: React.FC = () => {
       },
       {
         onSuccess: () => {
-          alert("인증번호가 발송되었습니다.");
+          toast.dismiss(loadingToastId);
+          toast.success("인증번호가 발송되었습니다.");
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
+        },
+        onSettled: () => {
+          isSendingRef.current = false;
         },
       },
     );
@@ -204,6 +219,7 @@ const EditProfilePage: React.FC = () => {
       alert("이메일을 입력해주세요.");
       return;
     }
+    const loadingToastId = toast.loading("이메일 인증 확인중...");
 
     postConfirmEmailCodeMutation.mutate(
       {
@@ -213,11 +229,13 @@ const EditProfilePage: React.FC = () => {
       },
       {
         onSuccess: () => {
-          alert("이메일 인증이 완료되었습니다.");
+          toast.dismiss(loadingToastId);
+          toast.success("이메일 인증이 완료되었습니다.");
           setIsEmailModalOpen(false);
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
         },
       },
     );
