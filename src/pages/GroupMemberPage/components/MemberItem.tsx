@@ -7,7 +7,7 @@ import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFri
 import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
 import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
 import { useDeleteGroup } from "@api/group/deleteGroup";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDeleteLeaveGroup } from "@api/group/deleteLeaveGroup";
 import { useDeleteForcedWithdrawalFromGroup } from "@api/group/deleteForcedWithdrawalFromGroup";
 
@@ -19,6 +19,7 @@ interface Props {
 const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
   const { accessToken } = useAuthStore.getState();
   const { groupId } = useParams<{ groupId: string }>();
+  const navigate = useNavigate();
 
   const { mutate: requestFriend } = usePostRequestFriend(accessToken);
   const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
@@ -60,7 +61,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
   };
 
   const handleShowFriendCalendar = () => {
-    // 달력 보기
+    navigate(`/myCalendar/${memberInfo.username}`);
     return;
   };
 

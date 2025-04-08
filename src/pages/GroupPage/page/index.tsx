@@ -12,6 +12,7 @@ import { useGetGroupCalendarSchedules } from "@api/group/getGroupCalendarSchedul
 import { usePatchGroupPin } from "@api/group/patchGroupPin";
 import { useQueryClient } from "@tanstack/react-query";
 import { useGetGroupDetails } from "@api/group/getGroupDetail";
+import toast from "react-hot-toast";
 
 const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
 
@@ -46,12 +47,15 @@ const GroupPage = () => {
       return;
     }
     const previousIsPin = optimisticGroupDetails.isPin;
+    const loadingToastId = toast.loading("처리 중...");
     setOptimisticGroupDetails((prev) => ({
       ...prev!,
       isPin: !prev?.isPin,
     }));
     patchGroupPin(groupId!, {
       onSuccess: () => {
+        toast.dismiss(loadingToastId);
+        toast.success("즐겨찾기 등록 완료");
         queryClient.invalidateQueries({
           queryKey: ["GROUP_DETAILS"],
         });
@@ -61,7 +65,8 @@ const GroupPage = () => {
           ...prev!,
           isPin: previousIsPin,
         }));
-        alert(error.message);
+        toast.dismiss(loadingToastId);
+        toast.error(error.message);
       },
     });
   };

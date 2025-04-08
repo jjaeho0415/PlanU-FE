@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const deleteComment = async (
   authorization: string,
@@ -27,13 +28,19 @@ export const useDeleteComment = (
 
   return useMutation({
     mutationFn: () => deleteComment(authorization, groupId, scheduleId, commentId),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "deleteCommentLoading" });
+    },
     onSuccess: () => {
+      toast.dismiss("deleteCommentLoading");
+      toast.success("댓글 삭제 완료");
       queryClient.invalidateQueries({
         queryKey: ["GROUP_SCHEDULE_COMMENTS", groupId, scheduleId],
       });
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("deleteCommentLoading");
+      toast.error(error.message);
     },
   });
 };

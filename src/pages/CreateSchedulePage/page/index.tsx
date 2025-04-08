@@ -63,7 +63,6 @@ const CreateSchedulePage: React.FC = () => {
     if (id === "my") {
       createMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
     } else {
-      console.log("group");
       createGroupSchedule(data);
     }
   };

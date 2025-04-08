@@ -9,7 +9,7 @@ import useScheduleStore from "@store/useScheduleStore";
 const TimeBox: React.FC = () => {
   const [isDateClicked, setIsDateClicked] = useState<number>(-1);
   const [isTimeClicked, setIsTimeClicked] = useState<number>(-1);
-  const { isAllDay, setIsAllDay, startDate, setStartDate, endDate, setEndDate } =
+  const { isAllDay, setIsAllDay, startDate, endDate } =
     useScheduleStore();
 
   const formatTime = (date: Date): string => {

@@ -8,8 +8,8 @@ function Map_Story() {
   //   lng: 126.923834,
   // };
   const notSelectedLocationInfo: UserLatLngType = {
-    lng: 0,
-    lat: 0,
+    latitude: 0,
+    longitude: 0,
   };
 
   return (

@@ -24,7 +24,7 @@ const LocationBox: React.FC<Props> = ({ name, lat, lng }) => {
         </div>
       </div>
       <div className={styles.MapBox}>
-        <Map latLng={{ lat: lat, lng: lng }} />
+        <Map latLng={{ latitude: lat, longitude: lng }} />
       </div>
     </div>
   );

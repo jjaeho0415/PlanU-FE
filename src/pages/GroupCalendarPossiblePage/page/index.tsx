@@ -78,7 +78,6 @@ const GroupCalendarPossiblePage: React.FC = () => {
   );
 
   // 그룹 총 인원 수
-
   const { data: groupTotalNumber } = useGetGroupTotalMemberCount(groupId!, accessToken);
 
   return (
