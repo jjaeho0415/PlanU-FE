@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./chatBubble.module.scss";
 
 interface Props {
@@ -16,8 +16,11 @@ const ChatBubble: React.FC<Props> = ({ message, isSentByMe }) => {
           className={styles.profileImage}
         />
       )}
+      <p className={styles.UnreadCount}>
+        {message.unReadCount > 0 && isSentByMe && message.unReadCount}
+      </p>
       <div className={styles.RightContainer}>
-        {!isSentByMe && <p className={styles.SenderName}>{message.sender}</p>}
+        {!isSentByMe && <p className={styles.SenderName}>{message.name}</p>}
         <div className={styles.bubble}>
           <p className={`${styles.text} ${isSentByMe ? styles.sentText : styles.receivedText}`}>
             {message.message}
@@ -25,6 +28,9 @@ const ChatBubble: React.FC<Props> = ({ message, isSentByMe }) => {
           <span className={styles.time}>{message.chatTime}</span>
         </div>
       </div>
+      <p className={styles.UnreadCount}>
+        {message.unReadCount > 0 && !isSentByMe && message.unReadCount}
+      </p>
     </div>
   );
 };

@@ -22,6 +22,7 @@ type IChatItem = {
   chatDate: string;
   chatTime: string;
   profileImageUrl: string;
+  name: string;
 };
 
 type IGroupedChatMessages = {

@@ -23,6 +23,10 @@
   }
 }
 
+.UnreadCount {
+  font-size: 10px;
+}
+
 .bubble {
   padding: 6px 12px;
   border-radius: 20px;
@@ -36,13 +40,6 @@
     border-top-right-radius: 5px;
     align-items: flex-end;
   }
-  .text {
-    color: black;
-  }
-  .time {
-    font-size: 11px;
-    color: var(--gray-200);
-  }
 }
 
 .received {
@@ -53,10 +50,8 @@
     border-top-left-radius: 5px;
     align-items: flex-end;
   }
-  .text {
-    color: black;
-  }
 }
+
 .time {
   font-size: 11px;
   color: var(--gray-200);

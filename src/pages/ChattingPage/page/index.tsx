@@ -1,4 +1,4 @@
-import { default as Logo, default as ProfileEditPage } from "@assets/images/chat.jpg";
+import { default as Logo } from "@assets/images/chat.jpg";
 import React, { useEffect, useRef, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatHeader from "../components/ChattingHeader";
@@ -10,6 +10,7 @@ import useAuthStore from "@store/useAuthStore";
 import { useNavigate, useParams } from "react-router-dom";
 import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
 import { useGetUserInfo } from "@api/user/getUserInfo";
+import { useGetUpdateChatMessages } from "@api/chat/getUpdateChatMessages copy";
 
 const ChattingPage: React.FC = () => {
   const { accessToken } = useAuthStore();
@@ -18,10 +19,17 @@ const ChattingPage: React.FC = () => {
   const [client, setClient] = useState<Client | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const [messages, setMessages] = useState<IGroupedChatMessages[]>([]);
-  // const [lastMessageId, setLastMessageId] = useState<string>("");
   const chatRef = useRef<{ [key: number]: HTMLDivElement | null }>({});
+  const readMessageRef = useRef<number>(-1);
+  const [startId, setStartId] = useState<number>(-1);
   const [messageInput, setMessageInput] = useState<string>("");
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
+  const { data: updatedChatMessageData } = useGetUpdateChatMessages(
+    accessToken,
+    groupId ?? "",
+    startId,
+    readMessageRef.current,
+  );
   const { data: userData } = useGetUserInfo(accessToken);
 
   useEffect(() => {
@@ -30,13 +38,43 @@ const ChattingPage: React.FC = () => {
     }
   }, [chatMessagesData]);
 
+  // useEffect(() => {
+  //   if (updatedChatMessageData) {
+  //     setMessages(updatedChatMessageData.data);
+  //   }
+  // }, [updatedChatMessageData]);
+
   useEffect(() => {
     if (messages.length > 0) {
+      const startMessage = messages[0];
+      const startChatItem = startMessage.messages[0];
+
+      if (startChatItem) {
+        setStartId(startChatItem.messageId);
+      }
+
       const lastMessage = messages[messages.length - 1];
       const lastChatItem = lastMessage.messages[lastMessage.messages.length - 1];
 
       if (lastChatItem) {
         handleChatScroll(lastChatItem.messageId);
+
+        if (readMessageRef.current === lastChatItem.messageId) return;
+
+        if (client && connected) {
+          const chatMessage = {
+            type: 4,
+            messageId: lastChatItem.messageId,
+            unReadCount: lastChatItem.unReadCount,
+          };
+
+          client.publish({
+            destination: `/pub/chat/read/${lastChatItem.messageId}/${groupId}`,
+            body: JSON.stringify(chatMessage),
+          });
+
+          readMessageRef.current = lastChatItem.messageId;
+        }
       }
     }
   }, [messages]);
@@ -69,6 +107,7 @@ const ChattingPage: React.FC = () => {
                   ...updatedMessages[existingDateIndex],
                   messages: [...updatedMessages[existingDateIndex].messages, newMessage],
                 };
+
                 return updatedMessages;
               } else {
                 return [...prevMessages, { chatDate: messageDate, messages: [newMessage] }];
@@ -146,11 +185,12 @@ const ChattingPage: React.FC = () => {
       </div>
       <div className={styles.chatContainer}>
         {messages.map((message) => (
-          <div className={styles.ChatItemContainer}>
+          <div className={styles.ChatItemContainer} key={message.chatDate}>
             <div className={styles.Date}>{message.chatDate}</div>
             {message.messages.map((chat) => (
               <div
-                className={`${userData?.username === chat.sender && styles.SentByMe}`}
+                key={chat.messageId}
+                className={userData?.username === chat.sender ? styles.SentByMe : ""}
                 ref={(el) => {
                   chatRef.current[chat.messageId] = el;
                 }}
@@ -160,6 +200,7 @@ const ChattingPage: React.FC = () => {
                   message={chat}
                   isSentByMe={userData?.username === chat.sender}
                 />
+                {/* {chat.messageId === readMessageRef.current && <div>라라라라</div>} */}
               </div>
             ))}
           </div>
