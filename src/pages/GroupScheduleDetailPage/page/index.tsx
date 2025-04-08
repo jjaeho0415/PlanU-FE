@@ -62,6 +62,7 @@ const GroupScheduleDetail: React.FC = () => {
   return (
     <div className={styles.Container}>
       <HasTwoIconHeader
+        title={groupScheduleData?.title ?? ""}
         rightType="moreIcon"
         backgroundColor="purple"
         handleLeftClick={() => {

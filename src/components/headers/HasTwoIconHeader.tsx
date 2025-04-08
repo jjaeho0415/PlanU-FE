@@ -8,6 +8,7 @@ import StarIcon from "@components/iconComponent/StarIcon";
 import useScheduleStore from "@store/useScheduleStore";
 
 interface Props {
+  title: string;
   rightType: "moreIcon" | "checkIcon" | "button" | "star";
   handleLeftClick: () => void;
   handleRightClick: () => void;
@@ -17,6 +18,7 @@ interface Props {
 }
 
 const HasTwoIconHeader: React.FC<Props> = ({
+  title,
   rightType,
   handleLeftClick,
   handleRightClick,
@@ -24,7 +26,6 @@ const HasTwoIconHeader: React.FC<Props> = ({
   isPin,
   groupId,
 }) => {
-  const { title } = useScheduleStore();
   return (
     <div className={`${styles.mainContainer} ${styles[backgroundColor]}`}>
       <div className={styles.leftSection}>

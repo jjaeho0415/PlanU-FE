@@ -8,21 +8,9 @@ import NoteBox from "@components/createSchedule/NoteBox";
 import TitleBox from "@components/createSchedule/TitleBox";
 import LocationBox from "@components/createSchedule/LocationBox";
 import useScheduleStore from "@store/useScheduleStore";
+import useLocationInfoStore from "@store/useLocationInfoStore";
 
 const EditSchedulePage: React.FC = () => {
-  const { setTitle, setColor, setStartDate, setEndDate, setIsAllDay, setParticipants, setNote } =
-    useScheduleStore();
-
-  useEffect(() => {
-    setTitle("수현이 생일파티");
-    setColor("#38AAO3");
-    setStartDate(new Date());
-    setEndDate(new Date());
-    setIsAllDay(false);
-    setParticipants([]);
-    setNote("모두 참석바랍니다~!");
-  }, []);
-
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
@@ -36,7 +24,7 @@ const EditSchedulePage: React.FC = () => {
         <TitleBox />
         <ColorBox />
         <TimeBox />
-        <LocationBox />
+        {/* <LocationBox /> */}
         <MemberBox />
         <NoteBox />
       </div>
