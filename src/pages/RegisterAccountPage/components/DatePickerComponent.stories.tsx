@@ -3,7 +3,7 @@ import DatePicker from "./DatePicker";
 import { useState } from "react";
 
 function DatePickerComponent() {
-  const [userBirth, setUserBirth] = useState<string>("2000-04-15");
+  const [userBirth, setUserBirth] = useState<string|null>("2000-04-15");
   const [isBirthError, setIsBirthError] = useState<boolean>(false);
   console.log(isBirthError)
   return (

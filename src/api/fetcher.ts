@@ -1,6 +1,7 @@
 import useAuthStore from "@store/useAuthStore";
 import { postReissue } from "./user/postReissue";
 import useBottomStore from "@store/useBottomStore";
+import useLocationInfoStore from "@store/useLocationInfoStore";
 
 interface IFetchOptions<T = unknown> {
   endpoint: string;
@@ -32,6 +33,9 @@ const _fetch = async <T = unknown, R = unknown>({
   body,
   authorization,
 }: IFetchOptions<T>): Promise<R> => {
+  const { clearAuth } = useAuthStore.getState();
+  const { clearBottomState } = useBottomStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
   const headers: HeadersInit = {
     Accept: "application/json",
     "Content-Type": "application/json",
@@ -81,10 +85,10 @@ const _fetch = async <T = unknown, R = unknown>({
             return await retryRes.json();
           }
         } catch (error) {
-          useAuthStore.getState().setIsLogin(false);
-          useAuthStore.getState().setAccessToken("");
-          useBottomStore.getState().setBottomIndex(0);
-          window.location.href = `${window.location.origin}`;
+          clearAuth();
+          clearBottomState();
+          clearLocationInfo();
+          window.history.replaceState(null, "", window.location.origin);
           throw new Error("Session expired. Please log in again.");
         }
       }

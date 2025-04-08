@@ -52,7 +52,7 @@ const MoreModal: React.FC<Props> = ({ groupId, scheduleId }) => {
       ))}
       {isOpenAlertModal && (
         <AlertModal
-          type="삭제하기"
+          type="일정삭제"
           onClick={handleDeleteSchedule}
           setIsOpenAlertModal={setIsOpenAlertModal}
         />

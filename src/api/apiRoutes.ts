@@ -9,6 +9,7 @@ const apiRoutes = {
   reissue: "/users/token/reissue",
   userVerifyPassword: "/users/verify-password",
   userChangePassword: "/users/validate-new-password",
+  logout: "/users/logout",
   // 그룹 관련
   group: "/groups",
   createGroup: "/groups/create",
