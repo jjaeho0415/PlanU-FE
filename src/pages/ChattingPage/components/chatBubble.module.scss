@@ -1,14 +1,26 @@
 .bubbleContainer {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   max-width: 100%;
+  gap: 5px;
 }
 
 .profileImage {
-  border: 1px solid black;
-  width: 30px;
-  height: 30px;
+  border: 1px solid var(--gray-200);
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+}
+
+.RightContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+
+  .SenderName {
+    font-size: 13px;
+    color: var(--gray-800);
+  }
 }
 
 .bubble {
@@ -21,7 +33,7 @@
 
   .bubble {
     background-color: var(--violet-50);
-    border-bottom-right-radius: 5px;
+    border-top-right-radius: 5px;
     align-items: flex-end;
   }
   .text {
@@ -38,7 +50,7 @@
 
   .bubble {
     background-color: var(--violet);
-    border-bottom-left-radius: 5px;
+    border-top-left-radius: 5px;
     align-items: flex-end;
   }
   .text {

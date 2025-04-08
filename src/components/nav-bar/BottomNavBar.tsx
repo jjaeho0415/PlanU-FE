@@ -6,10 +6,15 @@ import ChatIcon from "@assets/Icons/bottomNavBar/chat_bubble.svg?react";
 import PersonIcon from "@assets/Icons/bottomNavBar/person.svg?react";
 import useBottomStore from "@store/useBottomStore";
 import { useNavigate } from "react-router-dom";
+import useAuthStore from "@store/useAuthStore";
+import { useGetNewChatNumber } from "@api/chat/getNewChatNumber";
 
 const BottomNavBar: React.FC = () => {
   const { bottomIndex, setBottomIndex } = useBottomStore();
   const navigate = useNavigate();
+  const { accessToken } = useAuthStore();
+  const { data: newChatNumber } = useGetNewChatNumber(accessToken);
+
   const handleClick = (index: number) => {
     setBottomIndex(index);
     switch (index) {
@@ -37,7 +42,12 @@ const BottomNavBar: React.FC = () => {
       case 1:
         return <UsersIcon {...iconProps} width={36} height={34} />;
       case 2:
-        return <ChatIcon {...iconProps} width={33} height={31} />;
+        return (
+          <div>
+            <div className={styles.NewChatNumber}>{newChatNumber}</div>
+            <ChatIcon {...iconProps} width={33} height={31} />
+          </div>
+        );
       case 3:
         return <PersonIcon {...iconProps} width={36} height={34} />;
       default:

@@ -9,9 +9,10 @@ import { useGetChatMessages } from "@api/chat/getChatMessages";
 import useAuthStore from "@store/useAuthStore";
 import { useNavigate, useParams } from "react-router-dom";
 import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 
 const ChattingPage: React.FC = () => {
-  const { accessToken, username } = useAuthStore();
+  const { accessToken } = useAuthStore();
   const navigate = useNavigate();
   const { groupId } = useParams<{ groupId: string }>();
   const [client, setClient] = useState<Client | null>(null);
@@ -21,12 +22,13 @@ const ChattingPage: React.FC = () => {
   const chatRef = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const [messageInput, setMessageInput] = useState<string>("");
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
+  const { data: userData } = useGetUserInfo(accessToken);
 
   useEffect(() => {
     if (chatMessagesData) {
       setMessages(chatMessagesData.data);
     }
-  }, []);
+  }, [chatMessagesData]);
 
   useEffect(() => {
     if (messages.length > 0) {
@@ -148,12 +150,16 @@ const ChattingPage: React.FC = () => {
             <div className={styles.Date}>{message.chatDate}</div>
             {message.messages.map((chat) => (
               <div
-                className={`${username === chat.sender && styles.SentByMe}`}
+                className={`${userData?.username === chat.sender && styles.SentByMe}`}
                 ref={(el) => {
                   chatRef.current[chat.messageId] = el;
                 }}
               >
-                <ChatBubble key={chat.messageId} message={chat} />
+                <ChatBubble
+                  key={chat.messageId}
+                  message={chat}
+                  isSentByMe={userData?.username === chat.sender}
+                />
               </div>
             ))}
           </div>
