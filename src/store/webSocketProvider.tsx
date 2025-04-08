@@ -1,9 +1,9 @@
 import { createContext, useContext, useRef, useState } from "react";
 import SockJS from "sockjs-client";
-import Stomp, { Client } from "@stomp/stompjs";
+import { Client } from "@stomp/stompjs";
 
 const WebSocketContext = createContext<{
-  stompClient: Stomp.Client | null;
+  stompClient: Client | null;
   connectWebSocket: (startTime: string, accessToken: string) => void;
   isDisconnected: boolean;
   isConnected: boolean;

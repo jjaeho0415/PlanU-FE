@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import EditButton from "../../../components/buttons/DefaultButton";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/HasOnlyBackArrowHeader";

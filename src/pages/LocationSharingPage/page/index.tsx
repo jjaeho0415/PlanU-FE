@@ -12,6 +12,7 @@ import { LocationSharingRedirect } from "../LocationSharingRedirect";
 import useUserLocation from "@store/useUserLocation";
 import { useGetGroupMembersLocationInfo } from "@api/location/getGroupMembersLocationInfo";
 import { useGetArrivalLocationInfo } from "@api/group/getArrivalLocationInfo";
+import type { IMessage } from "@stomp/stompjs";
 
 const LocationSharingPage = () => {
   const { groupId, scheduleId } = useParams<{ groupId: string; scheduleId: string }>();
@@ -65,7 +66,7 @@ const LocationSharingPage = () => {
     if (isConnected) {
       stompClient?.subscribe(
         `/sub/location/groups/${groupId}/${scheduleId}`,
-        (message) => {
+        (message: IMessage) => {
           if (!message?.body) {
             console.warn("⚠️ 빈 메시지가 수신됨");
             return;

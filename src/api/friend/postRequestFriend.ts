@@ -12,15 +12,15 @@ const postRequestFriend = async (authorization: string, username: string) => {
 
 export const usePostRequestFriend = (
   authorization: string,
-  setId: React.Dispatch<React.SetStateAction<string>>,
-  setActiveTab: React.Dispatch<React.SetStateAction<"친구목록" | "받은요청" | "보낸요청">>,
+  setId?: React.Dispatch<React.SetStateAction<string>>,
+  setActiveTab?: React.Dispatch<React.SetStateAction<"친구목록" | "받은요청" | "보낸요청">>,
 ) => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (username: string) => postRequestFriend(authorization, username),
     onSuccess: () => {
-      setId("");
-      setActiveTab("보낸요청");
+      setId && setId("");
+      setActiveTab && setActiveTab("보낸요청");
       queryClient.invalidateQueries({
         queryKey: ["GROUP_MEMBER_LIST"],
       });
