@@ -22,6 +22,13 @@ const TimePicker: React.FC<props> = ({ isStartDay }) => {
     }
   }, [hour]);
 
+  useEffect(() => {
+    const targetDate = isStartDay ? startDate : endDate;
+
+    setHour(targetDate.getHours());
+    setMinute(targetDate.getMinutes());
+  }, [isStartDay]);
+
   const checkDateOrder = () => {
     if (startDate.getTime() > endDate.getTime()) {
       alert("시작 시간이 종료 시간보다 늦을 수 없습니다.");

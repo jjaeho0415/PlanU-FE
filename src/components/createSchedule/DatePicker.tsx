@@ -41,14 +41,12 @@ const DatePicker: React.FC<Props> = ({ isStartDay }) => {
       updatedStartDate.setFullYear(selectedDate.getFullYear());
       updatedStartDate.setMonth(selectedDate.getMonth());
       updatedStartDate.setDate(selectedDate.getDate());
-
       setStartDate(updatedStartDate);
     } else {
       const updatedEndDate = endDate;
       updatedEndDate.setFullYear(selectedDate.getFullYear());
       updatedEndDate.setMonth(selectedDate.getMonth());
       updatedEndDate.setDate(selectedDate.getDate());
-
       setEndDate(updatedEndDate);
     }
   }, [selectedDate]);
