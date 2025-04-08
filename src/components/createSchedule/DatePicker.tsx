@@ -21,7 +21,7 @@ interface Props {
 }
 
 const DatePicker: React.FC<Props> = ({ isStartDay }) => {
-  const { startDate, setStartDate, endDate, setEndDate } = useScheduleStore();
+  const { startDate, setStartDate, endDate, setEndDate, isAllDay } = useScheduleStore();
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
 
@@ -48,7 +48,9 @@ const DatePicker: React.FC<Props> = ({ isStartDay }) => {
   }, [selectedDate]);
 
   useEffect(() => {
-    if (startDate.getDate() > endDate.getDate()) {
+    if (isAllDay) {
+      setEndDate(startDate);
+    } else if (!isAllDay && startDate.getDate() > endDate.getDate()) {
       alert("시작 시간이 종료 시간보다 늦을 수 없습니다.");
       setSelectedDate(startDate);
       setEndDate(startDate);

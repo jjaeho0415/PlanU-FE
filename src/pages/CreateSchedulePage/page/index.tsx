@@ -38,7 +38,7 @@ const CreateSchedulePage: React.FC = () => {
 
   useEffect(() => {
     const filteredMemberId: string[] = participants.map(
-      (member: IGroupMemberItemType) => member.username,
+      (member: IScheduleMemberType) => member.username,
     );
     setPostParticipantsData(filteredMemberId);
   }, [participants]);
@@ -51,7 +51,7 @@ const CreateSchedulePage: React.FC = () => {
         ? format(startDate, "yyyy-MM-dd'T'00:00")
         : format(startDate, "yyyy-MM-dd'T'HH:mm"),
       endDateTime: isAllDay
-        ? format(endDate, "yyyy-MM-dd'T'23:59")
+        ? format(startDate, "yyyy-MM-dd'T'23:59")
         : format(endDate, "yyyy-MM-dd'T'HH:mm"),
       location: locationName ?? locationAddress,
       latitude: lat,
