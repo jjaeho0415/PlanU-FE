@@ -33,11 +33,48 @@ import EditSchedulePage from "@pages/EditSchedulePage/page";
 import CreateSchedulePage from "@pages/CreateSchedulePage/page";
 import NotificationPage from "@pages/NotificationPage/page";
 import { WebSocketProvider } from "@store/webSocketProvider";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   return (
     <WebSocketProvider>
       <Router>
+        {/* api 응답 대기중일때
+        1. 로딩 시작 : toast.loading("문구", {id: "id"})
+        2. 성공 or 실패 : toast.dismiss("id")
+        3. 후속 알림 : toast.success("문구") 또는 toast.error("문구") 호출 */}
+        <Toaster
+          position="bottom-center"
+          toastOptions={{
+            duration: 3000,
+            style: { fontSize: "15px" },
+            success: {
+              style: {
+                background: "#4BB543",
+                color: "white",
+              },
+            },
+            error: {
+              style: {
+                background: "#FF4C4C",
+                color: "white",
+              },
+            },
+            loading: {
+              style: {
+                fontSize: "13px",
+                background: "#333",
+                color: "#fff",
+                borderRadius: "8px",
+                padding: "12px 16px",
+              },
+              iconTheme: {
+                primary: "#fff",
+                secondary: "#888",
+              },
+            },
+          }}
+        />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route element={<CommonRoute />}>
