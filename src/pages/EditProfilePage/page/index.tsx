@@ -191,7 +191,7 @@ const EditProfilePage: React.FC = () => {
       {
         onSuccess: () => {
           toast.dismiss(loadingToastId);
-          toast.success("인증번호가 발송되었습니다.");
+          toast.success("인증번호 발송 완료");
         },
         onError: (error) => {
           toast.dismiss(loadingToastId);

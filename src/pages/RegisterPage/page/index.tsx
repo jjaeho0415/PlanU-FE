@@ -80,14 +80,14 @@ const RegisterPage: React.FC = () => {
       return;
     }
     isSendingRef.current = true;
-    const loadingToastId = toast.loading("인증코드 발송중...");
+    const loadingToastId = toast.loading("인증번호 발송중...");
     sendCode(
       { email, purpose: "REGISTER" },
       {
         onSuccess: () => {
           setIsSendedEmailCode(true);
           toast.dismiss(loadingToastId);
-          toast.success("인증코드 발송 완료");
+          toast.success("인증번호 발송 완료");
         },
         onError: (error) => {
           toast.dismiss(loadingToastId);
@@ -102,11 +102,11 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleConfirmCode = (data: IPostConfirmEmailCodeRequestBodyType) => {
-    const loadingToastId = toast.loading("인증코드 확인중...");
+    const loadingToastId = toast.loading("인증번호 확인중...");
     confirmCode(data, {
       onSuccess: () => {
         toast.dismiss(loadingToastId);
-        toast.success("인증코드 일치");
+        toast.success("인증번호 일치");
         setIsCheckedCode(true);
       },
       onError: (error) => {
@@ -186,12 +186,12 @@ const RegisterPage: React.FC = () => {
   if (isSendedEmailCode) {
     inputList.push({
       name: "code",
-      text: "인증코드 6자리 입력",
+      text: "인증번호 6자리 입력",
       buttonText: "확인",
       type: "text",
       rules: {
-        required: "인증코드를 입력하세요",
-        pattern: { value: /^\d{6}$/, message: "인증코드는 6자리입니다" },
+        required: "인증번호를 입력하세요",
+        pattern: { value: /^\d{6}$/, message: "인증번호는 6자리입니다" },
       },
       onClick: () =>
         handleConfirmCode({
