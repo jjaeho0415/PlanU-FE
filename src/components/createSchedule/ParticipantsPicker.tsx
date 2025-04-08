@@ -5,12 +5,15 @@ import useScheduleStore from "@store/useScheduleStore";
 
 interface props {
   groupMemberList: IGetGroupMemberListResponseBodyType | undefined;
+  creator: string;
 }
 
-const ParticipantsPicker: React.FC<props> = ({ groupMemberList }: props) => {
+const ParticipantsPicker: React.FC<props> = ({ groupMemberList, creator }) => {
   const { participants, setParticipants } = useScheduleStore();
 
   const handleAddParticipants = (member: IGroupMemberItemType) => {
+    if (member.username === creator) return;
+
     if (participants.some((p) => p.username === member.username)) {
       setParticipants(participants.filter((p) => p.username !== member.username));
     } else {

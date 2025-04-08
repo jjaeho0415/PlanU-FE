@@ -29,12 +29,14 @@ const TimePicker: React.FC<props> = ({ isStartDay }) => {
     setMinute(targetDate.getMinutes());
   }, [isStartDay]);
 
-  const checkDateOrder = () => {
+  useEffect(() => {
     if (startDate.getTime() > endDate.getTime()) {
       alert("시작 시간이 종료 시간보다 늦을 수 없습니다.");
-      setEndDate(new Date(startDate));
+      const controlledEndDate = endDate;
+      controlledEndDate.setHours(startDate.getHours(), startDate.getMinutes());
+      setStartDate(controlledEndDate);
     }
-  };
+  }, [startDate, endDate]);
 
   const updateDate = (newHour: number, newMinute: number, isStart: boolean) => {
     if (isStart) {
@@ -46,7 +48,6 @@ const TimePicker: React.FC<props> = ({ isStartDay }) => {
       updatedEndDate.setHours(newHour, newMinute, 0, 0);
       setEndDate(updatedEndDate);
     }
-    checkDateOrder();
   };
 
   const incrementValue = (type: "시간" | "분") => {

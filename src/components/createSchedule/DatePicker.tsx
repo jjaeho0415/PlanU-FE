@@ -47,6 +47,14 @@ const DatePicker: React.FC<Props> = ({ isStartDay }) => {
     }
   }, [selectedDate]);
 
+  useEffect(() => {
+    if (startDate.getDate() > endDate.getDate()) {
+      alert("시작 시간이 종료 시간보다 늦을 수 없습니다.");
+      setSelectedDate(startDate);
+      setEndDate(startDate);
+    }
+  }, [startDate, endDate]);
+
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => subMonths(prev, 1));
   };
@@ -133,9 +141,7 @@ const DatePicker: React.FC<Props> = ({ isStartDay }) => {
     <div className={styles.calendarContainer}>
       <div className={styles.header}>
         <ArrowIcon className={styles.leftArrow} width={6} height={11} onClick={handlePrevMonth} />
-
         <div className={styles.monthLabel}>{format(currentMonth, "yyyy년 M월")}</div>
-
         <ArrowIcon width={6} height={11} onClick={handleNextMonth} className={styles.rightArrow} />
       </div>
       {renderDays()}

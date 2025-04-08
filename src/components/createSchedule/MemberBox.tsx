@@ -4,6 +4,7 @@ import ParticipantsPicker from "./ParticipantsPicker";
 import useScheduleStore from "@store/useScheduleStore";
 import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
 import useAuthStore from "@store/useAuthStore";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 
 interface props {
   groupId?: string;
@@ -14,6 +15,22 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
   const { participants, setParticipants } = useScheduleStore();
   const { accessToken } = useAuthStore();
   const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
+  const { data: userInfoData } = useGetUserInfo(accessToken);
+
+  useEffect(() => {
+    if (userInfoData && groupMemberList) {
+      const creator = groupMemberList?.members.find(
+        (member) => member.username === userInfoData?.username,
+      );
+
+      if (creator) {
+        setParticipants([
+          ...participants,
+          { name: creator.name, username: creator.username, profileImage: creator.profileImage },
+        ]);
+      }
+    }
+  }, []);
 
   useEffect(() => {
     if (participants.length !== 0) {
@@ -33,7 +50,10 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
       ></input>
       {isSelecting && (
         <>
-          <ParticipantsPicker groupMemberList={groupMemberList} />
+          <ParticipantsPicker
+            groupMemberList={groupMemberList}
+            creator={participants[0].username}
+          />
           <div className={styles.Done} onClick={() => setIsSelecting(false)}>
             확인
           </div>
