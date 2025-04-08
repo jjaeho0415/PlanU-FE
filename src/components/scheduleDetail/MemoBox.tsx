@@ -1,11 +1,10 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface Props {
-  memo: string;
-}
+const MemoBox: React.FC = () => {
+  const { memo } = useScheduleStore();
 
-const MemoBox: React.FC<Props> = ({ memo }) => {
   return (
     <div className={styles.MemoContainer}>
       <p>메모</p>

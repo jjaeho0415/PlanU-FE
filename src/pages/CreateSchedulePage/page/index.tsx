@@ -25,9 +25,10 @@ const CreateSchedulePage: React.FC = () => {
     endDate,
     participants,
     unregisteredParticipants,
-    note,
+    memo,
     isAllDay,
   } = useScheduleStore();
+  const resetScheduleState = useScheduleStore.getState().reset;
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
   const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
   const { groupId } = useParams<{ groupId: string }>();
@@ -57,7 +58,7 @@ const CreateSchedulePage: React.FC = () => {
       latitude: lat,
       longitude: lng,
       participants: postParticipantsData,
-      memo: note,
+      memo: memo,
     };
 
     if (id === "my") {
@@ -75,6 +76,7 @@ const CreateSchedulePage: React.FC = () => {
         rightType="x"
         handleClick={() => {
           navigate(-1);
+          resetScheduleState();
         }}
       />
       <div className={styles.ContentContainer}>
