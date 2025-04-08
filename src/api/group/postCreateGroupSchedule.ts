@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const postCreateGroupSchedule = async (
   body: IPostCreateGroupScheduleType,
@@ -21,11 +22,16 @@ export const usePostCreateGroupSchedule = (authorization: string, groupId: numbe
   return useMutation({
     mutationFn: (body: IPostCreateGroupScheduleType) =>
       postCreateGroupSchedule(body, groupId, authorization),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "createGroupScheduleLoading" });
+    },
     onSuccess: () => {
-      alert("일정 생성이 완료되었습니다.");
+      toast.dismiss("createGroupScheduleLoading");
+      toast.success("일정 생성이 완료되었습니다.");
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("createGroupScheduleLoading");
+      toast.error(error.message);
     },
   });
 };

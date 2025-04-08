@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const putUserInfo = async ({
@@ -33,12 +34,17 @@ export const usePutUserInfo = (token: string) => {
 
   return useMutation({
     mutationFn: (body: IUpdateUserProfileRequest) => putUserInfo({ body, token }),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "changeUserInfoLoading" });
+    },
     onSuccess: (data) => {
-      alert(data.resultMsg);
+      toast.dismiss("changeUserInfoLoading");
+      toast.success(data.resultMsg);
       navigate(-1);
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("changeUserInfoLoading");
+      toast.error(error.message);
     },
   });
 };

@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const postRequestFriend = async (authorization: string, username: string) => {
   const response: IResponseType = await api.post({
@@ -18,7 +19,12 @@ export const usePostRequestFriend = (
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: (username: string) => postRequestFriend(authorization, username),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "requestFriendLoading" });
+    },
     onSuccess: () => {
+      toast.dismiss("requestFriendLoading");
+      toast.success("성공!");
       setId && setId("");
       setActiveTab && setActiveTab("보낸요청");
       queryClient.invalidateQueries({
@@ -29,7 +35,8 @@ export const usePostRequestFriend = (
       });
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("requestFriendLoading");
+      toast.error(error.message);
     },
   });
 };
