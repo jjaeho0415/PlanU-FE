@@ -21,15 +21,35 @@ interface Props {
 }
 
 const DatePicker: React.FC<Props> = ({ isStartDay }) => {
+  const { startDate, setStartDate, endDate, setEndDate } = useScheduleStore();
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<Date>(new Date());
-  const { setStartDate, setEndDate } = useScheduleStore();
 
   useEffect(() => {
     if (isStartDay) {
-      setStartDate(selectedDate);
+      setSelectedDate(startDate);
     } else {
-      setEndDate(selectedDate);
+      setSelectedDate(endDate);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!selectedDate) return;
+
+    if (isStartDay) {
+      const updatedStartDate = startDate;
+      updatedStartDate.setFullYear(selectedDate.getFullYear());
+      updatedStartDate.setMonth(selectedDate.getMonth());
+      updatedStartDate.setDate(selectedDate.getDate());
+
+      setStartDate(updatedStartDate);
+    } else {
+      const updatedEndDate = endDate;
+      updatedEndDate.setFullYear(selectedDate.getFullYear());
+      updatedEndDate.setMonth(selectedDate.getMonth());
+      updatedEndDate.setDate(selectedDate.getDate());
+
+      setEndDate(updatedEndDate);
     }
   }, [selectedDate]);
 
