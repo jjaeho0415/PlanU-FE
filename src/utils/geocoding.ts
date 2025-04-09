@@ -5,7 +5,7 @@ const ReverseGeocoding = (userLatLng: UserLatLngType): Promise<string> => {
   return new Promise(async(resolve, reject) => {
     await loadGoogleMapsAPI(import.meta.env.VITE_GOOGLE_MAP_API_KEY);
     const geocoder = new google.maps.Geocoder();
-    geocoder.geocode({ location: userLatLng, language: "ko" }, (results, status) => {
+    geocoder.geocode({ location: {lat: userLatLng.latitude, lng: userLatLng.longitude}, language: "ko" }, (results, status) => {
       if (status === "OK") {
         if (results && results.length > 0) {
           const koreaAddress = results[0].formatted_address;

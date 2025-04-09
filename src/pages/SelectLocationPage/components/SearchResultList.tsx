@@ -19,8 +19,8 @@ const SearchResultList: React.FC<Props> = ({
     <>
       {searchResults.map((result, index) => {
         const distance = calculateDistance(
-          userLatLng.lat,
-          userLatLng.lng,
+          userLatLng.latitude,
+          userLatLng.longitude,
           result.lat,
           result.lng,
         ).toFixed(1); // 소수점 한 자리까지 표시

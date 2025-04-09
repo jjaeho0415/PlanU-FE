@@ -6,26 +6,37 @@ import EventCard from "@components/calendarPage/EventCard";
 import useAuthStore from "@store/useAuthStore";
 import { format } from "date-fns";
 import { ko } from "date-fns/locale";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Calendar from "../../../components/calendar/Calendar";
 import CalendarHeader from "../../../components/headers/CalendarHeader";
 import Footer from "../../../components/nav-bar/BottomNavBar";
 import styles from "./myCalendarPage.module.scss";
 import { useGetUserInfo } from "@api/user/getUserInfo";
+import useUserLocation from "@store/useUserLocation";
+import { usePostUserLocationUpdate } from "@api/user/postUserLocationUpdate";
 
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
   const { username } = useParams<{ username?: string }>();
   const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
-
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const formattedDate = format(new Date(selectedDate), "M월 d일 (E)", { locale: ko });
 
+  const userCurrentLatLng = useUserLocation();
+
+  const { mutate: updateUserLocationInfo } = usePostUserLocationUpdate(accessToken);
+
+  useEffect(() => {
+    if (userCurrentLatLng) {
+      updateUserLocationInfo(userCurrentLatLng);
+    }
+  }, [userCurrentLatLng]);
+
   const { data: userInfo } = useGetUserInfo(accessToken);
-  const usernameToUse = username || userInfo?.username
+  const usernameToUse = username || userInfo?.username;
   const { data: myCheckEvents } = useGetMyCalendarCheckEvents(
     usernameToUse!,
     format(currentMonth, "yyyy-MM"),
@@ -43,7 +54,7 @@ const MyCalendarPage: React.FC = () => {
   return (
     <div className={styles.Container}>
       <CalendarHeader
-        title={username ? `${username}님의 달력` : "나의 달력" }
+        title={username ? `${username}님의 달력` : "나의 달력"}
         type="my"
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
@@ -75,7 +86,11 @@ const MyCalendarPage: React.FC = () => {
                     <BirthdayCard birthdayName={birthdayName} key={birthdayName + index} />
                   ))}
                   {myScheduleList.schedules.map((scheduleItem) => (
-                    <EventCard scheduleItem={scheduleItem} key={scheduleItem.id} />
+                    <EventCard
+                      scheduleItem={scheduleItem}
+                      key={scheduleItem.id}
+                      groupId={scheduleItem.groupId}
+                    />
                   ))}
                 </>
               )

@@ -65,3 +65,11 @@
   .bottomSheetContainer.open{
     bottom: 0;
   }
+  .error{
+    font-size: 14px;
+    color: var(--gray-200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+  }

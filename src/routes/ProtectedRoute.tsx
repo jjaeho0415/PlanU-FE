@@ -49,7 +49,6 @@ const ProtectedRoute = () => {
     // 1시간마다 SSE 자동 재연결
     intervalRef.current = window.setInterval(
       () => {
-        console.log("🔄 SSE 자동 재연결 중...");
         getSubscribeToSSE(accessToken, queryClient);
       },
       60 * 60 * 1000,

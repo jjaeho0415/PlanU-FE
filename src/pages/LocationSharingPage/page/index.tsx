@@ -6,75 +6,120 @@ import GroupMemberItem from "../components/GroupMemberItem";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import ArrivalPin from "@assets/images/arrivalPin.png";
-import { ReverseGeocoding } from "@utils/geocoding";
-import { useNavigate } from "react-router-dom";
-
-const arrivalLocationInfo: IArrivalLocationInfo = {
-  location: "홍대입구역 7번출구, 19 신촌로2길 마포구 서울특별시",
-  latitude: 37.5568905,
-  longitude: 126.9273886,
-};
-
-const groupMemberList: IGetGroupMemberLocationResponseType[] = [
-  {
-    name: "최준혁",
-    profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    username: "chlwnsgur",
-    latitude: 37.5568905,
-    longitude: 126.9273886,
-  },
-  {
-    name: "이수현",
-    username: "dltngus",
-    profileImage: "https://health.chosun.com/site/data/img_dir/2023/07/17/2023071701753_0.jpg",
-    latitude: 37.55372,
-    longitude: 126.9229984,
-  },
-  {
-    name: "정재호",
-    username: "wjdwogh",
-    profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    latitude: 37.553,
-    longitude: 126.9229984,
-  },
-  {
-    name: "김도하",
-    profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    latitude: 37.5443027,
-    longitude: 126.9497249,
-    username: "rlaehgk",
-  },
-  {
-    name: "이다은",
-    profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    username: "dlekdms",
-    latitude: 37.5475011,
-    longitude: 126.9598507,
-  },
-  {
-    name: "이상준",
-    profileImage: "https://planu-storage-main.s3.ap-northeast-2.amazonaws.com/defaultProfile.png",
-    latitude: 37.8496353,
-    longitude: 126.7894564,
-    username: "dltkdwns",
-  },
-];
+import { useNavigate, useParams } from "react-router-dom";
+import { useWebSocket } from "@store/webSocketProvider";
+import { LocationSharingRedirect } from "../LocationSharingRedirect";
+import useUserLocation from "@store/useUserLocation";
+import { useGetGroupMembersLocationInfo } from "@api/location/getGroupMembersLocationInfo";
+import { useGetArrivalLocationInfo } from "@api/group/getArrivalLocationInfo";
+import type { IMessage } from "@stomp/stompjs";
 
 const LocationSharingPage = () => {
+  const { groupId, scheduleId } = useParams<{ groupId: string; scheduleId: string }>();
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [map, setMap] = useState<google.maps.Map | null>(null);
   const { accessToken } = useAuthStore.getState();
   const { data: userInfo } = useGetUserInfo(accessToken);
-  const [userCurrentLatLng, setUserCurrentLatLng] = useState<UserLatLngType>();
-  const [userCurrentLocationInfo, setUserCurrentLocationInfo] = useState<UserLatLngType>();
   const markersRef = useRef<google.maps.marker.AdvancedMarkerElement[]>([]);
   const navigate = useNavigate();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState<boolean>(false);
   const bottomSheetRef = useRef<HTMLDivElement | null>(null);
   const startY = useRef<number>(0);
-  const [selectedName, setSelectedName] = useState<string | null>(null);
+  const { stompClient, connectWebSocket, isConnected } = useWebSocket();
+  const [groupMemberList, setGroupMemberList] = useState<IMemberLocationType[]>([]);
+  const userCurrentLatLng = useUserLocation();
+  const [selectedUserName, setSelectedUserName] = useState<string>("");
 
-  // PC/데스크탑 버전
+  const { data: arrivalLocationInfo } = useGetArrivalLocationInfo(
+    accessToken,
+    groupId!,
+    scheduleId!,
+  );
+
+  const { data: initialGroupMemberList } = useGetGroupMembersLocationInfo(
+    accessToken,
+    groupId!,
+    scheduleId!,
+  );
+
+  useEffect(() => {
+    if (initialGroupMemberList) {
+      setGroupMemberList(initialGroupMemberList.groupMemberLocations);
+    } 
+  }, [initialGroupMemberList]);
+
+  // 웹소켓 연결
+  useEffect(() => {
+    if (!arrivalLocationInfo?.groupScheduleLocation.startDateTime) {
+      return;
+    }
+
+    connectWebSocket(arrivalLocationInfo.groupScheduleLocation.startDateTime, accessToken);
+  }, [accessToken, arrivalLocationInfo]);
+
+  // 실시간 위치 정보 구독
+  useEffect(() => {
+    if (!groupId || !scheduleId) {
+      console.warn("❌ groupId 또는 scheduleId가 없음, 구독 중단");
+      return;
+    }
+    if (isConnected) {
+      stompClient?.subscribe(
+        `/sub/location/groups/${groupId}/${scheduleId}`,
+        (message: IMessage) => {
+          if (!message?.body) {
+            console.warn("⚠️ 빈 메시지가 수신됨");
+            return;
+          }
+
+          try {
+            const response: IGetGroupMemberLocationResponseType = JSON.parse(message.body);
+
+            setGroupMemberList((prev) => {
+              const updatedLocation: IMemberLocationType[] = response.groupMemberLocations;
+
+              const updatedMembers = prev.map((member) => {
+                const newLocation = updatedLocation.find((loc) => loc.username === member.username);
+                return newLocation ? newLocation : member;
+              });
+
+              const newMembers = updatedLocation.filter(
+                (loc) => !prev.some((member) => member.username === loc.username),
+              );
+
+              return [...updatedMembers, ...newMembers];
+            });
+          } catch (error) {
+            console.error("❌ JSON 파싱 에러:", error);
+          }
+        },
+        {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      );
+    }
+  }, [accessToken, groupId, scheduleId, isConnected]);
+
+  useEffect(() => {
+    // 현재 위치 및 변하는 위치 정보 감지 후 위치 변동 시 발행
+    if (!userCurrentLatLng || !groupId || !scheduleId || !accessToken) {
+      return;
+    }
+    const sendLocationUpdate = () => {
+      stompClient?.publish({
+        destination: `/pub/location/groups/${groupId}/${scheduleId}`,
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify(userCurrentLatLng),
+      });
+    };
+    if (stompClient && stompClient.connected && isConnected) {
+      sendLocationUpdate();
+    }
+  }, [isConnected, userCurrentLatLng, stompClient, groupId, scheduleId, accessToken]);
+
+  // PC/데스크탑 버전 바텀시트
   const handleMouseMove = (e: MouseEvent) => {
     const deltaY = e.clientY - startY.current;
 
@@ -96,7 +141,7 @@ const LocationSharingPage = () => {
     document.addEventListener("mouseup", handleMouseUp);
   };
 
-  // 모바일 버전
+  // 모바일 버전 바텀시트
   const handleTouchStart = (e: React.TouchEvent) => {
     startY.current = e.touches[0].clientY;
   };
@@ -110,7 +155,7 @@ const LocationSharingPage = () => {
     }
   };
 
-  const handleGroupMemberClick = (clickedMember: IGetGroupMemberLocationResponseType) => {
+  const handleGroupMemberClick = (clickedMember: IMemberLocationType) => {
     if (map) {
       map.panTo(new google.maps.LatLng(clickedMember.latitude, clickedMember.longitude));
 
@@ -121,7 +166,7 @@ const LocationSharingPage = () => {
 
         // 클릭된 마커만 스타일 변경
         if (isClickedMarker) {
-          marker.content = await (
+          marker.content = (
             await createCustomPin({
               scale: 2.0,
               glyph: clickedMember.profileImage,
@@ -131,7 +176,7 @@ const LocationSharingPage = () => {
           ).element;
           marker.position = marker.position;
           marker.zIndex = 10;
-          setSelectedName(clickedMember.name)
+          setSelectedUserName(clickedMember.username);
         } else {
           const imgElement =
             marker.content instanceof HTMLElement ? marker.content.querySelector("img") : null;
@@ -151,53 +196,26 @@ const LocationSharingPage = () => {
     }
   };
 
-  // 현재 위치가 변할때마다 업데이트
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        if (
-          userCurrentLatLng?.latitude === position.coords.latitude &&
-          userCurrentLatLng?.longitude === position.coords.longitude
-        ) {
-          return;
-        }
-        setUserCurrentLatLng({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.error("Error getting user's location: ", error);
-      },
-    );
-  }, [userCurrentLatLng]);
-
-  // 자신의 현재 위치 정보(경도, 위도)로 위치정보(한글) 변환
-  useEffect(() => {
-    const reverseGeocoding = async () => {
-      if (userCurrentLatLng) {
-        setUserCurrentLocationInfo({
-          latitude: userCurrentLatLng.latitude,
-          longitude: userCurrentLatLng.longitude,
-        });
-      }
-    };
-    reverseGeocoding();
-  }, [userCurrentLatLng]);
-
-  useEffect(() => {
-    // 백엔드로 사용자의 현재위치 보내는 로직 작성해야함(몇초마다 보내주는걸로 debounce나 소켓 사용해야할듯)
-  }, [userCurrentLocationInfo]);
-
   // 그룹 멤버들의 위치와 도착장소를 핀으로 보여줌
   // 처음 맵의 중심은 자신의 현재 위치로 지정
   useEffect(() => {
     const initMap = async () => {
-      if (!userInfo || !mapRef.current) {
+      if (!userInfo || !mapRef.current || !arrivalLocationInfo) {
         return;
       }
 
-      const userLocation = groupMemberList.find((member) => member.name === userInfo.name);
+      const userLocation = groupMemberList.find((member) => member.username === userInfo.username);
+
+      // if (!userLocation && userCurrentLatLng) {
+      //   console.warn("그룹 멤버 리스트에서 사용자 위치를 찾을 수 없어, 현재 위치를 사용합니다.");
+      //   userLocation = {
+      //     name: userInfo.name,
+      //     username: userInfo.username,
+      //     latitude: userCurrentLatLng.latitude,
+      //     longitude: userCurrentLatLng.longitude,
+      //     profileImage: userInfo.profileImage,
+      //   };
+      // }
 
       if (!userLocation) {
         console.error("User not found in group member list");
@@ -214,14 +232,16 @@ const LocationSharingPage = () => {
 
         const pin = await createCustomPin({
           scale: 2,
-          glyph: userInfo?.profileImage,
+          glyph: userInfo.profileImage,
           type: "sharing",
         });
-        await createMarker(
+
+        const myPin = await createMarker(
           newMap,
           { lat: userLocation.latitude, lng: userLocation.longitude },
           pin.element,
         );
+        myPin.zIndex = 10;
 
         setMap(newMap);
 
@@ -249,8 +269,8 @@ const LocationSharingPage = () => {
         const arrivalMarker = await createMarker(
           newMap,
           {
-            lat: arrivalLocationInfo.latitude,
-            lng: arrivalLocationInfo.longitude,
+            lat: arrivalLocationInfo.groupScheduleLocation.latitude,
+            lng: arrivalLocationInfo.groupScheduleLocation.longitude,
           },
           arrivalPin.element,
         );
@@ -259,12 +279,14 @@ const LocationSharingPage = () => {
         console.error("Error initializing map: ", error);
       }
     };
-
-    initMap();
-  }, [userInfo, mapRef.current]);
+    if (groupMemberList.length > 0) {
+      initMap();
+    }
+  }, [userInfo, mapRef.current, groupMemberList, arrivalLocationInfo]);
 
   return (
     <>
+      <LocationSharingRedirect />
       <div className={styles.mainContainer}>
         <BackArrow_Icon
           width={30}
@@ -284,15 +306,21 @@ const LocationSharingPage = () => {
         <div className={styles.line} />
         <div className={styles.text}>친구</div>
         <div className={styles.groupMemberListContainer}>
-          {groupMemberList.map((groupMemberInfo) => (
-            <GroupMemberItem
-              key={groupMemberInfo.name}
-              groupMemberItem={groupMemberInfo}
-              handleGroupMemberClick={() => handleGroupMemberClick(groupMemberInfo)}
-              arrivalLocationInfo={arrivalLocationInfo}
-              selectedName={selectedName}
-            />
-          ))}
+          {groupMemberList.length !== 0 && arrivalLocationInfo ? (
+            groupMemberList.map((groupMemberInfo, index) => (
+              <GroupMemberItem
+                key={index+groupMemberInfo.username}
+                groupMemberItem={groupMemberInfo}
+                handleGroupMemberClick={() => {
+                  handleGroupMemberClick(groupMemberInfo);
+                }}
+                arrivalLocationInfo={arrivalLocationInfo.groupScheduleLocation}
+                selectedUserName={selectedUserName}
+              />
+            ))
+          ) : (
+            <div className={styles.error}>Server Error</div>
+          )}
         </div>
       </div>
     </>

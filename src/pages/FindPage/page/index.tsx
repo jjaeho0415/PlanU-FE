@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import styles from "./find.module.scss";
 import HasOnlyBackArrowHeader from "@components/headers/HasOnlyBackArrowHeader";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import { useForm } from "react-hook-form";
 import InputItem from "../components/InputItem";
 import { getIdInputList, getPwInputList } from "../../../types/inputLists";
 import DefaultButton from "@components/buttons/DefaultButton";
+import toast from "react-hot-toast";
 
 const FindPage: React.FC = () => {
   const navigate = useNavigate();
@@ -23,9 +24,9 @@ const FindPage: React.FC = () => {
   const [selectedInputType, setSelectedInputType] = useState<IInputItem[]>([]);
   const [isCheckedCode, setIsCheckedCode] = useState<boolean>(false);
   const [isCheckedPw, setIsCheckedPw] = useState<boolean>(false);
-  const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const { mutate: sendCode } = usePostEmailVerification();
   const { mutate: confirmCode } = usePostConfirmEmailCode();
+  const isSendingRef = useRef<boolean>(false);
 
   useEffect(() => {
     switch (selectedTab) {
@@ -34,8 +35,11 @@ const FindPage: React.FC = () => {
         break;
       case "pw":
         setButtonText("비밀번호 변경");
+        break;
+      default:
+        break;
     }
-  }, []);
+  }, [selectedTab]);
 
   const {
     register: idRegister,
@@ -78,7 +82,6 @@ const FindPage: React.FC = () => {
     selectedTab === "id" ? idReset() : pwReset();
     setUsername("");
     setIsDisabledButton(true);
-    setErrorMsg(null);
     setIsCheckedCode(false);
     setIsCheckedPw(false);
   }, [selectedTab]);
@@ -87,18 +90,29 @@ const FindPage: React.FC = () => {
     email: string,
     purpose: "REGISTER" | "FIND_USERNAME" | "FIND_PASSWORD" | "CHANGE_EMAIL",
   ) => {
+    if (isSendingRef.current) {
+      return;
+    }
+
     if (!email) {
       alert("이메일을 입력하세요");
       return;
     }
+    isSendingRef.current = true;
+    const loadingToastId = toast.loading("인증번호 발송 중...");
     sendCode(
       { email, purpose: purpose },
       {
         onSuccess: () => {
-          alert("인증코드 발송 성공");
+          toast.dismiss(loadingToastId);
+          toast.success("인증번호 발송 완료");
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
+        },
+        onSettled: () => {
+          isSendingRef.current = false;
         },
       },
     );
@@ -114,16 +128,19 @@ const FindPage: React.FC = () => {
   };
 
   const handleConfirmCode = (data: IPostConfirmEmailCodeRequestBodyType) => {
+    const loadingToastId = toast.loading("인증번호 확인중...");
     confirmCode(data, {
       onSuccess: () => {
-        alert("인증코드 일치");
+        toast.dismiss(loadingToastId);
+        toast.success("인증번호 일치");
         setIsCheckedCode(true);
         if (selectedTab === "id") {
           setIsDisabledButton(false);
         }
       },
       onError: (error) => {
-        alert(error.message);
+        toast.dismiss(loadingToastId);
+        toast.error(error.message);
       },
     });
   };
@@ -139,14 +156,17 @@ const FindPage: React.FC = () => {
   }, [selectedTab]);
 
   const handleFindId = (data: IFindIdFormData) => {
+    const loadingToastId = toast.loading("아이디 찾는 중...");
     findId(
       { email: data.email },
       {
         onSuccess: (res) => {
+          toast.dismiss(loadingToastId);
           setUsername(res.resultMsg);
         },
         onError: (err) => {
-          setErrorMsg(err.message);
+          toast.dismiss(loadingToastId);
+          toast.error(err.message);
         },
         onSettled: () => {
           setIsDisabledButton(false);
@@ -156,15 +176,18 @@ const FindPage: React.FC = () => {
   };
 
   const handleChangePassword = (data: IFindPWFormData) => {
+    const loadingToastId = toast.loading("비밀번호 변경 중...");
     changePassword(
       { username: data.id, email: data.email, newPassword: data.confirmNewPassword },
       {
         onSuccess: () => {
-          alert("비밀번호가 변경되었습니다.");
+          toast.dismiss(loadingToastId);
+          toast.success("비밀번호 변경 완료");
           navigate("/login");
         },
         onError: (err) => {
-          alert(err.message);
+          toast.dismiss(loadingToastId);
+          toast.error(err.message);
         },
         onSettled: () => {
           setIsDisabledButton(false);
@@ -213,9 +236,6 @@ const FindPage: React.FC = () => {
         </div>
       </form>
       <div className={styles.ButtonBox}>
-        {errorMsg && (
-          <p className={styles.IdNotFound}>입력하신 이메일과 일치하는 정보가 없습니다.</p>
-        )}
         {username && (
           <p className={styles.UsernameP}>
             회원님의 아이디는 <span className={styles.Username}>{username}</span> 입니다.

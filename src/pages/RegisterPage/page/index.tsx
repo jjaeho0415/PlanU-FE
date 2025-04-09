@@ -1,6 +1,6 @@
 import { GoLogin } from "@components/buttons/GoLogin";
 import styles from "./register.module.scss";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import Icon_alert from "@assets/Icons/Icon_alert.svg?react";
 import LoginButton from "@components/buttons/LoginButton";
 import LoginInput from "@components/inputBoxes/LoginInput";
@@ -16,6 +16,7 @@ import {
   PASSWORD_VALIDATION,
   USER_ID_VALIDATION,
 } from "../../../constants/validation";
+import toast from "react-hot-toast";
 
 const RegisterPage: React.FC = () => {
   const navigate = useNavigate();
@@ -44,6 +45,7 @@ const RegisterPage: React.FC = () => {
   const { mutate: confirmCode } = usePostConfirmEmailCode();
   const { mutate: registerAccount } = usePostRegister();
   const { refetch } = useGetCheckIdDuplication(watch("id"), isCheckingId);
+  const isSendingRef = useRef<boolean>(false);
 
   const handleCheckIdDuplication = async () => {
     if (!watch("id")) {
@@ -70,19 +72,26 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleSendCode = (email: string) => {
+    if (isSendingRef.current) {
+      return;
+    }
     if (!email) {
       alert("이메일을 입력하세요");
       return;
     }
+    isSendingRef.current = true;
+    const loadingToastId = toast.loading("인증번호 발송중...");
     sendCode(
       { email, purpose: "REGISTER" },
       {
         onSuccess: () => {
           setIsSendedEmailCode(true);
-          alert("인증코드 발송 성공");
+          toast.dismiss(loadingToastId);
+          toast.success("인증번호 발송 완료");
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
         },
       },
     );
@@ -93,13 +102,16 @@ const RegisterPage: React.FC = () => {
   };
 
   const handleConfirmCode = (data: IPostConfirmEmailCodeRequestBodyType) => {
+    const loadingToastId = toast.loading("인증번호 확인중...");
     confirmCode(data, {
       onSuccess: () => {
-        alert("인증코드 일치");
+        toast.dismiss(loadingToastId);
+        toast.success("인증번호 일치");
         setIsCheckedCode(true);
       },
       onError: (error) => {
-        alert(error.message);
+        toast.dismiss(loadingToastId);
+        toast.error(error.message);
       },
     });
   };
@@ -174,12 +186,12 @@ const RegisterPage: React.FC = () => {
   if (isSendedEmailCode) {
     inputList.push({
       name: "code",
-      text: "인증코드 6자리 입력",
+      text: "인증번호 6자리 입력",
       buttonText: "확인",
       type: "text",
       rules: {
-        required: "인증코드를 입력하세요",
-        pattern: { value: /^\d{6}$/, message: "인증코드는 6자리입니다" },
+        required: "인증번호를 입력하세요",
+        pattern: { value: /^\d{6}$/, message: "인증번호는 6자리입니다" },
       },
       onClick: () =>
         handleConfirmCode({
@@ -197,14 +209,17 @@ const RegisterPage: React.FC = () => {
       name: data.name,
       email: data.email,
     };
-
+    const loadingToastId = toast.loading("회원가입 진행중...");
     if (isCheckedId && isCheckedCode) {
       registerAccount(transformedData, {
         onSuccess: () => {
+          toast.dismiss(loadingToastId);
+          toast.success("회원가입 완료");
           navigate("/registerSuccess");
         },
         onError: (error) => {
-          alert(error.message);
+          toast.dismiss(loadingToastId);
+          toast.error(error.message);
         },
       });
     } else {

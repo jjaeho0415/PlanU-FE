@@ -9,6 +9,7 @@ const apiRoutes = {
   reissue: "/users/token/reissue",
   userVerifyPassword: "/users/verify-password",
   userChangePassword: "/users/validate-new-password",
+  updateUserLocation: "/users/location/update",
   logout: "/users/logout",
   // 그룹 관련
   group: "/groups",
@@ -38,7 +39,9 @@ const apiRoutes = {
   notificationList: "/notification/list",
   readAllNotifications: "/notification/read-all",
   //실시간 위치 공유 소켓 연결
-  wsLocation: "/ws-location"
+  locationGroups: "/location/groups",
+  subLocation: "/sub/location/groups",
+  pubLocation: "/pub/location/groups"
 };
 
 export default apiRoutes;
