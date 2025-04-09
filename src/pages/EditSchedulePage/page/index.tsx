@@ -1,6 +1,5 @@
 import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./editMySchedule.module.scss";
-import { useEffect } from "react";
 import ColorBox from "@components/createSchedule/ColorBox";
 import TimeBox from "@components/createSchedule/TimeBox";
 import MemberBox from "@components/createSchedule/MemberBox";
@@ -13,18 +12,29 @@ import useAuthStore from "@store/useAuthStore";
 import { useParams } from "react-router-dom";
 import { usePutEditGroupSchedule } from "@api/schedule/putEditGroupSchedule";
 import { format } from "date-fns";
+import { usePostEditMySchedule } from "@api/schedule/putEditMySchedule";
 
 const EditSchedulePage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { accessToken } = useAuthStore();
-  const { title, color, startDate, endDate, memo, participants, isAllDay } = useScheduleStore();
+  const {
+    title,
+    color,
+    startDate,
+    endDate,
+    memo,
+    participants,
+    isAllDay,
+    unregisteredParticipants,
+  } = useScheduleStore();
   const { lng, lat, name: locationName, location: locationAddress } = useLocationInfoStore();
   const { mutate: editGroupSchedule } = usePutEditGroupSchedule(
     accessToken,
     groupId ?? "",
     scheduleId ?? "",
   );
+  const { mutate: editMySchedule } = usePostEditMySchedule(accessToken, scheduleId ?? "");
 
   const handleEditConfirmClick = () => {
     const filteredMemberId: string[] = participants.map(
@@ -48,7 +58,7 @@ const EditSchedulePage: React.FC = () => {
     };
 
     if (groupId === "my") {
-      console.log("editmy");
+      editMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
     } else {
       editGroupSchedule(data);
     }

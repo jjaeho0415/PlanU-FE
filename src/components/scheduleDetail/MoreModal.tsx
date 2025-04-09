@@ -7,7 +7,7 @@ import AlertModal from "@components/modals/AlertModal";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
-  groupId?: string;
+  groupId: string;
   scheduleId: string;
 }
 

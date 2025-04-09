@@ -28,7 +28,6 @@ const CreateSchedulePage: React.FC = () => {
     memo,
     isAllDay,
   } = useScheduleStore();
-  const resetScheduleState = useScheduleStore.getState().reset;
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
   const { groupId } = useParams<{ groupId: string }>();
   const { accessToken } = useAuthStore();
@@ -70,7 +69,6 @@ const CreateSchedulePage: React.FC = () => {
         rightType="x"
         handleClick={() => {
           navigate(-1);
-          resetScheduleState();
         }}
       />
       <div className={styles.ContentContainer}>

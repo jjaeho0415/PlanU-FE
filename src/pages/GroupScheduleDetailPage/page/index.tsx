@@ -21,6 +21,8 @@ const GroupScheduleDetail: React.FC = () => {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
   const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
   const navigate = useNavigate();
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
   const { accessToken } = useAuthStore();
   const {
     setTitle,
@@ -75,6 +77,8 @@ const GroupScheduleDetail: React.FC = () => {
         backgroundColor="purple"
         handleLeftClick={() => {
           navigate(-1);
+          resetScheduleState();
+          clearLocationInfo();
         }}
         handleRightClick={() => {
           setIsOpenMoreModal(!isOpenMoreModal);

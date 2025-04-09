@@ -24,7 +24,8 @@ const postCreateGroupSchedule = async (
 export const usePostCreateGroupSchedule = (authorization: string, groupId: number) => {
   const navigate = useNavigate();
   const { setLocationInfo } = useLocationInfoStore();
-  const scheduleStore = useScheduleStore.getState();
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
 
   return useMutation({
     mutationFn: (body: IPostCreateGroupScheduleType) =>
@@ -37,7 +38,8 @@ export const usePostCreateGroupSchedule = (authorization: string, groupId: numbe
       toast.success("일정 생성 완료");
       navigate(-1);
       setLocationInfo("", 0, 0, "");
-      useScheduleStore.getState().reset;
+      resetScheduleState();
+      clearLocationInfo();
     },
     onError: (error) => {
       toast.dismiss("createGroupScheduleLoading");

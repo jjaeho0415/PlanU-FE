@@ -29,7 +29,8 @@ export const usePutEditGroupSchedule = (
 ) => {
   const navigate = useNavigate();
   const { setLocationInfo } = useLocationInfoStore();
-  const scheduleStore = useScheduleStore.getState();
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -41,12 +42,13 @@ export const usePutEditGroupSchedule = (
     onSuccess: () => {
       toast.dismiss("editGroupScheduleLoading");
       toast.success("일정 수정 완료");
-      navigate(-1);
-      setLocationInfo("", 0, 0, "");
       queryClient.invalidateQueries({
         queryKey: ["GROUP_SCHEDULE_DETAIL", groupId, scheduleId],
       });
-      scheduleStore.reset();
+      navigate(-1);
+      setLocationInfo("", 0, 0, "");
+      resetScheduleState();
+      clearLocationInfo();
     },
     onError: (error) => {
       toast.dismiss("editGroupScheduleLoading");

@@ -17,7 +17,7 @@ interface IScheduleInfo {
   setUnregisteredParticipants: (info: string[]) => void;
   memo: string;
   setMemo: (info: string) => void;
-  reset: () => void;
+  resetScheduleState: () => void;
 }
 const useScheduleStore = create<IScheduleInfo>((set) => {
   const initialState = {
@@ -43,7 +43,7 @@ const useScheduleStore = create<IScheduleInfo>((set) => {
     setMemo: (memo) => set({ memo }),
 
     // 초기화할 때 setter 함수들은 유지하면서 상태만 초기 상태로 변경
-    reset: () => set(() => ({ ...initialState })),
+    resetScheduleState: () => set(() => ({ ...initialState })),
   };
 });
 
