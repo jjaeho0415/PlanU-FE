@@ -39,6 +39,12 @@ const RegisterAccountPage = () => {
   const { data: userInfo } = useGetUserInfo(accessToken);
 
   useEffect(() => {
+    if (userInfo?.birthday) {
+      window.location.replace(`${window.location.origin}/myCalendar`)
+    }
+  }, [userInfo])
+
+  useEffect(() => {
     setPostBody({
       UserProfileRequest: {
         birthDate: userBirth!,

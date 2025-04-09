@@ -45,6 +45,15 @@ const MyCalendarPage: React.FC = () => {
 
   const { data: myScheduleList } = useGetMyScheduleList(usernameToUse!, accessToken, selectedDate);
 
+  useEffect(() => {
+    if (!userInfo) {
+      return;
+    }
+    if (!userInfo.birthday) {
+      window.location.replace(`${window.location.origin}/registerAccount`);
+    }
+  }, [userInfo]);
+
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
   };
