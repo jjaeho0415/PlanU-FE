@@ -6,12 +6,8 @@ import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
-const postCreateGroupSchedule = async (
-  body: IPostCreateGroupScheduleType,
-  groupId: number,
-  authorization: string,
-) => {
-  const endpoint = `${apiRoutes.group}/${groupId}/schedules`;
+const postCreateMySchedule = async (body: IPostCreateMyScheduleType, authorization: string) => {
+  const endpoint = `${apiRoutes.schedules}`;
   const response = await api.post({
     endpoint,
     body,
@@ -21,26 +17,25 @@ const postCreateGroupSchedule = async (
   return response;
 };
 
-export const usePostCreateGroupSchedule = (authorization: string, groupId: number) => {
+export const usePostCreateMySchedule = (authorization: string) => {
   const navigate = useNavigate();
   const { setLocationInfo } = useLocationInfoStore();
   const scheduleStore = useScheduleStore.getState();
 
   return useMutation({
-    mutationFn: (body: IPostCreateGroupScheduleType) =>
-      postCreateGroupSchedule(body, groupId, authorization),
+    mutationFn: (body: IPostCreateMyScheduleType) => postCreateMySchedule(body, authorization),
     onMutate: () => {
-      toast.loading("처리 중...", { id: "createGroupScheduleLoading" });
+      toast.loading("처리 중...", { id: "createMyScheduleLoading" });
     },
     onSuccess: () => {
-      toast.dismiss("createGroupScheduleLoading");
+      toast.dismiss("createMyScheduleLoading");
       toast.success("일정 생성 완료");
       navigate(-1);
       setLocationInfo("", 0, 0, "");
-      useScheduleStore.getState().reset;
+      scheduleStore.reset();
     },
     onError: (error) => {
-      toast.dismiss("createGroupScheduleLoading");
+      toast.dismiss("createMyScheduleLoading");
       toast.error(error.message);
     },
   });

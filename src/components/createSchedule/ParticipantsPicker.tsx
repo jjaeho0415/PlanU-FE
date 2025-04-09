@@ -1,20 +1,23 @@
+import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
 import styles from "./participants.module.scss";
 import Icon_uncheckbox from "@assets/Icons/checkbox/Icon_blankBox.svg?react";
 import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
 import useScheduleStore from "@store/useScheduleStore";
+import useAuthStore from "@store/useAuthStore";
 
 interface props {
-  groupMemberList: IGetGroupMemberListResponseBodyType | undefined;
   creator: string;
+  groupId?: string;
 }
 
-const ParticipantsPicker: React.FC<props> = ({ groupMemberList, creator }) => {
+const ParticipantsPicker: React.FC<props> = ({ creator, groupId = "" }) => {
+  const { accessToken } = useAuthStore();
+  const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
   const { participants, setParticipants } = useScheduleStore();
 
   const handleAddParticipants = (member: IGroupMemberItemType) => {
     if (member.username === creator) return;
-
-    if (participants.some((p) => p.username === member.username)) {
+    else if (participants.some((p) => p.username === member.username)) {
       setParticipants(participants.filter((p) => p.username !== member.username));
     } else {
       setParticipants([...participants, member]);

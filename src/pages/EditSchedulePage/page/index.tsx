@@ -11,35 +11,62 @@ import useScheduleStore from "@store/useScheduleStore";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import useAuthStore from "@store/useAuthStore";
 import { useParams } from "react-router-dom";
+import { usePutEditGroupSchedule } from "@api/schedule/putEditGroupSchedule";
+import { format } from "date-fns";
 
 const EditSchedulePage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
-  // const id = groupId === "my" ? "my" : Number(groupId);
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { accessToken } = useAuthStore();
-  const { title, color, startDate, endDate, memo, participants } = useScheduleStore();
+  const { title, color, startDate, endDate, memo, participants, isAllDay } = useScheduleStore();
+  const { lng, lat, name: locationName, location: locationAddress } = useLocationInfoStore();
+  const { mutate: editGroupSchedule } = usePutEditGroupSchedule(
+    accessToken,
+    groupId ?? "",
+    scheduleId ?? "",
+  );
 
   const handleEditConfirmClick = () => {
+    const filteredMemberId: string[] = participants.map(
+      (member: IScheduleMemberType) => member.username,
+    );
+
+    const data = {
+      title: title,
+      color: color,
+      startDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'00:00")
+        : format(startDate, "yyyy-MM-dd'T'HH:mm"),
+      endDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'23:59")
+        : format(endDate, "yyyy-MM-dd'T'HH:mm"),
+      location: locationName ?? locationAddress,
+      latitude: lat,
+      longitude: lng,
+      participants: filteredMemberId,
+      memo: memo,
+    };
+
     if (groupId === "my") {
+      console.log("editmy");
     } else {
+      editGroupSchedule(data);
     }
   };
 
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
-        title="새로운 일정"
+        title="일정 수정"
         rightType="button"
-        handleClick={() => {
-          return;
-        }}
+        handleClick={handleEditConfirmClick}
       />
       <div className={styles.ContentContainer}>
         <TitleBox />
         <ColorBox />
         <TimeBox />
-        {/* <LocationBox /> */}
-        <MemberBox />
+        <LocationBox />
+        <MemberBox groupId={groupId} />
         <NoteBox />
       </div>
     </div>

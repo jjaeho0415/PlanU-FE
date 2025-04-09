@@ -32,7 +32,7 @@ export const usePostCreateMySchedule = (authorization: string) => {
       toast.success("일정 생성 완료");
       navigate(-1);
       setLocationInfo("", 0, 0, "");
-      scheduleStore.reset();
+      useScheduleStore.getState().reset;
     },
     onError: (error) => {
       toast.dismiss("createMyScheduleLoading");

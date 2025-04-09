@@ -29,7 +29,7 @@ const MoreModal: React.FC<Props> = ({ groupId, scheduleId }) => {
       case "공유하기":
         break;
       case "수정하기":
-        if (groupId) {
+        if (groupId !== "my") {
           navigate(`/editSchedule/${groupId}/${scheduleId}`);
         } else {
           navigate(`/editSchedule/my/${scheduleId}`);

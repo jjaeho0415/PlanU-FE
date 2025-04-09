@@ -32,13 +32,11 @@ const MyScheduleDetailPage: React.FC = () => {
         }}
       />
       <div className={styles.ContentContainer}>
-        <TitleBox title={data?.title ?? ""} />
-        <TimeBox startDate={data?.startDateTime ?? ""} endDate={data?.endDateTime ?? ""} />
-        {data?.location && <LocationBox name={data.location} lat={0} lng={0} />}
-        {data?.participants.length !== 0 && (
-          <ParticipantsBox participants={data?.participants ?? null} />
-        )}
-        <MemoBox memo={data?.memo ?? ""} />
+        <TitleBox />
+        <TimeBox />
+        {data?.location && <LocationBox />}
+        {data?.participants.length !== 0 && <ParticipantsBox />}
+        <MemoBox />
       </div>
       {isOpenMoreModal && <MoreModal scheduleId={scheduleId ?? ""} />}
     </div>

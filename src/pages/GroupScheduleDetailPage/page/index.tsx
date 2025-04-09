@@ -15,6 +15,7 @@ import { useGetComments } from "@api/schedule/getComments";
 import MoreModal from "@components/scheduleDetail/MoreModal";
 import useScheduleStore from "@store/useScheduleStore";
 import { getHours, getMinutes, isSameDay } from "date-fns";
+import useLocationInfoStore from "@store/useLocationInfoStore";
 
 const GroupScheduleDetail: React.FC = () => {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
@@ -32,6 +33,7 @@ const GroupScheduleDetail: React.FC = () => {
     startDate,
     endDate,
   } = useScheduleStore();
+  const { setLocationInfo } = useLocationInfoStore();
   const { groupId } = useParams<{ groupId: string }>();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { data: groupScheduleData } = useGetGroupScheduleDetail(
@@ -49,6 +51,12 @@ const GroupScheduleDetail: React.FC = () => {
         setStartDate(new Date(groupScheduleData.startDate)),
         setParticipants(groupScheduleData.participants),
         setMemo(groupScheduleData.memo);
+      setLocationInfo(
+        groupScheduleData.location,
+        groupScheduleData.latitude,
+        groupScheduleData.longitude,
+        groupScheduleData.location,
+      );
 
       const isSameDate = isSameDay(startDate, endDate);
       const isStartMidnight = getHours(startDate) === 0 && getMinutes(startDate) === 0;
@@ -75,11 +83,7 @@ const GroupScheduleDetail: React.FC = () => {
       <div className={styles.ContentContainer}>
         <TitleBox />
         <TimeBox />
-        <LocationBox
-          name={groupScheduleData?.location ?? ""}
-          lat={groupScheduleData?.latitude ?? 0}
-          lng={groupScheduleData?.longitude ?? 0}
-        />
+        <LocationBox />
         <ParticipantsBox />
         <MemoBox />
       </div>

@@ -30,21 +30,16 @@ const CreateSchedulePage: React.FC = () => {
   } = useScheduleStore();
   const resetScheduleState = useScheduleStore.getState().reset;
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
-  const [postParticipantsData, setPostParticipantsData] = useState<string[]>([]);
   const { groupId } = useParams<{ groupId: string }>();
-  const id = groupId === "my" ? "my" : Number(groupId);
   const { accessToken } = useAuthStore();
   const { mutate: createMySchedule } = usePostCreateMySchedule(accessToken);
   const { mutate: createGroupSchedule } = usePostCreateGroupSchedule(accessToken, Number(groupId));
 
-  useEffect(() => {
+  const handleButtonClick = () => {
     const filteredMemberId: string[] = participants.map(
       (member: IScheduleMemberType) => member.username,
     );
-    setPostParticipantsData(filteredMemberId);
-  }, [participants]);
 
-  const handleButtonClick = () => {
     const data = {
       title: title,
       color: color,
@@ -57,11 +52,11 @@ const CreateSchedulePage: React.FC = () => {
       location: locationName ?? locationAddress,
       latitude: lat,
       longitude: lng,
-      participants: postParticipantsData,
+      participants: filteredMemberId,
       memo: memo,
     };
 
-    if (id === "my") {
+    if (groupId === "my") {
       createMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
     } else {
       createGroupSchedule(data);
@@ -82,7 +77,7 @@ const CreateSchedulePage: React.FC = () => {
         <TitleBox />
         <ColorBox />
         <TimeBox />
-        <LocationBox lat={lat} lng={lng} location={locationAddress} name={locationName} />
+        <LocationBox />
         <MemberBox groupId={groupId} />
         <NoteBox />
       </div>

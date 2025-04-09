@@ -10,7 +10,7 @@ import { format } from "date-fns";
 const TimeBox: React.FC = () => {
   const [isDateClicked, setIsDateClicked] = useState<number>(-1);
   const [isTimeClicked, setIsTimeClicked] = useState<number>(-1);
-  const { isAllDay, setIsAllDay, startDate, endDate } =
+  const { isAllDay, setIsAllDay, startDate, setStartDate, setEndDate, endDate } =
     useScheduleStore();
 
   const formatTime = (date: Date): string => {

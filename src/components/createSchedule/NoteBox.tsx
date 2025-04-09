@@ -4,7 +4,7 @@ import useScheduleStore from "@store/useScheduleStore";
 
 const NoteBox: React.FC = () => {
   const textareaRef = useRef<HTMLTextAreaElement | null>(null);
-  const { note, setNote } = useScheduleStore();
+  const { memo, setMemo } = useScheduleStore();
 
   const resizeHeight = () => {
     if (!textareaRef.current) return;
@@ -24,7 +24,7 @@ const NoteBox: React.FC = () => {
   };
 
   const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setNote(event.target.value);
+    setMemo(event.target.value);
     resizeHeight();
   };
 
@@ -34,7 +34,7 @@ const NoteBox: React.FC = () => {
       ref={textareaRef}
       onChange={handleChange}
       placeholder="노트"
-      value={note}
+      value={memo}
     ></textarea>
   );
 };
