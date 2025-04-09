@@ -66,6 +66,9 @@ const MyCalendarPage: React.FC = () => {
         title={name ? `${name}님의 달력` : "나의 달력"}
         type={name ? "friend" : "my"}
         handleMiniCalendarClick={handleMiniCalendarClick}
+        handleBackArrowClick={() => {
+          name && navigate(-1);
+        }}
       />
 
       <div className={styles.content}>

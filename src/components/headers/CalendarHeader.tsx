@@ -18,21 +18,28 @@ const CalenderHeader: React.FC<Props> = ({
 }) => {
   return (
     <div className={styles.mainContainer}>
-      {type === "group" && (
+      {type !== "my" && (
         <div className={styles.leftSection}>
-          <BackArrow2_Icon width={9} height={18} onClick={handleBackArrowClick} className={styles.backArrow} />
+          <BackArrow2_Icon
+            width={9}
+            height={18}
+            onClick={handleBackArrowClick}
+            className={styles.backArrow}
+          />
         </div>
       )}
 
       <div className={styles.titleSection}>{title}</div>
-      {type !== "friend" && <div className={styles.rightSection}>
-        <MiniCalender_Icon
-          width={27}
-          height={26}
-          onClick={handleMiniCalendarClick}
-          className={styles.miniCalendarIconSection}
-        />
-      </div>}
+      {type !== "friend" && (
+        <div className={styles.rightSection}>
+          <MiniCalender_Icon
+            width={27}
+            height={26}
+            onClick={handleMiniCalendarClick}
+            className={styles.miniCalendarIconSection}
+          />
+        </div>
+      )}
     </div>
   );
 };
