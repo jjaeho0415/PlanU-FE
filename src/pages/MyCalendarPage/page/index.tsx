@@ -18,7 +18,7 @@ import { usePostUserLocationUpdate } from "@api/user/postUserLocationUpdate";
 
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
-  const { username } = useParams<{ username?: string }>();
+  const { username, name } = useParams<{ username?: string; name?: string }>();
   const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
@@ -63,7 +63,7 @@ const MyCalendarPage: React.FC = () => {
   return (
     <div className={styles.Container}>
       <CalendarHeader
-        title={username ? `${username}님의 달력` : "나의 달력"}
+        title={name ? `${name}님의 달력` : "나의 달력"}
         type="my"
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
@@ -83,7 +83,7 @@ const MyCalendarPage: React.FC = () => {
             <h1 className={styles.scheduleHeader}>{formattedDate}</h1>
             <EditIcon className={styles.editIcon} onClick={handleGoCreateSchedule} />
           </div>
-          <div className={styles.subText}>나의 스케줄</div>
+          <div className={styles.subText}>{name ? `${name}님의 스케줄` : "나의 스케줄"}</div>
           <div className={styles.cardSection}>
             {myScheduleList?.schedules.length === 0 &&
             myScheduleList?.birthdayPerson.length === 0 ? (
