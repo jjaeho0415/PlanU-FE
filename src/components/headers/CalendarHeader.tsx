@@ -5,7 +5,7 @@ import MiniCalender_Icon from "@assets/Icons/headers/miniCalendar.svg?react";
 
 interface Props {
   title: "그룹 달력" | "나의 달력" | string;
-  type: "my" | "group";
+  type: "my" | "group" | "friend";
   handleBackArrowClick?: () => void;
   handleMiniCalendarClick: () => void;
 }
@@ -25,14 +25,14 @@ const CalenderHeader: React.FC<Props> = ({
       )}
 
       <div className={styles.titleSection}>{title}</div>
-      <div className={styles.rightSection}>
+      {type !== "friend" && <div className={styles.rightSection}>
         <MiniCalender_Icon
           width={27}
           height={26}
           onClick={handleMiniCalendarClick}
           className={styles.miniCalendarIconSection}
         />
-      </div>
+      </div>}
     </div>
   );
 };

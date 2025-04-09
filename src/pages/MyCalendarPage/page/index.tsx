@@ -64,7 +64,7 @@ const MyCalendarPage: React.FC = () => {
     <div className={styles.Container}>
       <CalendarHeader
         title={name ? `${name}님의 달력` : "나의 달력"}
-        type="my"
+        type={name ? "friend" : "my"}
         handleMiniCalendarClick={handleMiniCalendarClick}
       />
 
@@ -81,7 +81,7 @@ const MyCalendarPage: React.FC = () => {
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
             <h1 className={styles.scheduleHeader}>{formattedDate}</h1>
-            <EditIcon className={styles.editIcon} onClick={handleGoCreateSchedule} />
+            {!name && <EditIcon className={styles.editIcon} onClick={handleGoCreateSchedule} />}
           </div>
           <div className={styles.subText}>{name ? `${name}님의 스케줄` : "나의 스케줄"}</div>
           <div className={styles.cardSection}>
@@ -99,6 +99,7 @@ const MyCalendarPage: React.FC = () => {
                       scheduleItem={scheduleItem}
                       key={scheduleItem.id}
                       groupId={scheduleItem.groupId}
+                      isFriendEvent={name ? true : false}
                     />
                   ))}
                 </>
@@ -107,7 +108,7 @@ const MyCalendarPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {!name && <Footer />}
     </div>
   );
 };
