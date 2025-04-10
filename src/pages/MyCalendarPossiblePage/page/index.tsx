@@ -21,6 +21,7 @@ const MyCalendarPossiblePage: React.FC = () => {
   const currentDate = new Date();
   const [currentMonth, setCurrentMonth] = useState<Date>(new Date());
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
+  console.log(currentMonth, selectedDate)
 
   const scheduleData: IGetScheduleType[] = [
     { date: "2025-01-04", isSchedule: true, isBirthday: false },

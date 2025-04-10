@@ -5,7 +5,7 @@ import { createCustomPin, createMarker, initializeMap } from "@utils/drawMap";
 import GroupMemberItem from "../components/GroupMemberItem";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
-import ArrivalPin from "@assets/images/arrivalPin.png";
+import ArrivalPin from "@assets/images/locationSharingPage/arrivalPin.png";
 import { useNavigate, useParams } from "react-router-dom";
 import { useWebSocket } from "@store/webSocketProvider";
 import { LocationSharingRedirect } from "../LocationSharingRedirect";

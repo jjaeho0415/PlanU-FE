@@ -36,7 +36,7 @@ const EditSchedulePage: React.FC = () => {
         <TitleBox />
         <ColorBox />
         <TimeBox />
-        <LocationBox />
+        <LocationBox lat={0} lng={0} name="asd" location="asd"/>
         <MemberBox />
         <NoteBox />
       </div>

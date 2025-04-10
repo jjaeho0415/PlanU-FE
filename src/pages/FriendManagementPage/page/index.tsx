@@ -21,6 +21,7 @@ const FriendManagementPage: React.FC = () => {
     { name: "이수현", username: "shuding0307", profileImageUrl: "" },
     { name: "이수현", username: "shuding0307", profileImageUrl: "" },
   ]);
+  setRecommendedFriends
 
   const { accessToken } = useAuthStore();
   const { data: friendList } = useGetFriendList(accessToken, activeTab);
