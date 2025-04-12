@@ -18,7 +18,7 @@ import { usePostUserLocationUpdate } from "@api/user/postUserLocationUpdate";
 
 const MyCalendarPage: React.FC = () => {
   const navigate = useNavigate();
-  const { username } = useParams<{ username?: string }>();
+  const { username, name } = useParams<{ username?: string; name?: string }>();
   const { accessToken } = useAuthStore.getState();
   const currentDate = new Date();
   const [selectedDate, setSelectedDate] = useState<string>(format(currentDate, "yyyy-MM-dd"));
@@ -45,6 +45,15 @@ const MyCalendarPage: React.FC = () => {
 
   const { data: myScheduleList } = useGetMyScheduleList(usernameToUse!, accessToken, selectedDate);
 
+  useEffect(() => {
+    if (!userInfo) {
+      return;
+    }
+    if (!userInfo.birthday) {
+      window.location.replace(`${window.location.origin}/registerAccount`);
+    }
+  }, [userInfo]);
+
   const handleMiniCalendarClick = () => {
     navigate("/myCalendar/possible");
   };
@@ -54,9 +63,12 @@ const MyCalendarPage: React.FC = () => {
   return (
     <div className={styles.Container}>
       <CalendarHeader
-        title={username ? `${username}님의 달력` : "나의 달력"}
-        type="my"
+        title={name ? `${name}님의 달력` : "나의 달력"}
+        type={name ? "friend" : "my"}
         handleMiniCalendarClick={handleMiniCalendarClick}
+        handleBackArrowClick={() => {
+          name && navigate(-1);
+        }}
       />
 
       <div className={styles.content}>
@@ -72,9 +84,9 @@ const MyCalendarPage: React.FC = () => {
         <div className={styles.scheduleSection}>
           <div className={styles.scheduleHeaderContainer}>
             <h1 className={styles.scheduleHeader}>{formattedDate}</h1>
-            <EditIcon className={styles.editIcon} onClick={handleGoCreateSchedule} />
+            {!name && <EditIcon className={styles.editIcon} onClick={handleGoCreateSchedule} />}
           </div>
-          <div className={styles.subText}>나의 스케줄</div>
+          <div className={styles.subText}>{name ? `${name}님의 스케줄` : "나의 스케줄"}</div>
           <div className={styles.cardSection}>
             {myScheduleList?.schedules.length === 0 &&
             myScheduleList?.birthdayPerson.length === 0 ? (
@@ -90,6 +102,7 @@ const MyCalendarPage: React.FC = () => {
                       scheduleItem={scheduleItem}
                       key={scheduleItem.id}
                       groupId={scheduleItem.groupId}
+                      isFriendEvent={name ? true : false}
                     />
                   ))}
                 </>
@@ -98,7 +111,7 @@ const MyCalendarPage: React.FC = () => {
           </div>
         </div>
       </div>
-      <Footer />
+      {!name && <Footer />}
     </div>
   );
 };
