@@ -5,11 +5,12 @@ import Toggle_abled from "@assets/Icons/toggleButton/toggle_abled.svg?react";
 import TimePicker from "./TimePicker";
 import DatePicker from "@components/createSchedule/DatePicker";
 import useScheduleStore from "@store/useScheduleStore";
+import { format } from "date-fns";
 
 const TimeBox: React.FC = () => {
   const [isDateClicked, setIsDateClicked] = useState<number>(-1);
   const [isTimeClicked, setIsTimeClicked] = useState<number>(-1);
-  const { isAllDay, setIsAllDay, startDate, endDate } =
+  const { isAllDay, setIsAllDay, startDate, setStartDate, setEndDate, endDate } =
     useScheduleStore();
 
   const formatTime = (date: Date): string => {
@@ -22,10 +23,14 @@ const TimeBox: React.FC = () => {
   };
 
   const handleDateClick = (isStart: boolean) => {
-    isStart
-      ? setIsDateClicked(isDateClicked === 0 ? -1 : 0)
-      : setIsDateClicked(isDateClicked === 1 ? -1 : 1);
-    setIsTimeClicked(-1);
+    if (isStart) {
+      setStartDate(startDate);
+      setIsDateClicked(isDateClicked === 0 ? -1 : 0);
+    } else {
+      setEndDate(endDate);
+      setIsDateClicked(isDateClicked === 1 ? -1 : 1);
+      setIsTimeClicked(-1);
+    }
   };
 
   const handleTimeClick = (isStart: boolean) => {
@@ -48,7 +53,7 @@ const TimeBox: React.FC = () => {
       <div className={`${styles.TimeBox} ${styles.Middle}`}>
         <p className={styles.Title}>시작</p>
         <div className={styles.Time}>
-          <p onClick={() => handleDateClick(true)}>{startDate.toISOString().split("T")[0]}</p>
+          <p onClick={() => handleDateClick(true)}>{format(startDate, "yyyy-MM-dd")}</p>
           {!isAllDay && <p onClick={() => handleTimeClick(true)}>{formatTime(startDate)}</p>}
         </div>
       </div>
@@ -60,7 +65,7 @@ const TimeBox: React.FC = () => {
         >
           <p className={styles.Title}>종료</p>
           <div className={styles.Time}>
-            <p onClick={() => handleDateClick(false)}>{endDate.toISOString().split("T")[0]}</p>
+            <p onClick={() => handleDateClick(false)}>{format(endDate, "yyyy-MM-dd")}</p>
             <p onClick={() => handleTimeClick(false)}>{formatTime(endDate)}</p>
           </div>
         </div>

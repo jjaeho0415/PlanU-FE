@@ -4,6 +4,8 @@ import ParticipantsPicker from "./ParticipantsPicker";
 import useScheduleStore from "@store/useScheduleStore";
 import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
 import useAuthStore from "@store/useAuthStore";
+import { useGetUserInfo } from "@api/user/getUserInfo";
+import { useGetFriendList } from "@api/friend/getFriendList";
 
 interface props {
   groupId?: string;
@@ -14,6 +16,23 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
   const { participants, setParticipants } = useScheduleStore();
   const { accessToken } = useAuthStore();
   const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
+  const { data: friendList } = useGetFriendList(accessToken, "친구목록");
+  const { data: userInfoData } = useGetUserInfo(accessToken);
+
+  useEffect(() => {
+    if (userInfoData && groupMemberList) {
+      const creator = groupMemberList?.members.find(
+        (member) => member.username === userInfoData?.username,
+      );
+
+      if (creator) {
+        setParticipants([
+          ...participants,
+          { name: creator.name, username: creator.username, profileImage: creator.profileImage },
+        ]);
+      }
+    }
+  }, [groupMemberList]);
 
   useEffect(() => {
     if (participants.length !== 0) {
@@ -33,7 +52,7 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
       ></input>
       {isSelecting && (
         <>
-          <ParticipantsPicker groupMemberList={groupMemberList} />
+          <ParticipantsPicker groupId={groupId} creator={participants[0].username} />
           <div className={styles.Done} onClick={() => setIsSelecting(false)}>
             확인
           </div>

@@ -11,9 +11,9 @@ type IPostCreateGroupScheduleType = {
   memo: string;
 };
 
-type IGetMemberType = {
+type IScheduleMemberType = {
   name: string;
-  userName: string;
+  username: string;
   profileImage: string;
 };
 
