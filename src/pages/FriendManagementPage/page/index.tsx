@@ -2,6 +2,7 @@ import { useGetFriendList } from "@api/friend/getFriendList";
 import { useGetReceiveFriendList } from "@api/friend/getReceiveFriendList";
 import { useGetRequestFriendList } from "@api/friend/getRequestFriendList";
 import { useGetUserInfo } from "@api/user/getUserInfo";
+import useGetRecommendedFriendList from "@api/friend/getRecommendedFriendList";
 import FriendRequestEmptyIcon from "@assets/Icons/myPage/add.svg?react";
 import DefaultButton from "@components/buttons/DefaultButton";
 import useAuthStore from "@store/useAuthStore";
@@ -16,22 +17,22 @@ import styles from "./friendManagementPage.module.scss";
 const FriendManagementPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"친구목록" | "받은요청" | "보낸요청">("친구목록");
   const [isEditing, setIsEditing] = useState(false);
-  const [recommendedFriends, setRecommendedFriends] = useState([
-    { name: "이수현", username: "shuding0307", profileImageUrl: "" },
-    { name: "이수현", username: "shuding0307", profileImageUrl: "" },
-    { name: "이수현", username: "shuding0307", profileImageUrl: "" },
-  ]);
 
   const { accessToken } = useAuthStore();
   const { data: friendList } = useGetFriendList(accessToken, activeTab);
   const { data: receivedFriendList } = useGetReceiveFriendList(accessToken, activeTab);
   const { data: requestFriendList } = useGetRequestFriendList(accessToken, activeTab);
-  const { data: userInfo } = useGetUserInfo(accessToken);
 
+  const result = useGetRecommendedFriendList(accessToken, activeTab);
+  const recommendedFriendList = result.data as any;
+
+  const { data: userInfo } = useGetUserInfo(accessToken);
   const navigate = useNavigate();
+
   const handleEditToggle = () => {
     setIsEditing((prev) => !prev);
   };
+
   return (
     <div className={styles.friendManagementPage}>
       <HasOnlyBackArrowHeader
@@ -65,9 +66,10 @@ const FriendManagementPage: React.FC = () => {
             ))}
           </div>
         )}
+
         {activeTab === "받은요청" && (
           <div className={styles.friendList}>
-            {receivedFriendList?.friends && receivedFriendList.friends.length > 0 ? (
+            {receivedFriendList?.friends?.length ? (
               receivedFriendList.friends.map((friend, index) => (
                 <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
               ))
@@ -80,6 +82,7 @@ const FriendManagementPage: React.FC = () => {
             )}
           </div>
         )}
+
         {activeTab === "보낸요청" && (
           <div className={styles.friendList}>
             {requestFriendList?.friends?.length ? (
@@ -89,7 +92,7 @@ const FriendManagementPage: React.FC = () => {
             ) : (
               <>
                 <p className={styles.recommendTitle}>추천 친구</p>
-                {recommendedFriends.map((friend, index) => (
+                {recommendedFriendList?.friends?.map((friend: any, index: number) => (
                   <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
                 ))}
               </>
