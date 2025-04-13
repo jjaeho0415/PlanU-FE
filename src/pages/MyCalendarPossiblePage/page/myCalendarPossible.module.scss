@@ -25,7 +25,7 @@
 
 .scheduleSection {
   padding: 0 20px;
-  display:flex;
+  display: flex;
   flex-direction: column;
   gap: 20px;
 
@@ -35,7 +35,6 @@
   }
   .subText {
     color: var(--gray-200);
-
   }
 }
 .editButton {
@@ -43,4 +42,9 @@
   justify-content: center;
   padding: 10px 0;
   margin-top: 10px;
+}
+.noSchedule {
+  text-align: center;
+  color: var(--gray-200);
+  margin-bottom: 50px;
 }
