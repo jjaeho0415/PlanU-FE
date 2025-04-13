@@ -4,9 +4,10 @@ import { useDeleteGroupSchedule } from "@api/schedule/deleteGroupSchedule";
 import useAuthStore from "@store/useAuthStore";
 import { useDeleteMySchedule } from "@api/schedule/deleteMySchedule";
 import AlertModal from "@components/modals/AlertModal";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
-  groupId?: string;
+  groupId: string;
   scheduleId: string;
 }
 
@@ -14,6 +15,7 @@ const types = ["공유하기", "수정하기", "삭제하기"];
 
 const MoreModal: React.FC<Props> = ({ groupId, scheduleId }) => {
   const { accessToken } = useAuthStore();
+  const navigate = useNavigate();
   const [isOpenAlertModal, setIsOpenAlertModal] = useState<boolean>(false);
   const { mutate: deleteGroupSchedule } = useDeleteGroupSchedule(
     accessToken,
@@ -27,6 +29,11 @@ const MoreModal: React.FC<Props> = ({ groupId, scheduleId }) => {
       case "공유하기":
         break;
       case "수정하기":
+        if (groupId !== "my") {
+          navigate(`/editSchedule/${groupId}/${scheduleId}`);
+        } else {
+          navigate(`/editSchedule/my/${scheduleId}`);
+        }
         break;
       case "삭제하기":
         setIsOpenAlertModal(true);
@@ -52,7 +59,7 @@ const MoreModal: React.FC<Props> = ({ groupId, scheduleId }) => {
       ))}
       {isOpenAlertModal && (
         <AlertModal
-          type="삭제하기"
+          type="일정삭제"
           onClick={handleDeleteSchedule}
           setIsOpenAlertModal={setIsOpenAlertModal}
         />

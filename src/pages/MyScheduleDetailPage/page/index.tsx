@@ -8,41 +8,80 @@ import LocationBox from "@components/scheduleDetail/LocationBox";
 import ParticipantsBox from "@components/scheduleDetail/ParticipantsBox";
 import MemoBox from "@components/scheduleDetail/MemoBox";
 import { useGetMyScheduleDetail } from "@api/schedule/getMyScheduleDetail";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MoreModal from "@components/scheduleDetail/MoreModal";
+import useScheduleStore from "@store/useScheduleStore";
+import { getHours, getMinutes, isSameDay } from "date-fns";
+import useLocationInfoStore from "@store/useLocationInfoStore";
 
 const MyScheduleDetailPage: React.FC = () => {
   const navigate = useNavigate();
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
   const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
   const { accessToken } = useAuthStore();
   const { scheduleId } = useParams<{ scheduleId: string }>();
-  const { data } = useGetMyScheduleDetail(accessToken, scheduleId ?? "");
+  const { setLocationInfo } = useLocationInfoStore();
+  const { data: myScheduleData } = useGetMyScheduleDetail(accessToken, scheduleId ?? "");
+  const {
+    setTitle,
+    setColor,
+    setIsAllDay,
+    setEndDate,
+    setStartDate,
+    setParticipants,
+    setMemo,
+    startDate,
+    endDate,
+  } = useScheduleStore();
+
+  useEffect(() => {
+    if (myScheduleData) {
+      setTitle(myScheduleData.title),
+        setColor(myScheduleData.color),
+        setEndDate(new Date(myScheduleData.endDateTime)),
+        setStartDate(new Date(myScheduleData.startDateTime)),
+        setParticipants(myScheduleData.participants),
+        setMemo(myScheduleData.memo);
+      setLocationInfo(
+        myScheduleData.location,
+        myScheduleData.latitude,
+        myScheduleData.longitude,
+        myScheduleData.location,
+      );
+
+      const isSameDate = isSameDay(startDate, endDate);
+      const isStartMidnight = getHours(startDate) === 0 && getMinutes(startDate) === 0;
+      const isEndLateNight = getHours(endDate) === 23 && getMinutes(endDate) === 59;
+      if (isSameDate && isStartMidnight && isEndLateNight) {
+        setIsAllDay(true);
+      }
+    }
+  }, [myScheduleData]);
 
   return (
     <div className={styles.Container}>
       <HasTwoIconHeader
-        title={data?.title ?? ""}
+        title={myScheduleData?.title ?? ""}
         rightType="moreIcon"
         backgroundColor="purple"
         handleLeftClick={() => {
           navigate(-1);
+          resetScheduleState();
+          clearLocationInfo();
         }}
         handleRightClick={() => {
           setIsOpenMoreModal(!isOpenMoreModal);
         }}
       />
       <div className={styles.ContentContainer}>
-        <TitleBox title={data?.title ?? ""} />
-        <TimeBox startDate={data?.startDate ?? ""} endDate={data?.endDate ?? ""} />
-        <LocationBox
-          name={data?.location ?? ""}
-          lat={data?.latitude ?? 0}
-          lng={data?.longitude ?? 0}
-        />
-        <ParticipantsBox participants={data?.participants ?? null} />
-        <MemoBox memo={data?.memo ?? ""} />
+        <TitleBox />
+        <TimeBox />
+        {myScheduleData?.location && <LocationBox />}
+        {myScheduleData?.participants.length !== 0 && <ParticipantsBox />}
+        <MemoBox />
       </div>
-      {isOpenMoreModal && <MoreModal scheduleId={scheduleId ?? ""} />}
+      {isOpenMoreModal && <MoreModal groupId="my" scheduleId={scheduleId ?? ""} />}
     </div>
   );
 };

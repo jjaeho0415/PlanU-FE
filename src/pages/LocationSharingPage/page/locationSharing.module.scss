@@ -56,7 +56,7 @@
       background-color: var(--gray);
       overflow: auto;
       scrollbar-width: none;
-      padding: 13px 10px 10px 10px;
+      padding: 25px 0 10px 0;
       display: flex;
       flex-direction: column;
       gap: 5px;
@@ -64,4 +64,12 @@
   }
   .bottomSheetContainer.open{
     bottom: 0;
+  }
+  .error{
+    font-size: 14px;
+    color: var(--gray-200);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
   }

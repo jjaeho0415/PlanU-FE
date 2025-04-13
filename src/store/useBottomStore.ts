@@ -2,19 +2,25 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 interface BottomState {
-    bottomIndex: number;
-    setBottomIndex: (BottomState: number) => void;
+  bottomIndex: number;
+  setBottomIndex: (BottomState: number) => void;
+  clearBottomState: () => void;
 }
 
-const useBottomStore = create<BottomState>(
+const useBottomStore = create<BottomState>()(
   persist(
     (set) => ({
       bottomIndex: 0,
-        setBottomIndex: (bottomIndex) => set({bottomIndex}),
-     
+      setBottomIndex: (bottomIndex) => set({ bottomIndex }),
+      clearBottomState: () => {
+        set({ bottomIndex: 0 });
+        localStorage.removeItem("bottom-state");
+      },
     }),
-    { name: "bottom-state" },
-  ) as (set: (fn: (state: BottomState) => BottomState) => void) => BottomState,
+    {
+      name: "bottom-state",
+    },
+  ),
 );
 
 export default useBottomStore;

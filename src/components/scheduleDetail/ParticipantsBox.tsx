@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
 import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface Props {
-  participants: IParticipants[] | null;
-}
+const ParticipantsBox: React.FC = () => {
+  const { participants } = useScheduleStore();
 
-const ParticipantsBox: React.FC<Props> = ({ participants }) => {
   return (
     <div className={styles.ParticipantsContainer}>
       <p>참석자</p>

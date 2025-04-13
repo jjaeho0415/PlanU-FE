@@ -45,6 +45,9 @@ export default defineConfig(({ mode }) => {
         },
       ],
     },
+    define: {
+      global: "window", // global을 window로 설정 (브라우저 환경에서 문제 해결)
+    },
     server: {
       proxy: {
         "/api": {
@@ -56,6 +59,10 @@ export default defineConfig(({ mode }) => {
         key: fs.readFileSync(path.resolve(__dirname, "localhost-key.pem")),
         cert: fs.readFileSync(path.resolve(__dirname, "localhost.pem")),
       },
+    },
+    // crypto 및 stream polyfill 추가
+    optimizeDeps: {
+      include: ["crypto-browserify", "stream-browserify"],
     },
   };
 });

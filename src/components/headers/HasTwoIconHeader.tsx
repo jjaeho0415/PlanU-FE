@@ -5,6 +5,7 @@ import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
 import Check_Icon from "@assets/Icons/headers/checkIcon.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
 import StarIcon from "@components/iconComponent/StarIcon";
+import useScheduleStore from "@store/useScheduleStore";
 
 interface Props {
   title: string;
@@ -23,7 +24,7 @@ const HasTwoIconHeader: React.FC<Props> = ({
   handleRightClick,
   backgroundColor,
   isPin,
-  groupId
+  groupId,
 }) => {
   return (
     <div className={`${styles.mainContainer} ${styles[backgroundColor]}`}>
@@ -38,7 +39,7 @@ const HasTwoIconHeader: React.FC<Props> = ({
           <Check_Icon width={24} height={24} />
         ) : rightType === "star" ? (
           <StarIcon isPin={isPin} id={groupId} />
-        ): (
+        ) : (
           <MiniButton
             buttonText="완료"
             color="purple"

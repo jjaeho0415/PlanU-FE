@@ -12,8 +12,8 @@ const DateCard: React.FC<props> = ({ availableDateInfo, groupTotalNumber }) => {
   return (
     <div className={styles.CardContainer}>
       <div className={styles.LeftBox}>
-        <p className={styles.Possible}>{availableDateInfo.memberNames.length}</p>
-        <p className={styles.MembersNum}>/ {groupTotalNumber}</p>
+        <p className={styles.Possible}>{availableDateInfo.memberNames.length} </p>
+        <p className={styles.MembersNum}>/{groupTotalNumber}</p>
       </div>
       <div className={styles.line} />
       <div className={styles.RightBox}>

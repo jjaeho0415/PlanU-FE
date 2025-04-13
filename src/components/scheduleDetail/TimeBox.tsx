@@ -1,12 +1,11 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
+import useScheduleStore from "@store/useScheduleStore";
+import { format } from "date-fns";
 
-interface Props {
-  startDate: string;
-  endDate: string;
-}
+const TimeBox: React.FC = () => {
+  const { startDate, endDate } = useScheduleStore();
 
-const TimeBox: React.FC<Props> = ({ startDate, endDate }) => {
   function formatDate(dateString: string) {
     const date = new Date(dateString);
 
@@ -22,8 +21,8 @@ const TimeBox: React.FC<Props> = ({ startDate, endDate }) => {
 
     return `${year}년 ${month}월 ${day}일 (${dayOfWeek}) ${hours}:${minutes}`;
   }
-  const formattedStartDate = formatDate(startDate);
-  const formattedEndDate = formatDate(endDate);
+  const formattedStartDate = formatDate(format(startDate, "yyyy-MM-dd HH:mm"));
+  const formattedEndDate = formatDate(format(endDate, "yyyy-MM-dd HH:mm"));
 
   return (
     <div className={styles.TimeContainer}>

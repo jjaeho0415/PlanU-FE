@@ -28,7 +28,7 @@ const MemberCard: React.FC<Props> = ({
   const navigate = useNavigate();
 
   const handleShowFriendCalendar = () => {
-    navigate(`/myCalendar/${memberInfo.username}`)
+    navigate(`/myCalendar/${memberInfo.name}/${memberInfo.username}`)
   };
 
   const handleCancelRequestFriend = () => {
