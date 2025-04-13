@@ -50,12 +50,13 @@ const MyCalendarPossiblePage: React.FC = () => {
 
   const handleSaveAvailableDates = async () => {
     try {
-      await postMyAvailableDates(token, availableDates);
+      const today = format(new Date(), "yyyy-MM-dd");
+      const filtered = availableDates.filter(date => date >= today);
+      await postMyAvailableDates(token, filtered);
       setIsEditing(false);
-      queryClient.invalidateQueries({
-        queryKey: ['MY_AVAILABLE_DATES'],
-      });
+      queryClient.invalidateQueries({ queryKey: ['MY_AVAILABLE_DATES'] });
     } catch (error) {
+      console.error(error);
     }
   };
 
