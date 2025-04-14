@@ -1,9 +1,13 @@
 import { useGetMyAvailableDates } from "@api/calendar/getMyAvailableDates";
 import { useGetMyCalendarCheckEvents } from "@api/calendar/getMyCalendarCheckEvents";
+import { useGetMyScheduleList } from "@api/calendar/getMyScheduleList";
 import { postMyAvailableDates } from "@api/calendar/postMyAvailableDates";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 import EditButton from "@components/buttons/DefaultButton";
 import Calendar from "@components/calendar/Calendar";
 import EventCard from "@components/calendarPage/EventCard";
+import type { IScheduleItemType } from "@components/calendarPage/EventCard";
+import BirthdayCard from "@components/calendarPage/BirthdayCard";
 import CalendarHeader from "@components/headers/HasOnlyBackArrowHeader";
 import Footer from "@components/nav-bar/BottomNavBar";
 import { useQueryClient } from "@tanstack/react-query";
@@ -12,16 +16,6 @@ import { ko } from "date-fns/locale";
 import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styles from "./myCalendarPossible.module.scss";
-
-interface IScheduleItem {
-  id: number;
-  title: string;
-  startTime: string;
-  endTime: string;
-  location: string;
-  color: string;
-  groupId: string;
-}
 
 const MyCalendarPossiblePage: React.FC = () => {
   const navigate = useNavigate();
@@ -39,18 +33,17 @@ const MyCalendarPossiblePage: React.FC = () => {
   const raw = localStorage.getItem("auth-storage");
   const token = raw ? JSON.parse(raw).state.accessToken : "";
 
+  const { data: userInfo } = useGetUserInfo(token);
+  const usernameToUse = username || userInfo?.username;
+
+  const { data: myCheckEvents } = useGetMyCalendarCheckEvents(usernameToUse!, yearMonth, token);
+
+  const { data: myScheduleList } = useGetMyScheduleList(usernameToUse!, token, selectedDate);
+
   const { data: fetchedAvailableDates = [] } = useGetMyAvailableDates(token, {
     startDate,
     endDate,
   });
-
-  const { data: rawCheckEvents = [] } = useGetMyCalendarCheckEvents(username, yearMonth, token);
-  const checkEvents = rawCheckEvents as {
-    date: string;
-    hasSchedule: boolean;
-    hasBirthday: boolean;
-    schedules?: IScheduleItem[];
-  }[];
 
   useEffect(() => {
     if (!isEditing && fetchedAvailableDates.length > 0) {
@@ -72,14 +65,12 @@ const MyCalendarPossiblePage: React.FC = () => {
     }
   };
 
-  const scheduleData: IScheduleType[] = checkEvents.map((event) => ({
-    date: event.date,
-    isSchedule: event.hasSchedule,
-    isBirthday: event.hasBirthday,
-    schedules: [],
-    isGroupSchedule: false,
-  }));
-  const selectedEvents = checkEvents.find((e) => e.date === selectedDate);
+  const scheduleData = myCheckEvents?.myScheduleData ?? [];
+
+  const mySchedule = myScheduleList as {
+    schedules: IScheduleItemType[];
+    birthdayPerson: string[];
+  };
 
   return (
     <div className={styles.page}>
@@ -91,7 +82,7 @@ const MyCalendarPossiblePage: React.FC = () => {
             type="myPossible"
             availableDates={availableDates}
             setAvailableDates={setAvailableDates}
-            scheduleData={scheduleData}
+            scheduleData={scheduleData.length > 0 ? scheduleData : undefined}
             setSelectedDate={setSelectedDate}
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
@@ -105,11 +96,20 @@ const MyCalendarPossiblePage: React.FC = () => {
           </div>
           <div className={styles.subText}>오늘 나의 스케줄</div>
 
-          {selectedEvents && selectedEvents.schedules && selectedEvents.schedules.length > 0 ? (
-            selectedEvents.schedules.map((item) => <EventCard key={item.id} scheduleItem={item} />)
-          ) : (
-            <div className={styles.noSchedule}>일정이 없습니다.</div>
-          )}
+          <div className={styles.cardSection}>
+            {mySchedule?.schedules.length === 0 && mySchedule?.birthdayPerson.length === 0 ? (
+              <div className={styles.noSchedule}>일정이 없습니다.</div>
+            ) : (
+              <>
+                {mySchedule?.birthdayPerson.map((name, index) => (
+                  <BirthdayCard birthdayName={name} key={name + index} />
+                ))}
+                {mySchedule?.schedules.map((item) => (
+                  <EventCard key={item.id} scheduleItem={item} />
+                ))}
+              </>
+            )}
+          </div>
         </div>
 
         <div className={styles.editButton}>
