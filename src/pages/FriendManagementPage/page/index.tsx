@@ -23,8 +23,7 @@ const FriendManagementPage: React.FC = () => {
   const { data: receivedFriendList } = useGetReceiveFriendList(accessToken, activeTab);
   const { data: requestFriendList } = useGetRequestFriendList(accessToken, activeTab);
 
-  const result = useGetRecommendedFriendList(accessToken, activeTab);
-  const recommendedFriendList = result.data as any;
+  const { data: recommendedFriendsList } = useGetRecommendedFriendList(accessToken, activeTab);
 
   const { data: userInfo } = useGetUserInfo(accessToken);
   const navigate = useNavigate();
@@ -85,16 +84,24 @@ const FriendManagementPage: React.FC = () => {
 
         {activeTab === "보낸요청" && (
           <div className={styles.friendList}>
-            {requestFriendList?.friends?.length ? (
+            {requestFriendList?.friends.length ? (
               requestFriendList.friends.map((friend, index) => (
                 <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
               ))
             ) : (
               <>
-                <p className={styles.recommendTitle}>추천 친구</p>
-                {recommendedFriendList?.friends?.map((friend: any, index: number) => (
-                  <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
-                ))}
+                <p className={styles.recommendTitle}>
+                  추천 친구 <span className={styles.recommendedTotal}>{recommendedFriendsList?.totalFriends}</span>
+                </p>
+                {recommendedFriendsList?.totalFriends === 0 ? (
+                  <div className={styles.emptySection}>추천 친구 목록이 비어있습니다.</div>
+                ) : (
+                  recommendedFriendsList?.friends.map(
+                    (friend: IRecommendedFriendItemType, index: number) => (
+                      <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
+                    ),
+                  )
+                )}
               </>
             )}
           </div>

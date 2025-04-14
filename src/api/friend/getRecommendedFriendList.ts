@@ -3,7 +3,7 @@ import api from "@api/fetcher";
 import { useQuery } from "@tanstack/react-query";
 
 const getRecommendedFriendList = async (authorization: string) => {
-  const response = await api.get({
+  const response: IGetRecommendedFriendListResponseBodyType = await api.get({
     endpoint: apiRoutes.showRecommendedFriendList,
     authorization,
   });
