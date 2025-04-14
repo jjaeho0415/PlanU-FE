@@ -11,13 +11,13 @@ interface IScheduleInfo {
   setStartDate: (info: Date) => void;
   endDate: Date;
   setEndDate: (info: Date) => void;
-  participants: IGroupMemberItemType[];
-  setParticipants: (info: IGroupMemberItemType[]) => void;
+  participants: IScheduleMemberType[];
+  setParticipants: (info: IScheduleMemberType[]) => void;
   unregisteredParticipants: string[];
   setUnregisteredParticipants: (info: string[]) => void;
-  note: string;
-  setNote: (info: string) => void;
-  reset: () => void;
+  memo: string;
+  setMemo: (info: string) => void;
+  resetScheduleState: () => void;
 }
 const useScheduleStore = create<IScheduleInfo>((set) => {
   const initialState = {
@@ -28,7 +28,7 @@ const useScheduleStore = create<IScheduleInfo>((set) => {
     endDate: new Date(),
     participants: [],
     unregisteredParticipants: [],
-    note: "",
+    memo: "",
   };
 
   return {
@@ -40,10 +40,10 @@ const useScheduleStore = create<IScheduleInfo>((set) => {
     setEndDate: (endDate) => set({ endDate }),
     setParticipants: (participants) => set({ participants }),
     setUnregisteredParticipants: (unregistered) => set({ unregisteredParticipants: unregistered }),
-    setNote: (note) => set({ note }),
+    setMemo: (memo) => set({ memo }),
 
     // 초기화할 때 setter 함수들은 유지하면서 상태만 초기 상태로 변경
-    reset: () => set(() => ({ ...initialState })),
+    resetScheduleState: () => set(() => ({ ...initialState })),
   };
 });
 

@@ -20,7 +20,8 @@ const postCreateMySchedule = async (body: IPostCreateMyScheduleType, authorizati
 export const usePostCreateMySchedule = (authorization: string) => {
   const navigate = useNavigate();
   const { setLocationInfo } = useLocationInfoStore();
-  const scheduleStore = useScheduleStore.getState();
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
 
   return useMutation({
     mutationFn: (body: IPostCreateMyScheduleType) => postCreateMySchedule(body, authorization),
@@ -32,7 +33,8 @@ export const usePostCreateMySchedule = (authorization: string) => {
       toast.success("일정 생성 완료");
       navigate(-1);
       setLocationInfo("", 0, 0, "");
-      scheduleStore.reset();
+      resetScheduleState;
+      clearLocationInfo();
     },
     onError: (error) => {
       toast.dismiss("createMyScheduleLoading");
