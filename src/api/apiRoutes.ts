@@ -30,6 +30,7 @@ const apiRoutes = {
   friend: "/users/friends",
   showReceiveFriendList: "/users/friends/receive",
   showRequestFriendList: "/users/friends/request",
+  showRecommendedFriendList: "/users/friends/recommendations",
   //스케줄 관련
   schedules: "/schedules",
   //채팅 관련
@@ -41,7 +42,7 @@ const apiRoutes = {
   //실시간 위치 공유 소켓 연결
   locationGroups: "/location/groups",
   subLocation: "/sub/location/groups",
-  pubLocation: "/pub/location/groups"
+  pubLocation: "/pub/location/groups",
 };
 
 export default apiRoutes;
