@@ -4,6 +4,16 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./eventCard.module.scss";
 
+export interface IScheduleItemType {
+  id: number;
+  title: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  color: string;
+  groupId: string;
+}
+
 interface Props {
   scheduleItem: IScheduleItemType;
   groupId?: string;
