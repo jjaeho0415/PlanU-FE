@@ -1,9 +1,9 @@
 import styles from "./groupOptions.module.scss";
-import MoneyIcon from "@assets/Icons/groupPage/moneyIcon.svg?react";
-import PostIcon from "@assets/Icons/groupPage/postIcon.svg?react";
-import CalendarIcon from "@assets/Icons/groupPage/calendarIcon.svg?react";
-import MemberIcon from "@assets/Icons/groupPage/memberIcon.svg?react";
-import ChattingIcon from "@assets/Icons/groupPage/chattingIcon.svg?react";
+import moneyIcon from "@assets/images/groupPage/moneyIcon.png";
+import postIcon from "@assets/images/groupPage/postIcon.png";
+import calendarIcon from "@assets/images/groupPage/calendarIcon.png";
+import memberIcon from "@assets/images/groupPage/memberIcon.png";
+import chattingIcon from "@assets/images/groupPage/chattingIcon.png";
 import { useNavigate } from "react-router-dom";
 
 interface Props {
@@ -18,15 +18,15 @@ const GroupOptions: React.FC<Props> = ({ title, groupId }) => {
   const IconOptions = () => {
     switch (title) {
       case "게시물":
-        return <PostIcon width={30} height={30} />;
+        return <img src={postIcon} width={30} height={30} />;
       case "그룹 달력":
-        return <CalendarIcon width={30} height={30} />;
+        return <img src={calendarIcon} width={30} height={30} />;
       case "정산하기":
-        return <MoneyIcon width={30} height={30} />;
+        return <img src={moneyIcon} width={30} height={30} />;
       case "멤버":
-        return <MemberIcon width={30} height={30} />;
+        return <img src={memberIcon} width={30} height={30} />;
       case "채팅":
-        return <ChattingIcon width={30} height={30} />;
+        return <img src={chattingIcon} width={30} height={30} />;
       default:
         return;
     }

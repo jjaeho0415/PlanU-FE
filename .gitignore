@@ -32,3 +32,6 @@ dist-ssr
 
 # typescript
 *.tsbuildinfo
+
+# js bundle 분석
+stats.html

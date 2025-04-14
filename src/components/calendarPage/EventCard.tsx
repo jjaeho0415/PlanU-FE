@@ -7,9 +7,10 @@ import { useNavigate } from "react-router-dom";
 interface Props {
   scheduleItem: IScheduleItemType;
   groupId?: string;
+  isFriendEvent?: boolean;
 }
 
-const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "" }) => {
+const EventCard: React.FC<Props> = ({ scheduleItem, groupId, isFriendEvent = false }) => {
   const navigate = useNavigate();
 
   const handleShowScheduleDetail = () => {
@@ -20,9 +21,11 @@ const EventCard: React.FC<Props> = ({ scheduleItem, groupId = "" }) => {
 
   return (
     <div className={styles.eventCard}>
-      <button className={styles.detailButton} onClick={handleShowScheduleDetail}>
-        상세보기 <ArrowIcon className={styles.icon} />
-      </button>
+      {!isFriendEvent && (
+        <button className={styles.detailButton} onClick={handleShowScheduleDetail}>
+          상세보기 <ArrowIcon className={styles.icon} />
+        </button>
+      )}
       <div className={styles.time} style={{ backgroundColor: scheduleItem.color || "#21212F" }}>
         {`${scheduleItem.startTime} ~ ${scheduleItem.endTime}`}
       </div>

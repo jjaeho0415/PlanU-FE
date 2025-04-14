@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const postUserInformation = async ({
@@ -42,12 +43,17 @@ export const usePostUserInformation = (token: string) => {
   const navigate = useNavigate();
   return useMutation({
     mutationFn: (body: IPostUserInformationRequestBodyType) => postUserInformation({ body, token }),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "registerUserInfoLoading" });
+    },
     onSuccess: (data) => {
-      alert(data.resultMsg);
+      toast.dismiss("registerUserInfoLoading");
+      toast.success(data.resultMsg);
       navigate("/myCalendar");
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("registerUserInfoLoading");
+      toast.error(error.message);
     },
   });
 };

@@ -1,11 +1,9 @@
 import React from "react";
 import styles from "./Boxes.module.scss";
+import useScheduleStore from "@store/useScheduleStore";
 
-interface Props {
-  title: string;
-}
-
-const TitleBox: React.FC<Props> = ({ title }) => {
+const TitleBox: React.FC = () => {
+  const { title } = useScheduleStore();
   return (
     <div className={styles.BoxContainer}>
       <div className={styles.Color} />

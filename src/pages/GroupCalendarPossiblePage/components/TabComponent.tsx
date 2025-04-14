@@ -12,7 +12,14 @@ interface Props {
   groupTotalNumber: number | undefined;
 }
 
-const TabComponent: React.FC<Props> = ({ activeTab, tabs, availableMemberInfos, availableDateInfos, availableDateRanks, groupTotalNumber }) => {
+const TabComponent: React.FC<Props> = ({
+  activeTab,
+  tabs,
+  availableMemberInfos,
+  availableDateInfos,
+  availableDateRanks,
+  groupTotalNumber,
+}) => {
   return (
     <div className={styles.Container}>
       <div className={styles.TabBox}>
@@ -28,20 +35,23 @@ const TabComponent: React.FC<Props> = ({ activeTab, tabs, availableMemberInfos, 
       </div>
       {activeTab === "멤버별" ? (
         <div className={styles.ContentBox}>
-          {availableMemberInfos?.map((availableMemberInfo) => (
-            <MemberCard availableDatesMemberInfo={availableMemberInfo} />
+          {availableMemberInfos?.map((availableMemberInfo, index) => (
+            <MemberCard
+              availableDatesMemberInfo={availableMemberInfo}
+              key={index + availableMemberInfo.name}
+            />
           ))}
         </div>
       ) : activeTab === "날짜별" ? (
         <div className={styles.ContentBox}>
-          {availableDateInfos?.map((availableDateInfo) => (
-            <DateCard availableDateInfo={availableDateInfo} groupTotalNumber={groupTotalNumber}/>
+          {availableDateInfos?.map((availableDateInfo, index) => (
+            <DateCard availableDateInfo={availableDateInfo} groupTotalNumber={groupTotalNumber} key={index + availableDateInfo.availableDate} />
           ))}
         </div>
       ) : (
         <div className={styles.ContentBox}>
-          {availableDateRanks?.map((availableDateRank) => (
-            <RankCard availableDateRank={availableDateRank} groupTotalNumber={groupTotalNumber}/>
+          {availableDateRanks?.map((availableDateRank, index) => (
+            <RankCard availableDateRank={availableDateRank} groupTotalNumber={groupTotalNumber} key={index+availableDateRank.date} />
           ))}
         </div>
       )}

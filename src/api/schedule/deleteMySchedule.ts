@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const deleteMySchedule = async (authorization: string, scheduleId: string) => {
@@ -18,12 +19,17 @@ export const useDeleteMySchedule = (authorization: string, scheduleId: string) =
 
   return useMutation({
     mutationFn: () => deleteMySchedule(authorization, scheduleId),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "deleteMyScheduleLoading" });
+    },
     onSuccess: () => {
-      alert("일정 삭제가 완료되었습니다.");
+      toast.dismiss("deleteMyScheduleLoading");
+      toast.success("일정 삭제 완료");
       navigate(-1);
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("deleteMyScheduleLoading");
+      toast.error(error.message);
     },
   });
 };

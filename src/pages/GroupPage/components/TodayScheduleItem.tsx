@@ -1,6 +1,6 @@
 import { getFormattedLocation } from "../../../utils/truncation";
 import styles from "./todayScheduleItem.module.scss";
-import LocationMarkerIcon from "@assets/Icons/groupPage/locationMarkerIcon.svg?react";
+import LocationMarkerIcon from "@assets/images/groupPage/locationMarkerIcon.png"
 
 interface Props {
   todayScheduleItem: ITodaySchedulesType;
@@ -29,7 +29,7 @@ const getFormattedDate = () => {
           {todayScheduleItem.startDateTime}
         </div>
         <div className={styles.location}>
-          <LocationMarkerIcon width={17} height={20} />
+          <img src={LocationMarkerIcon} width={17} height={20} />
           <div className={styles.locationText}>
             {getFormattedLocation(todayScheduleItem.location)}
           </div>

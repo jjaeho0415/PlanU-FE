@@ -132,7 +132,7 @@ function Headers() {
             handleSearchClick={() => {
               return;
             }}
-            isExistNoReadAlarms={true}
+            isExistUnReadAlarms={true}
           />
           <ChatListHeader
             handleAlertClick={() => {
@@ -141,7 +141,7 @@ function Headers() {
             handleSearchClick={() => {
               return;
             }}
-            isExistNoReadAlarms={false}
+            isExistUnReadAlarms={false}
           />
         </div>
       </div>
@@ -236,7 +236,7 @@ function Headers() {
           <HasOnlyRightIconHeader
             title="PlanU"
             rightType="alert"
-            isExistNoReadAlarms={true}
+            isExistUnReadAlarms={true}
             handleClick={() => {
               return;
             }}

@@ -1,6 +1,5 @@
 import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./editMySchedule.module.scss";
-import { useEffect } from "react";
 import ColorBox from "@components/createSchedule/ColorBox";
 import TimeBox from "@components/createSchedule/TimeBox";
 import MemberBox from "@components/createSchedule/MemberBox";
@@ -8,36 +7,76 @@ import NoteBox from "@components/createSchedule/NoteBox";
 import TitleBox from "@components/createSchedule/TitleBox";
 import LocationBox from "@components/createSchedule/LocationBox";
 import useScheduleStore from "@store/useScheduleStore";
+import useLocationInfoStore from "@store/useLocationInfoStore";
+import useAuthStore from "@store/useAuthStore";
+import { useParams } from "react-router-dom";
+import { usePutEditGroupSchedule } from "@api/schedule/putEditGroupSchedule";
+import { format } from "date-fns";
+import { usePostEditMySchedule } from "@api/schedule/putEditMySchedule";
 
 const EditSchedulePage: React.FC = () => {
-  const { setTitle, setColor, setStartDate, setEndDate, setIsAllDay, setParticipants, setNote } =
-    useScheduleStore();
+  const { groupId } = useParams<{ groupId: string }>();
+  const { scheduleId } = useParams<{ scheduleId: string }>();
+  const { accessToken } = useAuthStore();
+  const {
+    title,
+    color,
+    startDate,
+    endDate,
+    memo,
+    participants,
+    isAllDay,
+    unregisteredParticipants,
+  } = useScheduleStore();
+  const { lng, lat, name: locationName, location: locationAddress } = useLocationInfoStore();
+  const { mutate: editGroupSchedule } = usePutEditGroupSchedule(
+    accessToken,
+    groupId ?? "",
+    scheduleId ?? "",
+  );
+  const { mutate: editMySchedule } = usePostEditMySchedule(accessToken, scheduleId ?? "");
 
-  useEffect(() => {
-    setTitle("수현이 생일파티");
-    setColor("#38AAO3");
-    setStartDate(new Date());
-    setEndDate(new Date());
-    setIsAllDay(false);
-    setParticipants([]);
-    setNote("모두 참석바랍니다~!");
-  }, []);
+  const handleEditConfirmClick = () => {
+    const filteredMemberId: string[] = participants.map(
+      (member: IScheduleMemberType) => member.username,
+    );
+
+    const data = {
+      title: title,
+      color: color,
+      startDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'00:00")
+        : format(startDate, "yyyy-MM-dd'T'HH:mm"),
+      endDateTime: isAllDay
+        ? format(startDate, "yyyy-MM-dd'T'23:59")
+        : format(endDate, "yyyy-MM-dd'T'HH:mm"),
+      location: locationName ?? locationAddress,
+      latitude: lat,
+      longitude: lng,
+      participants: filteredMemberId,
+      memo: memo,
+    };
+
+    if (groupId === "my") {
+      editMySchedule({ ...data, unregisteredParticipants: unregisteredParticipants });
+    } else {
+      editGroupSchedule(data);
+    }
+  };
 
   return (
     <div className={styles.Container}>
       <HasOnlyRightIconHeader
-        title="새로운 일정"
+        title="일정 수정"
         rightType="button"
-        handleClick={() => {
-          return;
-        }}
+        handleClick={handleEditConfirmClick}
       />
       <div className={styles.ContentContainer}>
         <TitleBox />
         <ColorBox />
         <TimeBox />
         <LocationBox />
-        <MemberBox />
+        <MemberBox groupId={groupId} />
         <NoteBox />
       </div>
     </div>

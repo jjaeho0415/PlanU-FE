@@ -1,6 +1,7 @@
 import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 const postCreateComment = async (
   authorization: string,
@@ -27,14 +28,20 @@ export const usePostCreateComment = (
 
   return useMutation({
     mutationFn: (body: IPostComment) => postCreateComment(authorization, groupId, scheduleId, body),
+    onMutate: () => {
+      toast.loading("처리 중..", { id: "createCommentLoading" });
+    },
     onSuccess: () => {
+      toast.dismiss("createCommentLoading");
+      toast.success("댓글 생성 완료");
       queryClient.invalidateQueries({
         queryKey: ["GROUP_SCHEDULE_COMMENTS", groupId, scheduleId],
       });
       setMessage("");
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("createCommentLoading");
+      toast.error(error.message);
     },
   });
 };

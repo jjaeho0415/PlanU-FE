@@ -3,6 +3,7 @@ import api from "@api/fetcher";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import useScheduleStore from "@store/useScheduleStore";
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 const postCreateGroupSchedule = async (
@@ -23,19 +24,26 @@ const postCreateGroupSchedule = async (
 export const usePostCreateGroupSchedule = (authorization: string, groupId: number) => {
   const navigate = useNavigate();
   const { setLocationInfo } = useLocationInfoStore();
-  const scheduleStore = useScheduleStore.getState();
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
 
   return useMutation({
     mutationFn: (body: IPostCreateGroupScheduleType) =>
       postCreateGroupSchedule(body, groupId, authorization),
+    onMutate: () => {
+      toast.loading("처리 중...", { id: "createGroupScheduleLoading" });
+    },
     onSuccess: () => {
-      alert("일정 생성이 완료되었습니다.");
+      toast.dismiss("createGroupScheduleLoading");
+      toast.success("일정 생성 완료");
       navigate(-1);
       setLocationInfo("", 0, 0, "");
-      scheduleStore.reset();
+      resetScheduleState();
+      clearLocationInfo();
     },
     onError: (error) => {
-      alert(error.message);
+      toast.dismiss("createGroupScheduleLoading");
+      toast.error(error.message);
     },
   });
 };

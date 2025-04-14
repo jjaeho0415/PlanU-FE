@@ -31,13 +31,7 @@ const HasOnlyRightIconHeader: React.FC<Props> = ({
         ) : rightType === "x" ? (
           <X_Icon width={24} height={24} onClick={handleClick} />
         ) : rightType === "button" ? (
-          <MiniButton
-            buttonText="완료"
-            onClick={() => {
-              return;
-            }}
-            color="purple"
-          />
+          <MiniButton buttonText="완료" onClick={handleClick} color="purple" />
         ) : (
           <MiniCalendar_Icon />
         )}

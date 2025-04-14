@@ -2,17 +2,17 @@ import { calculateDistance } from "@utils/calculateDistance";
 import styles from "./groupMemberItem.module.scss";
 
 interface Props {
-  groupMemberItem: IGetGroupMemberLocationResponseType;
+  groupMemberItem: IMemberLocationType;
   handleGroupMemberClick: () => void;
   arrivalLocationInfo: IArrivalLocationInfo;
-  selectedName: string | null;
+  selectedUserName: string 
 }
 
 const GroupMemberItem: React.FC<Props> = ({
   groupMemberItem,
   handleGroupMemberClick,
   arrivalLocationInfo,
-  selectedName,
+  selectedUserName,
 }) => {
   const distance = calculateDistance(
     groupMemberItem.latitude,
@@ -21,11 +21,11 @@ const GroupMemberItem: React.FC<Props> = ({
     arrivalLocationInfo.longitude,
   );
 
-  const isSelected = selectedName === groupMemberItem.name;
+  const isSelected = selectedUserName === groupMemberItem.username;
 
   return (
     <div
-      className={`${styles.groupMemberItem} ${isSelected ? styles.selected : ""}`}
+      className={`${styles.groupMemberItem} ${isSelected && styles.selected}`}
       onClick={handleGroupMemberClick}
     >
       <div className={styles.profileImageSection}>

@@ -7,13 +7,13 @@ interface Props {
 }
 
 const Map: React.FC<Props> = ({ latLng }) => {
-  const [userLatLng, setUserLatLng] = useState<UserLatLngType>();
+  const [userLatLng, setUserLatLng] = useState<{lat: number, lng: number}>();
   const mapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     setUserLatLng({
-      lat: latLng.lat,
-      lng: latLng.lng,
+      lat: latLng.latitude,
+      lng: latLng.longitude,
     });
   }, [latLng]);
 

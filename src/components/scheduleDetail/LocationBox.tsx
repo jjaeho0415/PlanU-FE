@@ -1,22 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./Boxes.module.scss";
 import Icon_location from "@assets/Icons/scheduleDetail/Icon_location.svg?react";
 import Icon_arrow from "@assets/Icons/arrow/Icon_Arrow_upRight.svg?react";
 import Map from "@components/map/Map";
+import useLocationInfoStore from "@store/useLocationInfoStore";
 
-interface Props {
-  name: string;
-  lat: number;
-  lng: number;
-}
+const LocationBox: React.FC = () => {
+  const { lat, lng, name, location } = useLocationInfoStore();
+  const [locationName, setLocationName] = useState<string>("");
 
-const LocationBox: React.FC<Props> = ({ name, lat, lng }) => {
+  useEffect(() => {
+    setLocationName(name ?? location);
+  }, [name, location]);
+
   return (
     <div className={styles.LocationBox}>
       <div className={styles.LocationNameBox}>
         <div className={styles.LocationContainer}>
           <Icon_location />
-          <p>{name}</p>
+          <p>{locationName}</p>
         </div>
         <div className={styles.FindRoadContainer}>
           <Icon_arrow />
@@ -24,7 +26,7 @@ const LocationBox: React.FC<Props> = ({ name, lat, lng }) => {
         </div>
       </div>
       <div className={styles.MapBox}>
-        <Map latLng={{ lat: lat, lng: lng }} />
+        <Map latLng={{ latitude: lat, longitude: lng }} />
       </div>
     </div>
   );
