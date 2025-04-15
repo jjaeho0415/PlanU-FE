@@ -5,7 +5,6 @@ import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
 import Check_Icon from "@assets/Icons/headers/checkIcon.svg?react";
 import MiniButton from "@components/buttons/MiniButton";
 import StarIcon from "@components/iconComponent/StarIcon";
-import useScheduleStore from "@store/useScheduleStore";
 
 interface Props {
   title: string;

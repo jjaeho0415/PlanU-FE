@@ -31,4 +31,4 @@ const LocationBox: React.FC = () => {
   );
 };
 
-export default React.memo(LocationBox);
+export default LocationBox;
