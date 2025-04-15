@@ -1,31 +1,24 @@
-import api from '@api/fetcher';
-import { useQuery } from '@tanstack/react-query';
-import { isBefore, isSameMonth, parseISO } from 'date-fns';
+import apiRoutes from "@api/apiRoutes";
+import api from "@api/fetcher";
+import { useQuery } from "@tanstack/react-query";
 
-const getMyAvailableDates = async (
-  authorization: string,
-  { startDate, endDate }: AvailableDatesParams
-): Promise<string[]> => {
-  return api.get<string[]>({
-    endpoint: `/available-dates?startDate=${startDate}&endDate=${endDate}`,
+const getMyAvailableDates = async (authorization: string, startDate: string, endDate: string) => {
+  const response = await api.get<string[]>({
+    endpoint: `${apiRoutes.availableDates}?startDate=${startDate}&endDate=${endDate}`,
     authorization,
   });
+  return response;
 };
 
 export const useGetMyAvailableDates = (
   authorization: string,
-  { startDate, endDate }: AvailableDatesParams
+  startDate: string,
+  endDate: string,
 ) => {
-  const isPastMonth =
-    isBefore(parseISO(startDate), new Date()) &&
-    !isSameMonth(parseISO(startDate), new Date());
-
-  const isEnabled =
-    Boolean(authorization && authorization !== 'null' && startDate && endDate && !isPastMonth);
 
   return useQuery({
-    queryKey: ['MY_AVAILABLE_DATES', startDate, endDate],
-    queryFn: () => getMyAvailableDates(authorization, { startDate, endDate }),
-    enabled: isEnabled,
+    queryKey: ["MY_AVAILABLE_DATES", startDate, endDate],
+    queryFn: () => getMyAvailableDates(authorization, startDate, endDate),
+    enabled: !!authorization && !!startDate && !!endDate,
   });
 };

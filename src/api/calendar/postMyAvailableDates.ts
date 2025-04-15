@@ -1,14 +1,21 @@
+import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
+import { useMutation } from "@tanstack/react-query";
 
-export const postMyAvailableDates = async (
-  token: string,
-  availableDates: string[],
-) => {  if (!token) return;
-  await api.post({
-    endpoint: `/available-dates`,
+const postMyAvailableDates = async (authorization: string, availableDates: string[]) => {
+  const response:IResponseType = await api.post({
+    endpoint: apiRoutes.availableDates,
     body: {
-      availableDates,
+      availableDates: availableDates,
     },
-    authorization: token,
+    authorization,
+  });
+  return response;
+};
+
+export const usePostMyAvailableDates = (authorization: string) => {
+  return useMutation({
+    mutationFn: (availableDates: string[]) => postMyAvailableDates(authorization, availableDates),
+
   });
 };
