@@ -1,4 +1,4 @@
-import Logo from "@assets/logo/planU.svg?react";
+import logoImage from "@assets/logo/planU.png"
 import { GoLogin } from "@components/buttons/GoLogin";
 import LoginButton from "@components/buttons/LoginButton";
 import React from "react";
@@ -16,7 +16,7 @@ const StartPage: React.FC = () => {
     <div className={styles.Container}>
       <div className={styles.LogoBox}></div>
 
-      <Logo />
+      <img src={logoImage} />
       <div className={styles.ButtonBox}>
         <LoginButton
           buttonType="login_kakao"

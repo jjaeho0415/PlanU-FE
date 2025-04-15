@@ -30,6 +30,7 @@ const apiRoutes = {
   friend: "/users/friends",
   showReceiveFriendList: "/users/friends/receive",
   showRequestFriendList: "/users/friends/request",
+  showRecommendedFriendList: "/users/friends/recommendations",
   //스케줄 관련
   schedules: "/schedules",
   availableDates: "/available-dates",

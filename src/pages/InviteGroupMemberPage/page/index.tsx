@@ -27,17 +27,17 @@ const InviteGroupMemberPage = () => {
   const { mutate: cancelInviteGroupMember } = useDeleteInviteGroupMember(groupId!, accessToken);
   const initialGetGroupMemberInviteList = useRef(groupMemberInviteList);
 
+  // 검색어가 비어있을 경우 처음에 받아온값과 이전에 검색해서 받아온 값이 같으면 return하고 다르면 다시 refetch(필요없는 호출 방지)
   useEffect(() => {
-    if (!inputValue && groupMemberInviteList && initialGetGroupMemberInviteList.current) {
-      if (
-        isEqual(
-          groupMemberInviteList.nonGroupFriends,
-          initialGetGroupMemberInviteList.current.nonGroupFriends,
-        )
-      ) {
-        return;
+    if (!inputValue && groupMemberInviteList) {
+      const isSame = isEqual(
+        groupMemberInviteList.nonGroupFriends,
+        initialGetGroupMemberInviteList.current?.nonGroupFriends,
+      );
+      if (!isSame) {
+        refetchInviteGroupMember();
+        initialGetGroupMemberInviteList.current = groupMemberInviteList;
       }
-      refetchInviteGroupMember();
     }
   }, [inputValue, refetchInviteGroupMember, groupMemberInviteList]);
 
