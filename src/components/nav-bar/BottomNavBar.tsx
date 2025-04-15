@@ -44,7 +44,9 @@ const BottomNavBar: React.FC = () => {
       case 2:
         return (
           <div>
-            <div className={styles.NewChatNumber}>{newChatNumber}</div>
+            {newChatNumber && newChatNumber > 0 && (
+              <div className={styles.NewChatNumber}>{newChatNumber}</div>
+            )}
             <ChatIcon {...iconProps} width={33} height={31} />
           </div>
         );

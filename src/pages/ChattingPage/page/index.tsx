@@ -169,8 +169,9 @@ const ChattingPage: React.FC = () => {
   };
 
   const handleLeftClick = () => {
-    navigate(-1);
+    navigate("/chatList");
   };
+
   const handleRightClick = () => {};
 
   return (
