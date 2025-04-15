@@ -139,11 +139,6 @@ type IGetMyScheduleDetailType = {
   memo: string;
 };
 
-// 나의 달력 - 가능한 날짜 조회
-interface AvailableDatesParams {
-  startDate: string;
-  endDate: string;
-}
 //댓글
 type ICommentItem = {
   id: number;
