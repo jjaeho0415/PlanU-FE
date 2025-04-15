@@ -20,10 +20,11 @@ export const useGetUpdateChatMessages = (
   groupId: string,
   startId: number,
   endId: number,
+  type: number,
 ) => {
   return useQuery({
     queryKey: ["UPDATED_CHAT_MESSAGES", groupId, startId, endId],
     queryFn: () => getUpdateChatMessages(authorization, groupId, startId, endId),
-    enabled: authorization !== "",
+    enabled: authorization !== "" && startId !== -1 && endId !== -1 && type === 3,
   });
 };

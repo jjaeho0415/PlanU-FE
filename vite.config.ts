@@ -9,6 +9,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
+    define: {
+      global: "globalThis",
+    },
     plugins: [react(), svgr(), visualizer({ open: true, gzipSize: true, brotliSize: true })],
     resolve: {
       alias: [

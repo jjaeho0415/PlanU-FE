@@ -22,6 +22,7 @@ const ChattingPage: React.FC = () => {
   const chatRef = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const readMessageRef = useRef<number>(-1);
   const [startId, setStartId] = useState<number>(-1);
+  const [type, setType] = useState<number>(-1);
   const [messageInput, setMessageInput] = useState<string>("");
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
   const { data: updatedChatMessageData } = useGetUpdateChatMessages(
@@ -29,6 +30,7 @@ const ChattingPage: React.FC = () => {
     groupId ?? "",
     startId,
     readMessageRef.current,
+    type,
   );
   const { data: userData } = useGetUserInfo(accessToken);
 
@@ -39,8 +41,18 @@ const ChattingPage: React.FC = () => {
   }, [chatMessagesData]);
 
   // useEffect(() => {
-  //   if (updatedChatMessageData) {
-  //     setMessages(updatedChatMessageData.data);
+  //   if (updatedChatMessageData?.data) {
+  //     const extractedMessages = extractMessagesInRange(
+  //       updatedChatMessageData.data,
+  //       startId,
+  //       readMessageRef.current,
+  //     );
+
+  //     console.log("extract", extractedMessages);
+
+  //     // extractedMessages.map((msg) => {
+  //     //   updateUnreadCount(msg);
+  //     // });
   //   }
   // }, [updatedChatMessageData]);
 
@@ -62,15 +74,9 @@ const ChattingPage: React.FC = () => {
         if (readMessageRef.current === lastChatItem.messageId) return;
 
         if (client && connected) {
-          const chatMessage = {
-            type: 4,
-            messageId: lastChatItem.messageId,
-            unReadCount: lastChatItem.unReadCount,
-          };
-
           client.publish({
             destination: `/pub/chat/read/${lastChatItem.messageId}/${groupId}`,
-            body: JSON.stringify(chatMessage),
+            body: JSON.stringify({}),
           });
 
           readMessageRef.current = lastChatItem.messageId;
@@ -93,30 +99,7 @@ const ChattingPage: React.FC = () => {
         console.log("Connected to WebSocket");
 
         stompClient.subscribe(`/sub/chat/group/${groupId}`, (message) => {
-          setMessages((prevMessages) => {
-            try {
-              const newMessage: IChatItem = JSON.parse(message.body);
-              const messageDate = newMessage.chatDate;
-
-              const existingDateIndex = prevMessages.findIndex(
-                (group) => group.chatDate === messageDate,
-              );
-              if (existingDateIndex !== -1) {
-                const updatedMessages = [...prevMessages];
-                updatedMessages[existingDateIndex] = {
-                  ...updatedMessages[existingDateIndex],
-                  messages: [...updatedMessages[existingDateIndex].messages, newMessage],
-                };
-
-                return updatedMessages;
-              } else {
-                return [...prevMessages, { chatDate: messageDate, messages: [newMessage] }];
-              }
-            } catch (error) {
-              console.error("Invalid message format:", error);
-              return prevMessages;
-            }
-          });
+          handleIncomingMessage(message.body);
         });
       },
       onDisconnect: () => {
@@ -135,6 +118,90 @@ const ChattingPage: React.FC = () => {
       stompClient.deactivate();
     };
   }, [groupId]);
+
+  const extractMessagesInRange = (
+    groupedMessages: IGroupedChatMessages[],
+    startId: number,
+    endId: number,
+  ): IChatItem[] => {
+    const result: IChatItem[] = [];
+    let isInRange = false;
+
+    for (const group of groupedMessages) {
+      for (const msg of group.messages) {
+        if (msg.messageId === startId) {
+          isInRange = true;
+        }
+
+        if (isInRange) {
+          result.push(msg);
+        }
+
+        if (msg.messageId === endId) {
+          return result; // 추출 끝
+        }
+      }
+    }
+
+    return result;
+  };
+
+  const handleIncomingMessage = (raw: string) => {
+    let newMessage: IChatItem;
+    try {
+      newMessage = JSON.parse(raw);
+    } catch (err) {
+      console.error("Invalid message format:", err);
+      return;
+    }
+
+    switch (newMessage.type) {
+      case 3:
+        setType(3);
+        return;
+      case 4:
+        updateUnreadCount(newMessage);
+        return;
+      case 1:
+        addNewMessage(newMessage);
+        return;
+      case 2:
+        addNewMessage(newMessage);
+        return;
+      default:
+        console.warn("Unhandled message type:", newMessage.type);
+    }
+  };
+
+  const updateUnreadCount = (message: IChatItem) => {
+    setMessages((prev) =>
+      prev.map((group) => ({
+        ...group,
+        messages: group.messages.map((msg) =>
+          msg.messageId === message.messageId ? { ...msg, unReadCount: message.unReadCount } : msg,
+        ),
+      })),
+    );
+  };
+
+  const addNewMessage = (message: IChatItem) => {
+    const messageDate = message.chatDate;
+
+    setMessages((prevMessages) => {
+      const existingDateIndex = prevMessages.findIndex((group) => group.chatDate === messageDate);
+
+      if (existingDateIndex !== -1) {
+        const updatedMessages = [...prevMessages];
+        updatedMessages[existingDateIndex] = {
+          ...updatedMessages[existingDateIndex],
+          messages: [...updatedMessages[existingDateIndex].messages, message],
+        };
+        return updatedMessages;
+      } else {
+        return [...prevMessages, { chatDate: messageDate, messages: [message] }];
+      }
+    });
+  };
 
   const setMessageValue = (e: React.ChangeEvent<HTMLInputElement>) => {
     setMessageInput(e.target.value);
