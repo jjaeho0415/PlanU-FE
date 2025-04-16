@@ -1,6 +1,5 @@
 import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
 import styles from "./createSchedule.module.scss";
-import { useEffect, useState } from "react";
 import TitleBox from "@components/createSchedule/TitleBox";
 import ColorBox from "@components/createSchedule/ColorBox";
 import TimeBox from "@components/createSchedule/TimeBox";

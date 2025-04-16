@@ -1,6 +1,6 @@
 import { loadGoogleMapsAPI } from "@api/googleMapLoader";
 import styles from "./map.module.scss";
-import { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 interface Props {
   latLng: UserLatLngType;
@@ -64,4 +64,4 @@ const Map: React.FC<Props> = ({ latLng }) => {
   return <div className={styles.mapContainer} ref={mapRef} />;
 };
 
-export default Map;
+export default React.memo(Map);

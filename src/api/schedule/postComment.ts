@@ -33,7 +33,6 @@ export const usePostCreateComment = (
     },
     onSuccess: () => {
       toast.dismiss("createCommentLoading");
-      toast.success("댓글 생성 완료");
       queryClient.invalidateQueries({
         queryKey: ["GROUP_SCHEDULE_COMMENTS", groupId, scheduleId],
       });
