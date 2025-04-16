@@ -11,6 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import { useGetUpdateChatMessages } from "@api/chat/getUpdateChatMessages copy";
+import { useGetGroupDetails } from "@api/group/getGroupDetail";
 
 const ChattingPage: React.FC = () => {
   const { accessToken } = useAuthStore();
@@ -24,6 +25,7 @@ const ChattingPage: React.FC = () => {
   const [startId, setStartId] = useState<number>(-1);
   const [type, setType] = useState<number>(-1);
   const [messageInput, setMessageInput] = useState<string>("");
+  const { data: groupDetailData } = useGetGroupDetails(groupId ?? "", accessToken);
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
   const { data: updatedChatMessageData } = useGetUpdateChatMessages(
     accessToken,
@@ -262,8 +264,8 @@ const ChattingPage: React.FC = () => {
     <div className={styles.chatPage}>
       <div className={styles.header}>
         <ChatHeader
-          groupName="PlanU"
-          groupImage={Logo}
+          groupName={groupDetailData?.groupInfo.groupName ?? ""}
+          groupImage={groupDetailData?.groupInfo.groupImage ?? ""}
           handleLeftClick={handleLeftClick}
           handleRightClick={handleRightClick}
         />
