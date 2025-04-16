@@ -1,4 +1,3 @@
-import { default as Logo } from "@assets/images/chat.jpg";
 import React, { useEffect, useRef, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatHeader from "../components/ChattingHeader";
