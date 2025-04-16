@@ -16,21 +16,26 @@ const ChatBubble: React.FC<Props> = ({ message, isSentByMe }) => {
           className={styles.profileImage}
         />
       )}
-      <p className={styles.UnreadCount}>
-        {message.unReadCount > 0 && isSentByMe && message.unReadCount}
-      </p>
-      <div className={styles.RightContainer}>
+      {isSentByMe && (
+        <div className={styles.MyTimeUnreadCountBox}>
+          <p className={styles.UnreadCount}>{message.unReadCount > 0 && message.unReadCount}</p>
+          <span className={styles.time}>{message.chatTime}</span>
+        </div>
+      )}
+      <div className={styles.MiddleContainer}>
         {!isSentByMe && <p className={styles.SenderName}>{message.name}</p>}
         <div className={styles.bubble}>
           <p className={`${styles.text} ${isSentByMe ? styles.sentText : styles.receivedText}`}>
             {message.message}
           </p>
-          <span className={styles.time}>{message.chatTime}</span>
         </div>
       </div>
-      <p className={styles.UnreadCount}>
-        {message.unReadCount > 0 && !isSentByMe && message.unReadCount}
-      </p>
+      {!isSentByMe && (
+        <div className={styles.TimeUnreadCountBox}>
+          <p className={styles.UnreadCount}>{message.unReadCount > 0 && message.unReadCount}</p>
+          <span className={styles.time}>{message.chatTime}</span>
+        </div>
+      )}
     </div>
   );
 };
