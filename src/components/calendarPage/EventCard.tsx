@@ -1,8 +1,18 @@
 import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
 import LocationIcon from "@assets/Icons/myCalendar/location.svg?react";
 import React from "react";
-import styles from "./eventCard.module.scss";
 import { useNavigate } from "react-router-dom";
+import styles from "./eventCard.module.scss";
+
+export interface IScheduleItemType {
+  id: number;
+  title: string;
+  startTime: string;
+  endTime: string;
+  location: string;
+  color: string;
+  groupId: string;
+}
 
 interface Props {
   scheduleItem: IScheduleItemType;

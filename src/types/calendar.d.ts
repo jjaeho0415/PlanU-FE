@@ -52,6 +52,7 @@ type IGetGroupCalendarCheckEventsResponseBodyType = {
 };
 
 type IScheduleType = {
+  schedules: never[];
   date: string;
   isSchedule: boolean;
   isBirthday: boolean;
