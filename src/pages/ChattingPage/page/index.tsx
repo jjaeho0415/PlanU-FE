@@ -40,29 +40,52 @@ const ChattingPage: React.FC = () => {
     }
   }, [chatMessagesData]);
 
-  // useEffect(() => {
-  //   if (updatedChatMessageData?.data) {
-  //     const extractedMessages = extractMessagesInRange(
-  //       updatedChatMessageData.data,
-  //       startId,
-  //       readMessageRef.current,
-  //     );
+  useEffect(() => {
+    if (
+      !updatedChatMessageData?.data ||
+      startId === -1 ||
+      readMessageRef.current === -1 ||
+      type !== 3
+    )
+      return;
 
-  //     console.log("extract", extractedMessages);
+    const extractedMessages = extractMessagesInRange(
+      updatedChatMessageData.data,
+      startId,
+      readMessageRef.current,
+    );
 
-  //     // extractedMessages.map((msg) => {
-  //     //   updateUnreadCount(msg);
-  //     // });
-  //   }
-  // }, [updatedChatMessageData]);
+    if (extractedMessages.length === 0) return;
+
+    for (const msg of extractedMessages) {
+      updateUnreadCount(msg);
+    }
+
+    setStartId(-1);
+    setType(-1);
+  }, [updatedChatMessageData]);
 
   useEffect(() => {
     if (messages.length > 0) {
-      const startMessage = messages[0];
-      const startChatItem = startMessage.messages[0];
+      let unreadStartId: number | null = null;
 
-      if (startChatItem) {
-        setStartId(startChatItem.messageId);
+      for (const group of messages) {
+        for (const msg of group.messages) {
+          if (msg.unReadCount > 0) {
+            unreadStartId = msg.messageId;
+            break;
+          }
+        }
+        if (unreadStartId !== null) break;
+      }
+
+      if (unreadStartId !== null) {
+        setStartId(unreadStartId);
+      } else {
+        const firstMessage = messages[0]?.messages[0];
+        if (firstMessage) {
+          setStartId(firstMessage.messageId);
+        }
       }
 
       const lastMessage = messages[messages.length - 1];
@@ -90,13 +113,11 @@ const ChattingPage: React.FC = () => {
 
     const stompClient = new Client({
       webSocketFactory: () => new SockJS(import.meta.env.VITE_STOMP_URL), // WebSocket 서버 주소
-      debug: (str) => console.log(str),
       connectHeaders: {
         Authorization: `Bearer ${accessToken}`,
       },
       onConnect: () => {
         setConnected(true);
-        console.log("Connected to WebSocket");
 
         stompClient.subscribe(`/sub/chat/group/${groupId}`, (message) => {
           handleIncomingMessage(message.body);
@@ -104,7 +125,6 @@ const ChattingPage: React.FC = () => {
       },
       onDisconnect: () => {
         setConnected(false);
-        console.log("Disconnected");
       },
       onStompError: (frame) => {
         console.error("STOMP Error:", frame);
@@ -120,29 +140,24 @@ const ChattingPage: React.FC = () => {
   }, [groupId]);
 
   const extractMessagesInRange = (
-    groupedMessages: IGroupedChatMessages[],
+    updatedChatMessageData: IChatItem[],
     startId: number,
     endId: number,
   ): IChatItem[] => {
     const result: IChatItem[] = [];
     let isInRange = false;
 
-    for (const group of groupedMessages) {
-      for (const msg of group.messages) {
-        if (msg.messageId === startId) {
-          isInRange = true;
-        }
-
-        if (isInRange) {
-          result.push(msg);
-        }
-
-        if (msg.messageId === endId) {
-          return result; // 추출 끝
-        }
+    for (const msg of updatedChatMessageData) {
+      if (msg.messageId === startId) {
+        isInRange = true;
+      }
+      if (isInRange) {
+        result.push(msg);
+      }
+      if (msg.messageId === endId) {
+        return result;
       }
     }
-
     return result;
   };
 
@@ -156,17 +171,19 @@ const ChattingPage: React.FC = () => {
     }
 
     switch (newMessage.type) {
+      case 1:
+        addNewMessage(newMessage);
+        return;
+      case 2:
+        addNewMessage(newMessage);
+        return;
       case 3:
         setType(3);
         return;
       case 4:
         updateUnreadCount(newMessage);
         return;
-      case 1:
-        addNewMessage(newMessage);
-        return;
-      case 2:
-        addNewMessage(newMessage);
+      case 5:
         return;
       default:
         console.warn("Unhandled message type:", newMessage.type);

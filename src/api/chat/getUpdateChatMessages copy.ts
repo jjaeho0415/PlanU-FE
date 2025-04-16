@@ -8,7 +8,7 @@ const getUpdateChatMessages = async (
   startId: number,
   endId: number,
 ) => {
-  const response = await api.get<IChatMessageResponse>({
+  const response = await api.get<IUpdateMessageResponse>({
     endpoint: `${apiRoutes.chatMessages}/update?groupId=${groupId}&startId=${startId}&endId=${endId}`,
     authorization,
   });

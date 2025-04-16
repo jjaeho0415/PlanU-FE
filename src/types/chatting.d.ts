@@ -33,3 +33,7 @@ type IGroupedChatMessages = {
 type IChatMessageResponse = {
   data: IGroupedChatMessages[];
 };
+
+type IUpdateMessageResponse = {
+  data: IChatItem[];
+};
