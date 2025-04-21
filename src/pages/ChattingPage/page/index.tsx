@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatHeader from "../components/ChattingHeader";
-import styles from "./ChatPage.module.scss";
+import styles from "./chatPage.module.scss";
 import { Client } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
 import { useGetChatMessages } from "@api/chat/getChatMessages";
