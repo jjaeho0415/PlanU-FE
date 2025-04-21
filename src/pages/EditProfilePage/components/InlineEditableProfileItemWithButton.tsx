@@ -1,5 +1,5 @@
-import EyeClosedIcon from "@assets/icons/eye/Icon_eyeOff.svg?react";
-import EyeOpenIcon from "@assets/icons/eye/Icon_eyeOn.svg?react";
+import EyeClosedIcon from "@assets/Icons/eye/Icon_eyeOff.svg?react";
+import EyeOpenIcon from "@assets/Icons/eye/Icon_eyeOn.svg?react";
 import React, { useState } from "react";
 import styles from "./inlineEditableProfileItem.module.scss";
 
