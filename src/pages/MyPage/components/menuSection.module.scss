@@ -1,0 +1,39 @@
+.menuContainer {
+  background-color: var(--background-50);
+  padding: 0px 20px 10px 20px;
+  margin: 0;
+  margin-top: 20px;
+}
+.section {
+  margin-bottom: 24px;
+
+  &Title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 8px;
+    color: var(--black);
+  }
+
+  &List {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    .listItem {
+      font-size: 14px;
+      color: var(--gray-800);
+      margin-bottom: 8px;
+      cursor: pointer;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+.divider {
+  border: none;
+  border-top: 1px solid var(--gray-200);
+  margin: 16px 0;
+}

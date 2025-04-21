@@ -1,0 +1,35 @@
+.mainContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 56px;
+  background-color: var(--white);
+  padding: 0 12px;
+  box-sizing: border-box;
+  z-index: 50;
+  position: sticky;
+  justify-content: space-between;
+  top: 0;
+  .leftSection {    
+    .backArrow {
+      cursor: pointer;
+    }
+  }
+  .titleSection {
+    font-size: 20px;
+    color: var(--black);
+    font-weight: bold;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .rightSection {
+    position: absolute;
+    right: 12px;
+    display: flex;
+    align-items: center;
+    .miniCalendarIconSection {
+      cursor: pointer;
+    }
+  }
+}

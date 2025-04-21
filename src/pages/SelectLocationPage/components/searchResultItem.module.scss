@@ -1,0 +1,39 @@
+.searchResultItem {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding: 10px;
+  cursor: pointer;
+  border-bottom: 0.1px solid var(--gray-100);
+  .distance {
+    font-size: 9px;
+    color: var(--gray-200);
+  }
+  .selectedInfo {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .name {
+      font-weight: 500;
+      font-size: 17px;
+      color: #333333;
+      margin: 0;
+    }
+
+    .address {
+      margin: 0;
+      font-size: 10px;
+      font-weight: 500;
+      color: var(--gray-200);
+    }
+  }
+}
+
+.searchResultItem:hover {
+  background-color: var(--button);
+}
+
+.selectedItem {
+  border: 2px solid var(--violet-100);
+  background-color: var(--button);
+}

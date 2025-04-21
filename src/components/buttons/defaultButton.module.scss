@@ -1,0 +1,18 @@
+.Container {
+  width: 350px;
+  height: 35px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--white);
+  cursor: pointer;
+}
+
+.DefaultColor {
+  background-color: var(--violet-100);
+}
+
+.DisabledColor {
+  background-color: var(--disabled);
+}

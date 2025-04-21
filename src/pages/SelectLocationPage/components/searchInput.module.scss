@@ -1,0 +1,28 @@
+.mainContainer {
+  width: 351px;
+  height: 40px;
+  border-radius: 5px;
+  border: 0.5px solid #6f6f71;
+  font-size: 15px;
+  font-weight: lighter;
+  color: #767676;
+  display: flex;
+  background-color: white;
+  position: relative;
+  .inputContainer {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    padding: 0 40px 0 20px;
+    border: none;
+    border-radius: 5px;
+  }
+  .searchIcon {
+   position: absolute;
+   right: 0;
+   top: 50%;
+   transform: translate(-30%, -50%);
+   cursor: pointer;
+  }
+}

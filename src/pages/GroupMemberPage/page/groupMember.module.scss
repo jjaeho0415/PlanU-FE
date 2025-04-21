@@ -1,0 +1,49 @@
+.mainContainer {
+  width: 100%;
+  height: 100vh;
+  background-color: var(--background-50);
+  overflow: scroll;
+  scrollbar-width: none;
+
+  .contentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 170px;
+    height: calc(100% - 56px);
+    padding-top: 30px;
+    .searchContainer {
+      display: flex;
+      justify-content: center;
+    }
+    .memberListContainer {
+      position: relative;
+      .textBox {
+        width: 130px;
+        height: 59px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: 1px solid var(--background-100);
+        border-bottom: none;
+        border-left: none;
+        border-top-left-radius: 15px;
+        border-top-right-radius: 15px;
+        box-shadow: 0px -2px 4px rgba(0, 0, 0, 0.1);
+      }
+      .emptyBox {
+        position: absolute;
+        width: 129px;
+        height: 10px;
+        background-color: var(--background-50);
+        transform: translateY(-1px);
+      }
+      .scrollContainer {
+        max-height: 565px;
+        overflow: scroll;
+        scrollbar-width: none;
+        border-top: 1px solid var(--background-100);
+      }
+    }
+  }
+}

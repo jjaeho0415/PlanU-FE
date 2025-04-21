@@ -1,0 +1,65 @@
+.mainContainer {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--background-50);
+  overflow: scroll;
+  scrollbar-width: none;
+  .contentContainer {
+    width: 100%;
+    border-top: 1px solid var(--violet-50);
+    padding: 25px 28px 80px 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    .iconSection {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+    }
+    .buttonSection {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 16px;
+      width: 326px;
+      height: 54px;
+      font-size: 18px;
+      font-weight: bold;
+      background: linear-gradient(
+        90deg,
+        #c61fa1 0%,
+        #b12dcb 17%,
+        #9a54bb 32%,
+        #a55eed 55%,
+        #702dcc 73%,
+        #4709ae 87%,
+        #0f057f 100%
+      );
+      color: var(--white);
+      cursor: pointer;
+    }
+    .todayScheduleList {
+      width: 335px;
+      height: 231px;
+      background-color: var(--white);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    .groupCalendar {
+      width: 336px;
+      height: 272px;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}
+
+.loading{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

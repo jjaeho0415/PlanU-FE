@@ -1,0 +1,37 @@
+:root {
+  --name: #d9d9d9;
+  --white: #ffffff;
+  --background-50: #f4e5ff;
+  --background-100: #d4badc;
+  --button: #F6ECFE;
+
+  --pink: #c6b0cd;
+  --violet: #e4cfea;
+  --violet-50: #c2a7cb;
+  --violet-100: #a676b2;
+  --violet-150: #9569b0;
+  --violet-200: #9368c0;
+  --violet-300: #8b3e9f;
+  --violet-350: #833297;
+  --violet-400: #6640d0;
+  --violet-450: #8B56C1;
+  --violet-icon: #862cf9;
+
+  --people-50: #C9ACE7;
+  --people-100: #AF85DB;
+  --people-200: #965DD0;
+  --people-300: #7C38C1;
+
+  --blue: #632cff;
+  --blue-100: #5217fa;
+  --blue-400: #21212f;
+
+  --gray: #ebebeb;
+  --gray-100: #d9d9d9;
+  --gray-200: #777c89;
+  --gray-800: #505051;
+
+  --error: #cb0c0c;
+  --black: #111111;
+  --disabled: #BDC0C6;
+}

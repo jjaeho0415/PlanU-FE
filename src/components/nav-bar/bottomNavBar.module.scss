@@ -1,0 +1,37 @@
+.Container {
+  min-width: 390px;
+  max-width: 430px;
+  width: 100%;
+  height: 81px;
+  background-color: var(--white);
+  border-radius: 32px 32px 0 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px -4px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  bottom: 0;
+}
+
+.NavItem {
+  cursor: pointer;
+}
+
+/* 각각의 아이콘 버튼 */
+.Icon {
+  background-color: #ffffff;
+}
+
+.NewChatNumber {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--error);
+  position: absolute;
+  transform: translate(20px, -5px);
+}

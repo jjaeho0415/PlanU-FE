@@ -1,0 +1,61 @@
+.mainContainer {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--background-50);
+  overflow: scroll;
+  scrollbar-width: none;
+  .contentContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    height: calc(100% - 56px);
+    .searchContainer {
+      display: flex;
+      margin-top: 10px;
+      justify-content: center;
+    }
+    .line {
+      background-color: var(--button);
+      height: 4px;
+      width: 100%;
+    }
+    .friendContainer {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      flex: 1;
+      gap: 15px;
+      padding: 0 24px;
+      .friendText {
+        font-size: 15px;
+        font-weight: lighter;
+        color: var(--gray-200);
+      }
+      .error,
+      .loading {
+        display: flex;
+        font-size: 18px;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+      }
+      .errorMsgRed {
+        color: red;
+      }
+      .resultMsg{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 3px;
+        .addFriends{
+          font-size: 16px;
+          color: var(--gray-200);
+          border-bottom: 1px solid var(--gray-200);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

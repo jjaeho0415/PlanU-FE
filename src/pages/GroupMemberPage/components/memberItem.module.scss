@@ -1,0 +1,58 @@
+.memberItemContainer {
+  display: flex;
+  justify-content: space-between;
+  min-width: 370px;
+  height: 60px;
+  border-radius: 15px;
+  background-color: var(--white);
+  padding: 0 10px 0 15px;
+  filter: drop-shadow(0px 4px 5px rgba(0, 0, 0, 0.1));
+  .leftSection {
+    display: flex;
+    align-items: center;
+    font-size: 13px;
+    font-weight: lighter;
+    color: var(--black);
+    gap: 15px;
+    .profileSection {
+      width: 38px;
+      height: 37px;
+      border: 1px solid #f1ebf5;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      .profile{
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+      }
+      .crownIcon {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translateX(30%);
+      }
+    }
+    .textSection {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      .nameSection {
+        font-size: 14px;
+        font-weight: 500;
+        color: #0d0d0d;
+      }
+      .idSection {
+        font-size: 11px;
+        font-weight: 500;
+        color: #767676;
+      }
+    }
+  }
+  .rightSection {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+  }
+}

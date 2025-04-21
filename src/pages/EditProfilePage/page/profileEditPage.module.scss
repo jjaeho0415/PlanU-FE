@@ -1,0 +1,25 @@
+.container {
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding-top: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--background-50);
+}
+
+.profileItems {
+  margin-top: 20px;
+  padding: 0 25px;
+
+  > div {
+    margin-bottom: 25px;
+  }
+}
+.footerButtons {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-top: 50px;
+  padding-bottom: 40px;
+}

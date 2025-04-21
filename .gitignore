@@ -12,6 +12,7 @@ dist
 dist-ssr
 *.local
 .env
+.env.local
 
 # Editor directories and files
 .vscode/*
@@ -24,5 +25,13 @@ dist-ssr
 *.sln
 *.sw?
 
-
 *storybook.log
+
+# https
+*.pem
+
+# typescript
+*.tsbuildinfo
+
+# js bundle 분석
+stats.html

@@ -1,0 +1,95 @@
+.friendManagementPage {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--background-50);
+}
+
+.idInput {
+  width: 100%;
+  padding: 0 20px;
+  margin-bottom: 16px;
+}
+
+.myIdInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 390px;
+  padding: 8px;
+  background: var(--violet);
+  color: var(--gray-200);
+  font-size: 14px;
+  margin-bottom: 90px;
+}
+
+.tabContent {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--background-100);
+  overflow-y: auto;
+}
+.tabContent::-webkit-scrollbar {
+  display: none;
+}
+
+.friendList {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 15px;
+  margin-top: 40px;
+  height: 100%;
+}
+
+.footer {
+  margin-top: 50px;
+  position: absolute;
+  bottom: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 16px 0;
+}
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px;
+}
+.emptyTitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--black);
+  margin: 5px;
+}
+
+.emptyText {
+  font-size: 15px;
+  color: var(--gray-200);
+}
+
+.recommendTitle {
+  font-size: 16px;
+  font-weight: bold;
+  color: var(--gray-800);
+}
+
+.recommendedTotal{
+  margin-left: 10px;
+    color: var(--gray-200);
+
+}
+
+.emptySection{
+  display: flex;
+ flex: 1;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  color: var(--gray-200);
+}

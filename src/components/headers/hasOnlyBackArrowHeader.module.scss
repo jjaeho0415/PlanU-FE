@@ -1,0 +1,38 @@
+.mainContainer {
+  width: 100%;
+  min-height: 56px;
+  background-color: var(--background-50);
+  align-items: center;
+  display: flex;
+  position: relative;
+  box-sizing: border-box;
+  padding: 0 12px;
+  z-index: 50;
+  position: sticky;
+  top: 0;
+  justify-content: space-between;
+
+  .iconSection {
+    cursor: pointer;
+  }
+
+  .titleSection {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--black);
+  }
+  .notificationTitleSection{
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--black);
+    position: absolute;
+    transform: translateX(30px);
+  }
+  .readAllButton{
+    font-size: 12px;
+    color: var(--gray-800);
+  }
+}

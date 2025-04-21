@@ -1,0 +1,134 @@
+.Box {
+  width: 360px;
+  height: 40px;
+  border: 1px solid var(--gray-800);
+  border-radius: 5px;
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  background-color: var(--white);
+  justify-content: space-between;
+  cursor: pointer;
+}
+
+.Title {
+  font-size: 15px;
+  color: var(--gray-100);
+}
+
+// title
+.Input {
+  width: 360px;
+  min-height: 40px;
+  border: 1px solid var(--gray-800);
+  background-color: var(--white);
+  border-radius: 5px;
+  padding: 0 10px;
+  font-size: 15px;
+  color: var(--gray-800);
+}
+
+.Input::placeholder {
+  font-size: 15px;
+  color: var(--gray-100);
+}
+
+//color
+.RightBox {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.Color {
+  background-color: pink;
+  height: 22px;
+  width: 22px;
+  border-radius: 100%;
+}
+
+// time
+.TimeBox {
+  width: 360px;
+  height: 40px;
+  background-color: var(--white);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.Top {
+  border: 1px solid var(--gray-800);
+  border-bottom: none;
+  border-radius: 5px 5px 0 0;
+}
+
+.Middle {
+  border: 1px solid var(--gray-800);
+}
+
+.Last {
+  border: 1px solid var(--gray-800);
+  border-top: none;
+  border-radius: 0 0 5px 5px;
+}
+
+.Cursor {
+  cursor: pointer;
+}
+
+.Time {
+  display: flex;
+  align-items: center;
+  color: var(--gray-800);
+  cursor: pointer;
+  gap: 15px;
+}
+
+// location
+.LocationContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .LocationName {
+    font-size: 15px;
+    color: var(--gray-800);
+  }
+}
+
+.MapBox {
+  width: 360px;
+  height: 200px;
+  background-color: var(--white);
+}
+
+// participants
+.Done {
+  color: var(--gray-200);
+  background-color: var(--white);
+  border: 1px solid var(--gray-200);
+  border-radius: 3px;
+  width: 25px;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+// note
+.TextArea {
+  width: 360px;
+  height: 40px;
+  padding: 10px;
+  resize: none;
+  border-radius: 5px;
+  border: 1px solid var(--gray-800);
+  font-size: 15px;
+  max-height: 240px; /* 최대 높이 (12줄 기준, line-height * 12) */
+  line-height: 20px;
+}
+
+.TextArea::placeholder {
+  font-size: 15px;
+  color: var(--gray-100);
+}

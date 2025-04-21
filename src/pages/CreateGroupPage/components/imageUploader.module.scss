@@ -1,0 +1,39 @@
+.ImageCircle {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  margin: 2.5rem auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--violet-50);
+}
+.PreviewImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+.DefaultImage {
+  width: 45%;
+  height: 45%;
+}
+.SmallCircle {
+  width: 43px;
+  height: 43px;
+  border-radius: 50%;
+  background-color: var(--violet-100);
+  position: absolute;
+  bottom: 3px;
+  right: 3px;
+  display: flex;
+  justify-content: center;
+  border: 3.5px solid var(--background-50);
+}
+.CameraWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}

@@ -1,0 +1,64 @@
+.Container {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  background: var(--background-50);
+  overflow: auto;
+  scrollbar-width: none;
+
+  .calendarSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--white);
+    padding-bottom: 20px;
+    border-radius: 0 0 30px 30px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 56px;
+    z-index: 10;
+  }
+  .content {
+    flex: 1;
+    padding: 20px;
+
+    .scheduleSection {
+      height: calc(100% - 30px);
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+
+      .scheduleHeaderContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .scheduleHeader {
+          font-size: 18px;
+          font-weight: bold;
+          margin: 0;
+        }
+        .editIcon {
+          width: 28px;
+          height: 28px;
+          cursor: pointer;
+        }
+      }
+
+      .cardSection {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        gap: 18px;
+
+        .noEventCardSection {
+          display: flex;
+          height: 100%;
+          justify-content: center;
+          align-items: center;
+          font-size: 18px;
+          color: var(--gray-200);
+        }
+      }
+    }
+  }
+}

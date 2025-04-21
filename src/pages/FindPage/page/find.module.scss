@@ -1,0 +1,47 @@
+.Container {
+  background-color: var(--background-50);
+  height: 100svh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.Error {
+  font-size: 10px;
+  color: red;
+  margin: 5px 0 0 0;
+  padding-left: 6px;
+}
+
+.InputsBox {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  margin-top: 30px;
+}
+
+.IdNotFound {
+  font-size: 15px;
+  color: var(--error);
+}
+
+.UsernameP {
+  font-size: 15px;
+  margin-bottom: 10px;
+  color: var(--gray-200);
+}
+.Username {
+  font-size: 15px;
+  font-weight: bold;
+  color: var(--gray-800);
+}
+
+.ButtonBox {
+  display: flex;
+  flex-direction: column;
+  justify-content: end;
+  align-items: center;
+  flex-grow: 1;
+  margin-bottom: 30px;
+}

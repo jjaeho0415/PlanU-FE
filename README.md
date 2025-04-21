@@ -1,4 +1,34 @@
 # PlanU-FE
+<div>
+  <p> 
+    - 로컬서버 http -> https로 적용
+ </p>
+  <p>
+    - clone or pull 받고 npm install -> npm run init-https 실행한 이후 루트 경로에 init-https.sh파일이랑 .pem 파일 2개 정상적으로 설치 됐는지 확인하고 npm run dev 실행 -> https 적용
+  </p>
+</div>
+<div>
+  - types폴더 안에 api명세서에 명시된 카테고리별로 분리
+    (1) calendar.d.ts
+    (2) group.d.ts
+    (3) chatting.d.ts
+    (4) friend.d.ts
+    (5) user.d.ts
+    (6) response.d.ts(공통 응답 데이터 타입: resultCode, resultMsg)
+    (7) form.d.ts
+    (8) inputList.d.ts
+    (9) global.d.ts
+    (10) locationInfo.d.ts
+
+  - 타입 정의할때 타입이름 : I + 메소드타입 + api종류 + (Response or Request) + bodyType 이런식으로 타입 정의 필수
+  - 관련 타입(요청, 응답 body)을 묶어서 한 주석으로 위에 어떤 api에 대한 타입 정의인지 한글로 명시 필요
+  - 만약 응답 body의 타입이 response.d.ts에 있는 공통타입이면 따로 정의 X
+
+  ex. /types/friend.d.ts
+  // 친구요청 api 
+  type IPostRequestFriendRequestBodyType{}
+  type IPostRequestFriendResponseBodyType{}
+</div>
 
 ## 📖 프로젝트 소개
 약속잡기 / 모임 관리 서비스 (친구들과의 약속, 단체 모임, 팀플)
@@ -12,10 +42,9 @@
 <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
 <img src="https://img.shields.io/badge/Reactquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white"/>
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white">
-<!-- <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/> -->
-<img src="https://img.shields.io/badge/Styled_Component-38B2AC?style=for-the-badge&logo=Styled_Component&logoColor=white"/>
+<img src="https://img.shields.io/badge/SCSS_Module-CB3837?style=for-the-badge&logo=SCSS_Module&logoColor=white"/>
+<img src="https://img.shields.io/badge/FetchAPI-5A29E4?style=for-the-badge&logo=FetchAPI&logoColor=white">
 <img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
-<!-- <img src="https://img.shields.io/badge/axios-5A29E4?style=for-the-badge&logo=axios&logoColor=white"> -->
 <img src="https://img.shields.io/badge/zustand-553830?style=for-the-badge&logo=zustand&logoColor=white">
 <img src="https://img.shields.io/badge/storybook-pink?style=for-the-badge&logo=storybook&logoColor=white">
 

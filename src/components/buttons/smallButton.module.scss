@@ -1,0 +1,19 @@
+.Container {
+  width: 159px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  border-radius: 16px;
+  border: 1px solid var(--violet-50);
+  cursor: pointer;
+}
+
+.default {
+  background-color: var(--background-100);
+}
+
+.light {
+  background-color: var(--background-50);
+}

@@ -1,0 +1,42 @@
+.Container {
+  width: 326px;
+  height: 54px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 16px;
+  cursor: pointer;
+  gap: 10px;
+}
+
+.login_kakao {
+  background-color: #ffe812;
+  font-size: 14px;
+}
+
+.login_kakao_white {
+  background-color: var(--button);
+  border: 1px solid var(--pink);
+}
+
+.login_other {
+  background-color: var(--button);
+  border: 1px solid #4d3a52;
+  font-size: 14px;
+}
+
+.register, .login {
+  background: linear-gradient(
+    90deg,
+    #c61fa1 0%,
+    #b12dcb 17%,
+    #9a54bb 32%,
+    #a55eed 55%,
+    #702dcc 73%,
+    #4709ae 87%,
+    #0f057f 100%
+  );
+  color: var(--white);
+}
+
+

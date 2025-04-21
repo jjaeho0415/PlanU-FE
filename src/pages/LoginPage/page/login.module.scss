@@ -1,0 +1,36 @@
+.Container {
+  width: 100%;
+  height: 100dvh;
+  background-color: var(--background-50);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 15px;
+}
+
+.InputBox {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  margin-top: 50px;
+}
+
+.FindBox {
+  width: 326px;
+  flex-grow: 1;
+  margin-top: 10px;
+}
+
+.ButtonBox {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  flex-grow: 3;
+}
+
+.Error {
+  font-size: 10px;
+  color: red;
+  margin: 5px 0 0 0;
+  padding-left: 6px;
+}

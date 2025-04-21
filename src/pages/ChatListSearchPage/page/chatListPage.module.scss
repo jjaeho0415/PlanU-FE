@@ -1,0 +1,23 @@
+.container {
+  background-color: var(--background-50);
+  width: 100%;
+  height: 100vh;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: bold;
+  margin-top: 20px;
+  margin-left: 15px;
+  margin-bottom: 10px;
+}
+
+.profileList {
+  display: flex;
+  flex-direction: column;
+  padding: 0 10px;
+}
+.headerContainer {
+  padding-bottom: 5px;
+  border-bottom: 2px solid var(--white);
+}
