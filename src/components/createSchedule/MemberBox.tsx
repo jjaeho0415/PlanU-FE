@@ -17,6 +17,7 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
   const { accessToken } = useAuthStore();
   const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
   const { data: friendList } = useGetFriendList(accessToken, "친구목록");
+  console.log(friendList)
   const { data: userInfoData } = useGetUserInfo(accessToken);
 
   useEffect(() => {
