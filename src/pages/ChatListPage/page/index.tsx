@@ -22,6 +22,10 @@ const ChatListPage: React.FC = () => {
     navigate("/notificationList");
   };
 
+  const handleChatRoomClick = (groupId: number) => {
+    navigate(`/group/${groupId}/chatting`);
+  };
+
   const isExistUnReadNotification =
     notifications && notifications.notificationList.length > 0
       ? notifications.notificationList.some((notification) => !notification.read)
@@ -35,7 +39,11 @@ const ChatListPage: React.FC = () => {
         isExistUnReadAlarms={isExistUnReadNotification}
       />
       <div className={styles.chatList}>
-        {chatList?.data.map((chatRoom, index) => <ChatItem key={index} chatRoom={chatRoom} />)}
+        {chatList?.data.map((chatRoom, index) => (
+          <div onClick={() => handleChatRoomClick(chatRoom.groupId)}>
+            <ChatItem key={index} chatRoom={chatRoom} />
+          </div>
+        ))}
       </div>
       <FooterBar />
     </div>

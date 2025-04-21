@@ -62,7 +62,7 @@ const CommentModal: React.FC<props> = ({
       </div>
       <div className={styles.CommentsBox}>
         {commentData?.comments.map((comment) => (
-          <div className={styles.CommentItemBox} key={comment.name}>
+          <div className={styles.CommentItemBox} key={comment.id}>
             <div className={styles.ProfileImg}></div>
             <div className={styles.CommentRightBox}>
               <div className={styles.CommentTopBox}>

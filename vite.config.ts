@@ -9,6 +9,9 @@ import { visualizer } from "rollup-plugin-visualizer";
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), "");
   return {
+    define: {
+      global: "globalThis",
+    },
     plugins: [react(), svgr(), visualizer({ open: true, gzipSize: true, brotliSize: true })],
     resolve: {
       alias: [
@@ -45,9 +48,6 @@ export default defineConfig(({ mode }) => {
           replacement: path.resolve(__dirname, "src/api"),
         },
       ],
-    },
-    define: {
-      global: "window", // global을 window로 설정 (브라우저 환경에서 문제 해결)
     },
     server: {
       proxy: {

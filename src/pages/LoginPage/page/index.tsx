@@ -35,8 +35,8 @@ const LoginPage: React.FC = () => {
   });
 
   const handleKakaoLoginClick = () => {
-    window.location.href = `${import.meta.env.VITE_KAKAO_LOGIN_URL}`
-  }
+    window.location.href = `${import.meta.env.VITE_KAKAO_LOGIN_URL}`;
+  };
 
   useEffect(() => {
     const savedId = localStorage.getItem("userStoredId");
@@ -137,10 +137,7 @@ const LoginPage: React.FC = () => {
       </div>
       <div className={styles.ButtonBox}>
         <LoginButton buttonType="login" onClick={handleSubmit(onSubmit)} />
-        <LoginButton
-          buttonType="login_kakao_white"
-          onClick={handleKakaoLoginClick}
-        />
+        <LoginButton buttonType="login_kakao_white" onClick={handleKakaoLoginClick} />
       </div>
       <GoLogin textType="register" textColor="gray" />
     </div>

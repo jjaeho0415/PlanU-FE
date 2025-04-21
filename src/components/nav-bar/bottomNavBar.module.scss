@@ -21,3 +21,17 @@
 .Icon {
   background-color: #ffffff;
 }
+
+.NewChatNumber {
+  width: 20px;
+  height: 20px;
+  font-size: 13px;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--error);
+  position: absolute;
+  transform: translate(20px, -5px);
+}

@@ -2,22 +2,40 @@ import React from "react";
 import styles from "./chatBubble.module.scss";
 
 interface Props {
-  text: string;
-  time: string;
+  message: IChatItem;
   isSentByMe: boolean;
-  userImage?: string;
 }
 
-const ChatBubble: React.FC<Props> = ({ text, time, isSentByMe, userImage }) => {
+const ChatBubble: React.FC<Props> = ({ message, isSentByMe }) => {
   return (
     <div className={`${styles.bubbleContainer} ${isSentByMe ? styles.sent : styles.received}`}>
-      {!isSentByMe && userImage && <img src={userImage} alt="" className={styles.avatar} />}
-      <div className={styles.bubble}>
-        <p className={`${styles.text} ${isSentByMe ? styles.sentText : styles.receivedText}`}>
-          {text}
-        </p>
-        <span className={styles.time}>{time}</span>
+      {!isSentByMe && message.profileImageUrl && (
+        <img
+          src={message.profileImageUrl}
+          alt={`${message.sender}의 프로필이미지`}
+          className={styles.profileImage}
+        />
+      )}
+      {isSentByMe && (
+        <div className={styles.MyTimeUnreadCountBox}>
+          <p className={styles.UnreadCount}>{message.unReadCount > 0 && message.unReadCount}</p>
+          <span className={styles.time}>{message.chatTime}</span>
+        </div>
+      )}
+      <div className={styles.MiddleContainer}>
+        {!isSentByMe && <p className={styles.SenderName}>{message.name}</p>}
+        <div className={styles.bubble}>
+          <p className={`${styles.text} ${isSentByMe ? styles.sentText : styles.receivedText}`}>
+            {message.message}
+          </p>
+        </div>
       </div>
+      {!isSentByMe && (
+        <div className={styles.TimeUnreadCountBox}>
+          <p className={styles.UnreadCount}>{message.unReadCount > 0 && message.unReadCount}</p>
+          <span className={styles.time}>{message.chatTime}</span>
+        </div>
+      )}
     </div>
   );
 };
