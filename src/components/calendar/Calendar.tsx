@@ -17,7 +17,7 @@ import {
 } from "date-fns";
 import React, { JSX } from "react";
 import { DAY_LIST, HOLIDAYS } from "../../constants/holidays";
-import styles from "./Calendar.module.scss";
+import styles from "./calendar.module.scss";
 
 interface Props {
   type: "view" | "myPossible" | "groupPossible";
