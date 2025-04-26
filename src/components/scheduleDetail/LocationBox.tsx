@@ -1,17 +1,45 @@
 import React, { useEffect, useState } from "react";
 import styles from "./Boxes.module.scss";
 import Icon_location from "@assets/Icons/scheduleDetail/Icon_location.svg?react";
-import Icon_arrow from "@assets/Icons/arrow/Icon_Arrow_upRight.svg?react";
 import Map from "@components/map/Map";
 import useLocationInfoStore from "@store/useLocationInfoStore";
+import { useNavigate } from "react-router-dom";
+import { differenceInHours, isSameDay, parse } from "date-fns";
+import toast from "react-hot-toast";
 
-const LocationBox: React.FC = () => {
+interface Props{
+  scheduleId?: string;
+  groupId?: string;
+  startDate?: string;
+}
+
+const LocationBox: React.FC<Props> = ({scheduleId, groupId, startDate}) => {
   const { lat, lng, name, location } = useLocationInfoStore();
   const [locationName, setLocationName] = useState<string>("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLocationName(name ?? location);
   }, [name, location]);
+
+  const handleGoSharingLocationClick = () => {
+    const startDateTime = parse(startDate!, "yyyy-MM-dd HH:mm:ss", new Date());
+    const now = new Date();
+
+    if (isSameDay(now, startDateTime)) {
+      const diffInHours = differenceInHours(now, startDateTime);
+      if (diffInHours >= -1 && diffInHours <= 1) {
+         navigate(`/group/${groupId}/calendar/schedule/${scheduleId}/locationSharing`);
+      }
+      else {
+        toast.error("위치 현황 공유는 시작시간 ± 1시간 이내에만 가능합니다");
+      }
+    }
+    else {
+      toast.error("위치 현황 공유는 시작시간 ± 1시간 이내에만 가능합니다");
+    }
+   
+  }
 
   return (
     <div className={styles.LocationBox}>
@@ -20,9 +48,9 @@ const LocationBox: React.FC = () => {
           <Icon_location />
           <p>{locationName}</p>
         </div>
-        <div className={styles.FindRoadContainer}>
-          <Icon_arrow />
-          <p>길찾기</p>
+        <div className={styles.FindRoadContainer} onClick={handleGoSharingLocationClick}>
+          <p>위치</p>
+          <p>현황</p>
         </div>
       </div>
       <div className={styles.MapBox}>

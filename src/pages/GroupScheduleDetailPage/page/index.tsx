@@ -87,7 +87,7 @@ const GroupScheduleDetail: React.FC = () => {
       <div className={styles.ContentContainer}>
         <TitleBox />
         <TimeBox />
-        <LocationBox />
+        <LocationBox groupId={groupId} scheduleId={scheduleId} startDate={groupScheduleData?.startDate} />
         <ParticipantsBox />
         <MemoBox />
       </div>
