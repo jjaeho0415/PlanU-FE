@@ -7,13 +7,13 @@ import { useNavigate } from "react-router-dom";
 import { differenceInHours, isSameDay, parse } from "date-fns";
 import toast from "react-hot-toast";
 
-interface Props{
+interface Props {
   scheduleId?: string;
   groupId?: string;
   startDate?: string;
 }
 
-const LocationBox: React.FC<Props> = ({scheduleId, groupId, startDate}) => {
+const LocationBox: React.FC<Props> = ({ scheduleId, groupId, startDate }) => {
   const { lat, lng, name, location } = useLocationInfoStore();
   const [locationName, setLocationName] = useState<string>("");
   const navigate = useNavigate();
@@ -29,29 +29,28 @@ const LocationBox: React.FC<Props> = ({scheduleId, groupId, startDate}) => {
     if (isSameDay(now, startDateTime)) {
       const diffInHours = differenceInHours(now, startDateTime);
       if (diffInHours >= -1 && diffInHours <= 1) {
-         navigate(`/group/${groupId}/calendar/schedule/${scheduleId}/locationSharing`);
-      }
-      else {
+        navigate(`/group/${groupId}/calendar/schedule/${scheduleId}/locationSharing`);
+      } else {
         toast.error("위치 현황 공유는 시작시간 ± 1시간 이내에만 가능합니다");
       }
-    }
-    else {
+    } else {
       toast.error("위치 현황 공유는 시작시간 ± 1시간 이내에만 가능합니다");
     }
-   
-  }
+  };
 
   return (
     <div className={styles.LocationBox}>
       <div className={styles.LocationNameBox}>
-        <div className={styles.LocationContainer}>
+        <div className={styles.LocationContainer} style={!groupId ? { width: "100%" } : undefined}>
           <Icon_location />
           <p>{locationName}</p>
         </div>
-        <div className={styles.FindRoadContainer} onClick={handleGoSharingLocationClick}>
-          <p>위치</p>
-          <p>현황</p>
-        </div>
+        {groupId && (
+          <div className={styles.FindRoadContainer} onClick={handleGoSharingLocationClick}>
+            <p>위치</p>
+            <p>현황</p>
+          </div>
+        )}
       </div>
       <div className={styles.MapBox}>
         <Map latLng={{ latitude: lat, longitude: lng }} />
