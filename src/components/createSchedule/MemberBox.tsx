@@ -52,12 +52,12 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
         value={participants.length === 0 ? "" : participants.map((p) => p.name).join(", ")}
       ></input>
       {isSelecting && (
-        <>
+        <div className={styles.isSelecting}>
           <ParticipantsPicker groupId={groupId} creator={participants[0].username} />
           <div className={styles.Done} onClick={() => setIsSelecting(false)}>
             확인
           </div>
-        </>
+        </div>
       )}
     </div>
   );
