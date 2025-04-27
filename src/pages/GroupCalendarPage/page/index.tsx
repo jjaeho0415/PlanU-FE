@@ -54,6 +54,7 @@ const GroupCalendarPage: React.FC = () => {
           scheduleData={groupCheckEvents?.groupScheduleData}
           currentMonth={currentMonth}
           setCurrentMonth={setCurrentMonth}
+          selectedDate={selectedDate}
           setSelectedDate={setSelectedDate}
         />
       </div>

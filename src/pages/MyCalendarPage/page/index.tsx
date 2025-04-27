@@ -79,6 +79,7 @@ const MyCalendarPage: React.FC = () => {
             setSelectedDate={setSelectedDate}
             currentMonth={currentMonth}
             setCurrentMonth={setCurrentMonth}
+            selectedDate={selectedDate}
           />
         </div>
         <div className={styles.scheduleSection}>

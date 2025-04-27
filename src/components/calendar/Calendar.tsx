@@ -25,11 +25,11 @@ interface Props {
   setAvailableDates?: React.Dispatch<React.SetStateAction<string[]>>;
   scheduleData: IScheduleType[] | undefined;
   groupAvailableDates?: IGroupAvailableDatesCalendarItemType[];
+  selectedDate?: string;
   setSelectedDate: React.Dispatch<React.SetStateAction<string>>;
   currentMonth: Date;
   setCurrentMonth: React.Dispatch<React.SetStateAction<Date>>;
-   isEditing?: boolean;
-
+  isEditing?: boolean;
 }
 
 const Calendar: React.FC<Props> = ({
@@ -41,7 +41,8 @@ const Calendar: React.FC<Props> = ({
   setSelectedDate,
   currentMonth,
   setCurrentMonth,
-  isEditing, 
+  isEditing,
+  selectedDate,
 }) => {
   const handlePrevMonth = () => {
     setCurrentMonth((prev) => subMonths(prev, 1));
@@ -102,6 +103,8 @@ const Calendar: React.FC<Props> = ({
         const isAvailable = availableDates?.includes(formattedDate);
         const groupAvailableDate = groupAvailableDates?.find((item) => item.date === formattedDate);
 
+        const isSelected = type === "view" && selectedDate === formattedDate;
+
         let backgroundColor = "transparent";
         if (type === "myPossible" && isAvailable) {
           backgroundColor = "#C9ACE7";
@@ -120,6 +123,10 @@ const Calendar: React.FC<Props> = ({
           backgroundColor = "#F1F3F5";
         }
 
+        if (isSelected) {
+          backgroundColor = "#bdbaba";
+        }
+
         const isHoliday = HOLIDAYS.includes(format(day, "MM-dd"));
         const isSunday = format(day, "i") === "7";
         const isClickable =
@@ -133,9 +140,16 @@ const Calendar: React.FC<Props> = ({
             onClick={() => handleDateClick(formattedDate)}
             style={{
               cursor: isClickable || isGroupClickable || type === "view" ? "pointer" : "default",
-              color: isNotCurrentMonth ? "#767676" : isSunday || isHoliday ? "#FF0101" : "#111111",
+              color: isNotCurrentMonth
+                ? isSelected
+                  ? "var(--white)"
+                  : "#767676"
+                : isSunday || isHoliday
+                  ? "#FF0101"
+                  : "#111111",
               backgroundColor,
-              borderRadius: isToday || isAvailable || groupAvailableDate ? "50%" : "0",
+              borderRadius:
+                isToday || isAvailable || groupAvailableDate || isSelected ? "50%" : "0",
               fontWeight: isToday ? "bold" : "500",
             }}
           >
