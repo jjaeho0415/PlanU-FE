@@ -37,3 +37,8 @@ type IChatMessageResponse = {
 type IUpdateMessageResponse = {
   data: IChatItem[];
 };
+
+type ISendImageType = {
+  groupId: string;
+  file: File;
+};

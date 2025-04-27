@@ -42,22 +42,22 @@
       }
     }
   }
-
-  .InputContainer {
+  .ImageContainer {
+    background-color: var(--white);
     display: flex;
-    justify-content: center;
-    align-items: center;
-    .Input {
-      width: 270px;
-      height: 35px;
-      border-radius: 30px;
-      border: 1.5px solid var(--violet-100);
-      font-size: 15px;
-      padding: 0 10px;
+    height: 100px;
+
+    .Image {
+      width: 20%;
     }
-    .SendIcon {
-      position: absolute;
-      right: 87px;
+  }
+  .BottomContainer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    height: 50px;
+
+    .Cursor {
       cursor: pointer;
     }
   }

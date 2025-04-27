@@ -36,8 +36,8 @@ const apiRoutes = {
   availableDates: "/available-dates",
   //채팅 관련
   chatRoomsList: "/chats",
-  //채팅 관련
   chatMessages: "/chats/messages",
+  chatImage: "/chats/file",
   // 알림 관련
   readNotification: "/notification/read",
   notificationList: "/notification/list",
