@@ -24,15 +24,16 @@
     font-weight: bold;
     color: var(--black);
   }
-  .notificationTitleSection{
+  .notificationTitleSection {
     font-size: 20px;
     font-weight: bold;
     color: var(--black);
     position: absolute;
     transform: translateX(30px);
   }
-  .readAllButton{
+  .readAllButton {
     font-size: 12px;
     color: var(--gray-800);
+    cursor: pointer;
   }
 }

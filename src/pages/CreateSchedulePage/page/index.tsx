@@ -36,6 +36,8 @@ const CreateSchedulePage: React.FC = () => {
   const { mutate: createMySchedule } = usePostCreateMySchedule(accessToken);
   const { mutate: createGroupSchedule } = usePostCreateGroupSchedule(accessToken, Number(groupId));
   const [isOpenChangeColorModal, setIsOpenChangeColorModal] = useState<boolean>(false);
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
 
   const handleButtonClick = () => {
     const filteredMemberId: string[] = participants.map(
@@ -72,14 +74,13 @@ const CreateSchedulePage: React.FC = () => {
         rightType="x"
         handleClick={() => {
           navigate(-1);
+          resetScheduleState();
+          clearLocationInfo();
         }}
       />
       <div className={styles.ContentContainer}>
         <TitleBox />
-        <ColorBox
-          setIsOpenChangeColorModal={setIsOpenChangeColorModal}
-          color={color}
-        />
+        <ColorBox setIsOpenChangeColorModal={setIsOpenChangeColorModal} color={color} />
         <TimeBox />
         <LocationBox />
         <MemberBox groupId={groupId} />
@@ -88,7 +89,9 @@ const CreateSchedulePage: React.FC = () => {
       <div className={styles.ButtonBox}>
         <DefaultButton buttonText="완료" onClick={handleButtonClick} />
       </div>
-      {isOpenChangeColorModal && <ChangeColorBox setColor={setColor} setIsOpenChangeColorModal={setIsOpenChangeColorModal}/>}
+      {isOpenChangeColorModal && (
+        <ChangeColorBox setColor={setColor} setIsOpenChangeColorModal={setIsOpenChangeColorModal} />
+      )}
     </div>
   );
 };
