@@ -1,10 +1,10 @@
-import apiRoutes from "@api/apiRoutes";
 import api from "@api/fetcher";
+import apiRoutes from "@api/apiRoutes";
 import { useQuery } from "@tanstack/react-query";
 
 const getFriendList = async (authorization: string) => {
   const response: IGetFriendListResponseBodyType = await api.get({
-    endpoint: apiRoutes.friend,
+    endpoint: `${apiRoutes.friend}`,
     authorization,
   });
   return response;
