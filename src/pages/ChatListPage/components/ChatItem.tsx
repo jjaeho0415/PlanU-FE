@@ -15,6 +15,12 @@ const ChatItem: React.FC<ChatItemProps> = ({ chatRoom }) => {
     navigate(`/group/${chatRoom.groupId}/chatting`);
   };
 
+  const cutToTwoLines = (text: string) => {
+    const lines = text.split("\n");
+    const twoLines = lines.slice(0, 2).join("\n");
+    return twoLines;
+  };
+
   return (
     <div className={styles.chatItem} onClick={handleChatRoomClick}>
       <img
