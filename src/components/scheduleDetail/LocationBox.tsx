@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Boxes.module.scss";
 import Icon_location from "@assets/Icons/scheduleDetail/Icon_location.svg?react";
 import Map from "@components/map/Map";
-import useLocationInfoStore from "@store/useLocationInfoStore";
 import { useNavigate } from "react-router-dom";
 import { differenceInHours, isSameDay, parse } from "date-fns";
 import toast from "react-hot-toast";
@@ -11,16 +10,13 @@ interface Props {
   scheduleId?: string;
   groupId?: string;
   startDate?: string;
+  name: string;
+  lat: number;
+  lng: number;
 }
 
-const LocationBox: React.FC<Props> = ({ scheduleId, groupId, startDate }) => {
-  const { lat, lng, name, location } = useLocationInfoStore();
-  const [locationName, setLocationName] = useState<string>("");
+const LocationBox: React.FC<Props> = ({ scheduleId, groupId, startDate, name, lat, lng }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    setLocationName(name ?? location);
-  }, [name, location]);
 
   const handleGoSharingLocationClick = () => {
     const startDateTime = parse(startDate!, "yyyy-MM-dd HH:mm:ss", new Date());
@@ -43,7 +39,7 @@ const LocationBox: React.FC<Props> = ({ scheduleId, groupId, startDate }) => {
       <div className={styles.LocationNameBox}>
         <div className={styles.LocationContainer} style={!groupId ? { width: "100%" } : undefined}>
           <Icon_location />
-          <p>{locationName}</p>
+          <p>{name}</p>
         </div>
         {groupId && (
           <div className={styles.FindRoadContainer} onClick={handleGoSharingLocationClick}>

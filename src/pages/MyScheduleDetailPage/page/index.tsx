@@ -21,7 +21,6 @@ const MyScheduleDetailPage: React.FC = () => {
   const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
   const { accessToken } = useAuthStore();
   const { scheduleId } = useParams<{ scheduleId: string }>();
-  const { setLocationInfo } = useLocationInfoStore();
   const { data: myScheduleData } = useGetMyScheduleDetail(accessToken, scheduleId ?? "");
   const {
     setTitle,
@@ -43,12 +42,6 @@ const MyScheduleDetailPage: React.FC = () => {
         setStartDate(new Date(myScheduleData.startDateTime)),
         setParticipants(myScheduleData.participants),
         setMemo(myScheduleData.memo);
-      setLocationInfo(
-        myScheduleData.location,
-        myScheduleData.latitude,
-        myScheduleData.longitude,
-        myScheduleData.location,
-      );
 
       const isSameDate = isSameDay(startDate, endDate);
       const isStartMidnight = getHours(startDate) === 0 && getMinutes(startDate) === 0;
@@ -77,7 +70,13 @@ const MyScheduleDetailPage: React.FC = () => {
       <div className={styles.ContentContainer}>
         <TitleBox />
         <TimeBox />
-        {myScheduleData?.location && <LocationBox />}
+        {myScheduleData?.location && (
+          <LocationBox
+            lat={myScheduleData.latitude}
+            lng={myScheduleData.longitude}
+            name={myScheduleData.location}
+          />
+        )}
         {myScheduleData?.participants.length !== 0 && <ParticipantsBox />}
         <MemoBox />
       </div>
