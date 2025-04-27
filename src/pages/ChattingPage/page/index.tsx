@@ -9,6 +9,7 @@ import useAuthStore from "@store/useAuthStore";
 import { useNavigate, useParams } from "react-router-dom";
 import Icon_button from "@assets/Icons/chatt/button.svg?react";
 import Icon_mic from "@assets/Icons/chatt/mic.svg?react";
+import Icon_deleteImg from "@assets/Icons/Close/Icon_close.svg?react";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import { useGetUpdateChatMessages } from "@api/chat/getUpdateChatMessages copy";
 import { useGetGroupDetails } from "@api/group/getGroupDetail";
@@ -253,6 +254,12 @@ const ChattingPage: React.FC = () => {
     }
   };
 
+  const handleDeleteImg = () => {
+    setImgPreview(null);
+    setImgaeFile(null);
+    setIsBottomMenuClick(false);
+  };
+
   const handleLeftClick = () => {
     navigate("/chatList");
   };
@@ -294,6 +301,7 @@ const ChattingPage: React.FC = () => {
       </div>
       {imgPreview && (
         <div className={styles.ImageContainer}>
+          <Icon_deleteImg className={styles.DeleteIcon} onClick={handleDeleteImg} />
           <img src={imgPreview} className={styles.Image} />
         </div>
       )}
@@ -311,6 +319,7 @@ const ChattingPage: React.FC = () => {
           imageFile={imageFile}
           setImgaeFile={setImgaeFile}
           setImgaePreview={setImgPreview}
+          setIsBottomMenuClick={setIsBottomMenuClick}
         />
         <Icon_mic className={styles.Cursor} />
       </div>
@@ -319,7 +328,6 @@ const ChattingPage: React.FC = () => {
           setImgPreview={setImgPreview}
           imageFile={imageFile}
           setImageFile={setImgaeFile}
-          setIsBottomMenuClick={setIsBottomMenuClick}
         />
       )}
     </div>

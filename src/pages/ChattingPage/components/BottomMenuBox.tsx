@@ -6,7 +6,6 @@ interface Props {
   setImgPreview: React.Dispatch<React.SetStateAction<string | null>>;
   imageFile: string | File | null;
   setImageFile: React.Dispatch<React.SetStateAction<string | File | null>>;
-  setIsBottomMenuClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 const BottomMenuBox: React.FC<Props> = ({ setImgPreview, imageFile, setImageFile }) => {
   useEffect(() => {
@@ -40,7 +39,6 @@ const BottomMenuBox: React.FC<Props> = ({ setImgPreview, imageFile, setImageFile
         }
 
         setImageFile(file);
-        // setIsBottomMenuClick(false);
       }
     }
   };

@@ -13,6 +13,7 @@ interface Props {
   imageFile: string | File | null;
   setImgaeFile: React.Dispatch<React.SetStateAction<string | File | null>>;
   setImgaePreview: React.Dispatch<React.SetStateAction<string | null>>;
+  setIsBottomMenuClick: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SendMessageInput: React.FC<Props> = ({
@@ -24,6 +25,7 @@ const SendMessageInput: React.FC<Props> = ({
   imageFile,
   setImgaeFile,
   setImgaePreview,
+  setIsBottomMenuClick,
 }) => {
   const { accessToken } = useAuthStore();
   const { mutate: sendImage } = usePostSendImage(accessToken);
@@ -42,6 +44,7 @@ const SendMessageInput: React.FC<Props> = ({
     sendImage({ groupId: groupId, file: imageFile as File });
     setImgaeFile(null);
     setImgaePreview(null);
+    setIsBottomMenuClick(false);
   };
 
   return (
