@@ -30,6 +30,10 @@
 .bubble {
   padding: 6px 12px;
   border-radius: 10px;
+
+  .image {
+    width: 100%;
+  }
 }
 
 .sent {

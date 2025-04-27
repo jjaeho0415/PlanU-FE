@@ -1,0 +1,19 @@
+.InputContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  .Input {
+    width: 270px;
+    height: 35px;
+    border-radius: 30px;
+    border: 1.5px solid var(--violet-100);
+    font-size: 15px;
+    padding: 0 10px;
+  }
+  .SendIcon {
+    position: absolute;
+    right: 5px;
+    cursor: pointer;
+  }
+}

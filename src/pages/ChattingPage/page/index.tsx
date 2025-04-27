@@ -7,10 +7,14 @@ import SockJS from "sockjs-client";
 import { useGetChatMessages } from "@api/chat/getChatMessages";
 import useAuthStore from "@store/useAuthStore";
 import { useNavigate, useParams } from "react-router-dom";
-import Icon_sendMessage from "@assets/Icons/chatt/IconSendMessageButton.svg?react";
+import Icon_button from "@assets/Icons/chatt/button.svg?react";
+import Icon_mic from "@assets/Icons/chatt/mic.svg?react";
+import Icon_deleteImg from "@assets/Icons/Close/Icon_close.svg?react";
 import { useGetUserInfo } from "@api/user/getUserInfo";
 import { useGetUpdateChatMessages } from "@api/chat/getUpdateChatMessages copy";
 import { useGetGroupDetails } from "@api/group/getGroupDetail";
+import SendMessageInput from "../components/SendMessageInput";
+import BottomMenuBox from "../components/BottomMenuBox";
 
 const ChattingPage: React.FC = () => {
   const { accessToken } = useAuthStore();
@@ -19,11 +23,14 @@ const ChattingPage: React.FC = () => {
   const [client, setClient] = useState<Client | null>(null);
   const [connected, setConnected] = useState<boolean>(false);
   const [messages, setMessages] = useState<IGroupedChatMessages[]>([]);
+  const [imgPreview, setImgPreview] = useState<string | null>(null);
+  const [imageFile, setImgaeFile] = useState<string | null | File>(null);
   const chatRef = useRef<{ [key: number]: HTMLDivElement | null }>({});
   const readMessageRef = useRef<number>(-1);
   const [startId, setStartId] = useState<number>(-1);
   const [type, setType] = useState<number>(-1);
   const [messageInput, setMessageInput] = useState<string>("");
+  const [isBottomMenuClick, setIsBottomMenuClick] = useState<boolean>(false);
   const { data: groupDetailData } = useGetGroupDetails(groupId ?? "", accessToken);
   const { data: chatMessagesData } = useGetChatMessages(accessToken, groupId ?? "");
   const { data: updatedChatMessageData } = useGetUpdateChatMessages(
@@ -173,18 +180,22 @@ const ChattingPage: React.FC = () => {
 
     switch (newMessage.type) {
       case 1:
+        setType(1);
         addNewMessage(newMessage);
         return;
       case 2:
+        setType(2);
         addNewMessage(newMessage);
         return;
       case 3:
         setType(3);
         return;
       case 4:
+        setType(4);
         updateUnreadCount(newMessage);
         return;
       case 5:
+        setType(5);
         return;
       default:
         console.warn("Unhandled message type:", newMessage.type);
@@ -221,14 +232,10 @@ const ChattingPage: React.FC = () => {
     });
   };
 
-  const setMessageValue = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setMessageInput(e.target.value);
-  };
-
   const sendMessage = () => {
     if (client && connected && messageInput.trim() !== "") {
       const chatMessage = {
-        type: 1,
+        type: imageFile ? 2 : 1,
         message: messageInput,
       };
 
@@ -241,16 +248,16 @@ const ChattingPage: React.FC = () => {
     }
   };
 
-  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !e.nativeEvent.isComposing) {
-      sendMessage();
-    }
-  };
-
   const handleChatScroll = (id: number) => {
     if (chatRef.current[id]) {
       chatRef.current[id]?.scrollIntoView({ behavior: "smooth", block: "center" });
     }
+  };
+
+  const handleDeleteImg = () => {
+    setImgPreview(null);
+    setImgaeFile(null);
+    setIsBottomMenuClick(false);
   };
 
   const handleLeftClick = () => {
@@ -285,22 +292,44 @@ const ChattingPage: React.FC = () => {
                   key={chat.messageId}
                   message={chat}
                   isSentByMe={userData?.username === chat.sender}
+                  type={chat.type}
                 />
-                {/* {chat.messageId === readMessageRef.current && <div>라라라라</div>} */}
               </div>
             ))}
           </div>
         ))}
       </div>
-      <div className={styles.InputContainer}>
-        <input
-          className={styles.Input}
-          value={messageInput}
-          onChange={setMessageValue}
-          onKeyDown={onKeyDown}
+      {imgPreview && (
+        <div className={styles.ImageContainer}>
+          <Icon_deleteImg className={styles.DeleteIcon} onClick={handleDeleteImg} />
+          <img src={imgPreview} className={styles.Image} />
+        </div>
+      )}
+      <div className={styles.BottomContainer}>
+        <Icon_button
+          className={styles.Cursor}
+          onClick={() => setIsBottomMenuClick(!isBottomMenuClick)}
         />
-        <Icon_sendMessage onClick={sendMessage} className={styles.SendIcon} />
+        <SendMessageInput
+          messageInput={messageInput}
+          setMessageInput={setMessageInput}
+          sendMessage={sendMessage}
+          isSendImage={imageFile ? true : false}
+          groupId={groupId ?? ""}
+          imageFile={imageFile}
+          setImgaeFile={setImgaeFile}
+          setImgaePreview={setImgPreview}
+          setIsBottomMenuClick={setIsBottomMenuClick}
+        />
+        <Icon_mic className={styles.Cursor} />
       </div>
+      {isBottomMenuClick && (
+        <BottomMenuBox
+          setImgPreview={setImgPreview}
+          imageFile={imageFile}
+          setImageFile={setImgaeFile}
+        />
+      )}
     </div>
   );
 };

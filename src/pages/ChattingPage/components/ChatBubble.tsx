@@ -4,9 +4,10 @@ import styles from "./chatBubble.module.scss";
 interface Props {
   message: IChatItem;
   isSentByMe: boolean;
+  type: number;
 }
 
-const ChatBubble: React.FC<Props> = ({ message, isSentByMe }) => {
+const ChatBubble: React.FC<Props> = ({ message, isSentByMe, type }) => {
   return (
     <div className={`${styles.bubbleContainer} ${isSentByMe ? styles.sent : styles.received}`}>
       {!isSentByMe && message.profileImageUrl && (
@@ -25,9 +26,17 @@ const ChatBubble: React.FC<Props> = ({ message, isSentByMe }) => {
       <div className={styles.MiddleContainer}>
         {!isSentByMe && <p className={styles.SenderName}>{message.name}</p>}
         <div className={styles.bubble}>
-          <p className={`${styles.text} ${isSentByMe ? styles.sentText : styles.receivedText}`}>
-            {message.message}
-          </p>
+          {type === 1 && (
+            <p className={`${isSentByMe ? styles.sentText : styles.receivedText}`}>
+              {message.message}
+            </p>
+          )}
+          {type === 2 && (
+            <img
+              src={message.message}
+              className={`${styles.image} ${isSentByMe ? styles.sentText : styles.receivedText}`}
+            />
+          )}
         </div>
       </div>
       {!isSentByMe && (
