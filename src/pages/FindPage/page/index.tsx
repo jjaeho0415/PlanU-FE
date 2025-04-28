@@ -95,7 +95,7 @@ const FindPage: React.FC = () => {
     }
 
     if (!email) {
-      alert("이메일을 입력하세요");
+      toast.error("이메일을 입력하세요");
       return;
     }
     isSendingRef.current = true;
@@ -121,9 +121,9 @@ const FindPage: React.FC = () => {
   const handleCheckPasswordMatch = (password: string, confirmPassword: string) => {
     if (confirmPassword === password) {
       setIsCheckedPw(true);
-      alert("비밀번호가 일치합니다.");
+      toast.success("비밀번호가 일치합니다.");
     } else {
-      alert("비밀번호가 일치하지 않습니다.");
+      toast.error("비밀번호가 일치하지 않습니다.");
     }
   };
 

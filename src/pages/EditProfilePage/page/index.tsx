@@ -91,7 +91,7 @@ const EditProfilePage: React.FC = () => {
 
   const handleVerifyPassword = () => {
     if (!requestUserInfo.password) {
-      alert("기존 비밀번호를 입력해주세요.");
+      toast.error("기존 비밀번호를 입력해주세요.");
       return;
     }
     const loadingToastId = toast.loading("비밀번호 확인중...");
@@ -178,7 +178,7 @@ const EditProfilePage: React.FC = () => {
       return;
     }
     if (!requestUserInfo.email) {
-      alert("이메일을 입력해주세요.");
+      toast.error("이메일을 입력해주세요.");
       return;
     }
     isSendingRef.current = true;
@@ -210,13 +210,13 @@ const EditProfilePage: React.FC = () => {
 
   const handleConfirmAuthCode = () => {
     if (!authCode) {
-      alert("인증번호를 입력해주세요.");
+      toast.error("인증번호를 입력해주세요.");
       return;
     }
 
     const email = requestUserInfo.email ?? "";
     if (!email) {
-      alert("이메일을 입력해주세요.");
+      toast.error("이메일을 입력해주세요.");
       return;
     }
     const loadingToastId = toast.loading("이메일 인증 확인중...");

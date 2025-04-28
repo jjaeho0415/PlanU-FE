@@ -49,7 +49,7 @@ const RegisterPage: React.FC = () => {
 
   const handleCheckIdDuplication = async () => {
     if (!watch("id")) {
-      return alert("ID를 입력하세요.");
+      return toast.error("ID를 입력하세요.");
     }
 
     setIsCheckingId(true);
@@ -57,15 +57,15 @@ const RegisterPage: React.FC = () => {
       const { data: idDuplicationData, error } = await refetch();
       if (idDuplicationData && idDuplicationData.resultMsg === "false") {
         setIsCheckedId(true);
-        alert("사용 가능한 ID입니다.");
+        toast.success("사용 가능한 ID입니다.");
       } else {
-        alert("이미 사용 중인 ID입니다.");
+        toast.error("이미 사용 중인 ID입니다.");
       }
       if (error) {
-        console.error(error.message);
+        toast.error(error.message);
       }
     } catch (error) {
-      alert("중복 확인에 실패했습니다. 다시 시도해주세요.");
+      toast.error("중복 확인에 실패했습니다. 다시 시도해주세요.");
     } finally {
       setIsCheckingId(false);
     }
@@ -76,7 +76,7 @@ const RegisterPage: React.FC = () => {
       return;
     }
     if (!email) {
-      alert("이메일을 입력하세요");
+      toast.error("이메일을 입력하세요");
       return;
     }
     isSendingRef.current = true;
@@ -223,7 +223,7 @@ const RegisterPage: React.FC = () => {
         },
       });
     } else {
-      alert("ID 중복 확인 및 이메일 인증을 완료해주세요.");
+      toast.error("ID 중복 확인 및 이메일 인증을 완료해주세요.");
     }
   };
 

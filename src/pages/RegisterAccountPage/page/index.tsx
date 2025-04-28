@@ -9,6 +9,7 @@ import RightArrow_Icon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { usePostUserInformation } from "@api/user/postUserInformation";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
+import toast from "react-hot-toast";
 
 const userInformation: IPostUserInformationRequestBodyType = {
   UserProfileRequest: {
@@ -67,7 +68,7 @@ const RegisterAccountPage = () => {
   ]);
 
   const handleConfirmBirth = () => {
-    isBirthError ? alert("생년월일을 알맞게 입력해주세요.") : setIsBirthInputClick(false);
+    isBirthError ? toast.error("생년월일을 알맞게 입력해주세요.") : setIsBirthInputClick(false);
   };
 
   const handleSelectGender = (gender: string) => {
@@ -107,15 +108,15 @@ const RegisterAccountPage = () => {
 
   const handleNextBtnClick = () => {
     if (!userBirth) {
-      alert("생년월일을 입력해주세요");
+      toast.error("생년월일을 입력해주세요");
       return;
     }
     if (!isPrivacyPolicyAgreed) {
-      alert("이용약관 동의는 필수항목입니다.");
+      toast.error("이용약관 동의는 필수항목입니다.");
       return;
     }
     if (!isTermsOfServiceAgreed) {
-      alert("개인정보 수집 및 이용동의는 필수항목입니다.");
+      toast.error("개인정보 수집 및 이용동의는 필수항목입니다.");
       return;
     }
 

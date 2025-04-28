@@ -15,6 +15,7 @@ import styles from "./datePicker.module.scss";
 import ArrowIcon from "@assets/Icons/arrow/RightArrow.svg?react";
 import { DAY_LIST, HOLIDAYS } from "../../constants/holidays";
 import useScheduleStore from "@store/useScheduleStore";
+import toast from "react-hot-toast";
 
 interface Props {
   isStartDay: boolean;
@@ -51,7 +52,7 @@ const DatePicker: React.FC<Props> = ({ isStartDay }) => {
     if (isAllDay) {
       setEndDate(startDate);
     } else if (!isAllDay && startDate.getDate() > endDate.getDate()) {
-      alert("시작 시간이 종료 시간보다 늦을 수 없습니다.");
+      toast.error("시작 시간이 종료 시간보다 늦을 수 없습니다.");
       setSelectedDate(startDate);
       setEndDate(startDate);
     }
