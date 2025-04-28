@@ -4,18 +4,43 @@ import Icon_uncheckbox from "@assets/Icons/checkbox/Icon_blankBox.svg?react";
 import Icon_checkbox from "@assets/Icons/checkbox/Icon_checkBox_purple.svg?react";
 import useScheduleStore from "@store/useScheduleStore";
 import useAuthStore from "@store/useAuthStore";
+import { useGetFriendList } from "@api/friend/getFriendList";
+import { useEffect, useState } from "react";
 
 interface props {
-  creator: string;
-  groupId?: string;
+  creator?: string;
+  groupId: string;
 }
 
-const ParticipantsPicker: React.FC<props> = ({ creator, groupId = "" }) => {
+const ParticipantsPicker: React.FC<props> = ({ creator, groupId }) => {
   const { accessToken } = useAuthStore();
   const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
+  const { data: friendList } = useGetFriendList(accessToken, groupId === "my" ? "친구목록" : "");
+  const [members, setMembers] = useState<IScheduleMemberType[]>([]);
   const { participants, setParticipants } = useScheduleStore();
 
-  const handleAddParticipants = (member: IGroupMemberItemType) => {
+  useEffect(() => {
+    if (groupId === "my" && friendList) {
+      console.log(groupId, friendList);
+      const filteredMembersInfo = friendList.friends.map((friend) => ({
+        name: friend.name,
+        username: friend.username,
+        profileImage: friend.profileImageUrl,
+      }));
+      setMembers(filteredMembersInfo);
+    } else if (groupId !== "my" && groupMemberList) {
+      console.log(groupId, groupMemberList.members);
+
+      const filteredMembersInfo = groupMemberList.members.map((member) => ({
+        name: member.name,
+        username: member.username,
+        profileImage: member.profileImage,
+      }));
+      setMembers(filteredMembersInfo);
+    }
+  }, [groupId]);
+
+  const handleAddParticipants = (member: IScheduleMemberType) => {
     if (member.username === creator) return;
     else if (participants.some((p) => p.username === member.username)) {
       setParticipants(participants.filter((p) => p.username !== member.username));
@@ -26,13 +51,14 @@ const ParticipantsPicker: React.FC<props> = ({ creator, groupId = "" }) => {
 
   return (
     <div className={styles.Container}>
-      {groupMemberList?.members.map((member, index) => {
+      {members.map((member, index) => {
         const isSelected = participants.some((m) => m.username === member.username);
         return (
           <div key={index} className={styles.ItemBox}>
             <div className={styles.Checkbox} onClick={() => handleAddParticipants(member)}>
               {isSelected ? <Icon_checkbox /> : <Icon_uncheckbox />}
             </div>
+            <img className={styles.ProfileImg} src={member.profileImage} />
             <p>{member.name}</p>
           </div>
         );

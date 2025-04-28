@@ -14,6 +14,6 @@ export const useGetGroupMemberList = (authorization: string, groupId: string) =>
   return useQuery({
     queryKey: ["GROUP_MEMBER_LIST", groupId],
     queryFn: () => getGroupMemberList(authorization, groupId),
-    enabled: groupId !== undefined && authorization !== "",
+    enabled: groupId !== "my" && authorization !== "",
   });
 };

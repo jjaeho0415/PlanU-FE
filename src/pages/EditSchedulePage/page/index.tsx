@@ -13,14 +13,18 @@ import { useParams } from "react-router-dom";
 import { usePutEditGroupSchedule } from "@api/schedule/putEditGroupSchedule";
 import { format } from "date-fns";
 import { usePostEditMySchedule } from "@api/schedule/putEditMySchedule";
+import { useState } from "react";
+import ChangeColorBox from "@components/createSchedule/ChangeColorBox";
 
 const EditSchedulePage: React.FC = () => {
   const { groupId } = useParams<{ groupId: string }>();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { accessToken } = useAuthStore();
+  const [isOpenChangeColorModal, setIsOpenChangeColorModal] = useState<boolean>(false);
   const {
     title,
     color,
+    setColor,
     startDate,
     endDate,
     memo,
@@ -73,12 +77,15 @@ const EditSchedulePage: React.FC = () => {
       />
       <div className={styles.ContentContainer}>
         <TitleBox />
-        <ColorBox />
+        <ColorBox setIsOpenChangeColorModal={setIsOpenChangeColorModal} color={color} />
         <TimeBox />
-        <LocationBox />
+        <LocationBox lat={lat} lng={lng} name={locationName} location={locationAddress} />
         <MemberBox groupId={groupId} />
         <NoteBox />
       </div>
+      {isOpenChangeColorModal && (
+        <ChangeColorBox setColor={setColor} setIsOpenChangeColorModal={setIsOpenChangeColorModal} />
+      )}
     </div>
   );
 };

@@ -14,12 +14,15 @@ import { format } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import { useNavigate, useParams } from "react-router-dom";
 import useScheduleStore from "@store/useScheduleStore";
+import { useState } from "react";
+import ChangeColorBox from "@components/createSchedule/ChangeColorBox";
 
 const CreateSchedulePage: React.FC = () => {
   const navigate = useNavigate();
   const {
     title,
     color,
+    setColor,
     startDate,
     endDate,
     participants,
@@ -32,6 +35,9 @@ const CreateSchedulePage: React.FC = () => {
   const { accessToken } = useAuthStore();
   const { mutate: createMySchedule } = usePostCreateMySchedule(accessToken);
   const { mutate: createGroupSchedule } = usePostCreateGroupSchedule(accessToken, Number(groupId));
+  const [isOpenChangeColorModal, setIsOpenChangeColorModal] = useState<boolean>(false);
+  const { resetScheduleState } = useScheduleStore.getState();
+  const { clearLocationInfo } = useLocationInfoStore.getState();
 
   const handleButtonClick = () => {
     const filteredMemberId: string[] = participants.map(
@@ -68,19 +74,24 @@ const CreateSchedulePage: React.FC = () => {
         rightType="x"
         handleClick={() => {
           navigate(-1);
+          resetScheduleState();
+          clearLocationInfo();
         }}
       />
       <div className={styles.ContentContainer}>
         <TitleBox />
-        <ColorBox />
+        <ColorBox setIsOpenChangeColorModal={setIsOpenChangeColorModal} color={color} />
         <TimeBox />
-        <LocationBox />
+        <LocationBox lat={lat} lng={lng} name={locationName} location={locationAddress} />
         <MemberBox groupId={groupId} />
         <NoteBox />
       </div>
       <div className={styles.ButtonBox}>
         <DefaultButton buttonText="완료" onClick={handleButtonClick} />
       </div>
+      {isOpenChangeColorModal && (
+        <ChangeColorBox setColor={setColor} setIsOpenChangeColorModal={setIsOpenChangeColorModal} />
+      )}
     </div>
   );
 };

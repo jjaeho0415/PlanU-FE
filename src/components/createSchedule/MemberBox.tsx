@@ -5,7 +5,6 @@ import useScheduleStore from "@store/useScheduleStore";
 import { useGetGroupMemberList } from "@api/group/getGroupMemberList";
 import useAuthStore from "@store/useAuthStore";
 import { useGetUserInfo } from "@api/user/getUserInfo";
-import { useGetFriendList } from "@api/friend/getFriendList";
 
 interface props {
   groupId?: string;
@@ -16,8 +15,6 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
   const { participants, setParticipants } = useScheduleStore();
   const { accessToken } = useAuthStore();
   const { data: groupMemberList } = useGetGroupMemberList(accessToken, groupId);
-  const { data: friendList } = useGetFriendList(accessToken, "친구목록");
-  console.log(friendList)
   const { data: userInfoData } = useGetUserInfo(accessToken);
 
   useEffect(() => {
@@ -52,12 +49,15 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
         value={participants.length === 0 ? "" : participants.map((p) => p.name).join(", ")}
       ></input>
       {isSelecting && (
-        <>
-          <ParticipantsPicker groupId={groupId} creator={participants[0].username} />
+        <div className={styles.isSelecting}>
+          <ParticipantsPicker
+            groupId={groupId}
+            creator={groupId === "my" ? "" : participants[0].username}
+          />
           <div className={styles.Done} onClick={() => setIsSelecting(false)}>
             확인
           </div>
-        </>
+        </div>
       )}
     </div>
   );
