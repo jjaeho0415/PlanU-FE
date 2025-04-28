@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import styles from "./Boxes.module.scss";
 import Icon_location from "@assets/Icons/scheduleDetail/Icon_location.svg?react";
 import Map from "@components/map/Map";
