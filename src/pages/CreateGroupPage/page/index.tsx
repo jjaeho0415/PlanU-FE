@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import DefaultButton from "@components/buttons/DefaultButton";
 import { usePostCreateGroup } from "@api/group/postCreateGroup";
 import useAuthStore from "@store/useAuthStore";
+import toast from "react-hot-toast";
 
 const CreateGroupPage = () => {
   const [groupName, setGroupName] = useState("");
@@ -17,12 +18,12 @@ const CreateGroupPage = () => {
 
   const handleCompletion = () => {
     if (!groupName) {
-      alert("그룹 이름을 입력해주세요.");
+      toast.error("그룹 이름을 입력해주세요.");
       return;
     }
 
     if (!image) {
-      alert("그룹 이미지를 업로드해주세요.");
+      toast.error("그룹 이미지를 업로드해주세요.");
       return;
     }
     if (typeof image !== "string") {
