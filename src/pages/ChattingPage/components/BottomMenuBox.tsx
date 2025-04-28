@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import styles from "./bottomMenu.module.scss";
 import Icon_photo from "@assets/Icons/chatt/photo.svg?react";
+import toast from "react-hot-toast";
 
 interface Props {
   setImgPreview: React.Dispatch<React.SetStateAction<string | null>>;
@@ -28,13 +29,13 @@ const BottomMenuBox: React.FC<Props> = ({ setImgPreview, imageFile, setImageFile
         const fileExtension = file.name.split(".").pop()?.toLowerCase();
 
         if (!fileExtension || !validExtensions.includes(fileExtension)) {
-          alert("이미지 형식에 맞지 않습니다. (허용: jpg, jpeg, png)");
+          toast.error("이미지 형식에 맞지 않습니다. (허용: jpg, jpeg, png)");
           return;
         }
 
         const maxFileSize = 5 * 1024 * 1024;
         if (file.size > maxFileSize) {
-          alert("파일이 너무 큽니다. (최대: 5MB)");
+          toast.error("파일이 너무 큽니다. (최대: 5MB)");
           return;
         }
 

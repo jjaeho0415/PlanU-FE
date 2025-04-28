@@ -3,6 +3,7 @@ import styles from "./timePicker.module.scss";
 import Icon_topArrow from "@assets/Icons/arrow/TopArrow_sm.svg?react";
 import Icon_bottomArrow from "@assets/Icons/arrow/BottomArrow_sm.svg?react";
 import useScheduleStore from "@store/useScheduleStore";
+import toast from "react-hot-toast";
 
 interface props {
   isStartDay: boolean;
@@ -31,7 +32,7 @@ const TimePicker: React.FC<props> = ({ isStartDay }) => {
 
   useEffect(() => {
     if (startDate.getTime() > endDate.getTime()) {
-      alert("시작 시간이 종료 시간보다 늦을 수 없습니다.");
+      toast.error("시작 시간이 종료 시간보다 늦을 수 없습니다.");
       const controlledEndDate = endDate;
       controlledEndDate.setHours(startDate.getHours(), startDate.getMinutes());
       setStartDate(controlledEndDate);

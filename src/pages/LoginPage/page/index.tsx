@@ -10,6 +10,7 @@ import { postLogin } from "@api/user/postLogin";
 import { useForm } from "react-hook-form";
 import useAuthStore from "@store/useAuthStore";
 import { getIsExistUserProfile } from "@api/user/getIsExistUserProfile";
+import toast from "react-hot-toast";
 
 type ILoginFormData = {
   ID: string;
@@ -95,13 +96,13 @@ const LoginPage: React.FC = () => {
             navigate("/registerAccount");
           }
         } catch (error) {
-          alert("프로필 확인 중 오류가 발생했습니다.");
+          toast.error("프로필 확인 중 오류가 발생했습니다.");
         }
       }
     } catch (error) {
       // 백엔드에서 에러처리 해주면 다시 에러핸들링 해야함
       console.error("로그인 실패:", error);
-      alert(error);
+      toast.error("ID 또는 PW가 일치하지 않습니다. 다시 확인해주세요");
     }
   };
 
