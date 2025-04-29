@@ -149,7 +149,7 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth, setIsBirthError 
       <div className={styles.inputContainer}>
         <div className={styles.inputSection}>
           <div className={styles.birthInputSection}>
-            <TopArrow_Icon onClick={() => incrementValue("year")} />
+            <TopArrow_Icon className={styles.arrowIcon} onClick={() => incrementValue("year")} />
             <input
               type="text"
               value={year === 0 ? "" : year}
@@ -157,33 +157,36 @@ const DatePicker: React.FC<Props> = ({ userBirth, setUserBirth, setIsBirthError 
               className={styles.input}
               onBlur={handleBlur}
             />
-            <BottomArrow_Icon onClick={() => decrementValue("year")} />
+            <BottomArrow_Icon className={styles.arrowIcon} onClick={() => decrementValue("year")} />
           </div>
           <span>년</span>
         </div>
         <div className={styles.inputSection}>
           <div className={styles.birthInputSection}>
-            <TopArrow_Icon onClick={() => incrementValue("month")} />
+            <TopArrow_Icon className={styles.arrowIcon} onClick={() => incrementValue("month")} />
             <input
               type="text"
               value={month === 0 ? "" : month}
               onChange={(e) => handleInputChange(e, "month")}
               className={styles.input}
             />
-            <BottomArrow_Icon onClick={() => decrementValue("month")} />
+            <BottomArrow_Icon
+              className={styles.arrowIcon}
+              onClick={() => decrementValue("month")}
+            />
           </div>
           <span>월</span>
         </div>
         <div className={styles.inputSection}>
           <div className={styles.birthInputSection}>
-            <TopArrow_Icon onClick={() => incrementValue("day")} />
+            <TopArrow_Icon className={styles.arrowIcon} onClick={() => incrementValue("day")} />
             <input
               type="text"
               value={day === 0 ? "" : day}
               onChange={(e) => handleInputChange(e, "day")}
               className={styles.input}
             />
-            <BottomArrow_Icon onClick={() => decrementValue("day")} />
+            <BottomArrow_Icon className={styles.arrowIcon} onClick={() => decrementValue("day")} />
           </div>
           <span>일</span>
         </div>
