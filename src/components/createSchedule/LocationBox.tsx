@@ -36,4 +36,4 @@ const LocationBox: React.FC<Props> = ({ lat, lng, name, location }) => {
   );
 };
 
-export default LocationBox;
+export default React.memo(LocationBox);
