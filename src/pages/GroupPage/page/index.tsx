@@ -14,7 +14,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { useGetGroupDetails } from "@api/group/getGroupDetail";
 import toast from "react-hot-toast";
 
-const iconOptionsTitle = ["정산하기", "그룹 달력", "게시물", "멤버", "채팅"];
+const iconOptionsTitle = ["그룹 달력", "멤버", "채팅"];
 
 const GroupPage = () => {
   const navigate = useNavigate();
