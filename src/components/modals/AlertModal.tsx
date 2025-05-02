@@ -37,7 +37,14 @@ const AlertModal: React.FC<Props> = ({ type, onClick, setIsOpenAlertModal, name 
       }}
     >
       <div className={styles.Container}>
-        <p>{modalContent}</p>
+        <p>
+          {modalContent.split("\n").map((line, idx) => (
+            <React.Fragment key={idx}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </p>
         <div className={styles.ButtonBox}>
           <MiniButton
             buttonText="취소"
