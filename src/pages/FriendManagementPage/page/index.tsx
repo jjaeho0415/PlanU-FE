@@ -47,7 +47,7 @@ const FriendManagementPage: React.FC = () => {
 
       <div className={styles.myIdInfo}>
         <span>내 아이디</span>
-        <span>{userInfo?.username}</span>
+        <span className={styles.selectable}>{userInfo?.username}</span>
       </div>
 
       <FriendsTab activeTab={activeTab} setActiveTab={setActiveTab} />
@@ -91,7 +91,10 @@ const FriendManagementPage: React.FC = () => {
             ) : (
               <>
                 <p className={styles.recommendTitle}>
-                  추천 친구 <span className={styles.recommendedTotal}>{recommendedFriendsList?.totalFriends}</span>
+                  추천 친구{" "}
+                  <span className={styles.recommendedTotal}>
+                    {recommendedFriendsList?.totalFriends}
+                  </span>
                 </p>
                 {recommendedFriendsList?.totalFriends === 0 ? (
                   <div className={styles.emptySection}>추천 친구 목록이 비어있습니다.</div>
