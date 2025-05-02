@@ -166,7 +166,9 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               <AlertModal
                 name={memberInfo.name}
                 type="강제추방"
-                onClick={() => forcedWithdrawalGroup(memberInfo.name)}
+                onClick={() => {
+                  forcedWithdrawalGroup(memberInfo.username);
+                }}
                 setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
               />
             )}
@@ -186,7 +188,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               <AlertModal
                 name={memberInfo.name}
                 type="강제추방"
-                onClick={() => forcedWithdrawalGroup(memberInfo.name)}
+                onClick={() => forcedWithdrawalGroup(memberInfo.username)}
                 setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
               />
             )}
@@ -206,7 +208,7 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               <AlertModal
                 name={memberInfo.name}
                 type="강제추방"
-                onClick={() => forcedWithdrawalGroup(memberInfo.name)}
+                onClick={() => forcedWithdrawalGroup(memberInfo.username)}
                 setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
               />
             )}
