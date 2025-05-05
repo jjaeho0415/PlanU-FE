@@ -30,6 +30,8 @@ const EditProfilePage: React.FC = () => {
   const postChangePasswordMutation = useChangePassword(accessToken);
   const [birthDate, setBirthDate] = useState<string | null>(userInfo?.birthday ?? null);
   const [authCode, setAuthCode] = useState<string>("");
+  const [profileImage, setProfileImage] = useState<string | File | null>(userInfo?.profileImage ?? null);
+
   const isSendingRef = useRef<boolean>(false);
 
   const [requestUserNoBirthInfo, setRequestUserNoBirthInfo] =
@@ -55,6 +57,7 @@ const EditProfilePage: React.FC = () => {
         name: userInfo.name,
         email: userInfo.email,
       });
+      setProfileImage(userInfo.profileImage ?? null);
     }
   }, [userInfo]);
 
@@ -63,10 +66,21 @@ const EditProfilePage: React.FC = () => {
       name: requestUserNoBirthInfo.name,
       email: requestUserNoBirthInfo.email,
       password: requestUserNoBirthInfo.password,
-      profileImage: requestUserNoBirthInfo.profileImage,
+      profileImage: profileImage instanceof File ? profileImage : null,
       birthDate: birthDate,
     });
-  }, [birthDate, requestUserNoBirthInfo]);
+  }, [birthDate, requestUserNoBirthInfo, profileImage]);
+
+  useEffect(() => {
+    if (userInfo) {
+      setRequestUserNoBirthInfo({
+        ...requestUserNoBirthInfo,
+        name: userInfo.name,
+        email: userInfo.email,
+      });
+      setProfileImage(userInfo.profileImage ?? null);
+    }
+  }, [userInfo]);
 
   const [isEmailModalOpen, setIsEmailModalOpen] = useState<boolean>(false);
   const [isPasswordModalOpen, setIsPasswordModalOpen] = useState<boolean>(false);
@@ -110,10 +124,12 @@ const EditProfilePage: React.FC = () => {
       },
     );
   };
+
   const handleUpdateUserInfo = () => {
     putUserInfoMutation.mutate({
       ...requestUserInfo,
       birthDate: birthDate,
+      profileImage: profileImage instanceof File ? profileImage : null,
     });
   };
 
@@ -157,6 +173,7 @@ const EditProfilePage: React.FC = () => {
       },
     );
   };
+
   const handleOpenEmailModal = () => {
     setRequestUserInfo((prev) => ({
       ...prev,
@@ -259,11 +276,7 @@ const EditProfilePage: React.FC = () => {
           display: "flex",
         }}
       >
-        <ProfileImageEdit
-          iconType="edit"
-          image={userInfo?.profileImage || null}
-          setImage={() => {}}
-        />
+        <ProfileImageEdit iconType="edit" image={profileImage} setImage={setProfileImage} />
       </div>
 
       <div className={styles.profileItems}>
