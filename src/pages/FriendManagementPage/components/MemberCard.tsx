@@ -93,7 +93,7 @@ const MemberCard: React.FC<Props> = ({
     <div className={styles.memberCardContainer}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          <img src={memberInfo.profileImageUrl} width={38} height={37} alt="profile" />
+          <img src={memberInfo.profileImageUrl} width={40} height={40} alt="profile" />
         </div>
 
         <div className={styles.textSection}>
