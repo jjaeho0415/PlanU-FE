@@ -2,6 +2,7 @@ import { useDeleteCancelRequestFriend } from "@api/friend/deleteCancelRequestFri
 import { useDeleteDeleteFriends } from "@api/friend/deleteDeleteFriends";
 import { useDeleteRejectRequestFriend } from "@api/friend/deleteRejectRequestFriend";
 import { usePostAcceptRequestFriend } from "@api/friend/postAcceptRequestFriend";
+import { usePostRequestFriend } from "@api/friend/postRequestFriend";
 import MiniButton from "@components/buttons/MiniButton";
 import useAuthStore from "@store/useAuthStore";
 import styles from "./memberCard.module.scss";
@@ -25,6 +26,7 @@ const MemberCard: React.FC<Props> = ({
   const { mutate: acceptRequestFriend } = usePostAcceptRequestFriend(accessToken);
   const { mutate: rejectRequestFriend } = useDeleteRejectRequestFriend(accessToken);
   const { mutate: deleteFriend } = useDeleteDeleteFriends(accessToken);
+  const { mutate: sendFriendRequest } = usePostRequestFriend(accessToken);
   const navigate = useNavigate();
 
   const handleShowFriendCalendar = () => {
@@ -46,7 +48,10 @@ const MemberCard: React.FC<Props> = ({
   const handleDeleteMember = () => {
     deleteFriend(memberInfo.username);
   };
-  const handleSendFriendRequest = () => {};
+
+  const handleSendFriendRequest = () => {
+    sendFriendRequest(memberInfo.username);
+  };
 
   const renderButtons = () => {
     if (isEditing && activeTab === "친구목록") {
