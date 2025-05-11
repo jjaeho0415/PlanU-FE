@@ -13,6 +13,7 @@ interface Props {
   activeTab: "친구목록" | "받은요청" | "보낸요청";
   isEditing?: boolean;
   hasSentRequest?: boolean;
+  setSentRequestUsernames?: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const MemberCard: React.FC<Props> = ({
@@ -20,6 +21,7 @@ const MemberCard: React.FC<Props> = ({
   activeTab,
   isEditing = false,
   hasSentRequest,
+  setSentRequestUsernames,
 }) => {
   const { accessToken } = useAuthStore.getState();
   const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
@@ -50,7 +52,11 @@ const MemberCard: React.FC<Props> = ({
   };
 
   const handleSendFriendRequest = () => {
-    sendFriendRequest(memberInfo.username);
+    sendFriendRequest(memberInfo.username, {
+      onSuccess: () => {
+        setSentRequestUsernames?.((prev) => [...prev, memberInfo.username]);
+      },
+    });
   };
 
   const renderButtons = () => {
