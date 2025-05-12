@@ -17,16 +17,18 @@ import styles from "./friendManagementPage.module.scss";
 const FriendManagementPage: React.FC = () => {
   const [activeTab, setActiveTab] = useState<"친구목록" | "받은요청" | "보낸요청">("친구목록");
   const [isEditing, setIsEditing] = useState(false);
+  const [, setSentRequestUsernames] = useState<string[]>([]);
 
   const { accessToken } = useAuthStore();
+  const navigate = useNavigate();
+
   const { data: friendList } = useGetFriendList(accessToken, activeTab);
   const { data: receivedFriendList } = useGetReceiveFriendList(accessToken, activeTab);
   const { data: requestFriendList } = useGetRequestFriendList(accessToken, activeTab);
-
   const { data: recommendedFriendsList } = useGetRecommendedFriendList(accessToken, activeTab);
-
   const { data: userInfo } = useGetUserInfo(accessToken);
-  const navigate = useNavigate();
+
+  const recommendedUsernames = recommendedFriendsList?.friends?.map((f) => f.username) ?? [];
 
   const handleEditToggle = () => {
     setIsEditing((prev) => !prev);
@@ -84,27 +86,54 @@ const FriendManagementPage: React.FC = () => {
 
         {activeTab === "보낸요청" && (
           <div className={styles.friendList}>
-            {requestFriendList?.friends.length ? (
-              requestFriendList.friends.map((friend, index) => (
-                <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
-              ))
-            ) : (
+            {!!requestFriendList?.friends?.filter(
+              (friend) => !recommendedUsernames.includes(friend.username),
+            ).length && (
+              <>
+                <p className={styles.recommendTitle}>보낸 요청</p>
+                {requestFriendList.friends
+                  .filter((friend) => !recommendedUsernames.includes(friend.username))
+                  .map((friend) => (
+                    <MemberCard
+                      key={friend.username}
+                      memberInfo={friend}
+                      activeTab={activeTab}
+                      hasSentRequest={true}
+                      setSentRequestUsernames={setSentRequestUsernames}
+                    />
+                  ))}
+              </>
+            )}
+
+            {!!recommendedFriendsList?.friends?.length && (
               <>
                 <p className={styles.recommendTitle}>
-                  추천 친구{" "}
+                  추천 친구{""}
                   <span className={styles.recommendedTotal}>
-                    {recommendedFriendsList?.totalFriends}
+                    {recommendedFriendsList.totalFriends}
                   </span>
                 </p>
-                {recommendedFriendsList?.totalFriends === 0 ? (
-                  <div className={styles.emptySection}>추천 친구 목록이 비어있습니다.</div>
-                ) : (
-                  recommendedFriendsList?.friends.map(
-                    (friend: IRecommendedFriendItemType, index: number) => (
-                      <MemberCard key={index} memberInfo={friend} activeTab={activeTab} />
-                    ),
-                  )
-                )}
+                {recommendedFriendsList.friends.map((friend) => {
+                  const username = friend.username;
+                  if (!username) return null;
+
+                  const isAlreadyRequested = requestFriendList?.friends?.some(
+                    (req) => req.username === username,
+                  );
+                  return (
+                    <MemberCard
+                      key={username}
+                      memberInfo={{
+                        name: friend.name,
+                        username,
+                        profileImageUrl: friend.profileImageUrl,
+                      }}
+                      activeTab={activeTab}
+                      hasSentRequest={isAlreadyRequested}
+                      setSentRequestUsernames={setSentRequestUsernames}
+                    />
+                  );
+                })}
               </>
             )}
           </div>
