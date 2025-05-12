@@ -10,6 +10,8 @@ import { useDeleteGroup } from "@api/group/deleteGroup";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDeleteLeaveGroup } from "@api/group/deleteLeaveGroup";
 import { useDeleteForcedWithdrawalFromGroup } from "@api/group/deleteForcedWithdrawalFromGroup";
+import { useState } from "react";
+import AlertModal from "@components/modals/AlertModal";
 
 interface Props {
   memberInfo: IGroupMemberItemType;
@@ -20,6 +22,10 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
   const { accessToken } = useAuthStore.getState();
   const { groupId } = useParams<{ groupId: string }>();
   const navigate = useNavigate();
+  const [isDeleteGroupModalOpen, setIsDeleteGroupModalOpen] = useState<boolean>(false);
+  const [isLeaveGroupModalOpen, setIsLeaveGroupModalOpen] = useState<boolean>(false);
+  const [isForcedWithdrawalGroupModalOpen, setIsForcedWithdrawalGroupModalOpen] =
+    useState<boolean>(false);
 
   const { mutate: requestFriend } = usePostRequestFriend(accessToken);
   const { mutate: cancelRequestFriend } = useDeleteCancelRequestFriend(accessToken);
@@ -48,16 +54,16 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
     cancelRequestFriend(username);
   };
 
-  const handleForcedWithdraw = (username: string) => {
-    forcedWithdrawalGroup(username);
+  const handleForcedWithdraw = () => {
+    setIsForcedWithdrawalGroupModalOpen(true);
   };
 
   const handleLeaveGroup = () => {
-    leaveGroup();
+    setIsLeaveGroupModalOpen(true);
   };
 
   const handleDeleteGroup = () => {
-    deleteGroup();
+    setIsDeleteGroupModalOpen(true);
   };
 
   const handleShowFriendCalendar = () => {
@@ -81,7 +87,18 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
           </>
         );
       } else if (memberInfo.friendStatus === "ME") {
-        return <MiniButton buttonText="그룹탈퇴" color="red" onClick={handleLeaveGroup} />;
+        return (
+          <>
+            <MiniButton buttonText="그룹탈퇴" color="red" onClick={handleLeaveGroup} />
+            {isLeaveGroupModalOpen && (
+              <AlertModal
+                onClick={() => leaveGroup()}
+                type="그룹탈퇴"
+                setIsOpenAlertModal={setIsLeaveGroupModalOpen}
+              />
+            )}
+          </>
+        );
       } else if (memberInfo.friendStatus === "NONE") {
         return (
           <MiniButton
@@ -122,7 +139,18 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
     // 사용자가 리더인경우
     else {
       if (memberInfo.friendStatus === "ME") {
-        return <MiniButton buttonText="그룹삭제" color="red" onClick={handleDeleteGroup} />;
+        return (
+          <>
+            <MiniButton buttonText="그룹삭제" color="red" onClick={handleDeleteGroup} />
+            {isDeleteGroupModalOpen && (
+              <AlertModal
+                type="그룹삭제"
+                onClick={() => deleteGroup()}
+                setIsOpenAlertModal={setIsDeleteGroupModalOpen}
+              />
+            )}
+          </>
+        );
       } else if (memberInfo.friendStatus === "FRIEND") {
         return (
           <>
@@ -133,11 +161,17 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               isCalendar={true}
               onClick={handleShowFriendCalendar}
             />
-            <MiniButton
-              buttonText="강제퇴장"
-              color="gray"
-              onClick={() => handleForcedWithdraw(memberInfo.username)}
-            />
+            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedWithdraw} />
+            {isForcedWithdrawalGroupModalOpen && (
+              <AlertModal
+                name={memberInfo.name}
+                type="강제추방"
+                onClick={() => {
+                  forcedWithdrawalGroup(memberInfo.username);
+                }}
+                setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
+              />
+            )}
           </>
         );
       } else if (memberInfo.friendStatus === "NONE") {
@@ -149,11 +183,15 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               isAddFriend={true}
               onClick={() => handleRequestFriend(memberInfo.username)}
             />
-            <MiniButton
-              buttonText="강제퇴장"
-              color="gray"
-              onClick={() => handleForcedWithdraw(memberInfo.username)}
-            />
+            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedWithdraw} />
+            {isForcedWithdrawalGroupModalOpen && (
+              <AlertModal
+                name={memberInfo.name}
+                type="강제추방"
+                onClick={() => forcedWithdrawalGroup(memberInfo.username)}
+                setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
+              />
+            )}
           </>
         );
       } else if (memberInfo.friendStatus === "REQUEST") {
@@ -165,11 +203,15 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               color="red"
               onClick={() => handleCancelRequestFriend(memberInfo.username)}
             />
-            <MiniButton
-              buttonText="강제퇴장"
-              color="gray"
-              onClick={() => handleForcedWithdraw(memberInfo.username)}
-            />
+            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedWithdraw} />
+            {isForcedWithdrawalGroupModalOpen && (
+              <AlertModal
+                name={memberInfo.name}
+                type="강제추방"
+                onClick={() => forcedWithdrawalGroup(memberInfo.username)}
+                setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
+              />
+            )}
           </>
         );
       } else {
@@ -185,11 +227,15 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
               color="red"
               onClick={() => handleRejectRequestFriend(memberInfo.username)}
             />
-            <MiniButton
-              buttonText="강제퇴장"
-              color="gray"
-              onClick={() => handleForcedWithdraw(memberInfo.username)}
-            />
+            <MiniButton buttonText="강제퇴장" color="gray" onClick={handleForcedWithdraw} />
+            {isForcedWithdrawalGroupModalOpen && (
+              <AlertModal
+                name={memberInfo.name}
+                type="강제추방"
+                onClick={() => forcedWithdrawalGroup(memberInfo.name)}
+                setIsOpenAlertModal={setIsForcedWithdrawalGroupModalOpen}
+              />
+            )}
           </>
         );
       }
@@ -200,7 +246,13 @@ const MemberItem: React.FC<Props> = ({ memberInfo, isUserLeader }) => {
     <div className={styles.memberItemContainer}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          <img src={memberInfo.profileImage} width={38} height={37} alt="profile" className={styles.profile} />
+          <img
+            src={memberInfo.profileImage}
+            width={38}
+            height={37}
+            alt="profile"
+            className={styles.profile}
+          />
           {memberInfo.groupRole === "LEADER" && (
             <CrownIcon width={29} height={25} className={styles.crownIcon} />
           )}

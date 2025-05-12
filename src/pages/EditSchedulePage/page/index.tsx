@@ -1,5 +1,5 @@
 import HasOnlyRightIconHeader from "@components/headers/HasOnlyRightIconHeader";
-import styles from "./editMySchedule.module.scss";
+import styles from "./editSchedule.module.scss";
 import ColorBox from "@components/createSchedule/ColorBox";
 import TimeBox from "@components/createSchedule/TimeBox";
 import MemberBox from "@components/createSchedule/MemberBox";
@@ -9,14 +9,16 @@ import LocationBox from "@components/createSchedule/LocationBox";
 import useScheduleStore from "@store/useScheduleStore";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import useAuthStore from "@store/useAuthStore";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { usePutEditGroupSchedule } from "@api/schedule/putEditGroupSchedule";
 import { format } from "date-fns";
 import { usePostEditMySchedule } from "@api/schedule/putEditMySchedule";
 import { useState } from "react";
 import ChangeColorBox from "@components/createSchedule/ChangeColorBox";
+import MiniButton from "@components/buttons/MiniButton";
 
 const EditSchedulePage: React.FC = () => {
+  const navigation = useNavigate();
   const { groupId } = useParams<{ groupId: string }>();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { accessToken } = useAuthStore();
@@ -41,6 +43,7 @@ const EditSchedulePage: React.FC = () => {
   const { mutate: editMySchedule } = usePostEditMySchedule(accessToken, scheduleId ?? "");
 
   const handleEditConfirmClick = () => {
+    console.log(groupId);
     const filteredMemberId: string[] = participants.map(
       (member: IScheduleMemberType) => member.username,
     );
@@ -70,6 +73,9 @@ const EditSchedulePage: React.FC = () => {
 
   return (
     <div className={styles.Container}>
+      <div className={styles.CancelButton}>
+        <MiniButton color="gray" buttonText="취소" onClick={() => navigation(-1)} />
+      </div>
       <HasOnlyRightIconHeader
         title="일정 수정"
         rightType="button"

@@ -30,7 +30,7 @@ const MemberBox: React.FC<props> = ({ groupId = "" }) => {
         ]);
       }
     }
-  }, [groupMemberList]);
+  }, []);
 
   useEffect(() => {
     if (participants.length !== 0) {

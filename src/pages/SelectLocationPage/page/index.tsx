@@ -40,7 +40,8 @@ const SelectLocationPage = () => {
   // 지도 초기화 (한 번만 실행됨)
   useEffect(() => {
     const initMap = async () => {
-      if (!userLatLng || !mapRef.current || map) return;
+      if (!userLatLng || !mapRef.current) return;
+      if (map) return;
 
       if (userLatLng) {
         ReverseGeocoding(userLatLng)
@@ -66,6 +67,7 @@ const SelectLocationPage = () => {
           newMap,
           { lat: userLatLng.latitude, lng: userLatLng.longitude },
           pin.element,
+          "select"
         );
 
         setMap(newMap);
@@ -77,6 +79,40 @@ const SelectLocationPage = () => {
 
     initMap();
   }, [userLatLng]);
+
+  useEffect(() => {
+    if (!marker || !map) return;
+
+    const handleDragEnd = async () => {
+      const position = marker.position as google.maps.LatLngLiteral;
+      const lat = position.lat;
+      const lng = position.lng;
+
+      try {
+        const formatted_address = await ReverseGeocoding({ latitude: lat, longitude: lng });
+
+        const updatedLocation = {
+          lat,
+          lng,
+          formatted_address,
+          name: formatted_address,
+        };
+
+        setSelectedLocationInfo(updatedLocation);
+        setInputValue(formatted_address); 
+      } catch (error) {
+        console.error("Reverse geocoding failed: ", error);
+      }
+    };
+
+
+    const listener = google.maps.event.addListener(marker, "dragend", handleDragEnd);
+
+    return () => {
+      google.maps.event.removeListener(listener);
+    };
+  }, [marker]);
+
 
   // inputValue 변경 시 자동 처리
   useEffect(() => {
@@ -95,6 +131,7 @@ const SelectLocationPage = () => {
             map,
             { lat: userLatLng.latitude, lng: userLatLng.longitude },
             pin.element,
+            "select"
           ).then((userMarker) => {
             setMarker(userMarker); // 새로운 마커 설정
           });
@@ -164,6 +201,7 @@ const SelectLocationPage = () => {
       map,
       { lat: location.lat, lng: location.lng },
       pin.element,
+      "select"
     );
 
     setSelectedLocationInfo(location);
