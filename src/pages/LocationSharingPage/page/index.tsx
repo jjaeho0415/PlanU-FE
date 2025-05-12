@@ -54,7 +54,7 @@ const LocationSharingPage = () => {
       return;
     }
 
-    connectWebSocket(arrivalLocationInfo.groupScheduleLocation.startDateTime, accessToken);
+    connectWebSocket(arrivalLocationInfo.groupScheduleLocation.startDateTime, arrivalLocationInfo.groupScheduleLocation.endDateTime, accessToken);
   }, [accessToken, arrivalLocationInfo]);
 
   // 실시간 위치 정보 구독

@@ -10,17 +10,44 @@ interface Props {
   scheduleId?: string;
   groupId?: string;
   startDate?: string;
+  endDate?: string;
   name: string;
   lat: number;
   lng: number;
 }
 
-const LocationBox: React.FC<Props> = ({ scheduleId, groupId, startDate, name, lat, lng }) => {
+const LocationBox: React.FC<Props> = ({
+  scheduleId,
+  groupId,
+  startDate,
+  endDate,
+  name,
+  lat,
+  lng,
+}) => {
   const navigate = useNavigate();
 
   const handleGoSharingLocationClick = () => {
     const startDateTime = parse(startDate!, "yyyy-MM-dd HH:mm:ss", new Date());
+    const endDateTime = parse(endDate!, "yyyy-MM-dd HH:mm:ss", new Date());
     const now = new Date();
+
+    const isAllDayToday =
+      startDateTime.getFullYear() === now.getFullYear() &&
+      startDateTime.getMonth() === now.getMonth() &&
+      startDateTime.getDate() === now.getDate() &&
+      startDateTime.getHours() === 0 &&
+      startDateTime.getMinutes() === 0 &&
+      endDateTime.getFullYear() === now.getFullYear() &&
+      endDateTime.getMonth() === now.getMonth() &&
+      endDateTime.getDate() === now.getDate() &&
+      endDateTime.getHours() === 23 &&
+      endDateTime.getMinutes() === 59;
+
+    if (isAllDayToday) {
+      navigate(`/group/${groupId}/calendar/schedule/${scheduleId}/locationSharing`);
+      return;
+    }
 
     if (isSameDay(now, startDateTime)) {
       const diffInHours = differenceInHours(now, startDateTime);

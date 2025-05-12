@@ -88,6 +88,7 @@ const GroupScheduleDetail: React.FC = () => {
             lng={groupScheduleData.longitude}
             lat={groupScheduleData.latitude}
             name={groupScheduleData.location}
+            endDate={groupScheduleData.endDate}
           />
         )}
         <ParticipantsBox />
