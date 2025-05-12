@@ -29,7 +29,7 @@ const CreateSchedulePage: React.FC = () => {
     unregisteredParticipants,
     memo,
     isAllDay,
-  } = useScheduleStore();
+  } = useScheduleStore.getState();
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
   const { groupId } = useParams<{ groupId: string }>();
   const { accessToken } = useAuthStore();
@@ -83,7 +83,7 @@ const CreateSchedulePage: React.FC = () => {
         <ColorBox setIsOpenChangeColorModal={setIsOpenChangeColorModal} color={color} />
         <TimeBox />
         <LocationBox lat={lat} lng={lng} name={locationName} location={locationAddress} />
-        <MemberBox groupId={groupId} />
+        {groupId !== "my" && <MemberBox groupId={groupId} />}
         <NoteBox />
       </div>
       <div className={styles.ButtonBox}>

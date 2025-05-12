@@ -288,12 +288,20 @@ const ChattingPage: React.FC = () => {
                   chatRef.current[chat.messageId] = el;
                 }}
               >
-                <ChatBubble
-                  key={chat.messageId}
-                  message={chat}
-                  isSentByMe={userData?.username === chat.sender}
-                  type={chat.type}
-                />
+                {chat.type === 1 || chat.type === 2 ? (
+                  <ChatBubble
+                    key={chat.messageId}
+                    message={chat}
+                    isSentByMe={userData?.username === chat.sender}
+                    type={chat.type}
+                  />
+                ) : chat.type === 5 ? (
+                  <div className={styles.EnterChatRoom}>{chat.name}님이 입장했습니다.</div>
+                ) : chat.type === 6 ? (
+                  <div className={styles.EnterChatRoom}>{chat.name}님이 퇴장했습니다.</div>
+                ) : (
+                  <></>
+                )}
               </div>
             ))}
           </div>
