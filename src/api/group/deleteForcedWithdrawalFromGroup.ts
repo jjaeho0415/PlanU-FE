@@ -25,7 +25,7 @@ export const useDeleteForcedWithdrawalFromGroup = (authorization: string, groupI
     },
     onSuccess: () => {
       toast.dismiss("forcedWithdrawalLoading");
-      toast.success("그룹이 삭제되었습니다");
+      toast.success("강제 추방 완료");
       queryClient.invalidateQueries({
         queryKey: ["GROUP_MEMBER_LIST"],
       });

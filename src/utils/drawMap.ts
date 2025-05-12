@@ -76,10 +76,20 @@ export const createMarker = async (
   map: google.maps.Map,
   position: google.maps.LatLngLiteral,
   pinElement: HTMLElement,
+  type?: "select" | "sharing",
 ): Promise<google.maps.marker.AdvancedMarkerElement> => {
   const { AdvancedMarkerElement } = (await google.maps.importLibrary(
     "marker",
   )) as google.maps.MarkerLibrary;
+
+  if (type === "select") {
+    return new AdvancedMarkerElement({
+      map,
+      position,
+      content: pinElement,
+      gmpDraggable: true,
+    });
+  }
 
   return new AdvancedMarkerElement({
     map,

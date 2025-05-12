@@ -7,9 +7,10 @@ interface Props {
   type: string;
   onClick: () => void;
   setIsOpenAlertModal: React.Dispatch<React.SetStateAction<boolean>>;
+  name?: string;
 }
 
-const AlertModal: React.FC<Props> = ({ type, onClick, setIsOpenAlertModal }) => {
+const AlertModal: React.FC<Props> = ({ type, onClick, setIsOpenAlertModal, name }) => {
   const [modalContent, setModalContent] = useState<string>("");
 
   useEffect(() => {
@@ -17,6 +18,12 @@ const AlertModal: React.FC<Props> = ({ type, onClick, setIsOpenAlertModal }) => 
       setModalContent("일정을 삭제하시겠습니까?");
     } else if (type === "댓글삭제") {
       setModalContent("댓글을 삭제하시겠습니까?");
+    } else if (type === "강제추방") {
+      setModalContent(`${name}님을\n그룹에서 추방하시겠습니까?`);
+    } else if (type === "그룹삭제") {
+      setModalContent("그룹을 삭제하시겠습니까?");
+    } else if (type === "그룹탈퇴") {
+      setModalContent("그룹에서 나가시겠습니까?");
     }
   }, []);
 
@@ -30,7 +37,14 @@ const AlertModal: React.FC<Props> = ({ type, onClick, setIsOpenAlertModal }) => 
       }}
     >
       <div className={styles.Container}>
-        <p>{modalContent}</p>
+        <p>
+          {modalContent.split("\n").map((line, idx) => (
+            <React.Fragment key={idx}>
+              {line}
+              <br />
+            </React.Fragment>
+          ))}
+        </p>
         <div className={styles.ButtonBox}>
           <MiniButton
             buttonText="취소"

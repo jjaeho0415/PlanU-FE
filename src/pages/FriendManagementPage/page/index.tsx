@@ -49,7 +49,7 @@ const FriendManagementPage: React.FC = () => {
 
       <div className={styles.myIdInfo}>
         <span>내 아이디</span>
-        <span>{userInfo?.username}</span>
+        <span className={styles.selectable}>{userInfo?.username}</span>
       </div>
 
       <FriendsTab activeTab={activeTab} setActiveTab={setActiveTab} />
