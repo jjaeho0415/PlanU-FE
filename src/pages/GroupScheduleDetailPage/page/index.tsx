@@ -35,6 +35,7 @@ const GroupScheduleDetail: React.FC = () => {
     startDate,
     endDate,
   } = useScheduleStore();
+  const { setLocationInfo } = useLocationInfoStore();
   const { groupId } = useParams<{ groupId: string }>();
   const { scheduleId } = useParams<{ scheduleId: string }>();
   const { data: groupScheduleData } = useGetGroupScheduleDetail(
@@ -52,6 +53,13 @@ const GroupScheduleDetail: React.FC = () => {
         setStartDate(new Date(groupScheduleData.startDate)),
         setParticipants(groupScheduleData.participants),
         setMemo(groupScheduleData.memo);
+
+      setLocationInfo(
+        groupScheduleData.location,
+        groupScheduleData.latitude,
+        groupScheduleData.longitude,
+        groupScheduleData.location,
+      );
 
       const isSameDate = isSameDay(startDate, endDate);
       const isStartMidnight = getHours(startDate) === 0 && getMinutes(startDate) === 0;

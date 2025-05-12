@@ -29,7 +29,7 @@ const CreateSchedulePage: React.FC = () => {
     unregisteredParticipants,
     memo,
     isAllDay,
-  } = useScheduleStore();
+  } = useScheduleStore.getState();
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
   const { groupId } = useParams<{ groupId: string }>();
   const { accessToken } = useAuthStore();
