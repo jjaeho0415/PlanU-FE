@@ -10,13 +10,16 @@ interface Props {
 const ChatBubble: React.FC<Props> = ({ message, isSentByMe, type }) => {
   return (
     <div className={`${styles.bubbleContainer} ${isSentByMe ? styles.sent : styles.received}`}>
-      {!isSentByMe && message.profileImageUrl && (
-        <img
-          src={message.profileImageUrl}
-          alt={`${message.sender}의 프로필이미지`}
-          className={styles.profileImage}
-        />
-      )}
+      <div className={styles.LeftContainer}>
+        {!isSentByMe && <p className={styles.SenderName}>{message.name}</p>}
+        {!isSentByMe && message.profileImageUrl && (
+          <img
+            src={message.profileImageUrl}
+            alt={`${message.sender}의 프로필이미지`}
+            className={styles.profileImage}
+          />
+        )}
+      </div>
       {isSentByMe && (
         <div className={styles.MyTimeUnreadCountBox}>
           <p className={styles.UnreadCount}>{message.unReadCount > 0 && message.unReadCount}</p>
@@ -24,7 +27,6 @@ const ChatBubble: React.FC<Props> = ({ message, isSentByMe, type }) => {
         </div>
       )}
       <div className={styles.MiddleContainer}>
-        {!isSentByMe && <p className={styles.SenderName}>{message.name}</p>}
         <div className={styles.bubble}>
           {type === 1 && (
             <p className={`${isSentByMe ? styles.sentText : styles.receivedText}`}>

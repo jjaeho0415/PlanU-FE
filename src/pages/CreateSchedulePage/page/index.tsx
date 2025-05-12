@@ -83,7 +83,7 @@ const CreateSchedulePage: React.FC = () => {
         <ColorBox setIsOpenChangeColorModal={setIsOpenChangeColorModal} color={color} />
         <TimeBox />
         <LocationBox lat={lat} lng={lng} name={locationName} location={locationAddress} />
-        <MemberBox groupId={groupId} />
+        {groupId !== "my" && <MemberBox groupId={groupId} />}
         <NoteBox />
       </div>
       <div className={styles.ButtonBox}>
