@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface IScheduleInfo {
   title: string;
@@ -19,7 +20,7 @@ interface IScheduleInfo {
   setMemo: (info: string) => void;
   resetScheduleState: () => void;
 }
-const useScheduleStore = create<IScheduleInfo>((set) => {
+const useScheduleStore = create<IScheduleInfo>()((set) => {
   const initialState = {
     title: "",
     color: "#F6B6CA",
@@ -42,7 +43,6 @@ const useScheduleStore = create<IScheduleInfo>((set) => {
     setUnregisteredParticipants: (unregistered) => set({ unregisteredParticipants: unregistered }),
     setMemo: (memo) => set({ memo }),
 
-    // 초기화할 때 setter 함수들은 유지하면서 상태만 초기 상태로 변경
     resetScheduleState: () => set(() => ({ ...initialState })),
   };
 });

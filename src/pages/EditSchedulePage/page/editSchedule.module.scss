@@ -3,6 +3,13 @@
   width: 100%;
   position: relative;
 
+  .CancelButton {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+  }
+
   .ContentContainer {
     background-color: var(--background-50);
     display: flex;
