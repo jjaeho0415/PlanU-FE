@@ -82,4 +82,4 @@ const LocationBox: React.FC<Props> = ({
   );
 };
 
-export default LocationBox;
+export default React.memo(LocationBox);
