@@ -14,6 +14,7 @@ interface Props {
   name: string;
   lat: number;
   lng: number;
+  isParticipants?: boolean;
 }
 
 const LocationBox: React.FC<Props> = ({
@@ -24,10 +25,16 @@ const LocationBox: React.FC<Props> = ({
   name,
   lat,
   lng,
+  isParticipants
 }) => {
   const navigate = useNavigate();
 
   const handleGoSharingLocationClick = () => {
+
+    if (!isParticipants) {
+      toast.error("위치 공유 기능은 참석자만 이용 가능합니다.")
+      return;
+    }
     const startDateTime = parse(startDate!, "yyyy-MM-dd HH:mm:ss", new Date());
     const endDateTime = parse(endDate!, "yyyy-MM-dd HH:mm:ss", new Date());
     const now = new Date();

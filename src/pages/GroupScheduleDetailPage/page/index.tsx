@@ -16,10 +16,12 @@ import MoreModal from "@components/scheduleDetail/MoreModal";
 import useScheduleStore from "@store/useScheduleStore";
 import { getHours, getMinutes, isSameDay } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
+import { useGetUserInfo } from "@api/user/getUserInfo";
 
 const GroupScheduleDetail: React.FC = () => {
   const [isOpenCommentModal, setIsOpenCommentModal] = useState<boolean>(false);
   const [isOpenMoreModal, setIsOpenMoreModal] = useState<boolean>(false);
+  const [isParticipants, setIsParticipants] = useState<boolean>(false)
   const navigate = useNavigate();
   const { resetScheduleState } = useScheduleStore.getState();
   const { clearLocationInfo } = useLocationInfoStore.getState();
@@ -44,6 +46,16 @@ const GroupScheduleDetail: React.FC = () => {
     scheduleId ?? "",
   );
   const { data: commentData } = useGetComments(accessToken, groupId ?? "", scheduleId ?? "");
+  const { data: userInfo } = useGetUserInfo(accessToken);
+
+  useEffect(() => {
+    if (!userInfo || !groupScheduleData) {
+      return;
+    }
+    if (groupScheduleData.participants.some((participant) => participant.username === userInfo.username)) {
+      setIsParticipants(true);
+    }
+  }, [userInfo, groupScheduleData])
 
   useEffect(() => {
     if (groupScheduleData) {
@@ -97,6 +109,7 @@ const GroupScheduleDetail: React.FC = () => {
             lat={groupScheduleData.latitude}
             name={groupScheduleData.location}
             endDate={groupScheduleData.endDate}
+            isParticipants={isParticipants}
           />
         )}
         <ParticipantsBox />
