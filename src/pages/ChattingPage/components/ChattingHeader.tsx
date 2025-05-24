@@ -28,7 +28,7 @@ const ChattingHeader: React.FC<Props> = ({
         <div className={styles.textSection}>{groupName}</div>
       </div>
       <div className={styles.rightSection}>
-        <Hamburger_Icon width={30} height={30} onClick={handleRightClick} />
+        {/* <Hamburger_Icon width={30} height={30} onClick={handleRightClick} /> */}
       </div>
     </div>
   );
