@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import { useNavigate, useParams } from "react-router-dom";
 import useScheduleStore from "@store/useScheduleStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ChangeColorBox from "@components/createSchedule/ChangeColorBox";
 
 const CreateSchedulePage: React.FC = () => {
@@ -29,7 +29,7 @@ const CreateSchedulePage: React.FC = () => {
     unregisteredParticipants,
     memo,
     isAllDay,
-  } = useScheduleStore.getState();
+  } = useScheduleStore();
   const { lat, lng, name: locationName, location: locationAddress } = useLocationInfoStore();
   const { groupId } = useParams<{ groupId: string }>();
   const { accessToken } = useAuthStore();
