@@ -16,7 +16,7 @@ const FriendItem: React.FC<Props> = ({
     <div className={styles.friendItem}>
       <div className={styles.leftSection}>
         <div className={styles.profileSection}>
-          <img src={friendInfo.profileImage} width={42.43} height={40} alt="profile" />
+          <img src={friendInfo.profileImage} className={styles.profileImage} width={42.43} height={40} alt="profile" />
         </div>
         <div className={styles.friendInfoSection}>
           <div>{friendInfo.name}</div>

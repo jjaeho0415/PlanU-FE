@@ -3,7 +3,6 @@ import styles from "./Inputs.module.scss";
 import Icon_search from "@assets/Icons/Icon_search.svg?react";
 import Map from "@components/map/Map";
 import { useNavigate } from "react-router-dom";
-import useLocationInfoStore from "@store/useLocationInfoStore";
 
 interface Props {
   lat: number;
@@ -37,4 +36,4 @@ const LocationBox: React.FC<Props> = ({ lat, lng, name, location }) => {
   );
 };
 
-export default LocationBox;
+export default React.memo(LocationBox);

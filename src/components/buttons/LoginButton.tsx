@@ -26,7 +26,7 @@ const LoginButton: React.FC<ILoginBtn> = ({ onClick, buttonType }) => {
 
   return (
     <div role="button" className={`${styles.Container} ${styles[buttonType]}`} onClick={onClick}>
-      {(buttonType === "login_kakao" || buttonType === "login_kakao_white") && <Icon_kakao />}
+      {(buttonType === "login_kakao" || buttonType === "login_kakao_white") && <Icon_kakao width={35} height={35} />}
       <p>{buttonText}</p>
     </div>
   );
