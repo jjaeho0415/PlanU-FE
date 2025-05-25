@@ -3,10 +3,10 @@ import styles from "./Boxes.module.scss";
 import useScheduleStore from "@store/useScheduleStore";
 
 const TitleBox: React.FC = () => {
-  const { title } = useScheduleStore();
+  const { title, color } = useScheduleStore();
   return (
     <div className={styles.BoxContainer}>
-      <div className={styles.Color} />
+      <div className={styles.Color} style={{ backgroundColor: color }} />
       <p>{title}</p>
     </div>
   );
