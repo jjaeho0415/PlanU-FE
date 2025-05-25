@@ -43,7 +43,7 @@ const LocationSharingPage = () => {
   );
 
   useEffect(() => {
-    if (initialGroupMemberList) {
+    if (initialGroupMemberList && !groupMemberList) {
       setGroupMemberList(initialGroupMemberList.groupMemberLocations);
     } 
   }, [initialGroupMemberList]);
@@ -80,14 +80,20 @@ const LocationSharingPage = () => {
 
               const updatedMembers = prev.map((member) => {
                 const newLocation = updatedLocation.find((loc) => loc.username === member.username);
-                return newLocation ? newLocation : member;
+                return newLocation ?? member;
               });
 
               const newMembers = updatedLocation.filter(
                 (loc) => !prev.some((member) => member.username === loc.username),
               );
 
-              return [...updatedMembers, ...newMembers];
+              const nextMembers = [...updatedMembers, ...newMembers];
+
+              const isSame = prev.length === nextMembers.length && prev.every((member, i) => (
+                member.username === nextMembers[i].username && member.latitude === nextMembers[i].latitude && member.longitude === nextMembers[i].longitude
+              ))
+
+              return isSame ? prev : nextMembers;
             });
           } catch (error) {
             console.error("❌ JSON 파싱 에러:", error);
@@ -282,7 +288,7 @@ const LocationSharingPage = () => {
     if (groupMemberList.length > 0) {
       initMap();
     }
-  }, [userInfo, mapRef.current, groupMemberList, arrivalLocationInfo]);
+  }, [userInfo, groupMemberList, arrivalLocationInfo]);
 
   return (
     <>

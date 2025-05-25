@@ -29,7 +29,7 @@ const ChangeColorBox: React.FC<Props> = ({ setColor, setIsOpenChangeColorModal }
         </div>
         <div className={styles.colorListSection}>
           {colorList.map((colorItem) => (
-            <div className={styles.colorItemSection} onClick={() => handleSelectColor(colorItem)}>
+            <div key={colorItem} className={styles.colorItemSection} onClick={() => handleSelectColor(colorItem)}>
               <div className={styles.colorSection} style={{ backgroundColor: colorItem }}></div>
               <div>{colorItem}</div>
             </div>
