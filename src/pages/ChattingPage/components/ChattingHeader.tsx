@@ -1,6 +1,5 @@
 import React from "react";
 import styles from "./chattingHeader.module.scss";
-import Hamburger_Icon from "@assets/Icons/headers/hamburgerIcon.svg?react";
 import BackArrow2_Icon from "@assets/Icons/headers/backArrow2.svg?react";
 
 interface Props {
@@ -10,12 +9,7 @@ interface Props {
   handleRightClick: () => void;
 }
 
-const ChattingHeader: React.FC<Props> = ({
-  groupImage,
-  groupName,
-  handleLeftClick,
-  handleRightClick,
-}) => {
+const ChattingHeader: React.FC<Props> = ({ groupImage, groupName, handleLeftClick }) => {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.leftSection}>

@@ -14,7 +14,7 @@ import { format } from "date-fns";
 import useLocationInfoStore from "@store/useLocationInfoStore";
 import { useNavigate, useParams } from "react-router-dom";
 import useScheduleStore from "@store/useScheduleStore";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import ChangeColorBox from "@components/createSchedule/ChangeColorBox";
 
 const CreateSchedulePage: React.FC = () => {
