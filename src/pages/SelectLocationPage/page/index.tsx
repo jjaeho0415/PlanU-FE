@@ -67,7 +67,7 @@ const SelectLocationPage = () => {
           newMap,
           { lat: userLatLng.latitude, lng: userLatLng.longitude },
           pin.element,
-          "select"
+          "select",
         );
 
         setMap(newMap);
@@ -99,12 +99,11 @@ const SelectLocationPage = () => {
         };
 
         setSelectedLocationInfo(updatedLocation);
-        setInputValue(formatted_address); 
+        setInputValue(formatted_address);
       } catch (error) {
         console.error("Reverse geocoding failed: ", error);
       }
     };
-
 
     const listener = google.maps.event.addListener(marker, "dragend", handleDragEnd);
 
@@ -112,7 +111,6 @@ const SelectLocationPage = () => {
       google.maps.event.removeListener(listener);
     };
   }, [marker]);
-
 
   // inputValue 변경 시 자동 처리
   useEffect(() => {
@@ -131,7 +129,7 @@ const SelectLocationPage = () => {
             map,
             { lat: userLatLng.latitude, lng: userLatLng.longitude },
             pin.element,
-            "select"
+            "select",
           ).then((userMarker) => {
             setMarker(userMarker); // 새로운 마커 설정
           });
@@ -190,7 +188,7 @@ const SelectLocationPage = () => {
   const handleResultClick = async (location: SearchLocationResultType) => {
     if (!map || !marker) return;
 
-    map.setCenter({ lat: location.lat, lng: location.lng }); 
+    map.setCenter({ lat: location.lat, lng: location.lng });
 
     // 기존 마커 삭제
     marker.map = null;
@@ -201,7 +199,7 @@ const SelectLocationPage = () => {
       map,
       { lat: location.lat, lng: location.lng },
       pin.element,
-      "select"
+      "select",
     );
 
     setSelectedLocationInfo(location);

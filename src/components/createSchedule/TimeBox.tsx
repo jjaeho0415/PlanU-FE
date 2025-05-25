@@ -47,7 +47,13 @@ const TimeBox: React.FC = () => {
         {isAllDay ? (
           <Toggle_abled className={styles.Cursor} onClick={() => setIsAllDay(false)} />
         ) : (
-          <Toggle_disabled className={styles.Cursor} onClick={() => setIsAllDay(true)} />
+          <Toggle_disabled
+            className={styles.Cursor}
+            onClick={() => {
+              setIsAllDay(true);
+              setIsTimeClicked(-1);
+            }}
+          />
         )}
       </div>
       <div className={`${styles.TimeBox} ${styles.Middle}`}>

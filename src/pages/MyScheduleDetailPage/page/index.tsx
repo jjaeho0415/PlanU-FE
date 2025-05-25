@@ -33,6 +33,7 @@ const MyScheduleDetailPage: React.FC = () => {
     startDate,
     endDate,
   } = useScheduleStore();
+  const { setLocationInfo } = useLocationInfoStore();
 
   useEffect(() => {
     if (myScheduleData) {
@@ -42,6 +43,13 @@ const MyScheduleDetailPage: React.FC = () => {
         setStartDate(new Date(myScheduleData.startDateTime)),
         setParticipants(myScheduleData.participants),
         setMemo(myScheduleData.memo);
+
+      setLocationInfo(
+        myScheduleData.location,
+        myScheduleData.latitude,
+        myScheduleData.longitude,
+        myScheduleData.location,
+      );
 
       const isSameDate = isSameDay(startDate, endDate);
       const isStartMidnight = getHours(startDate) === 0 && getMinutes(startDate) === 0;

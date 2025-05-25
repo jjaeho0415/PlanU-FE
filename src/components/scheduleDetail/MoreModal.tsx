@@ -44,7 +44,7 @@ const MoreModal: React.FC<Props> = ({ groupId, scheduleId }) => {
   };
 
   const handleDeleteSchedule = () => {
-    if (groupId) {
+    if (groupId !== "my") {
       deleteGroupSchedule();
     } else {
       deleteMySchedule();
